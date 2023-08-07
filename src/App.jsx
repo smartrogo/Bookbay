@@ -1,13 +1,12 @@
-import React from 'react'
-import './App.css'
+import React from "react";
+import "./App.css";
 
 function App() {
-
   return (
-    <>
-     <h1 className=' text-blue-500 text-2xl text-center'>Welcome to Bookbay App.</h1>
-    </>
-  )
+    <div>
+      <h1 className="text-center text-green-600 underline text-2xl">HELLO FROM BOOKBAY APP!</h1>
+    </div>
+  );
 }
 
-export default App
+export default App;
