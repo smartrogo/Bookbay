@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import {BiMoon} from "react-icons/bi";
+import { Button } from "./Button";
 
 const Navbar = () => {
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -15,26 +17,42 @@ const Navbar = () => {
     <div className="">
       <nav className="bg-gray-800 shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center border-2 border-white justify-between h-16">
-            <div className="flex items-center">
-              <div className="flex-shrink-0 text-white">bookbay</div>
-            </div>
-            <div className="hidden md:block">
-              <div className="ml-4 flex items-center space-x-4">
-                <a href="#" className="text-gray-300 hover:text-white">
-                  Home
-                </a>
-                <a href="#" className="text-gray-300 hover:text-white">
-                  About
-                </a>
-                <a href="#" className="text-gray-300 hover:text-white">
-                  Services
-                </a>
-                <a href="#" className="text-gray-300 hover:text-white">
-                  Contact
-                </a>
+
+          <div className="flex items-center justify-between border-2 border-white h-16">
+
+            <div className=" flex justify-between w-[45%] border-2">
+              <div className="flex items-center border-2 border-red-500">
+                <div className="flex-shrink-0 text-white">bookbay</div>
+              </div>
+
+              <div className="hidden md:block border-2 border-red-500">
+                <div className="ml-4 flex items-center space-x-4">
+                  <a href="#" className="text-gray-300 hover:text-white">
+                    Home
+                  </a>
+                  <a href="#" className="text-gray-300 hover:text-white">
+                    About Us
+                  </a>
+                  <a href="#" className="text-gray-300 hover:text-white">
+                    Borrow
+                  </a>
+                  <a href="#" className="text-gray-300 hover:text-white">
+                    Buy/Sell
+                  </a>
+                </div>
               </div>
             </div>
+
+            <div className="border-2 w-[45%] flex">
+                <div>
+                    <BiMoon className="text-white"/>
+                </div>
+
+                <span className="text-white">connect with your wallet</span>
+                <Button />
+
+            </div>
+
             <div className="md:hidden">
               <button
                 onClick={toggleNavbar}
