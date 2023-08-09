@@ -48,7 +48,9 @@ const Navbar = () => {
                     <BiMoon className="text-white"/>
                 </div>
 
-                <span className="text-white">connect with your wallet</span>
+                <span className="text-white">
+                  <a href="">connect with your wallet</a>
+                </span>
                 <Button />
 
             </div>
