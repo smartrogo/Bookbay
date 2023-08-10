@@ -1,0 +1,7 @@
+/* Example CSS */
+.mobile-menu-icon {
+    @apply ml-2 cursor-pointer; /* Apply Tailwind classes for margin and cursor */
+  }
+  
+  /* Rest of your Tailwind classes */
+  

@@ -1,94 +1,116 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import {RxCross1} from 'react-icons/rx';
-import {RiMenu3Line} from 'react-icons/ri';
-// import { Button } from './Button';
-import { Button } from './Button';
-import { useRef } from 'react';
-// import { NavLink } from 'react-router-dom';
-// import { useNavigate } from 'react-router-dom';
-// import { Login } from '../routes/Login';
-
+import React, { useState, useEffect, useRef } from "react";
+import { RiMenu3Line } from "react-icons/ri";
+import { Button } from "./Button";
+import { RxCross1 } from "react-icons/rx";
 
 export const Header2 = () => {
-  const [active, setActive] = useState(false)
+  const [active, setActive] = useState(false);
+  const menuRef = useRef();
 
   const handleNavbar = () => {
-    setActive(!active)
-  }
-
-  let menuRef = useRef();
+    setActive(!active);
+  };
 
   useEffect(() => {
-    let handler = (e) => {
-      if (!menuRef.current.contains(e.target)) {
-        setActive(false)
+    const handleOutsideClick = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setActive(false);
       }
-    }
+    };
 
-    document.addEventListener('mousedown', handler)
+    document.addEventListener("mousedown", handleOutsideClick);
 
     return () => {
-      document.removeEventListener('mousedown', handler)
-    }
-  })
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
-//   const navLinkStyle = ({ isActive }) => {
-//     return {
-//     textDecoration: isActive ? 'underline' : 'none',
-//     textDecorationColor: isActive ? '#0F9D58': 'none',
-//     textDecorationThickness: isActive ? '2px' : '0px'
-//     }
-//   }
-
-//   const next = useNavigate()
   return (
-    <div className='bg-[#484848] fixed px-2 border-2 border-red-600 sm:px-4 py-2.5 z-20 top-0 left-0 border-b shadow-md border-gray-500 w-full text-white flex '>
-
-      <div className='container border-2 border-green-500 flex flex-wrap items-center justify-around mx-auto'>
-
-       
-
-        <div className=' items-center justify-between border-2 border-yellow-400'>
-
-          <div className=' absolute right-8 top-[18px] items-center text-center mb-4 flex sm:hidden cursor-pointer scale-150 '>
-            <RiMenu3Line onClick={ handleNavbar } style={{ color: 'white', textAlign: 'center'}}/>
+    <div className="bg-[#484848] fixed px-2 border-2 border-red-600 sm:px-4 py-2.5 z-20 top-0 left-0 border-b shadow-md border-gray-500 w-full text-white flex ">
+      <div className="container border-2 border-green-500 flex flex-wrap items-center justify-between mx-auto">
+        <div className="mobile-nav-container flex justify-between border-2 border-yellow-400 w-[40%]">
+          <div className="mobile-menu-icon" onClick={handleNavbar}>
+            <RiMenu3Line className="menu-icon-svg md:hidden md:absolute" />
           </div>
+          <a href="/" className="site-title">
+            Bookbay
+          </a>
 
-          {/* Desktop view */}
-          <ul className='hidden sm:flex gap-8 p-4 w-full uppercase md:text-sm md:font-bold font-popins rounded-lg text-[#f5f5f5]'>
-            <li className='hover:underline hover:decoration-[#0F9D58] hover:decoration-2 underline-offset-4'>
-              {/* <NavLink  style={navLinkStyle} to='/'>Home</NavLink> */}
+          {/* Desktop View */}
+          <ul className="hidden md:flex gap-8 border-2 uppercase text-white">
+            <li>
+              <a href="/" className="hover:underline">
+                Home
+              </a>
             </li>
-            <li className='hover:underline hover:decoration-[#0F9D58] hover:decoration-2 underline-offset-4'>
-              {/* <NavLink style={navLinkStyle} to='/about'>About</NavLink> */}
+            <li>
+              <a href="/about" className="hover:underline">
+                About
+              </a>
             </li>
-            {/* <Button next={() => next('Login')} primaryGreen='#0f9d58' ml='5px' typeValue='Login'/> */}
+            <li>
+              <a href="/contact" className="hover:underline">
+                Contact Us
+              </a>
+            </li>
           </ul>
-
-          {/* Mobile view */}
-          <div ref={menuRef} className={active ? 'cursor-pointer border-2 try flex flex-col items-start p-3 fixed inset-0 right-[30%] uppercase h-full bg-black/50 backdrop-blur-sm gap-5 transition delay-700 duration-300 ease-in-out sm:hidden' : 'hidden'}>
-            <ul className='flex flex-col'>
-              <RxCross1 onClick={handleNavbar} className='close mt-7 right-0 text-white font-medium text-[25px] leading-5 not-italic'/>
-              <li className='hover:underline hover:decoration-[#0F9D58] underline-offset-8 text-white font-medium text-[16px] leading-5 not-italic'>
-                {/* <NavLink style={navLinkStyle} to='/'>Home</NavLink> */}
-              </li>
-              <li className='hover:underline hover:decoration-[#0F9D58] hover:decoration-2 underline-offset-4 text-white font-medium text-[16px] leading-5 not-italic'>
-                {/* <NavLink style={navLinkStyle} to='/about'>About</NavLink> */}
-              </li>
-            </ul>
-            <div  className='flex justify-start'>
-              <Button primaryGreen='#0f9d58'/>
-            </div>
-          </div>
-          
         </div>
 
-       <a href="" className='flex items-center'>
-          <span className='self-center text-xl font-semibold whitespace-nowrap dark:text-white'> Bookbay</span>
-        </a>
+        {/* Add Login Button */}
+        <div className="login-button-container flex w-[50%] text-sm border-2 border-white justify-between items-center">
+          <div>
+            <a href="/contact" className="hover:underline">
+              Connect with wallet
+            </a>
+          </div>
+          <div>
+            <Button primaryGreen="#0f9d58">Login</Button>
+          </div>
+        </div>
 
+        <ul
+          ref={menuRef}
+          className={`mobile-menu ${
+            active ? "w-[60%]" : "w-0"
+          } h-screen overflow-hidden transition-all duration-300 ease-in-out absolute top-0 left-0 bg-black/50 backdrop-blur-sm sm:hidden`}
+        >
+          {active && (
+            <RxCross1
+              onClick={handleNavbar}
+              className="close mt-7 right-0 text-white font-medium text-[25px] leading-5 not-italic absolute"
+            />
+          )}
+          <ul className="p-4">
+            <li className="mb-4">
+              <a
+                href="/"
+                className="text-white font-medium text-lg hover:underline"
+              >
+                Home
+              </a>
+            </li>
+            <li className="mb-4">
+              <a
+                href="/about"
+                className="text-white font-medium text-lg hover:underline"
+              >
+                About
+              </a>
+            </li>
+            <li className="mb-4">
+              <a
+                href="/contact"
+                className="text-white font-medium text-lg hover:underline"
+              >
+                Contact Us
+              </a>
+            </li>
+          </ul>
+          <div className="flex justify-end">
+            <Button primaryGreen="#0f9d58" />
+          </div>
+        </ul>
       </div>
     </div>
-  )
-}
+  );
+};
