@@ -5,3 +5,8 @@
   
   /* Rest of your Tailwind classes */
   
+  @media (min-width: 640px) {
+    .con {
+        width: 90%;
+    }
+}
