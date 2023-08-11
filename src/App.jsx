@@ -5,7 +5,7 @@ import { Header2 } from "./components/Header";
 
 function App() {
   return (
-    <div className="bg-[#FFFFFF] dark:bg-[#3B383E] h-screen flex flex-col">
+    <div className="[#FFFFFF] dark:bg-[#3B383E] h-screen flex flex-col">
       {/* <Navbar /> */}
       <Header2 />
       <h1 className="text-center mt-20 text-green-600 underline text-2xl">
