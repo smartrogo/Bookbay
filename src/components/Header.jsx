@@ -26,7 +26,7 @@ export const Header2 = () => {
   }, []);
 
   return (
-    <div className="bg-[#FFFFFF] fixed px-2 h-[5rem] border-2 border-red-600 sm:px-4 py-2.5 z-20 top-0 left-0 border-b shadow-md w-full text-white flex items-center ">
+    <div className={`bg-[#FFFFFF] fixed px-2 h-[5rem] border-2 border-red-600 sm:px-4 py-2.5 z-20 top-0 left-0 border-b shadow-md w-full text-white flex items-center ${active ? 'blur-active' : ''}`}>
       <div className="container border-2 border-green-500 flex flex-wrap items-center justify-between mx-auto">
         <div className="mobile-nav-container flex justify-between items-center border-2 border-yellow-400 w-[36%] md:w-[40%]">
           <div className="mobile-menu-icon" onClick={handleNavbar}>

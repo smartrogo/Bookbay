@@ -4,9 +4,16 @@
   }
   
   /* Rest of your Tailwind classes */
-  
-    font-family: "poppins";
+  .poppins {
+    font-family: 'Poppins', sans-serif;
+    color: red;
   }
+
+ /* Header2.css */
+.blur-active .content-wrapper {
+  filter: blur(5px); /* Adjust the blur intensity as needed */
+  pointer-events: none; /* Prevent interaction with blurred content */
+}
 
   @media (min-width: 640px) {
     .con {
