@@ -26,13 +26,13 @@ export const Header2 = () => {
   }, []);
 
   return (
-    <div className="bg-[#484848] fixed px-2 h-[5rem] border-2 border-red-600 sm:px-4 py-2.5 z-20 top-0 left-0 border-b shadow-md border-gray-500 w-full text-white flex ">
+    <div className="bg-[#FFFFFF] fixed px-2 h-[5rem] border-2 border-red-600 sm:px-4 py-2.5 z-20 top-0 left-0 border-b shadow-md border-gray-500 w-full text-white flex items-center ">
       <div className="container border-2 border-green-500 flex flex-wrap items-center justify-between mx-auto">
-        <div className="mobile-nav-container flex justify-between border-2 border-yellow-400 w-[40%]">
+        <div className="mobile-nav-container flex justify-between items-center border-2 border-yellow-400 w-[36%] md:w-[40%]">
           <div className="mobile-menu-icon" onClick={handleNavbar}>
-            <RiMenu3Line className="menu-icon-svg md:hidden md:absolute" />
+            <RiMenu3Line className=" text-[#000000] text-[1.5rem] menu-icon-svg md:hidden md:absolute" />
           </div>
-          <a href="/" className="site-title">
+          <a href="/" className="site-title text-[1.2rem] text-[#000000] font-bold leading-normal">
             Bookbay
           </a>
 
@@ -57,14 +57,14 @@ export const Header2 = () => {
         </div>
 
         {/* Add Login Button */}
-        <div className="login-button-container flex w-[50%] text-sm border-2 border-white justify-between md:justify-end items-center">
+        <div className="login-button-container flex w-[50%] items-center text-sm border-2 border-white justify-between md:justify-end items-center">
           <div>
-            <a href="/contact" className="hover:underline md:mr-10">
+            <a href="/contact" className=" leading-normal font-bold text-[0.44769rem] poppins underline text-[#000000] md:mr-10">
               Connect with wallet
             </a>
           </div>
-          <div className="bg-[#0f9d58] md:mr-24">
-            <Button className="bg-[#0f9d58] mr-24">Login</Button>
+          <div className="md:mr-24">
+            <Button value="Login" cls_name=" rounded-[2.48719rem] bg-[#6750A4] py-2 px-4"/>
           </div>
         </div>
 
