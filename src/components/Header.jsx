@@ -64,11 +64,11 @@ export const Header2 = () => {
         </div>
 
         {/* Add Login Button */}
-        <div className="login-button-container flex w-[50%] text-sm justify-between md:justify-end items-center">
+        <div className="login-button-container flex w-[54%] text-sm justify-between md:justify-end items-center">
           <div>
             <a
               href="/contact"
-              className=" leading-normal font-bold text-[0.6rem] poppins underline text-[#000000] dark:text-[#F4F4F4] md:mr-10"
+              className=" leading-normal font-bold text-[0.6rem] poppins underline text-[#000000] dark:text-[#F4F4F4] mr-4 md:mr-10"
             >
               Connect with wallet
             </a>
@@ -76,7 +76,7 @@ export const Header2 = () => {
           <div className="md:mr-24">
             <Button
               value="Login"
-              cls_name=" rounded-[2.48719rem] bg-[#6750A4] py-[8.7px] px-6"
+              cls_name=" rounded-[6px] bg-[#0F9D58] py-[8px] px-4 "
             />
           </div>
         </div>
@@ -93,7 +93,7 @@ export const Header2 = () => {
               className="close z-20 mt-7 right-0 font-medium text-[25px] leading-5 not-italic absolute"
             />
           )}
-          <ul className="p-4 border-2 mt-20">
+          <ul className="p-4 mt-20">
             <li className="mb-4">
               <a href="/" className="font-medium text-lg hover:underline">
                 Home
