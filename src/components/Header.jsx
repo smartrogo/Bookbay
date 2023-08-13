@@ -26,7 +26,7 @@ export const Header2 = () => {
   }, []);
 
   return (
-    <div
+    <section
       className={`bg-[#FFFFFF] dark:bg-[#141218] fixed px-2 h-[5rem] sm:px-4 py-2.5 z-20 top-0 left-0 border-b shadow-md w-full text-white flex items-center ${
         active ? "blur-active" : ""
       }`}
@@ -64,7 +64,7 @@ export const Header2 = () => {
         </div>
 
         {/* Add Login Button */}
-        <div className="login-button-container flex w-[54%] text-sm justify-between md:justify-end items-center">
+        <React.Fragment className="login-button-container border-2 flex w-[54%] text-sm justify-between md:justify-end items-center">
           <div>
             <a
               href="/contact"
@@ -79,7 +79,7 @@ export const Header2 = () => {
               cls_name=" rounded-[6px] bg-[#0F9D58] py-[8px] px-4 "
             />
           </div>
-        </div>
+        </React.Fragment>
 
         <ul
           ref={menuRef}
@@ -113,11 +113,11 @@ export const Header2 = () => {
               </a>
             </li>
           </ul>
-          <div className="flex justify-end">
+          <React.Fragment className="flex justify-end">
             <Button primaryGreen="#0f9d58" />
-          </div>
+          </React.Fragment>
         </ul>
       </div>
-    </div>
+    </section>
   );
 };
