@@ -35,8 +35,8 @@ export const Header2 = () => {
         active ? "blur-active" : ""
       }`}
     >
-      <div className="wrapper border-2 flex flex-wrap items-center justify-between mx-auto">
-        <div className="mobile-nav-container w-[30%] md:w-[45%] flex justify-between items-center">
+      <div className="wrapper flex flex-wrap items-center justify-between mx-auto">
+        <div className="mobile-nav-container w-[34%] md:w-[45%] flex justify-between items-center">
           <div className="mobile-menu-icon md:hidden" onClick={handleNavbar}>
             <RiMenu3Line className=" text-[#000000] text-[1.5rem] menu-icon-svg md:hidden md:absolute" />
           </div>
@@ -46,10 +46,9 @@ export const Header2 = () => {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="51"
-              height="51"
               viewBox="0 0 51 51"
               fill="none"
+              className="md:w-[52px] md:h-[52px] w-[2.13456rem] h-[2.13456rem] "
             >
               <path
                 d="M9.41635 16.2141L25.5 6.9282L41.5836 16.2141V34.7859L25.5 44.0718L9.41635 34.7859V16.2141Z"
@@ -66,11 +65,11 @@ export const Header2 = () => {
                 d="M25.5 18L31.9952 21.75V29.25L25.5 33L19.0048 29.25V21.75L25.5 18Z"
                 fill="#FD6727"
               />
-            </svg> <span className=" md:font-bold md:text-[1.5rem]">ookbay</span>
+            </svg> <span className="font-bold md:text-[1.5rem] text-[1.0045rem]">ookbay</span>
           </a>
 
           {/* Desktop View */}
-          <ul className="hidden md:flex gap-8 border-2 md:mr-12 leading-normal text-[0.875rem] text-[#000000]">
+          <ul className="hidden md:flex gap-8 md:mr-12 leading-normal text-[0.875rem] text-[#000000]">
             <li>
               <a href="/" className="hover:underline">
                 Home

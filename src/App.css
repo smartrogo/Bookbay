@@ -13,7 +13,13 @@
   }
   
   .wrapper {
-    width: 92%;
+    width: 96%;
+  }
+
+  @media screen and (min-width: 1024px) {
+    .wrapper {
+      width: 92%;
+    }
   }
 
  /* Header2.css */
