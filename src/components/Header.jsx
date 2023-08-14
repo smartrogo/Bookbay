@@ -4,7 +4,8 @@ import { Button } from "./Button";
 import { RxCross1 } from "react-icons/rx";
 import { LuArrowUpRight } from "react-icons/lu";
 import { LuMoon } from "react-icons/lu";
-import { LuLogIn } from "react-icons/lu"
+import { LuLogIn } from "react-icons/lu";
+import log from "../assets/log.svg"
 
 export const Header2 = () => {
   const [active, setActive] = useState(false);
@@ -34,8 +35,8 @@ export const Header2 = () => {
         active ? "blur-active" : ""
       }`}
     >
-      <div className="container flex flex-wrap border-2  items-center justify-between mx-auto">
-        <div className="mobile-nav-container border-2 border-yellow-500 md:w-[53%] flex justify-between items-center">
+      <div className="container flex flex-wrap items-center justify-between mx-auto">
+        <div className="mobile-nav-container md:w-[45%] flex justify-between items-center">
           <div className="mobile-menu-icon md:hidden" onClick={handleNavbar}>
             <RiMenu3Line className=" text-[#000000] dark:text-[#F4F4F4] text-[1.5rem] menu-icon-svg md:hidden md:absolute" />
           </div>
@@ -47,7 +48,7 @@ export const Header2 = () => {
           </a>
 
           {/* Desktop View */}
-          <ul className="hidden md:flex gap-8 border-2 leading-normal text-[0.875rem] text-[#000000]">
+          <ul className="hidden md:flex gap-8 leading-normal text-[0.875rem] text-[#000000]">
             <li>
               <a href="/" className="hover:underline">
                 Home
@@ -72,23 +73,24 @@ export const Header2 = () => {
         </div>
 
         {/* Add Login Button */}
-        <div className="login-button-container w-[25%] flex justify-evenly items-center border-red-500 border-2 ">
+        <div className="login-button-container w-[25%] flex justify-evenly items-center">
           <div>
             <LuMoon className="text-[#000000]" />
           </div>
-          <div className="border-2">
+          <div className="">
             <a
               href="/contact"
-              className=" leading-normal flex font-bold text-[0.6rem] poppins underline text-[#000000] mr-4 "
+              className=" leading-normal flex font-bold text-[0.6rem] poppins underline text-[#000000]"
             >
-              Connect with wallet <LuArrowUpRight />
+              Connect with wallet <LuArrowUpRight className="mt-[3px] ml-[1.5px]"/>
             </a>
           </div>
-          <div className="border-2">
-            <Button
-              value={` "Login" ${<LuLogIn/>} `}
-              cls_name=" rounded-[6px] bg-[#0F9D58] py-[8px] px-4 "
-            />
+          <div className="">
+            {/* <Button
+              value="Login"
+              cls_name=" rounded-[6px] bg-[#0F9D58] py-[8px] md:py-[5px] text-center flex items-center px-4 "
+            /> */}
+            <button className="rounded-[5px] flex items-center text-[14px] bg-[#0F9D58] px-4 text-center md:py-[4px]">{<LuLogIn className="mt-1 mr-1"/>}Login</button>
           </div>
         </div>
 
