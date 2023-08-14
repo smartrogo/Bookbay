@@ -5,7 +5,7 @@ import { RxCross1 } from "react-icons/rx";
 import { LuArrowUpRight } from "react-icons/lu";
 import { LuMoon } from "react-icons/lu";
 import { LuLogIn } from "react-icons/lu";
-import log from "../assets/log.svg"
+// import log from "../assets/log.svg"
 
 export const Header2 = () => {
   const [active, setActive] = useState(false);
@@ -36,9 +36,9 @@ export const Header2 = () => {
       }`}
     >
       <div className="container flex flex-wrap items-center justify-between mx-auto">
-        <div className="mobile-nav-container md:w-[45%] flex justify-between items-center">
+        <div className="mobile-nav-container w-[35%] md:w-[45%] flex justify-between items-center">
           <div className="mobile-menu-icon md:hidden" onClick={handleNavbar}>
-            <RiMenu3Line className=" text-[#000000] dark:text-[#F4F4F4] text-[1.5rem] menu-icon-svg md:hidden md:absolute" />
+            <RiMenu3Line className=" text-[#000000] text-[1.5rem] menu-icon-svg md:hidden md:absolute" />
           </div>
           <a
             href="/"
@@ -73,7 +73,7 @@ export const Header2 = () => {
         </div>
 
         {/* Add Login Button */}
-        <div className="login-button-container w-[25%] flex justify-evenly items-center">
+        <div className="login-button-container  w-[60%]  md:w-[25%] flex justify-evenly items-center">
           <div>
             <LuMoon className="text-[#000000]" />
           </div>
@@ -126,9 +126,9 @@ export const Header2 = () => {
               </a>
             </li>
           </ul>
-          <React.Fragment className="flex justify-end">
+          <div className="flex justify-end">
             <Button primaryGreen="#0f9d58" />
-          </React.Fragment>
+          </div>
         </ul>
       </div>
     </section>
