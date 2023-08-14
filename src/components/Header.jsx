@@ -35,20 +35,42 @@ export const Header2 = () => {
         active ? "blur-active" : ""
       }`}
     >
-      <div className="container flex flex-wrap items-center justify-between mx-auto">
-        <div className="mobile-nav-container w-[35%] md:w-[45%] flex justify-between items-center">
+      <div className="wrapper border-2 flex flex-wrap items-center justify-between mx-auto">
+        <div className="mobile-nav-container w-[30%] md:w-[45%] flex justify-between items-center">
           <div className="mobile-menu-icon md:hidden" onClick={handleNavbar}>
             <RiMenu3Line className=" text-[#000000] text-[1.5rem] menu-icon-svg md:hidden md:absolute" />
           </div>
           <a
             href="/"
-            className="site-title text-[1.1rem] md:ml-0 text-[#000000] font- leading-normal"
+            className="site-title flex items-center text-[1.1rem] md:ml-0 text-[#000000] font- leading-normal"
           >
-            Bookbay
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="51"
+              height="51"
+              viewBox="0 0 51 51"
+              fill="none"
+            >
+              <path
+                d="M9.41635 16.2141L25.5 6.9282L41.5836 16.2141V34.7859L25.5 44.0718L9.41635 34.7859V16.2141Z"
+                stroke="#AEAEAE"
+                stroke-width="12"
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M17 4.8125L11 8.34375V18H11.0607V33.8365L25.5 42.1731L39.9393 33.8365V17.1634L25.5 8.8269L17 13.7344V4.8125ZM23.0607 24.0916L25.5 22.6833L27.9393 24.0916V26.9083L25.5 28.3167L23.0607 26.9083V24.0916Z"
+                fill="black"
+              />
+              <path
+                d="M25.5 18L31.9952 21.75V29.25L25.5 33L19.0048 29.25V21.75L25.5 18Z"
+                fill="#FD6727"
+              />
+            </svg> <span className=" md:font-bold md:text-[1.5rem]">ookbay</span>
           </a>
 
           {/* Desktop View */}
-          <ul className="hidden md:flex gap-8 leading-normal text-[0.875rem] text-[#000000]">
+          <ul className="hidden md:flex gap-8 border-2 md:mr-12 leading-normal text-[0.875rem] text-[#000000]">
             <li>
               <a href="/" className="hover:underline">
                 Home
@@ -73,16 +95,17 @@ export const Header2 = () => {
         </div>
 
         {/* Add Login Button */}
-        <div className="login-button-container  w-[60%]  md:w-[25%] flex justify-evenly items-center">
+        <div className="login-button-container w-[58%]  md:w-[25%] flex justify-evenly items-center">
           <div>
             <LuMoon className="text-[#000000]" />
           </div>
           <div className="">
             <a
               href="/contact"
-              className=" leading-normal flex font-bold text-[0.6rem] poppins underline text-[#000000]"
+              className=" leading-normal flex font-bold text-[0.7rem] poppins underline text-[#000000]"
             >
-              Connect with wallet <LuArrowUpRight className="mt-[3px] ml-[1.5px]"/>
+              Connect with wallet{" "}
+              <LuArrowUpRight className="mt-[px] text-base ml-[1px]" />
             </a>
           </div>
           <div className="">
@@ -90,7 +113,9 @@ export const Header2 = () => {
               value="Login"
               cls_name=" rounded-[6px] bg-[#0F9D58] py-[8px] md:py-[5px] text-center flex items-center px-4 "
             /> */}
-            <button className="rounded-[5px] flex items-center text-[14px] bg-[#0F9D58] px-4 text-center md:py-[4px]">{<LuLogIn className="mt-1 mr-1"/>}Login</button>
+            <button className="rounded-[5px] flex items-center text-[14px] bg-[#0F9D58] px-2 font-medium md:px-4 text-center py-1 md:py-[4px]">
+              {<LuLogIn className="mt-1 mr-1 font-black text-[14px]" />}Login
+            </button>
           </div>
         </div>
 

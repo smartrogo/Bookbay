@@ -11,15 +11,13 @@
   .font-weight {
     font-family:'Roboto', sans-serif;;
   }
+  
+  .wrapper {
+    width: 92%;
+  }
 
  /* Header2.css */
 .blur-active .content-wrapper {
   filter: blur(5px); /* Adjust the blur intensity as needed */
   pointer-events: none; /* Prevent interaction with blurred content */
-}
-
-  @media (min-width: 640px) {
-    .con {
-        width: 90%;
-    }
 }
