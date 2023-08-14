@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { RiMenu3Line } from "react-icons/ri";
 import { Button } from "./Button";
 import { RxCross1 } from "react-icons/rx";
-import {LuArrowUpRight} from "react-icons/lu"
-import {LuMoon} from "react-icons/lu"
+import { LuArrowUpRight } from "react-icons/lu";
+import { LuMoon } from "react-icons/lu";
+import { LuLogIn } from "react-icons/lu"
 
 export const Header2 = () => {
   const [active, setActive] = useState(false);
@@ -71,19 +72,21 @@ export const Header2 = () => {
         </div>
 
         {/* Add Login Button */}
-        <div className="login-button-container w-[30%] flex border-red-500 border-2 ">
+        <div className="login-button-container w-[25%] flex justify-evenly items-center border-red-500 border-2 ">
+          <div>
+            <LuMoon className="text-[#000000]" />
+          </div>
           <div className="border-2">
-
             <a
               href="/contact"
-              className=" leading-normal font-bold text-[0.6rem] poppins underline text-[#000000] mr-4 "
+              className=" leading-normal flex font-bold text-[0.6rem] poppins underline text-[#000000] mr-4 "
             >
               Connect with wallet <LuArrowUpRight />
             </a>
           </div>
           <div className="border-2">
             <Button
-              value="Login"
+              value={` "Login" ${<LuLogIn/>} `}
               cls_name=" rounded-[6px] bg-[#0F9D58] py-[8px] px-4 "
             />
           </div>
