@@ -6,7 +6,10 @@
   /* Rest of your Tailwind classes */
   .poppins {
     font-family: 'Poppins', sans-serif;
-    color: red;
+  }
+
+  .font-weight {
+    font-family:'Roboto', sans-serif;;
   }
 
  /* Header2.css */

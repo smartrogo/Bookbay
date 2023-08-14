@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { RiMenu3Line } from "react-icons/ri";
 import { Button } from "./Button";
 import { RxCross1 } from "react-icons/rx";
+import {LuArrowUpRight} from "react-icons/lu"
+import {LuMoon} from "react-icons/lu"
 
 export const Header2 = () => {
   const [active, setActive] = useState(false);
@@ -27,24 +29,24 @@ export const Header2 = () => {
 
   return (
     <section
-      className={`bg-[#FFFFFF] dark:bg-[#141218] fixed px-2 h-[5rem] sm:px-4 py-2.5 z-20 top-0 left-0 border-b shadow-md w-full text-white flex items-center ${
+      className={`bg-[#F4F4F4] fixed px-2 h-[4rem] sm:px-4 py-2.5 z-20 top-0 left-0 border-b shadow-md w-full text-white flex items-center ${
         active ? "blur-active" : ""
       }`}
     >
-      <div className="container flex flex-wrap items-center justify-between mx-auto">
-        <div className="mobile-nav-container flex justify-between items-center w-[36%] md:w-[40%]">
-          <div className="mobile-menu-icon" onClick={handleNavbar}>
+      <div className="container flex flex-wrap border-2  items-center justify-between mx-auto">
+        <div className="mobile-nav-container border-2 border-yellow-500 md:w-[53%] flex justify-between items-center">
+          <div className="mobile-menu-icon md:hidden" onClick={handleNavbar}>
             <RiMenu3Line className=" text-[#000000] dark:text-[#F4F4F4] text-[1.5rem] menu-icon-svg md:hidden md:absolute" />
           </div>
           <a
             href="/"
-            className="site-title text-[1.2rem] text-[#000000] dark:text-[#F4F4F4] font-bold leading-normal"
+            className="site-title text-[1.1rem] md:ml-0 text-[#000000] font- leading-normal"
           >
             Bookbay
           </a>
 
           {/* Desktop View */}
-          <ul className="hidden md:flex gap-8 border-2 uppercase text-white">
+          <ul className="hidden md:flex gap-8 border-2 leading-normal text-[0.875rem] text-[#000000]">
             <li>
               <a href="/" className="hover:underline">
                 Home
@@ -52,34 +54,40 @@ export const Header2 = () => {
             </li>
             <li>
               <a href="/about" className="hover:underline">
-                About
+                About us
               </a>
             </li>
             <li>
               <a href="/contact" className="hover:underline">
-                Contact Us
+                Borrow
+              </a>
+            </li>
+            <li>
+              <a href="/contact" className="hover:underline">
+                Buy/Sell
               </a>
             </li>
           </ul>
         </div>
 
         {/* Add Login Button */}
-        <React.Fragment className="login-button-container border-2 flex w-[54%] text-sm justify-between md:justify-end items-center">
-          <div>
+        <div className="login-button-container w-[30%] flex border-red-500 border-2 ">
+          <div className="border-2">
+
             <a
               href="/contact"
-              className=" leading-normal font-bold text-[0.6rem] poppins underline text-[#000000] dark:text-[#F4F4F4] mr-4 md:mr-10"
+              className=" leading-normal font-bold text-[0.6rem] poppins underline text-[#000000] mr-4 "
             >
-              Connect with wallet
+              Connect with wallet <LuArrowUpRight />
             </a>
           </div>
-          <div className="md:mr-24">
+          <div className="border-2">
             <Button
               value="Login"
               cls_name=" rounded-[6px] bg-[#0F9D58] py-[8px] px-4 "
             />
           </div>
-        </React.Fragment>
+        </div>
 
         <ul
           ref={menuRef}
