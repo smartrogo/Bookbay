@@ -11,10 +11,12 @@ export const Header2 = () => {
   const [active, setActive] = useState(false);
   const menuRef = useRef();
 
+  // sidebar toggle function
   const handleNavbar = () => {
     setActive(!active);
   };
 
+  // useEffect function to handle outside click to toggle
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -42,7 +44,7 @@ export const Header2 = () => {
           </div>
           <a
             href="/"
-            className="site-title flex items-center text-[1.1rem] md:ml-0 text-[#000000] font- leading-normal"
+            className="site-title border-2 flex items-center text-[1.1rem] md:ml-0 text-[#000000] font- leading-normal"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -94,16 +96,16 @@ export const Header2 = () => {
         </div>
 
         {/* Add Login Button */}
-        <div className="login-button-container w-[58%]  md:w-[25%] flex justify-evenly items-center">
+        <div className="login-button-container w-[55%]  md:w-[20%] flex justify-evenly items-center">
           <div>
-            <LuMoon className="text-[#000000]" />
+            <LuMoon className="text-[#000000] cursor-pointer" />
           </div>
           <div className="">
             <a
               href="/contact"
               className=" leading-normal flex font-bold text-[0.7rem] poppins underline text-[#000000]"
             >
-              Connect with wallet{" "}
+             wallet connect{" "}
               <LuArrowUpRight className="mt-[px] text-base ml-[1px]" />
             </a>
           </div>
@@ -121,13 +123,13 @@ export const Header2 = () => {
         <ul
           ref={menuRef}
           className={`mobile-menu ${
-            active ? "w-[65%]" : "w-0"
+            active ? "w-[70%]" : "w-0"
           } h-screen overflow-hidden transition-all text-[#000000] dark:[#F4F4F4] duration-300 ease-in-out absolute top-0 left-0 bg-white/80 backdrop-blur-sm [#3B383E] sm:hidden`}
         >
           {active && (
             <RxCross1
               onClick={handleNavbar}
-              className="close z-20 mt-7 right-0 font-medium text-[25px] leading-5 not-italic absolute"
+              className="close z-20 mt-7 border-2 border-blue-500 right-4 cursor-pointer font-medium text-[25px] leading-5 not-italic absolute"
             />
           )}
           <ul className="p-4 mt-20">
