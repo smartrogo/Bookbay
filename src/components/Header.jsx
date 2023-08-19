@@ -44,30 +44,9 @@ export const Header2 = () => {
           </div>
           <a
             href="/"
-            className="site-title border-2 flex items-center text-[1.1rem] md:ml-0 text-[#000000] font- leading-normal"
+            className="site-title border-2 flex items-center text-[1.1rem] md:ml-0 text-[#000] font- leading-normal"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 51 51"
-              fill="none"
-              className="md:w-[52px] md:h-[52px] w-[2.13456rem] h-[2.13456rem] "
-            >
-              <path
-                d="M9.41635 16.2141L25.5 6.9282L41.5836 16.2141V34.7859L25.5 44.0718L9.41635 34.7859V16.2141Z"
-                stroke="#AEAEAE"
-                stroke-width="12"
-              />
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M17 4.8125L11 8.34375V18H11.0607V33.8365L25.5 42.1731L39.9393 33.8365V17.1634L25.5 8.8269L17 13.7344V4.8125ZM23.0607 24.0916L25.5 22.6833L27.9393 24.0916V26.9083L25.5 28.3167L23.0607 26.9083V24.0916Z"
-                fill="black"
-              />
-              <path
-                d="M25.5 18L31.9952 21.75V29.25L25.5 33L19.0048 29.25V21.75L25.5 18Z"
-                fill="#FD6727"
-              />
-            </svg> <span className="font-bold md:text-[1.5rem] text-[1.0045rem]">ookbay</span>
+            <span>Bookbay</span>
           </a>
 
           {/* Desktop View */}
