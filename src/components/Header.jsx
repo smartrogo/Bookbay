@@ -5,7 +5,7 @@ import { RxCross1 } from "react-icons/rx";
 import { LuArrowUpRight } from "react-icons/lu";
 import { LuMoon } from "react-icons/lu";
 import { LuLogIn } from "react-icons/lu";
-// import log from "../assets/log.svg"
+import { NavLink } from "react-router-dom";
 
 export const Header2 = () => {
   const [active, setActive] = useState(false);
@@ -31,9 +31,20 @@ export const Header2 = () => {
     };
   }, []);
 
+  // active page indicator
+  const navLinkStyle = ({ isActive }) => {
+    return {
+      textDecoration: isActive ? "underline" : "none",
+      textDecorationColor: isActive ? "#0F9D58" : "none",
+      textDecorationThickness: isActive ? "2px" : "0px",
+      textUnderlineOffset: isActive ? "0.3em" : "none",
+      color: isActive ? "#0F9D58" : "",
+    };
+  };
+
   return (
     <section
-      className={`bg-[#F4F4F4] fixed px-2 h-[4rem] sm:px-4 py-2.5 z-20 top-0 left-0 border-b shadow-md w-full text-white flex items-center ${
+      className={`bg-[#fff] fixed px-2 h-[5rem] sm:px-4 py-2.5 z-20 top-0 left-0 border-b box-shadow w-full text-white flex items-center ${
         active ? "blur-active" : ""
       }`}
     >
@@ -44,32 +55,28 @@ export const Header2 = () => {
           </div>
           <a
             href="/"
-            className="site-title border-2 flex items-center text-[1.1rem] md:ml-0 text-[#000] font- leading-normal"
+            className="site-title border-2 flex items-center text-[24px] md:ml-0 text-[#000] font-bold leading-normal poppins"
           >
             <span>Bookbay</span>
           </a>
 
           {/* Desktop View */}
           <ul className="hidden md:flex gap-8 md:mr-12 leading-normal text-[0.875rem] text-[#000000]">
-            <li>
-              <a href="/" className="hover:underline">
+            <li className="under">
+              <NavLink to="/" style={navLinkStyle}>
                 Home
-              </a>
+              </NavLink>
             </li>
-            <li>
-              <a href="/about" className="hover:underline">
+            <li className="roboto under text-[18px] leading-normal">
+              <NavLink to="/about" style={navLinkStyle}>
                 About us
-              </a>
+              </NavLink>
             </li>
-            <li>
-              <a href="/contact" className="hover:underline">
-                Borrow
-              </a>
+            <li className="roboto under text-[18px] leading-normal">
+              <NavLink to="/borrow" style={navLinkStyle}>Borrow</NavLink>
             </li>
-            <li>
-              <a href="/contact" className="hover:underline">
-                Buy/Sell
-              </a>
+            <li className="roboto under text-[18px] leading-normal">
+              <NavLink to="/buy/sell" style={navLinkStyle}>Buy/Sell</NavLink>
             </li>
           </ul>
         </div>
@@ -79,23 +86,24 @@ export const Header2 = () => {
           <div>
             <LuMoon className="text-[#000000] cursor-pointer" />
           </div>
+          <Button
+              value="Login"
+              cls_name=" rounded-[6px] bg bg-transparent border-2 border-[#0F9D58] py-[8px] md:py-[5px] text-center flex items-center px-4 "
+            />
           <div className="">
             <a
               href="/contact"
               className=" leading-normal flex font-bold text-[0.7rem] poppins underline text-[#000000]"
             >
-             wallet connect{" "}
+              wallet connect{" "}
               <LuArrowUpRight className="mt-[px] text-base ml-[1px]" />
             </a>
           </div>
           <div className="">
-            {/* <Button
-              value="Login"
-              cls_name=" rounded-[6px] bg-[#0F9D58] py-[8px] md:py-[5px] text-center flex items-center px-4 "
-            /> */}
-            <button className="rounded-[5px] flex items-center text-[14px] bg-[#0F9D58] px-2 font-medium md:px-4 text-center py-1 md:py-[4px]">
+           
+            {/* <button className="rounded-[5px] flex items-center text-[14px] bg-[#0F9D58] px-2 font-medium md:px-4 text-center py-1 md:py-[4px]">
               {<LuLogIn className="mt-1 mr-1 font-black text-[14px]" />}Login
-            </button>
+            </button> */}
           </div>
         </div>
 
@@ -113,22 +121,42 @@ export const Header2 = () => {
           )}
           <ul className="p-4 mt-20">
             <li className="mb-4">
-              <a href="/" className="font-medium text-lg hover:underline">
+              <NavLink to="/" className="font-medium text-lg hover:underline">
                 Home
-              </a>
+              </NavLink>
             </li>
             <li className="mb-4">
-              <a href="/about" className="font-medium text-lg hover:underline">
-                About
-              </a>
-            </li>
-            <li className="mb-4">
-              <a
-                href="/contact"
+              <NavLink
+                to="/about"
+                onClick={() => {
+                  setActive(false);
+                }}
                 className="font-medium text-lg hover:underline"
               >
-                Contact Us
-              </a>
+                About
+              </NavLink>
+            </li>
+            <li className="mb-4">
+              <NavLink
+                to="/borrow"
+                onClick={() => {
+                  setActive(false);
+                }}
+                className="font-medium text-lg hover:underline"
+              >
+                Borrow
+              </NavLink>
+            </li>
+            <li className="mb-4">
+              <NavLink
+                to="/buy/sell"
+                onClick={() => {
+                  setActive(false);
+                }}
+                className="font-medium text-lg hover:underline"
+              >
+                Buy/Sell
+              </NavLink>
             </li>
           </ul>
           <div className="flex justify-end">

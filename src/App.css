@@ -8,12 +8,41 @@
     font-family: 'Poppins', sans-serif;
   }
 
-  .font-weight {
-    font-family:'Roboto', sans-serif;;
+  .roboto {
+    font-family:'Roboto', sans-serif;
+    font-weight: 400;
   }
   
   .wrapper {
     width: 96%;
+  }
+
+
+  .under {
+    display: inline-block;
+    position: relative;
+  }
+  
+  .under::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1.7px;
+    bottom: 0;
+    left: 0;
+    background-color: #0f9d58;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+  
+  .under:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+
+  .box-shadow {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
   }
 
   @media screen and (min-width: 1024px) {

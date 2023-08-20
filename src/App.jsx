@@ -1,18 +1,26 @@
 import React from "react";
 import "./App.css";
-// import Navbar from "./components/Navbar";
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route, Routes, } from 'react-router-dom';
 import { Header2 } from "./components/Header";
-
+import { Home } from "./components/Home";
+import { Borrow } from "./components/Borrow";
+import { Buy } from "./components/Buy";
+import { About } from "./components/About";
 function App() {
   return (
-    <div className="bg-[#FFFFFF] h-screen flex flex-col">
-      {/* <Navbar /> */}
-      <Header2 />
-      <h1 className="text-center mt-20 text-green-600 underline text-2xl">
-        HELLO FROM BOOKBAY APP!
-      </h1>
-      <h1 className="text-center text-white">buy, sell and borrow books online</h1>
-    </div>
+    <Router>
+      <div>
+        <Header2 />
+      </div>
+      
+     <Routes>
+     <Route path="/" exact element={<Home />}></Route>
+      <Route path="/about"  element={<About />}></Route>
+      <Route path="/buy"  element={<Buy />}></Route>
+      <Route path="/borrow"  element={<Borrow />}></Route>
+     </Routes>
+    </Router>
   );
 }
 
