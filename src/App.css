@@ -1,9 +1,5 @@
-/* Example CSS */
-.mobile-menu-icon {
-    @apply ml-2 cursor-pointer; /* Apply Tailwind classes for margin and cursor */
-  }
+
   
-  /* Rest of your Tailwind classes */
   .poppins {
     font-family: 'Poppins', sans-serif;
   }
@@ -44,6 +40,9 @@
   .box-shadow {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
   }
+
+
+
 
   @media screen and (min-width: 1024px) {
     .wrapper {
