@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { RiMenu3Line } from "react-icons/ri";
 import { Button } from "./Button";
-import { RxCross1 } from "react-icons/rx";
+import { RiCloseCircleFill } from "react-icons/ri"
 import { LuMoon } from "react-icons/lu";
 import { NavLink } from "react-router-dom";
 export const Header2 = () => {
@@ -120,46 +120,52 @@ export const Header2 = () => {
           } h-screen overflow-hidden transition-all text-[#000000] dark:[#F4F4F4] duration-300 ease-in-out absolute top-0 left-0 bg-white/80 backdrop-blur-sm [#3B383E] sm:hidden`}
         >
           {active && (
-            <RxCross1
+            <RiCloseCircleFill
               onClick={handleNavbar}
-              className="close z-20 mt-7 border-2 border-blue-500 right-4 cursor-pointer font-medium text-[25px] leading-5 not-italic absolute"
+              className="close z-20 mt-7 right-4 cursor-pointer font-medium text-[40px] leading-5 not-italic absolute"
             />
           )}
-          <ul className="p-4 mt-20">
-            <li className="mb-4">
-              <NavLink to="/" className="font-medium text-lg hover:underline">
+          <ul className="p-4 mt-20 w-[80%] ml-8">
+            <li className="mb-5 text-[25px] font-medium leading-[120%] hover:underline">
+              <NavLink
+                to="/"
+                onClick={() => {
+                  setActive(false);
+                }}
+                className=""
+              >
                 Home
               </NavLink>
             </li>
-            <li className="mb-4">
+            <li className="mb-5 text-[25px] font-medium leading-[120%] hover:underline">
               <NavLink
                 to="/about"
                 onClick={() => {
                   setActive(false);
                 }}
-                className="font-medium text-lg hover:underline"
+                className=""
               >
                 About
               </NavLink>
             </li>
-            <li className="mb-4">
+            <li className="mb-5 text-[25px] font-medium leading-[120%] hover:underline">
               <NavLink
                 to="/borrow"
                 onClick={() => {
                   setActive(false);
                 }}
-                className="font-medium text-lg hover:underline"
+                className=""
               >
                 Borrow
               </NavLink>
             </li>
-            <li className="mb-4">
+            <li className="mb-5 text-[25px] font-medium leading-[120%] hover:underline">
               <NavLink
                 to="/buy/sell"
                 onClick={() => {
                   setActive(false);
                 }}
-                className="font-medium text-lg hover:underline"
+                className=""
               >
                 Buy/Sell
               </NavLink>
