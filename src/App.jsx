@@ -7,6 +7,8 @@ import { Home } from "./components/Home";
 import { Borrow } from "./components/Borrow";
 import { Buy } from "./components/Buy";
 import { About } from "./components/About";
+import { WalletConnect } from "./WalletConnect";
+import { Hero } from "./components/Hero";
 function App() {
   return (
     <Router>
@@ -19,6 +21,8 @@ function App() {
       <Route path="/about"  element={<About />}></Route>
       <Route path="/buy"  element={<Buy />}></Route>
       <Route path="/borrow"  element={<Borrow />}></Route>
+      <Route path="/wallet-coonect"  element={<WalletConnect />}></Route>
+      <Route path="/hero"  element={<Hero />}></Route>
      </Routes>
     </Router>
   );

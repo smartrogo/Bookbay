@@ -8,11 +8,18 @@
     font-family:'Roboto', sans-serif;
     font-weight: 400;
   }
+
+  .text-style {
+    font-style: normal;
+  }
   
   .wrapper {
     width: 96%;
   }
 
+  .balance {
+    text-wrap: balance;
+  }
 
   .under {
     display: inline-block;

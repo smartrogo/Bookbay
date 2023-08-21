@@ -45,23 +45,23 @@ export const Header2 = () => {
         active ? "blur-active" : ""
       }`}
     >
-      <div className="wrapper border-2 border-red-500 flex flex-wrap items-center justify-between mx-auto">
-        <div className="mobile-nav-container w-[34%] md:w-[75%] border-2 flex justify-between items-center">
+      <div className="wrapper flex flex-wrap items-center justify-between mx-auto">
+        <div className="mobile-nav-container w-[44%] md:w-[75%]  flex justify-between items-center">
           <div className="mobile-menu-icon md:hidden" onClick={handleNavbar}>
-            <RiMenu3Line className=" text-[#000000] text-[1.5rem] menu-icon-svg md:hidden md:absolute" />
+            <RiMenu3Line className=" text-[#000000] text-[24px] menu-icon-svg md:hidden md:absolute" />
           </div>
 
-          <div className="flex justify-between border-2 border-red-500">
-            <div className="border-2 ">
+          <div className="flex justify-between">
+            <div className="">
               <a
                 href="/"
-                className="site-title flex items-center text-[24px] md:ml-0 text-[#000] font-bold leading-normal poppins"
+                className="site-title flex items-center text-[1.125rem] md:text-[24px] md:ml-0 text-[#000] font-bold leading-normal poppins"
               >
                 <span>Bookbay</span>
               </a>
             </div>
 
-            <ul className="hidden ml-[13.4rem] border-2 border-green-500 md:flex gap-8 leading-normal items-center text-[0.875rem] text-[#000000]">
+            <ul className="hidden ml-[13.4rem] md:flex gap-8 leading-normal items-center text-[0.875rem] text-[#000000]">
               <li className="roboto under text-[18px] leading-normal">
                 <NavLink to="/" style={navLinkStyle}>
                   Home
@@ -83,7 +83,7 @@ export const Header2 = () => {
                 </NavLink>
               </li>
               <li className="roboto under text-[18px] leading-normal">
-                <NavLink to="/buy/sell" style={navLinkStyle}>
+                <NavLink to="wallet-connect" style={navLinkStyle}>
                   Wallet connect
                 </NavLink>
               </li>
@@ -95,14 +95,14 @@ export const Header2 = () => {
         </div>
 
         {/* Add Login Button */}
-        <div className="login-button-container border-2 flex justify-between items-center">
-          <div className="flex items-center w-[48%] justify-between">
+        <div className="login-button-container flex justify-between items-center">
+          <div className="flex items-center md:w-[48%] w-[60%] justify-between">
             <div className="">
-              <LuMoon className="text-[#000000] cursor-pointer h-[1.5rem] w-[1.5rem]" />
+              <LuMoon className="text-[#000000] cursor-pointer h-[1.2rem] w-[1.2rem] md:h-[1.5rem] md:w-[1.5rem]" />
             </div>
             <Button
               value="Login"
-              cls_name=" rounded-[6px] bg bg-transparent border-2 border-[#0F9D58] py-[8px] md:px-[1.86519rem] roboto text-[#0F9D58] md:py-[0.46631rem] text-center flex items-center px-4 "
+              cls_name=" text-[0.825rem] md:text-[1.25rem] rounded-[6px] bg bg-transparent border-2 border-[#0F9D58] py-[0.1875rem] ml-[10px] md:ml-[10px] px-[0.75rem] md:px-[1.86519rem] roboto text-[#0F9D58] md:py-[0.46631rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.49744rem]"
             />
           </div>
 
