@@ -17,6 +17,18 @@
     width: 96%;
   }
 
+  .swiper-button-next, .swiper-button-prev {
+    display: none !important;
+    background-color: rgba(102, 102, 102, 0.40);
+    color: #000000 !important;
+    font-weight: 800;
+    /* margin-right: 5px; */
+    width: 2.5rem !important;
+    height: 3.5rem !important;
+    text-align: center;
+    padding-top: 7px;
+  }
+
   .balance {
     text-wrap: balance;
   }
@@ -54,6 +66,9 @@
   @media screen and (min-width: 1024px) {
     .wrapper {
       width: 92%;
+    }
+    .swiper-button-next, .swiper-button-prev {
+      display: block !important;
     }
   }
 

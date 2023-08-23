@@ -45,8 +45,8 @@ export const Header2 = () => {
         active ? "blur-active" : ""
       }`}
     >
-      <div className="wrapper flex flex-wrap items-center justify-between mx-auto">
-        <div className="mobile-nav-container w-[44%] md:w-[75%]  flex justify-between items-center">
+      <div className="wrapper border-2 flex flex-wrap items-center justify-between mx-auto">
+        <div className="mobile-nav-container w-[44%] sm:w-[30%] md:w-[75%]  flex justify-between items-center">
           <div className="mobile-menu-icon md:hidden" onClick={handleNavbar}>
             <RiMenu3Line className=" text-[#000000] text-[24px] menu-icon-svg md:hidden md:absolute" />
           </div>
@@ -117,7 +117,7 @@ export const Header2 = () => {
           ref={menuRef}
           className={`mobile-menu ${
             active ? "w-[70%]" : "w-0"
-          } h-screen overflow-hidden transition-all text-[#000000] dark:[#F4F4F4] duration-300 ease-in-out absolute top-0 left-0 bg-white/80 backdrop-blur-sm [#3B383E] sm:hidden`}
+          } h-screen overflow-hidden transition-all text-[#000000] dark:[#F4F4F4] duration-300 ease-in-out absolute top-0 left-0 bg-white/80 backdrop-blur-sm [#3B383E] md:hidden`}
         >
           {active && (
             <RiCloseCircleFill
