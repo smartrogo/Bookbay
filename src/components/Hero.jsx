@@ -50,10 +50,10 @@ export const Hero = ({ menuRef, isSidebarOpen }) => {
       modules={[Navigation, Autoplay, Pagination, Scrollbar, A11y]}
       spaceBetween={50}
       slidesPerView={1}
-      // autoplay={{
-      //   delay: 2500,
-      //   disableOnInteraction: false,
-      // }}
+      autoplay={{
+        delay: 2500,
+        disableOnInteraction: false,
+      }}
       navigation
       pagination={{
         clickable: true,
@@ -101,18 +101,10 @@ export const Hero = ({ menuRef, isSidebarOpen }) => {
       </SwiperSlide>
 
       <SwiperSlide>
-        <SlideShow
-          paragrhap={para}
-          heading={head}
-          img={hero1}
-        />
+        <SlideShow paragrhap={para} heading={head} img={hero1} />
       </SwiperSlide>
       <SwiperSlide>
-      <SlideShow
-          paragrhap={para}
-          heading={head}
-          img={hero1}
-        />
+        <SlideShow paragrhap={para} heading={head} img={hero1} />
       </SwiperSlide>
     </Swiper>
   );
