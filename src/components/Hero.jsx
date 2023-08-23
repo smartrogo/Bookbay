@@ -95,7 +95,7 @@ export const Hero = ({ menuRef, isSidebarOpen }) => {
         <div className="w-full md:w-[50%]">
           <img
             src={hero1}
-            className=" w-[22.8125rem] sm:w-[32rem] rounded-[2rem] h-[23.95313rem] mx-auto object-cover mt-10 sm:mt-5 md:w-[30.5rem] md:h-[27.375rem]"
+            className=" w-[20.8125rem] sm:w-[32rem] rounded-[2rem] h-[23.95313rem] mx-auto object-cover mt-10 sm:mt-5 md:w-[30.5rem] md:h-[27.375rem]"
           />
         </div>
       </SwiperSlide>
