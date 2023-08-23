@@ -75,7 +75,7 @@ export const Hero = ({ menuRef, isSidebarOpen }) => {
               {para}
             </p>
 
-            <div className="flex mx-auto w-[20rem] md:w-[72.5%] md:justify-start md:gap-5 justify-evenly mt-[3rem] mb-[2rem] items-center">
+            <div className="flex mx-auto w-[20rem] md:w-[72.5%] md:justify-start md:gap-5 justify-evenly mt-[3rem] md:mb-[2rem] mb-[2px] items-center">
               <Button
                 value="Join us today!"
                 cls_name=" flex justify-center items-center bg-[#0F9D58] text-[#FFFFFF] poppins text-style font-bold leading-normal rounded-[0.32494rem] py-[0.6905rem] px-[1.34038rem]"
