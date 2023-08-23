@@ -41,7 +41,7 @@ export const Header2 = () => {
 
   return (
     <section
-      className={`bg-[#fff] fixed px-2 h-[5rem] sm:px-4 py-2.5 z-20 top-0 left-0 border-b box-shadow w-full text-white flex items-center ${
+      className={`bg-[#fff] fixed px-2 h-[5rem] sm:px-4 py-2 md:py-2.5 z-20 top-0 left-0 border-b box-shadow w-full text-white flex items-center ${
         active ? "blur-active" : ""
       }`}
     >
