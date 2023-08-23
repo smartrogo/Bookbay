@@ -45,7 +45,7 @@ export const Header2 = () => {
         active ? "blur-active" : ""
       }`}
     >
-      <div className="wrapper border-2 flex flex-wrap items-center justify-between mx-auto">
+      <div className="wrapper flex flex-wrap items-center justify-between mx-auto">
         <div className="mobile-nav-container w-[44%] sm:w-[30%] md:w-[75%]  flex justify-between items-center">
           <div className="mobile-menu-icon md:hidden" onClick={handleNavbar}>
             <RiMenu3Line className=" text-[#000000] text-[24px] menu-icon-svg md:hidden md:absolute" />
