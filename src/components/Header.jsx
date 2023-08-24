@@ -20,13 +20,14 @@ export const Header2 = () => {
         setActive(false);
       }
     };
-
+  
     document.addEventListener("mousedown", handleOutsideClick);
-
+  
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, []);
+  }, [menuRef]);
+  
 
   // active page indicator
   const navLinkStyle = ({ isActive }) => {
