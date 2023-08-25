@@ -8,12 +8,28 @@ import { BiSolidBookAlt } from "react-icons/bi";
 import "@splidejs/react-splide/css/skyblue";
 import "@splidejs/react-splide/css/sea-green";
 import { useState, useEffect } from "react";
+
+const Slide = ({ handleClick, type }) => {
+  return (
+    <div className="border-[1px] border-solid border-[#000] rounded-[0.25075rem] md:rounded-[0.5rem] flex cursor-pointer hover:border-[#fff] active:bg-[#0F9D58] hover:text-[#fff] hover:bg-[#0F9D58]">
+      <button
+        className="[0.25075rem] px-[0.2rem] py-[0.5rem] md:py-[0.5rem] md:px-[1rem] items-center gap-[0] md:gap-[0.5rem] flex justify-evenly  "
+        onClick={handleClick}
+      >
+        <BiSolidBookAlt className=" w-[2rem] h-[2rem] md:w-[2.75rem] md:h-[2.75rem]" />{" "}
+        <span className="roboto font-bold capitalize text-[1rem] md:text-[1.5rem] leading-normal text-style">
+          {type}
+        </span>
+      </button>
+    </div>
+  );
+};
+
 export const MiniSwipper = () => {
   const [slidesPerPage, setSlidesPerPage] = useState(getSlidesPerPage());
 
-  const handleSlideClick = (value) => {
-    console.log(`${value} slide clicked`);
-    // You can perform your desired action here
+  const handleClick = (value) => {
+    console.log("hello", value);
   };
 
   // Calculate the number of slides per page based on screen size
@@ -53,49 +69,30 @@ export const MiniSwipper = () => {
       aria-label="My Favorite Images"
       className="border-2 border-red-500"
     >
-      <SplideSlide className="border-2 rounded-[0.25075rem] md:rounded-[0.5rem] flex cursor-pointer text-[#fff] bg-[#0F9D58] py-">
-        <div className="[0.25075rem] px-[0.2rem] py-[0.5rem] md:py-[0.5rem] md:px-[1rem] items-center gap-[0] md:gap-[0.5rem] flex justify-evenly" onClick={() => handleSlideClick("textbook")}>
-          <BiSolidBookAlt className=" w-[2rem] h-[2rem] md:w-[2.75rem] md:h-[2.75rem]" />{" "}
-          <span className="roboto font-bold capitalize text-[1rem] md:text-[1.5rem] leading-normal text-style">
-            textbooks
-          </span>
-        </div>
+      <SplideSlide>
+        <Slide handleClick={() => handleClick("textbook")} type="textbook" />
       </SplideSlide>
 
-      <SplideSlide className="border-2 cursor-pointer text-[#fff] justify-evenly bg-[#0F9D58] py-[0.5rem] px-[1rem] items-center gap-[0.5rem] flex">
-        <BiSolidBookAlt className="w-[2.75rem] h-[2.75rem]" />{" "}
-        <span className="roboto font-bold capitalize text-[1.5rem] text-style">
-          History
-        </span>
+      <SplideSlide>
+        <Slide handleClick={() => handleClick("history")} type="history"/>
       </SplideSlide>
 
-      <SplideSlide className="border-2 cursor-pointer text-[#fff] justify-evenly bg-[#0F9D58] py-[0.5rem] px-[1rem] items-center gap-[0.5rem] flex">
-        <BiSolidBookAlt className="w-[2.75rem] h-[2.75rem]" />{" "}
-        <span className="roboto font-bold capitalize text-[1.5rem] text-style">
-          Adventure
-        </span>
+      <SplideSlide>
+        <Slide handleClick={() => handleClick("adventure")} type="adventure"/>
       </SplideSlide>
 
-      <SplideSlide className="border-2 cursor-pointer text-[#fff] justify-evenly bg-[#0F9D58] py-[0.5rem] px-[1rem] items-center gap-[0.5rem] flex">
-        <BiSolidBookAlt className="w-[2.75rem] h-[2.75rem]" />{" "}
-        <span className="roboto font-bold capitalize text-[1.5rem] text-style">
-          science
-        </span>
+      <SplideSlide>
+        <Slide handleClick={() => handleClick("science")} type="science"/>
       </SplideSlide>
 
-      <SplideSlide className="border-2 cursor-pointer text-[#fff] justify-evenly bg-[#0F9D58] py-[0.5rem] px-[1rem] items-center gap-[0.5rem] flex">
-        <BiSolidBookAlt className="w-[2.75rem] h-[2.75rem]" />{" "}
-        <span className="roboto font-bold capitalize text-[1.5rem] text-style">
-          Biography
-        </span>
+      <SplideSlide>
+        <Slide handleClick={() => handleClick("biography")} type="biography"/>
       </SplideSlide>
 
-      <SplideSlide className="border-2 cursor-pointer text-[#fff] justify-evenly bg-[#0F9D58] py-[0.5rem] px-[1rem] items-center gap-[0.5rem] flex">
-        <BiSolidBookAlt className="w-[2.75rem] h-[2.75rem]" />{" "}
-        <span className="roboto font-bold capitalize text-[1.5rem] text-style">
-          Fiction
-        </span>
+      <SplideSlide>
+        <Slide handleClick={() => handleClick("computer science")} type="computer science"/>
       </SplideSlide>
+
     </Splide>
   );
 };
