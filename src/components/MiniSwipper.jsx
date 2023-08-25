@@ -13,7 +13,7 @@ const Slide = ({ handleClick, type }) => {
   return (
     <div className="border-[1px] border-solid border-[#000] rounded-[0.25075rem] md:rounded-[0.5rem] flex cursor-pointer hover:border-[#fff] active:bg-[#0F9D58] hover:text-[#fff] hover:bg-[#0F9D58]">
       <button
-        className="[0.25075rem] px-[0.2rem] py-[0.5rem] md:py-[0.5rem] md:px-[1rem] items-center gap-[0] md:gap-[0.5rem] flex justify-evenly  "
+        className="[0.25075rem] px-[0.2rem] py-[0.5rem] md:py-[0.5rem] md:px-[1rem] items-center gap-2 md:gap-[0.5rem] flex justify-evenly  "
         onClick={handleClick}
       >
         <BiSolidBookAlt className=" w-[2rem] h-[2rem] md:w-[2.75rem] md:h-[2.75rem]" />{" "}
@@ -58,41 +58,58 @@ export const MiniSwipper = () => {
     };
   }, []);
   return (
-    <Splide
-      options={{
-        rewind: true,
-        gap: "0.5rem",
-        arrows: false,
-        perPage: slidesPerPage,
-        pagination: false, // Set pagination to false
-      }}
-      aria-label="My Favorite Images"
-      className="border-2 border-red-500"
-    >
-      <SplideSlide>
-        <Slide handleClick={() => handleClick("textbook")} type="textbook" />
-      </SplideSlide>
+    <>
+      <Splide
+        options={{
+          rewind: true,
+          gap: "0.5rem",
+          arrows: false,
+          perPage: slidesPerPage,
+          pagination: false, // Set pagination to false
+        }}
+        aria-label="My Favorite Images"
+        className="border-2 border-red-500"
+      >
+        <SplideSlide>
+          <Slide handleClick={() => handleClick("textbook")} type="textbook" />
+        </SplideSlide>
 
-      <SplideSlide>
-        <Slide handleClick={() => handleClick("history")} type="history"/>
-      </SplideSlide>
+        <SplideSlide>
+          <Slide handleClick={() => handleClick("history")} type="history" />
+        </SplideSlide>
 
-      <SplideSlide>
-        <Slide handleClick={() => handleClick("adventure")} type="adventure"/>
-      </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => handleClick("adventure")}
+            type="adventure"
+          />
+        </SplideSlide>
 
-      <SplideSlide>
-        <Slide handleClick={() => handleClick("science")} type="science"/>
-      </SplideSlide>
+        <SplideSlide>
+          <Slide handleClick={() => handleClick("science")} type="science" />
+        </SplideSlide>
 
-      <SplideSlide>
-        <Slide handleClick={() => handleClick("biography")} type="biography"/>
-      </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => handleClick("biography")}
+            type="biography"
+          />
+        </SplideSlide>
 
-      <SplideSlide>
-        <Slide handleClick={() => handleClick("computer science")} type="computer science"/>
-      </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => handleClick("computer science")}
+            type="computer"
+          />
+        </SplideSlide>
+      </Splide>
 
-    </Splide>
+      <div className="display">
+        <div>
+
+        </div>
+        <div></div>
+      </div>
+    </>
   );
 };
