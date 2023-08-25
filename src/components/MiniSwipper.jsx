@@ -54,7 +54,7 @@ export const MiniSwipper = () => {
       className="border-2 border-red-500"
     >
       <SplideSlide className="border-2 rounded-[0.25075rem] md:rounded-[0.5rem] flex cursor-pointer text-[#fff] bg-[#0F9D58] py-">
-        <div className="[0.25075rem] px-[0.2rem] py-[0.5rem] w-full md:py-[0.5rem] md:px-[1rem] items-center gap-[0] md:gap-[0.5rem] flex justify-evenly" onClick={() => handleSlideClick("textbook")}>
+        <div className="[0.25075rem] px-[0.2rem] py-[0.5rem] md:py-[0.5rem] md:px-[1rem] items-center gap-[0] md:gap-[0.5rem] flex justify-evenly" onClick={() => handleSlideClick("textbook")}>
           <BiSolidBookAlt className=" w-[2rem] h-[2rem] md:w-[2.75rem] md:h-[2.75rem]" />{" "}
           <span className="roboto font-bold capitalize text-[1rem] md:text-[1.5rem] leading-normal text-style">
             textbooks
