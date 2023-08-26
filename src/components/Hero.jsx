@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
 import { Button } from "./Button";
-import { LiaLongArrowAltRightSolid } from "react-icons/lia";
 import {
   Navigation,
   Pagination,

@@ -7,6 +7,7 @@ import { MiniSwipper } from "./MiniSwipper";
 import { Reasons } from "./Reasons";
 import { Testimony } from "./Testimony";
 import { Blogs } from "./Blogs";
+import { Text } from "./Text";
 
 export const Home = () => {
   const menuRef = useRef();
@@ -25,7 +26,9 @@ export const Home = () => {
         ></div>
       )}
       <Hero className="border-2 border-red-500" menuRef={menuRef} isSidebarOpen={isSidebarOpen} />
-    <SecondSec />
+    {/* <SecondSec /> */}
+    <Text className="mt-10" head="books categories" body=" Lorem ipsum dolor sit amet consectetur. Diam ut feugiat aliquet in
+        varius feugiat magna dictum. Tortor diam et placerat."/>
     {/* <Categories /> */}
     <MiniSwipper />
     <Reasons />
