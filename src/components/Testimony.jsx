@@ -15,8 +15,8 @@ export const Testimony = () => {
         </p>
       </div>
 
-      <div className="flex justify-center border-2 border-red-500">
-        <div className=" border-2 md:flex md:w-full justify-evenly border-red-500 mx-auto overflow-x-hidden">
+      <div className="flex justify-center">
+        <div className=" md:flex md:w-full justify-evenly mx-auto overflow-x-hidden">
           <Card
             profession="Teacher"
             name="Sani muhammad"
