@@ -4,7 +4,7 @@ import { Card } from "./Card";
 export const Testimony = () => {
   return (
     <section>
-      <div className="roboto text-style text-center leading-normal mt-10">
+      <div className="roboto text-style text-center leading-normal mt-10 mb-24">
         <h1 className="text-[#000] font-bold text-[1.5rem] md:text-[3rem] roboto ">
           Don’t just take our words !
         </h1>
@@ -16,7 +16,7 @@ export const Testimony = () => {
       </div>
 
       <div className="flex justify-center border-2 border-red-500">
-        <div className=" border-2 flex flex-col md:flex-row md:gap-[4rem] border-red-500 mx-auto md:w-[90%]">
+        <div className=" border-2 md:flex md:w-full justify-evenly border-red-500 mx-auto overflow-x-hidden">
           <Card
             profession="Teacher"
             name="Sani muhammad"
