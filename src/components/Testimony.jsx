@@ -4,7 +4,7 @@ import { Card } from "./Card";
 export const Testimony = () => {
   return (
     <section>
-      <div className="roboto text-style text-center leading-normal mt-10 mb-24 md:mb-[2rem]">
+      <div className="roboto text-style text-center leading-normal mt-10 mb-2 md:mb-[2rem]">
         <h1 className="text-[#000] font-bold text-[1.5rem] md:text-[3rem] roboto ">
           Don’t just take our words !
         </h1>
