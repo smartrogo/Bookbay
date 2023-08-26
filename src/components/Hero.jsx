@@ -19,10 +19,12 @@ import "swiper/css/scrollbar";
 
 export const Hero = ({ menuRef, isSidebarOpen }) => {
   const head = (
-    <h1 className="border-2">
+    <h1 className="">
       {" "}
-      The online <span className="text-[#FD6727] balance underscore">books-hub</span> <br/> that
-      you’ve been<br/> looking for
+      The online{" "}
+      <span className="text-[#FD6727] balance underscore">books-hub</span>{" "}
+      <br /> that you’ve been
+      <br /> looking for
     </h1>
   );
 
@@ -50,10 +52,10 @@ export const Hero = ({ menuRef, isSidebarOpen }) => {
       modules={[Navigation, Autoplay, Pagination, Scrollbar, A11y]}
       spaceBetween={50}
       slidesPerView={1}
-        // autoplay={{
-        //   delay: 2500,
-        //   disableOnInteraction: false,
-        // }}
+      // autoplay={{
+      //   delay: 2500,
+      //   disableOnInteraction: false,
+      // }}
       navigation
       pagination={{
         clickable: true,
@@ -64,7 +66,6 @@ export const Hero = ({ menuRef, isSidebarOpen }) => {
       onSwiper={(swiper) => console.log(swiper)}
       className="mt-[21%] sm:mt-[10%] md:mt-[6.5%]"
     >
-
       <SwiperSlide>
         <SlideShow paragrhap={para} heading={head} img={hero1} />
       </SwiperSlide>
