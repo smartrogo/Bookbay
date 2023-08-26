@@ -37,7 +37,7 @@ export const Testimony = () => {
           />
         </div>
       </div>
-      <Link className="my-10 roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#4285F4] flex justify-end w-[80%] mx-auto items-center">
+      <Link className="my-10 roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#4285F4] flex justify-end w-[80%] md:w-[86%] mx-auto items-center">
         <span className="underline">see more </span>
         <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />
       </Link>

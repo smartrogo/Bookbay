@@ -2,12 +2,12 @@ import React from "react";
 import { Hero } from "./Hero";
 import { useRef } from "react";
 import { useState } from "react";
-import { SecondSec } from "./SecondSec";
 import { MiniSwipper } from "./MiniSwipper";
 import { Reasons } from "./Reasons";
 import { Testimony } from "./Testimony";
 import { Blogs } from "./Blogs";
 import { Text } from "./Text";
+import { Contact } from "./Contact";
 
 export const Home = () => {
   const menuRef = useRef();
@@ -34,6 +34,7 @@ export const Home = () => {
     <Reasons />
     <Testimony />
     <Blogs />
+    <Contact />
 
     </div>
   );
