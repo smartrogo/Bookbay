@@ -42,7 +42,7 @@ export const MiniSwipper = () => {
     } else if (screenWidth >= 400) {
       return 2.5;
     } else {
-      return 2; // Show 2 slides per page on smaller screens
+      return 2.5; // Show 2 slides per page on smaller screens
     }
   }
 

@@ -19,10 +19,10 @@ import "swiper/css/scrollbar";
 
 export const Hero = ({ menuRef, isSidebarOpen }) => {
   const head = (
-    <h1>
+    <h1 className="border-2">
       {" "}
       The online <span className="text-[#FD6727] balance underscore">books-hub</span> <br/> that
-      you’ve been looking for
+      you’ve been<br/> looking for
     </h1>
   );
 
