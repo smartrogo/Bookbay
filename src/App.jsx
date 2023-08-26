@@ -12,6 +12,9 @@ import { Hero } from "./components/Hero";
 // import { ThumbnailCarousel } from "./components/ThumbnailCarousel";
 // import { ThumbnailCarousel } from "./components/ThumbnailCarousel ";
 import ThumbnailCarousel from "./components/ThumbnailCarousel ";
+import { ErrorPage } from "./components/ErrorPage";
+
+
 function App() {
   return (
     <Router>
@@ -27,6 +30,7 @@ function App() {
         <Route path="/wallet-coonect" element={<WalletConnect />}></Route>
         <Route path="/hero" element={<Hero />}></Route>
         <Route path="/thumb" element={<ThumbnailCarousel />}></Route>
+        <Route path="*" element={<ErrorPage />}></Route>
       </Routes>
     </Router>
   );

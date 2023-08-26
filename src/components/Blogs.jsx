@@ -10,7 +10,7 @@ export const Blogs = () => {
         body="Lorem ipsum dolor sit amet consectetur. Diam ut feugiat aliquet in varius feugiat magna dictum. Tortor diam et placerat."
       />
 
-      <div>
+      <div className="mt-6 md:flex justify-evenly md:w-[90%] mx-auto">
         <BlogCart />
         <BlogCart />
       </div>
