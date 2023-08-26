@@ -12,7 +12,7 @@ export const Card = (props) => {
           />
         </div>
 
-        <p className="text-sm poppins relative mt-6 md:mt-4 border-2 text-[0.91488rem] md:text-[1.25rem] italic font-normal leading-normal poppins text-[#000] text-center w-[12.03069rem] h-[6.49563rem] md:w-[16.4375rem] mx-auto md:h-[8.875rem]">
+        <p className="text-sm poppins relative mt-6 md:mt-4 text-[0.91488rem] md:text-[1.25rem] italic font-normal leading-normal poppins text-[#000] text-center w-[12.03069rem] h-[6.49563rem] md:w-[16.4375rem] mx-auto md:h-[8.875rem]">
           <span className="text-[#666] font-bold text-[2.19569rem] absolute left-0 -top-1 md:top-1">
             &#8220;
           </span>
