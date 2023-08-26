@@ -106,7 +106,7 @@ export const MiniSwipper = () => {
 
       <div className="display border-2 border-red-500 h-[200px]">
         <div>
-
+          <h1 className="text-center mt-4">render book api</h1>
         </div>
         <div></div>
       </div>
