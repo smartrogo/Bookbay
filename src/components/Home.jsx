@@ -3,10 +3,10 @@ import { Hero } from "./Hero";
 import { useRef } from "react";
 import { useState } from "react";
 import { SecondSec } from "./SecondSec";
-// import { Categories } from "./Categories";
 import { MiniSwipper } from "./MiniSwipper";
 import { Reasons } from "./Reasons";
 import { Testimony } from "./Testimony";
+import { Blogs } from "./Blogs";
 
 export const Home = () => {
   const menuRef = useRef();
@@ -30,6 +30,7 @@ export const Home = () => {
     <MiniSwipper />
     <Reasons />
     <Testimony />
+    <Blogs />
 
     </div>
   );

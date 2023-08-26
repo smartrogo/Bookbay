@@ -7,8 +7,8 @@ export const Card = (props) => {
         <div className="flex justify-center -mt-16 md:justify-end ">
           <img
             className="md:mr-[5rem] object-cover w-[6.03819rem] h-[6.03819rem] border-[3.66px] border-[#fff] rounded-[6.03819rem] border-solid"
-            alt="Testimonial avatar"
-            src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=76&q=80"
+            alt="Testimonial pic"
+            src={props.img}
           />
         </div>
 

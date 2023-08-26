@@ -1,5 +1,9 @@
 import React from "react";
 import { Card } from "./Card";
+import tech2 from "../assets/tech2.jpeg"
+import ellipse1 from "../assets/ellipse1.png"
+import ellipse3 from "../assets/ellipse3.png"
+
 
 export const Testimony = () => {
   return (
@@ -20,16 +24,19 @@ export const Testimony = () => {
           <Card
             profession="Teacher"
             name="Sani muhammad"
+            img={ellipse1}
             says="Lorem ipsum dolor sit amet consectetur. Sodales risus sed condimentum aliquet eget lectus."
           />
           <Card
             profession="UI/UX Designer "
             name="Muhammad Niimatullahi"
+            img={tech2}
             says="Lorem ipsum dolor sit amet consectetur. Sodales risus sed condimentum aliquet eget lectus."
           />
           <Card
             profession="frontend Engineer "
             name="Muhammad Ala"
+            img={ellipse3}
             says="Lorem ipsum dolor sit amet consectetur. Sodales risus sed condimentum aliquet eget lectus."
           />
         </div>
