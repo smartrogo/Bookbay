@@ -4,18 +4,18 @@ import blog2 from "../assets/blog2.jpg"
 export const BlogCart = () => {
   return (
     <div>
-      <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div className="max-w-sm bg-[#eee] border rounded-[1rem] shadow text-start mx-auto">
         <a href="#">
           <img
-            className="rounded-t-lg"
+            className="rounded-[1rem] w-[23.57394rem] h-[16.66694rem] object-cover"
             src={blog2}
             alt=""
           />
         </a>
-        <div className="p-5">
+        <div className="p-5 leading-normal roboto">
           <a href="#">
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              Noteworthy technology acquisitions 2021
+            <h5 className=" text-[#000] text-style  font-bold text-[0.67569rem] w-[12.95063rem]">
+            Unlocking Reading Adventures: Your Guide to Getting Started with BookBay
             </h5>
           </a>
           <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">

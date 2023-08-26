@@ -10,7 +10,10 @@ export const Blogs = () => {
         body="Lorem ipsum dolor sit amet consectetur. Diam ut feugiat aliquet in varius feugiat magna dictum. Tortor diam et placerat."
       />
 
-    <BlogCart />
+      <div>
+        <BlogCart />
+        <BlogCart />
+      </div>
     </section>
   );
 };
