@@ -5,6 +5,8 @@ import { useState } from "react";
 import { SecondSec } from "./SecondSec";
 // import { Categories } from "./Categories";
 import { MiniSwipper } from "./MiniSwipper";
+import { Reasons } from "./Reasons";
+import { Testimony } from "./Testimony";
 
 export const Home = () => {
   const menuRef = useRef();
@@ -26,6 +28,8 @@ export const Home = () => {
     <SecondSec />
     {/* <Categories /> */}
     <MiniSwipper />
+    <Reasons />
+    <Testimony />
 
     </div>
   );

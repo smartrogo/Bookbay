@@ -104,7 +104,7 @@ export const MiniSwipper = () => {
         </SplideSlide>
       </Splide>
 
-      <div className="display">
+      <div className="display border-2 border-red-500 h-[200px]">
         <div>
 
         </div>
