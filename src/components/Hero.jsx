@@ -63,7 +63,7 @@ export const Hero = ({ menuRef, isSidebarOpen }) => {
       scrollbar={{ draggable: true }}
       onSlideChange={() => console.log("slide change")}
       onSwiper={(swiper) => console.log(swiper)}
-      className="mt-[21%] sm:mt-[10%] md:mt-[6.5%]"
+      className="mt-[21%] mb-10 sm:mt-[10%] md:mt-[6.5%]"
     >
       <SwiperSlide>
         <SlideShow paragrhap={para} heading={head} img={hero1} />

@@ -5,7 +5,7 @@ import Input from "./Input"; // Import the Input component
 export const Contact = () => {
   return (
     <section className="relative mb-10">
-      <div className="w-[93%] md:w-[75%] px-5 md:px-12 pb-10 mx-auto flex sm:flex-nowrap flex-wrap">
+      <div className="w-[94.5%] md:w-[75%] px-5 md:px-12 pb-4 md:pb-10 mx-auto flex sm:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 bg-white flex flex-col w-full md:py-8 mt-8 md:mt-0">
           <h2 className="text-[#000] poppins text-[1.03794rem] md:text-[1.75rem] text-style mb-1 font-bold leading-normal title-font capitalize">
             contact us
@@ -15,14 +15,18 @@ export const Contact = () => {
             label="Email"
             id="email"
             name="email"
+            label_cls_name="leading-normal poppins capitalize text-[0.66725rem] text-[#000] font-normal"
             type="email"
             placeholder="example@gmail.com"
+            cls_name="w-full bg-[#eee] rounded-[0.29656rem] md:rounded-[0.5rem] focus:border-[#0F9D58] focus:ring-[2px] focus:ring-[#abeacc] text-base outline-none text-[#696969] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
           />
 
           <Input
             label="Name"
             id="name"
             name="name"
+            label_cls_name="leading-normal poppins capitalize text-[0.66725rem] text-[#000] font-normal"
+            cls_name="w-full bg-[#eee] rounded-[0.29656rem] md:rounded-[0.5rem] focus:border-[#0F9D58] focus:ring-[2px] focus:ring-[#abeacc] text-base outline-none text-[#696969] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
             type="text"
             placeholder="Muhammad Ni'imatullahi"
           />
@@ -49,7 +53,7 @@ export const Contact = () => {
           />
         </div>
       </div>
-      <hr className=" h-[1px] mt-10 mx-auto w-[90%] border-[#333] " />
+      <hr className=" h-[1px] mx-auto w-[90%] border-[#333] " />
     </section>
   );
 };

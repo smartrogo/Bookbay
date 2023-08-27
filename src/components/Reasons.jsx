@@ -3,7 +3,7 @@ import { Button } from "./Button";
 
 export const Reasons = () => {
   return (
-    <div className="text-[#fff] bg-[#DAA520] roboto text-style  capitalize leading-normal p-[2rem] md:p-[4.2rem]">
+    <div className="text-[#fff] bg-[#DAA520] roboto text-style mb-10 capitalize leading-normal p-[2rem] md:p-[4.2rem]">
       <h1 className="text-center mb-2 text-[1.5rem]  font-bold md:text-[3rem]">
         Why use Bookbay ?
       </h1>

@@ -70,16 +70,17 @@
 
 .underscore {
   position: relative;
+  padding-bottom: 5px;
 }
 
-.underscore:after {
+.underscore::after {
   content: "";
   position: absolute;
   width: 100%;
   border-top: 3px solid #fd6727;
   height: 10%;
   left: 0;
-  bottom: -2px;
+  bottom: 0;
   border-radius: 50%;
 }
 

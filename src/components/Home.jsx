@@ -8,6 +8,7 @@ import { Testimony } from "./Testimony";
 import { Blogs } from "./Blogs";
 import { Text } from "./Text";
 import { Contact } from "./Contact";
+import { Newslatter } from "./Newslatter";
 
 export const Home = () => {
   const menuRef = useRef();
@@ -35,6 +36,7 @@ export const Home = () => {
     <Testimony />
     <Blogs />
     <Contact />
+    <Newslatter />
 
     </div>
   );
