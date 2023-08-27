@@ -3,7 +3,7 @@ import React from "react";
 export const Card = (props) => {
   return (
     <div>
-      <div className="w-[17.61144rem] h-[18.755rem] md:w-[20.0625rem] md:h-[20.625rem] px-8 py-4 mt-[4.5rem] bg-[#eee] rounded-[0.73188rem] md:rounded-[1rem] box">
+      <div className="w-[18.61144rem] h-[18.755rem] md:w-[20.0625rem] md:h-[20.625rem] px-8 py-4 mt-[4.5rem] bg-[#eee] rounded-[0.73188rem] md:rounded-[1rem] box">
         <div className="flex justify-center -mt-16 md:justify-end ">
           <img
             className="md:mr-[5rem] object-cover w-[6.03819rem] h-[6.03819rem] border-[3.66px] border-[#fff] rounded-[6.03819rem] border-solid"

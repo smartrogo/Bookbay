@@ -54,7 +54,7 @@ export const SlideShow = ({ menuRef, isSidebarOpen, paragrhap, img, heading }) =
             </div>
           </div>
         </div>
-        <div className="w-full md:w-[50%]">
+        <div className="w-full md:w-[50%] px-5 md:px-0">
           <img
             src={img}
             className=" w-[22.8125rem] sm:w-[32rem] rounded-[2rem] h-[23.95313rem] mx-auto object-cover mt-10 sm:mt-5 md:w-[30.5rem] md:h-[27.375rem]"
