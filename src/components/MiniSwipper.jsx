@@ -5,7 +5,7 @@ import "@splidejs/react-splide/css";
 import { BiSolidBookAlt } from "react-icons/bi";
 import "@splidejs/react-splide/css/skyblue";
 import "@splidejs/react-splide/css/sea-green";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo  } from "react";
 
 const Slide = ({ handleClick, type }) => {
   return (
@@ -24,51 +24,58 @@ const Slide = ({ handleClick, type }) => {
 };
 
 export const MiniSwipper = () => {
-  const [slidesPerPage, setSlidesPerPage] = useState(getSlidesPerPage());
+  // const [slidesPerPage, setSlidesPerPage] = useState(getSlidesPerPage());
   const [books, setBooks] = useState([]);
+  const [displayedData, setDisplayedData] = useState([]);
 
   useEffect(() => {
-    getBooks("programming", 6); // Fetch programming books initially
+    getBooks("programming"); // Fetch programming books initially
   }, []);
 
-  const getBooks = async (bookType, limit) => {
+  const getBooks = async (bookType) => {
     try {
       const response = await fetch(
         `http://openlibrary.org/search.json?q=${bookType}`
       );
       const data = await response.json();
       setBooks(data.docs);
-      console.log(books)
     } catch (error) {
       console.error("Error fetching books:", error);
     }
   };
 
   // Calculate the number of slides per page based on screen size
-  function getSlidesPerPage() {
+  // function getSlidesPerPage() {
+  //   const screenWidth = window.innerWidth;
+  //   if (screenWidth >= 1200) {
+  //     return 4.5; // Show 4 slides per page on larger screens
+  //   } else if (screenWidth >= 768) {
+  //     return 2.5; // Show 3 slides per page on medium screens
+  //   } else if (screenWidth >= 400) {
+  //     return 2.5;
+  //   } else {
+  //     return 2.5; // Show 2 slides per page on smaller screens
+  //   }
+  // }
+
+  const slidesPerPage = useMemo(() => {
     const screenWidth = window.innerWidth;
     if (screenWidth >= 1200) {
-      return 4.5; // Show 4 slides per page on larger screens
+      return 4.5;
     } else if (screenWidth >= 768) {
-      return 2.5; // Show 3 slides per page on medium screens
+      return 3;
     } else if (screenWidth >= 400) {
       return 2.5;
     } else {
-      return 2.5; // Show 2 slides per page on smaller screens
+      return 2;
     }
-  }
-
-  // Update slides per page when the screen size changes
-  useEffect(() => {
-    function handleResize() {
-      setSlidesPerPage(getSlidesPerPage());
-    }
-
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
   }, []);
+
+
+  useEffect(() => {
+    setDisplayedData(books.slice(0, 4));
+  }, [books]);
+
   return (
     <>
       <Splide
@@ -83,31 +90,31 @@ export const MiniSwipper = () => {
         className="border-2 border-red-500"
       >
         <SplideSlide>
-          <Slide handleClick={() => getBooks("programming", 6)} type="textbook" />
+          <Slide handleClick={() => getBooks("programming")} type="textbook" />
         </SplideSlide>
 
         <SplideSlide>
-          <Slide handleClick={() => getBooks("science", 6)} type="history" />
+          <Slide handleClick={() => getBooks("science")} type="history" />
         </SplideSlide>
 
         <SplideSlide>
-          <Slide handleClick={() => getBooks("history", 6)} type="adventure" />
+          <Slide handleClick={() => getBooks("history")} type="adventure" />
         </SplideSlide>
 
         <SplideSlide>
-          <Slide handleClick={() => getBooks("science", 6)} type="science" />
+          <Slide handleClick={() => getBooks("science")} type="science" />
         </SplideSlide>
 
         <SplideSlide>
           <Slide
-            handleClick={() => getBooks("biography", 6)}
+            handleClick={() => getBooks("biography")}
             type="biography"
           />
         </SplideSlide>
 
         <SplideSlide>
           <Slide
-            handleClick={() => getBooks("computer science", 6)}
+            handleClick={() => getBooks("computer science")}
             type="computer"
           />
         </SplideSlide>
@@ -116,11 +123,13 @@ export const MiniSwipper = () => {
       <div className="display border-2 border-red-500 h-[200px]">
         <div>
           <h1 className="text-center mt-4">render book api</h1>
-          {/* <ul>
-            {books.map((book, index) => (
-              <li key={index}>{book.title}</li>
-            ))}
-          </ul> */}
+          {displayedData.length > 0 ? (
+        displayedData.map((item, index) => (
+          <p key={index}>{item.title}</p>
+        ))
+      ) : (
+        <p>No data available</p>
+      )}
         </div>
         <div></div>
       </div>
