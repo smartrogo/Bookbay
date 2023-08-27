@@ -1,10 +1,8 @@
 import React from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css/core";
-// Default theme
 import "@splidejs/react-splide/css";
 import { BiSolidBookAlt } from "react-icons/bi";
-// or other themes
 import "@splidejs/react-splide/css/skyblue";
 import "@splidejs/react-splide/css/sea-green";
 import { useState, useEffect } from "react";
@@ -27,9 +25,23 @@ const Slide = ({ handleClick, type }) => {
 
 export const MiniSwipper = () => {
   const [slidesPerPage, setSlidesPerPage] = useState(getSlidesPerPage());
+  const [books, setBooks] = useState([]);
 
-  const handleClick = (value) => {
-    console.log("hello", value);
+  useEffect(() => {
+    getBooks("programming", 6); // Fetch programming books initially
+  }, []);
+
+  const getBooks = async (bookType, limit) => {
+    try {
+      const response = await fetch(
+        `http://openlibrary.org/search.json?q=${bookType}`
+      );
+      const data = await response.json();
+      setBooks(data.docs);
+      console.log(books)
+    } catch (error) {
+      console.error("Error fetching books:", error);
+    }
   };
 
   // Calculate the number of slides per page based on screen size
@@ -71,34 +83,31 @@ export const MiniSwipper = () => {
         className="border-2 border-red-500"
       >
         <SplideSlide>
-          <Slide handleClick={() => handleClick("textbook")} type="textbook" />
+          <Slide handleClick={() => getBooks("programming", 6)} type="textbook" />
         </SplideSlide>
 
         <SplideSlide>
-          <Slide handleClick={() => handleClick("history")} type="history" />
+          <Slide handleClick={() => getBooks("science", 6)} type="history" />
+        </SplideSlide>
+
+        <SplideSlide>
+          <Slide handleClick={() => getBooks("history", 6)} type="adventure" />
+        </SplideSlide>
+
+        <SplideSlide>
+          <Slide handleClick={() => getBooks("science", 6)} type="science" />
         </SplideSlide>
 
         <SplideSlide>
           <Slide
-            handleClick={() => handleClick("adventure")}
-            type="adventure"
-          />
-        </SplideSlide>
-
-        <SplideSlide>
-          <Slide handleClick={() => handleClick("science")} type="science" />
-        </SplideSlide>
-
-        <SplideSlide>
-          <Slide
-            handleClick={() => handleClick("biography")}
+            handleClick={() => getBooks("biography", 6)}
             type="biography"
           />
         </SplideSlide>
 
         <SplideSlide>
           <Slide
-            handleClick={() => handleClick("computer science")}
+            handleClick={() => getBooks("computer science", 6)}
             type="computer"
           />
         </SplideSlide>
@@ -107,6 +116,11 @@ export const MiniSwipper = () => {
       <div className="display border-2 border-red-500 h-[200px]">
         <div>
           <h1 className="text-center mt-4">render book api</h1>
+          {/* <ul>
+            {books.map((book, index) => (
+              <li key={index}>{book.title}</li>
+            ))}
+          </ul> */}
         </div>
         <div></div>
       </div>
