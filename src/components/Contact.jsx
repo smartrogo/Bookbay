@@ -1,10 +1,12 @@
 import React from "react";
 import { Button } from "./Button";
-import Input from "./Input"; // Import the Input component
+import Input from "./Input";
+import stay from "../assets/stay.png"
 
 export const Contact = () => {
   return (
     <section className="relative mb-10">
+      <img src={stay} alt="" className="absolute w-[34.80581rem] md:right-[14.5rem] md:-top-[3.9rem]" />
       <div className="w-[94.5%] md:w-[75%] px-5 md:px-12 pb-4 md:pb-10 mx-auto flex sm:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 bg-white flex flex-col w-full md:py-8 mt-8 md:mt-0">
           <h2 className="text-[#000] poppins text-[1.03794rem] md:text-[1.75rem] text-style mb-1 font-bold leading-normal title-font capitalize">
@@ -12,7 +14,7 @@ export const Contact = () => {
           </h2>
 
           <Input
-            label="Email"
+            label="Email:"
             id="email"
             name="email"
             label_cls_name="leading-normal poppins capitalize text-[0.66725rem] text-[#000] font-normal"
@@ -22,7 +24,7 @@ export const Contact = () => {
           />
 
           <Input
-            label="Name"
+            label="Name:"
             id="name"
             name="name"
             label_cls_name="leading-normal poppins capitalize text-[0.66725rem] text-[#000] font-normal"
@@ -36,7 +38,7 @@ export const Contact = () => {
               htmlFor="message"
               className="leading-normal poppins capitalize text-[0.66725rem] text-[#000] font-normal"
             >
-              Message
+              Message:
             </label>
 
             <textarea

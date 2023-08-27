@@ -7,7 +7,7 @@ const Input = ({ label, id, name, type, placeholder, label_cls_name, cls_name })
         htmlFor={id}
         className={label_cls_name}
       >
-        {label}:
+        {label}
       </label>
 
       <input
