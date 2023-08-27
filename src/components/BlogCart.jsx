@@ -28,7 +28,7 @@ export const BlogCart = (props) => {
               BookBay
             </h2>
           </a>
-          <p className="mb-3 mt-2 w-[20.15794rem] md:w-[98%] text-[#666] font-normal text-[0.60063rem] md:text-[0.86281rem] text-style">
+          <p className="mb-3 mt-2 w-[100%] md:w-[98%] text-[#666] font-normal text-[0.60063rem] md:text-[0.86281rem] text-style">
             Lorem ipsum dolor sit amet consectetur. Viverra in lacinia nisl mi
             mattis turpis nibh blandit. Nulla in massa sollicitudin non. Cum
             nulla et suscipit sed viverra magna magna diam.
