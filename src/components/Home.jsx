@@ -9,6 +9,7 @@ import { Blogs } from "./Blogs";
 import { Text } from "./Text";
 import { Contact } from "./Contact";
 import { Newslatter } from "./Newslatter";
+import { Footer } from "./Footer";
 
 export const Home = () => {
   const menuRef = useRef();
@@ -37,7 +38,7 @@ export const Home = () => {
     <Blogs />
     <Contact />
     <Newslatter />
-
+      <Footer />
     </div>
   );
 };
