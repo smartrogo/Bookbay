@@ -4,7 +4,7 @@ import { Button } from "./Button";
 export const Contact = () => {
   return (
     <section className="relative mb-10">
-      <div className=" w-[90%] md:w-[75%] px-5 md:px-12 pb-10 mx-auto flex sm:flex-nowrap flex-wrap">
+      <div className=" w-[93%] md:w-[75%] px-5 md:px-12 pb-10 mx-auto flex sm:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 bg-white flex flex-col w-full md:py-8 mt-8 md:mt-0">
           <h2 className="text-[#000] poppins text-[1.03794rem] md:text-[1.75rem] text-style mb-1 font-bold leading-normal title-font capitalize">
             contact us

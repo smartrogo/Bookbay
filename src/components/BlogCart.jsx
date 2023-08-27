@@ -4,12 +4,12 @@ import { Button } from "./Button";
 
 export const BlogCart = (props) => {
   return (
-    <div>
+    <div className="px-7">
       <div className="max-w-sm my-8 bg-[#eee] box border rounded-[1rem] shadow text-start mx-auto">
         <div className="relative">
           <Link to="/">
             <img
-              className="rounded-t-[1rem] w-[23.57394rem] h-[16.66694rem] md:w-[33.86506rem] object-cover"
+              className="rounded-t-[1rem] w-full h-[16.66694rem] md:w-[33.86506rem] object-cover"
               src={props.img}
               alt=""
             />
