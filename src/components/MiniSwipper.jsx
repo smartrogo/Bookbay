@@ -24,7 +24,6 @@ const Slide = ({ handleClick, type }) => {
 };
 
 export const MiniSwipper = () => {
-  // const [slidesPerPage, setSlidesPerPage] = useState(getSlidesPerPage());
   const [books, setBooks] = useState([]);
   const [displayedData, setDisplayedData] = useState([]);
 
@@ -35,7 +34,7 @@ export const MiniSwipper = () => {
   const getBooks = async (bookType) => {
     try {
       const response = await fetch(
-        `http://openlibrary.org/search.json?q=${bookType}`
+        `https://openlibrary.org/search.json?q=${bookType}`
       );
       const data = await response.json();
       setBooks(data.docs);
@@ -44,19 +43,6 @@ export const MiniSwipper = () => {
     }
   };
 
-  // Calculate the number of slides per page based on screen size
-  // function getSlidesPerPage() {
-  //   const screenWidth = window.innerWidth;
-  //   if (screenWidth >= 1200) {
-  //     return 4.5; // Show 4 slides per page on larger screens
-  //   } else if (screenWidth >= 768) {
-  //     return 2.5; // Show 3 slides per page on medium screens
-  //   } else if (screenWidth >= 400) {
-  //     return 2.5;
-  //   } else {
-  //     return 2.5; // Show 2 slides per page on smaller screens
-  //   }
-  // }
 
   const slidesPerPage = useMemo(() => {
     const screenWidth = window.innerWidth;
