@@ -1,14 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { LiaFacebook } from "react-icons/lia";
+import { TiSocialTwitterCircular} from "react-icons/ti";
+import { TiSocialLinkedinCircular } from "react-icons/ti";
+import { MdOutlineMailOutline } from "react-icons/md";
+import { IoLogoInstagram } from "react-icons/io"
 
 export const Footer = () => {
   return (
-    <div className="mt-24 border-2 border-red-500">
-      <footer className="bg-[#1E1E1E] border-2 border-red-500">
-        <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8  border-2 border-green-500">
-          <div className="md:flex md:justify-between border-2 border-yellow-500">
-            <div className="flex justify-between w-full md:w-1/2 mb-6 md:mb-0 border-2 border-red-500">
-              <div className="w-1/2 ">
+    <div className="mt-24">
+      <footer className="bg-[#1E1E1E] ">
+        <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
+          <div className="md:flex md:justify-between md:w-[] mx-auto border-2 border-red-500">
+            <div className="flex justify-evenly w-full md:w-1/2 mb-6 md:mb-0">
+
+              <div className="w-1/2 md:w-[40%]">
                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
                   <li className="mb-2">
                     <Link to="/" className="flex items-center hover:underline">
@@ -40,7 +46,7 @@ export const Footer = () => {
                 </ul>
               </div>
 
-              <div className="border-blue-400 w-1/2 pl-6 md:pl-0">
+              <div className="w-1/2 md:w-[40%] pl-6 md:pl-0">
                 <h2 className="mb-2 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                   Quick Links
                 </h2>
@@ -72,42 +78,44 @@ export const Footer = () => {
                 </ul>
               </div>
             </div>
-            <div className="flex justify-between w-full md:w-1/2 mb-6 md:mb-0 border-2 border-red-500">
-              <div className="w-1/2">
+
+            <div className="flex justify-evenly w-full md:w-1/2 mb-6 md:mb-0">
+
+              <div className="w-1/2 md:w-[40%]">
                 <h2 className="mb-2 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                 Follow Us
                 </h2>
                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
                 
                   <li>
-                    <Link to="/" className="hover:underline">
-                      Facebook
+                    <Link to="/" className="hover:underline flex items-center">
+                     <LiaFacebook className="mr-2"/> Facebook
                     </Link>
                   </li>
                   <li>
-                    <Link to="/" className="hover:underline">
-                      Twitter
+                    <Link to="/" className="hover:underline flex items-center">
+                      <TiSocialTwitterCircular className="mr-2"/> Twitter
                     </Link>
                   </li>
                   <li>
-                    <Link to="/" className="hover:underline">
-                      Linkedin
+                    <Link to="/" className="hover:underline flex items-center">
+                      <TiSocialLinkedinCircular className="mr-2"/> Linkedin
                     </Link>
                   </li>
                   <li>
-                    <Link to="/" className="hover:underline">
-                      Gmail
+                    <Link to="/" className="hover:underline flex items-center">
+                     <MdOutlineMailOutline className="mr-2"/> Gmail
                     </Link>
                   </li>
                   <li>
-                    <Link to="/" className="hover:underline">
-                      Intagram
+                    <Link to="/" className="hover:underline flex items-center">
+                      <IoLogoInstagram className="mr-2"/> Intagram
                     </Link>
                   </li>
                 </ul>
               </div>
 
-              <div className="w-1/2 pl-6 md:pl-0">
+              <div className="w-1/2 pl-6 md:pl-0 md:w-[40%]">
                 <h2 className="mb-2 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                   Address
                 </h2>
@@ -146,40 +154,24 @@ export const Footer = () => {
                   </li>
                 </ul>
               </div>
+
             </div>
 
             
           </div>
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
 
-          <div className="border-2 w-[70%] flex justify-center mx-auto border-red-500 text-center">
+          <div className="w-[75%] flex justify-center mx-auto text-center">
             <span className="text-sm text-gray-500 dark:text-gray-400">
               Copyright © 2023
-              . All Rights Reserved.
-              <a href="https://flowbite.com/" className="hover:underline">
-               By Bookbay™
-              </a>
+              . All Rights Reserved  <br /> By
+              <Link to="/" className="underline pl-1">
+                Bookbay
+              </Link>
             </span>
+            
             {/* <div className="flex mt-4 space-x-5 sm:justify-center sm:mt-0">
-              <a
-                href="#"
-                className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
-              >
-                <svg
-                  className="w-4 h-4"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  viewBox="0 0 8 19"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <span className="sr-only">Facebook page</span>
-              </a>
+            
               <a
                 href="#"
                 className="text-gray-500 hover:text-gray-900 dark:hover:text-white"
