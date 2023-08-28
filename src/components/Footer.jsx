@@ -1,41 +1,151 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
   return (
     <div className="mt-24 border-2 border-red-500">
-      <footer className="bg-[#1E1E1E]">
-        <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
-          <div className="md:flex md:justify-between">
-            <div className="mb-6 md:mb-0">
-              <a href="https://flowbite.com/" className="flex items-center">
-                <img
-                  src="https://flowbite.com/docs/images/logo.svg"
-                  className="h-8 mr-3"
-                  alt="FlowBite Logo"
-                />
-                <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                  Flowbite
-                </span>
-              </a>
-            </div>
-            <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
-              <div>
-                <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-                  Resources
-                </h2>
+      <footer className="bg-[#1E1E1E] border-2 border-red-500">
+
+        <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8  border-2 border-green-500">
+
+          <div className="md:flex md:justify-between border-2 border-yellow-500">
+
+            <div className="flex justify-between w-full md:w-1/2 mb-6 md:mb-0 border-2 border-red-500">
+
+              <div className="w-1/2 ">
                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
-                  <li className="mb-4">
-                    <a href="https://flowbite.com/" className="hover:underline">
-                      Flowbite
-                    </a>
+                  <li className="mb-2">
+                    <Link to="/"
+                      className="flex items-center hover:underline"
+                    >
+                     
+                      <span className="self-center font-semibold whitespace-nowrap dark:text-white text-sm text-gray-900 uppercase">
+                        Bookbay
+                      </span>
+                    </Link>
                   </li>
                   <li>
-                    <a href="https://tailwindcss.com/" className="hover:underline">
-                      Tailwind CSS
-                    </a>
+                    <Link to="/" className="hover:underline">Home</Link>
+                  </li>
+                  <li>
+                    <Link to="/about" className="hover:underline">About Us</Link>
+                  </li>
+                  <li>
+                    <Link to="/borrow" className="hover:underline">Borrow</Link>
+                  </li>
+                  <li>
+                    <Link to="/buy/sell" className="hover:underline">Buy/Sell</Link>
                   </li>
                 </ul>
               </div>
+
+              <div className="border-blue-400 w-1/2 pl-6 md:pl-0">
+                <h2 className="mb-2 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+                  Quick Links
+                </h2>
+                <ul className="text-gray-500 dark:text-gray-400 font-medium">
+                 
+                  <li>
+                    <Link
+                      href="https://tailwindcss.com/"
+                      className="hover:underline"
+                    >
+                      Terms Of Services
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="https://tailwindcss.com/"
+                      className="hover:underline"
+                    >
+                      Privacy Policy
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="https://tailwindcss.com/"
+                      className="hover:underline"
+                    >
+                      PAQs
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+            <div className="flex justify-between w-full md:w-1/2 mb-6 md:mb-0 border-2 border-red-500">
+
+              <div className="w-1/2">
+                <ul className="text-gray-500 dark:text-gray-400 font-medium">
+                  <li className="mb-2">
+                    <Link to="/"
+                      className="flex items-center hover:underline"
+                    >
+                     
+                      <span className="self-center font-semibold whitespace-nowrap dark:text-white text-sm text-gray-900 uppercase">
+                        Bookbay
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/" className="hover:underline">Home</Link>
+                  </li>
+                  <li>
+                    <Link to="/about" className="hover:underline">About Us</Link>
+                  </li>
+                  <li>
+                    <Link to="/borrow" className="hover:underline">Borrow</Link>
+                  </li>
+                  <li>
+                    <Link to="/buy/sell" className="hover:underline">Buy/Sell</Link>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="w-1/2 pl-6 md:pl-0">
+                <h2 className="mb-2 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+                  Address
+                </h2>
+                <ul className="text-gray-500 dark:text-gray-400 font-medium">
+                 
+                  <li>
+                    <Link
+                      href="https://tailwindcss.com/"
+                      className="hover:underline"
+                    >
+                      Lorem ipsum dolor.
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="https://tailwindcss.com/"
+                      className="hover:underline"
+                    >
+                      dolor sit.
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="https://tailwindcss.com/"
+                      className="hover:underline"
+                    >
+                      Lorem ipsum.
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="https://tailwindcss.com/"
+                      className="hover:underline"
+                    >
+                      amet consectetur.
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+
+            {/* <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3  border-2 border-red-500">
               <div>
                 <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                   Follow us
@@ -76,7 +186,8 @@ export const Footer = () => {
                   </li>
                 </ul>
               </div>
-            </div>
+            </div> */}
+
           </div>
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
           <div className="sm:flex sm:items-center sm:justify-between">

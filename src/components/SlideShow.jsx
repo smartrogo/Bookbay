@@ -30,7 +30,7 @@ export const SlideShow = ({ menuRef, isSidebarOpen, paragrhap, img, heading }) =
       <SwiperSlide className=" flex flex-col justify-center items-center md:flex-row">
         <div className="w-full md:w-[50%]">
           <div className="md:[80%]">
-            <h1 className=" w-[24.1875rem] mx-auto h-[10.6875rem] flex-shrink-0 text-[2.3rem] overflow-x-hidden roboto leading-[3rem] mt-10 font-bold text-start md:text-start md:w-[76%] sm:w-[90%] md:ml-20 balance">
+            <h1 className=" w-[24.1875rem] mx-auto h-[10.6875rem] flex-shrink-0 text-[2.3rem] overflow-x-hidden roboto leading-[3rem] mt-10 font-bold text-center md:text-start md:w-[76%] sm:w-[90%] md:ml-20 balance">
              {heading}
             </h1>
             <p className="text-[#000] poppins leading-normal text-center text-style font-normal text-[0.875rem] mx-auto w-[16.8125rem] md:w-[75.5%] sm:w-[80%] md:text-justify balance">

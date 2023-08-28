@@ -73,7 +73,7 @@
   padding-bottom: 5px;
 }
 
-.underscore::after {
+.underscore::yafter {
   content: "";
   position: absolute;
   width: 100%;
