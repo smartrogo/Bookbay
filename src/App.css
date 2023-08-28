@@ -1,5 +1,35 @@
+.dark-mode {
+  --bg-color: #1E1E1E;
+  --text-color: #FFFFFF;
+  --nav-bg: #141218;
+  --icon-color: white;
+}
+
+.light-mode {
+  --bg-color: #FFF;
+  --text-color: #000000;
+  --nav-bg: #FFFFFF;
+  --icon-color: #000;
+}
+
+.app {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.icon {
+  color: var(--icon-color);
+}
+
+.header {
+  background-color: var(--nav-bg);
+}
+
 .poppins {
   font-family: "Poppins", sans-serif;
+}
+.outfit {
+  font-family: 'Outfit', sans-serif;
 }
 
 .roboto {

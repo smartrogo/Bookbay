@@ -1,6 +1,4 @@
 import React from "react";
-import { useEffect } from "react";
-import { Button } from "./Button";
 import {
   Navigation,
   Pagination,
@@ -16,36 +14,17 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
-export const Hero = ({ menuRef, isSidebarOpen }) => {
+export const Hero = () => {
   const head = (
     <>
       {" "}
-      The online{" "}
+      Your Ultimate Online{" "}
       <span className="text-[#FD6727] balance underscore">books-hub</span>{" "}
-      <br /> that you’ve been
-      <br /> looking for
     </>
   );
 
   const para =
-    "  BookBay is the platform that makes buying, selling, and borrowing books easy and fun. You can browse through a huge selection of books, find amazing deals, and order them with just a few clicks.Create your account today and join the BookBay family.";
-  useEffect(() => {
-    const handleOutsideClick = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        if (isSidebarOpen) {
-          console.log("done");
-        }
-        console.log("hi");
-        // Close the navbar or perform your action here
-      }
-    };
-
-    document.addEventListener("mousedown", handleOutsideClick);
-
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, [menuRef, isSidebarOpen]);
+    "BookBay: Your one-stop platform for buying, selling, and borrowing books. Discover a vast selection, enjoy great deals, and join our family by signing up today.";
   return (
     <Swiper
       modules={[Navigation, Autoplay, Pagination, Scrollbar, A11y]}

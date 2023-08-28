@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { RiMenu3Line } from "react-icons/ri";
 import { Button } from "./Button";
-import { RiCloseCircleFill } from "react-icons/ri"
+import { RiCloseCircleFill } from "react-icons/ri";
 import { LuMoon } from "react-icons/lu";
+import { BsSun } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
-export const Header2 = () => {
+export const Header = (props) => {
   const [active, setActive] = useState(false);
   const menuRef = useRef();
 
@@ -20,14 +21,13 @@ export const Header2 = () => {
         setActive(false);
       }
     };
-  
+
     document.addEventListener("mousedown", handleOutsideClick);
-  
+
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [menuRef]);
-  
 
   // active page indicator
   const navLinkStyle = ({ isActive }) => {
@@ -42,21 +42,21 @@ export const Header2 = () => {
 
   return (
     <section
-      className={`bg-[#fff] fixed px-2 h-[5rem] sm:px-4 py-2 md:py-2.5 z-20 top-0 left-0 border-b box-shadow w-full text-white flex items-center ${
+      className={`header fixed px-2 h-[5rem] sm:px-4 py-2 md:py-2.5 z-20 top-0 left-0 border-b box-shadow w-full flex items-center ${
         active ? "blur-active" : ""
       }`}
     >
       <div className="wrapper flex flex-wrap items-center justify-between mx-auto">
         <div className="mobile-nav-container w-[44%] sm:w-[30%] md:w-[75%]  flex justify-between items-center">
           <div className="mobile-menu-icon md:hidden" onClick={handleNavbar}>
-            <RiMenu3Line className=" text-[#000000] text-[24px] menu-icon-svg md:hidden md:absolute" />
+            <RiMenu3Line className="text-[24px] menu-icon-svg md:hidden md:absolute" />
           </div>
 
           <div className="flex justify-between">
             <div className="">
               <a
                 href="/"
-                className="site-title flex items-center text-[1.125rem] md:text-[24px] md:ml-0 text-[#000] font-bold leading-normal poppins"
+                className="site-title flex items-center text-[1.125rem] md:text-[24px] md:ml-0 font-bold leading-normal poppins"
               >
                 <span>Bookbay</span>
               </a>
@@ -99,7 +99,17 @@ export const Header2 = () => {
         <div className="login-button-container flex justify-between items-center">
           <div className="flex items-center md:w-[48%] w-[60%] justify-between">
             <div className="">
-              <LuMoon className="text-[#000000] cursor-pointer h-[1.2rem] w-[1.2rem] md:h-[1.5rem] md:w-[1.5rem]" />
+              {props.darkMode ? (
+                <BsSun
+                  onClick={props.onClick}
+                  className="icon cursor-pointer h-[1.2rem] w-[1.2rem] md:h-[1.5rem] md:w-[1.5rem]"
+                />
+              ) : (
+                <LuMoon
+                  onClick={props.onClick}
+                  className="cursor-pointer h-[1.2rem] w-[1.2rem] md:h-[1.5rem] md:w-[1.5rem]"
+                />
+              )}
             </div>
             <Button
               value="Login"
