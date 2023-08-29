@@ -128,7 +128,7 @@ export const Header = (props) => {
           ref={menuRef}
           className={`mobile-menu ${
             active ? "w-[70%]" : "w-0"
-          } h-screen overflow-hidden transition-all duration-300 ease-in-out absolute top-0 left-0 aside lg:hidden border-2`}
+          } h-screen overflow-hidden transition-all duration-300 ease-in-out absolute top-0 left-0 aside lg:hidden`}
         >
           {active && (
             <RiCloseCircleFill
@@ -136,7 +136,7 @@ export const Header = (props) => {
               className="close z-20 mt-7 right-4 cursor-pointer font-medium text-[40px] leading-5 not-italic absolute"
             />
           )}
-          <ul className="p-4 mt-20 w-[80%] border-2 fixed z-10 ml-8">
+          <ul className="p-4 mt-20 w-[80%] border-2  z-10 ml-8">
             <li className="mb-5 text-[25px] font-medium leading-[120%] hover:underline">
               <NavLink
                 to="/"
