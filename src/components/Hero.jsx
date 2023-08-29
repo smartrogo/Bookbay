@@ -18,8 +18,8 @@ export const Hero = () => {
   const head = (
     <>
       {" "}
-      Your Ultimate Online{" "}
-      <span className="text-[#FD6727] balance underscore">books-hub</span>
+      Your Ultimate<br/> Online
+      <span className="text-[#FD6727] balance underscore"> books-hub</span>
     </>
   );
 

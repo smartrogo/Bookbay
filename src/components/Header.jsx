@@ -42,14 +42,14 @@ export const Header = (props) => {
 
   return (
     <section
-      className={`header fixed px-2 h-[5rem] sm:px-4 py-2 md:py-2.5 z-20 top-0 left-0 box-shadow w-full flex items-center ${
+      className={`header border-2 fixed px-2 h-[5rem] sm:px-4 py-2 md:py-2.5 z-20 top-0 left-0 box-shadow w-full flex items-center ${
         active ? "blur-active" : ""
       }`}
     >
       <div className="wrapper flex flex-wrap items-center justify-between mx-auto">
-        <div className="mobile-nav-container w-[44%] sm:w-[30%] md:w-[75%]  flex justify-between items-center">
-          <div className="mobile-menu-icon md:hidden" onClick={handleNavbar}>
-            <RiMenu3Line className="text-[24px] menu-icon-svg md:hidden md:absolute" />
+        <div className="mobile-nav-container w-[40%] border-2 border-red-500 sm:w-[30%] md:w-[75%] md:justify-start md:border-fuchsia-500 sm:border-2 sm:border-green-500 flex justify-between items-center">
+          <div className="mobile-menu-icon lg:hidden md:mr-8" onClick={handleNavbar}>
+            <RiMenu3Line className="text-[24px] menu-icon-svg lg:hidden lg:absolute" />
           </div>
 
           <div className="flex justify-between">
@@ -62,7 +62,7 @@ export const Header = (props) => {
               </a>
             </div>
 
-            <ul className="hidden ml-[13.4rem] md:flex gap-8 leading-normal items-center text-[0.875rem]">
+            <ul className="hidden ml-[13.4rem] lg:flex gap-8 md:items-center lg:ml-[5rem] leading-normal items-center text-[0.875rem]">
               <li className="roboto under text-[18px] leading-normal">
                 <NavLink to="/" style={navLinkStyle}>
                   Home
@@ -128,7 +128,7 @@ export const Header = (props) => {
           ref={menuRef}
           className={`mobile-menu ${
             active ? "w-[70%]" : "w-0"
-          } h-screen overflow-hidden transition-all duration-300 ease-in-out absolute top-0 left-0 bg-white/80 backdrop-blur-sm [#3B383E] md:hidden`}
+          } h-screen overflow-hidden transition-all duration-300 ease-in-out absolute top-0 left-0 aside lg:hidden border-2`}
         >
           {active && (
             <RiCloseCircleFill
@@ -136,7 +136,7 @@ export const Header = (props) => {
               className="close z-20 mt-7 right-4 cursor-pointer font-medium text-[40px] leading-5 not-italic absolute"
             />
           )}
-          <ul className="p-4 mt-20 w-[80%] ml-8">
+          <ul className="p-4 mt-20 w-[80%] border-2 absolute z-10 ml-8">
             <li className="mb-5 text-[25px] font-medium leading-[120%] hover:underline">
               <NavLink
                 to="/"
