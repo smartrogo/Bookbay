@@ -62,7 +62,7 @@ export const Header = (props) => {
               </a>
             </div>
 
-            <ul className="hidden ml-[13.4rem] md:flex gap-8 leading-normal items-center text-[0.875rem] text-[#000000]">
+            <ul className="hidden ml-[13.4rem] md:flex gap-8 leading-normal items-center text-[0.875rem]">
               <li className="roboto under text-[18px] leading-normal">
                 <NavLink to="/" style={navLinkStyle}>
                   Home
@@ -113,7 +113,7 @@ export const Header = (props) => {
             </div>
             <Button
               value="Login"
-              cls_name=" text-[0.825rem] md:text-[1.25rem] rounded-[6px] bg bg-transparent border-2 border-[#0F9D58] py-[0.1875rem] ml-[10px] md:ml-[10px] px-[0.75rem] md:px-[1.86519rem] roboto text-[#0F9D58] md:py-[0.46631rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.49744rem]"
+              cls_name=" text-[0.825rem] md:text-[1.25rem] rounded-[6px] bg bg-transparent border-2 border-[#0F9D58] py-[0.1875rem] ml-[10px] md:ml-[10px] px-[0.75rem] md:px-[1.86519rem] roboto md:py-[0.46631rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.49744rem]"
             />
           </div>
 
@@ -128,7 +128,7 @@ export const Header = (props) => {
           ref={menuRef}
           className={`mobile-menu ${
             active ? "w-[70%]" : "w-0"
-          } h-screen overflow-hidden transition-all text-[#000000] dark:[#F4F4F4] duration-300 ease-in-out absolute top-0 left-0 bg-white/80 backdrop-blur-sm [#3B383E] md:hidden`}
+          } h-screen overflow-hidden transition-all duration-300 ease-in-out absolute top-0 left-0 bg-white/80 backdrop-blur-sm [#3B383E] md:hidden`}
         >
           {active && (
             <RiCloseCircleFill
