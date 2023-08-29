@@ -11,14 +11,14 @@ export const SlideShow = ({ paragrhap, img, heading }) => {
       <SwiperSlide className=" flex flex-col justify-center items-center md:flex-row">
         <div className="w-full md:w-[50%]">
           <div className="md:[80%]">
-            <h1 className=" w-[24.1875rem] mx-auto h-[10.6875rem] flex-shrink-0 text-[2.5rem] overflow-x-hidden outfit leading-[3rem] mt-10 font-bold text-center md:text-start md:w-[76%] sm:w-[90%] md:ml-20 balance">
+            <h1 className=" w-[21.1875rem] border-2 mx-auto h-[7rem] flex-shrink-0 text-[2.5rem] overflow-x-hidden outfit leading-[3rem] mt-10 font-bold text-center md:text-start md:w-[76%] sm:w-[90%] md:ml-20 balance mb-0">
              {heading}
             </h1>
-            <p className="text-[#000] poppins leading-normal text-center text-style font-normal text-[0.875rem] mx-auto w-[16.8125rem] md:w-[75.5%] sm:w-[80%] md:text-justify balance">
+            <p className="poppins leading-normal text-center text-style font-normal text-[0.875rem] mx-auto w-[19.3125rem] h-[6.5625rem] md:w-[75.5%] sm:w-[80%] md:text-justify balance">
                 {paragrhap}
             </p>
 
-            <div className="flex mx-auto w-[20rem] md:w-[72.5%] md:justify-start md:gap-5 justify-evenly mt-[3rem] mb-[2rem] items-center">
+            <div className="flex mx-auto w-[20rem] md:w-[72.5%] md:justify-start md:gap-5 justify-evenly mt-[2rem] mb-[2rem] items-center">
               <Button
                 value="Join us today!"
                 cls_name=" flex justify-center items-center bg-[#0F9D58] text-[#FFFFFF] poppins text-style font-bold leading-normal rounded-[0.32494rem] py-[0.6905rem] px-[1.34038rem]"

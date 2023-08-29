@@ -3,6 +3,7 @@
   --text-color: #FFFFFF;
   --nav-bg: #141218;
   --icon-color: white;
+  --para-color: #aaa;
 }
 
 .light-mode {
@@ -10,6 +11,7 @@
   --text-color: #000000;
   --nav-bg: #FFFFFF;
   --icon-color: #000;
+  --para-color: #666;
 }
 
 .app {
@@ -19,6 +21,10 @@
 
 .icon {
   color: var(--icon-color);
+}
+
+.para {
+  color: var(--para-color);
 }
 
 .header {
@@ -51,6 +57,10 @@
 
 .test {
   width: 20% !important;
+}
+
+.swiper-scrollbar-drag, .swiper-scrollbar {
+  display: none !important;
 }
 
 .swiper-button-next,
