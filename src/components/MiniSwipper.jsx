@@ -6,6 +6,7 @@ import { BiSolidBookAlt } from "react-icons/bi";
 import "@splidejs/react-splide/css/skyblue";
 import "@splidejs/react-splide/css/sea-green";
 import { useState, useEffect, useMemo  } from "react";
+import { Book } from "./Book";
 
 const Slide = ({ handleClick, type }) => {
   return (
@@ -24,8 +25,9 @@ const Slide = ({ handleClick, type }) => {
 };
 
 export const MiniSwipper = () => {
-  const [books, setBooks] = useState([]);
+  // const [books, setBooks] = useState([]);
   const [displayedData, setDisplayedData] = useState([]);
+  // const [covers, setCovers] = useState([]);
 
   useEffect(() => {
     getBooks("programming"); // Fetch programming books initially
@@ -37,7 +39,8 @@ export const MiniSwipper = () => {
         `https://openlibrary.org/search.json?q=${bookType}`
       );
       const data = await response.json();
-      setBooks(data.docs);
+      const booksWithCovers = data.docs.filter(item => item.cover_i);
+      setDisplayedData(booksWithCovers.slice(0, 4));
     } catch (error) {
       console.error("Error fetching books:", error);
     }
@@ -58,9 +61,15 @@ export const MiniSwipper = () => {
   }, []);
 
 
-  useEffect(() => {
-    setDisplayedData(books.slice(0, 4));
-  }, [books]);
+  // useEffect(() => {
+  //   setDisplayedData(books.slice(0, 4));
+  // }, [books]);
+
+  // useEffect(() => {
+  //   // Extract cover_i values from displayedData
+  //   const extractedCovers = displayedData.map(item => item.cover_i);
+  //   setCovers(extractedCovers);
+  // }, [displayedData]);
 
   return (
     <>
@@ -106,16 +115,17 @@ export const MiniSwipper = () => {
         </SplideSlide>
       </Splide>
 
-      <div className="display border-2 border-red-500 h-[200px]">
+      <div className="display border-2 border-red-500 ">
         <div>
-          <h1 className="text-center mt-4">render book api</h1>
+          <div className="flex flex-wrap justify-evenly">
           {displayedData.length > 0 ? (
         displayedData.map((item, index) => (
-          <p key={index}>{item.title}</p>
+          <Book key={index} title={item.title} cover={item.cover_i}/>
         ))
       ) : (
         <p>No data available</p>
       )}
+          </div>
         </div>
         <div></div>
       </div>

@@ -8,6 +8,8 @@
   --boder-color: #FFFFFF;
   --card-bg: #36343B;
   --qoute-color: #AAAAAA;
+  --swiper-btn: #454545;
+  --footer-bg: #111111;
 }
 
 .light-mode {
@@ -20,6 +22,8 @@
   --border-color: #000000;
   --card-bg: #EEEEEE;
   --qoute-color: #666666;
+  --swiper-btn: #b7b3b3;
+  --footer-bg: #1E1E1E;
 }
 
 .app {
@@ -51,6 +55,10 @@
   background-color: var(--aside--bg);
   filter: blur(2px);
   -webkit-filter: blur(2px);
+}
+
+.footer {
+  background-color: var(--footer-bg);
 }
 /* .backdrop-blur-md {
   --tw-backdrop-blur: blur(12px);
@@ -93,8 +101,9 @@
 .swiper-button-next,
 .swiper-button-prev {
   display: none !important;
-  background-color: rgba(102, 102, 102, 0.4);
-  color: #000000 !important;
+  background-color: var(--swiper-btn);
+  /* background-color: rgba(102, 102, 102, 0.4); */
+  color: var(--text-color) !important;
   font-weight: 800;
   /* margin-right: 5px; */
   width: 2.5rem !important;
@@ -158,6 +167,7 @@
   .swiper-button-next,
   .swiper-button-prev {
     display: block !important;
+    
   }
 }
 

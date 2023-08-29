@@ -9,9 +9,9 @@ import { IoLogoInstagram } from "react-icons/io"
 export const Footer = () => {
   return (
     <div className="mt-24">
-      <footer className="bg-[#1E1E1E] ">
+      <footer className="footer ">
         <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
-          <div className="md:flex md:justify-between md:w-[] mx-auto border-2 border-red-500">
+          <div className="md:flex md:justify-between md:w-[] mx-auto">
             <div className="flex justify-evenly w-full md:w-1/2 mb-6 md:mb-0">
 
               <div className="w-1/2 md:w-[40%]">
