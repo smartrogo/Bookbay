@@ -18,7 +18,6 @@ export const Home = () => {
       <Hero
         className="border-2 border-red-500" />
       <Text
-        className="mt-10"
         head="books categories"
         body=" Lorem ipsum dolor sit amet consectetur. Diam ut feugiat aliquet in
         varius feugiat magna dictum. Tortor diam et placerat."

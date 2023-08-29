@@ -11,7 +11,7 @@ export const SlideShow = ({ paragrhap, img, heading }) => {
       <SwiperSlide className=" flex flex-col justify-center items-center md:flex-row">
         <div className="w-full md:w-[50%]">
           <div className="md:[80%]">
-            <h1 className=" w-[21.1875rem] border-2 mx-auto h-[7rem] flex-shrink-0 text-[2.5rem] overflow-x-hidden outfit leading-[3rem] mt-10 font-bold text-center md:text-start md:w-[76%] sm:w-[90%] md:ml-20 balance mb-0">
+            <h1 className=" w-[21.1875rem] mx-auto h-[7rem] flex-shrink-0 text-[2.5rem] overflow-x-hidden outfit leading-[3rem] mt-10 font-bold text-center md:text-start md:w-[76%] sm:w-[90%] md:ml-20 balance mb-0">
              {heading}
             </h1>
             <p className="poppins leading-normal text-center text-style font-normal text-[0.875rem] mx-auto w-[19.3125rem] h-[6.5625rem] md:w-[75.5%] sm:w-[80%] md:text-justify balance">
@@ -38,7 +38,7 @@ export const SlideShow = ({ paragrhap, img, heading }) => {
         <div className="w-full md:w-[50%] px-5 md:px-0">
           <img
             src={img}
-            className=" w-[22.8125rem] sm:w-[32rem] rounded-[2rem] h-[23.95313rem] mx-auto object-cover mt-10 mb-10 sm:mt-5 md:w-[30.5rem] md:h-[27.375rem]"
+            className=" w-[22.8125rem] sm:w-[32rem] rounded-[2rem] h-[23.95313rem] mx-auto object-cover mt-10 mb-8  sm:mt-5 md:w-[30.5rem] md:h-[27.375rem]"
           />
         </div>
       </SwiperSlide>
