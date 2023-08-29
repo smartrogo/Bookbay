@@ -47,7 +47,7 @@ export const Header = (props) => {
       }`}
     >
       <div className="wrapper flex flex-wrap items-center justify-between mx-auto">
-        <div className="mobile-nav-container w-[40%] sm:w-[30%] md:w-[75%] lg:w-[80%] border-2 border-green-500 lg:justify-between md:justify-start flex justify-between items-center">
+        <div className="mobile-nav-container w-[40%] sm:w-[30%] md:w-[75%] lg:w-[80%] lg:justify-between md:justify-start flex justify-between items-center">
           <div
             className="mobile-menu-icon lg:hidden md:mr-8"
             onClick={handleNavbar}
@@ -55,7 +55,7 @@ export const Header = (props) => {
             <RiMenu3Line className="text-[24px] menu-icon-svg lg:hidden lg:absolute" />
           </div>
 
-          <div className="flex justify-between border-2">
+          <div className="flex justify-between">
             <div className="">
               <a
                 href="/"
@@ -65,7 +65,7 @@ export const Header = (props) => {
               </a>
             </div>
 
-            <ul className="hidden ml-[13.4rem] lg:flex  border-2 gap-8 md:items-center lg:ml-[12rem] leading-normal items-center lg:w-[70%] xl:ml-[16rem] text-[0.875rem]">
+            <ul className="hidden ml-[13.4rem] lg:flex gap-8 md:items-center lg:ml-[12rem] leading-normal items-center lg:w-[70%] xl:ml-[16rem] text-[0.875rem]">
               <li className="roboto under text-[18px] leading-normal">
                 <NavLink to="/" style={navLinkStyle}>
                   Home
