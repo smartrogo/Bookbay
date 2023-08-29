@@ -5,7 +5,7 @@ import { Button } from "./Button";
 export const BlogCart = (props) => {
   return (
     <div className="px-7">
-      <div className="max-w-sm my-8 bg-[#eee] box border rounded-[1rem] shadow text-start mx-auto">
+      <div className="max-w-sm my-8 card box  rounded-[1rem] shadow text-start mx-auto">
         <div className="relative">
           <Link to="/">
             <img
@@ -23,12 +23,12 @@ export const BlogCart = (props) => {
 
         <div className="p-5 leading-normal text-style roboto mt-4">
           <a href="#">
-            <h2 className=" text-[#000]   font-bold text-[0.67569rem] w-[12.95063rem] md:w-[18.60425rem] md:text-[0.97063rem]">
+            <h2 className="font-bold text-[0.67569rem] w-[12.95063rem] md:w-[18.60425rem] md:text-[0.97063rem]">
               Unlocking Reading Adventures: Your Guide to Getting Started with
               BookBay
             </h2>
           </a>
-          <p className="mb-3 mt-2 w-[100%] md:w-[98%] text-[#666] font-normal text-[0.60063rem] md:text-[0.86281rem] text-style">
+          <p className="mb-3 mt-2 w-[100%] md:w-[98%] qoute font-normal text-[0.60063rem] md:text-[0.86281rem] text-style">
             Lorem ipsum dolor sit amet consectetur. Viverra in lacinia nisl mi
             mattis turpis nibh blandit. Nulla in massa sollicitudin non. Cum
             nulla et suscipit sed viverra magna magna diam.

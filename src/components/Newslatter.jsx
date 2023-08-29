@@ -20,10 +20,10 @@ export const Newslatter = () => {
             <Input
               id="email"
               name="email"
-              label_cls_name="leading-normal poppins capitalize text-[0.66725rem] text-[#000] font-normal"
+              label_cls_name="leading-normal poppins capitalize text-[0.66725rem] font-normal"
               type="email"
               placeholder="example@gmail.com"
-              cls_name="w-[100%] mx-auto bg-[#eee] rounded-[0.29656rem] md:rounded-[0.5rem] focus:border-[#0F9D58] focus:ring-[2px] focus:ring-[#abeacc] text-base outline-none text-[#696969] py-1 mt-4 md:-mt-10 placeholder:text-center px-3 leading-8 transition-colors duration-200 ease-in-out"
+              cls_name="w-[100%] mx-auto card rounded-[0.29656rem] md:rounded-[0.5rem] focus:border-[#0F9D58] focus:ring-[2px] focus:ring-[#abeacc] text-base outline-none text-[#696969] py-1 mt-4 md:-mt-10 placeholder:text-center px-3 leading-8 transition-colors duration-200 ease-in-out"
             />
             <Button
               value="subscribe"

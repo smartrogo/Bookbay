@@ -8,9 +8,9 @@ export const SlideShow = ({ paragrhap, img, heading }) => {
  
 
   return (
-      <SwiperSlide className="border-2 h-[100vh] border-red-500 flex flex-col justify-center items-center md:flex-row">
+      <SwiperSlide className="border-2 flex flex-col justify-center items-center md:flex-row">
         <div className="w-full md:w-[50%]">
-          <div className="md:[80%] mt-[8rem]">
+          <div className="md:[80%]">
             <h1 className=" w-[21.1875rem] mx-auto h-[7rem] flex-shrink-0 text-[2.5rem] outfit leading-[3rem] mt-10 font-bold text-center md:text-start md:w-[76%] sm:w-[90%] md:ml-20 balance mb-0">
              {heading}
             </h1>

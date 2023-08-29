@@ -42,12 +42,12 @@ export const Header = (props) => {
 
   return (
     <section
-      className={`header border-2 fixed px-2 h-[5rem] sm:px-4 py-2 md:py-2.5 z-20 top-0 left-0 box-shadow w-full flex items-center ${
+      className={`header fixed px-2 h-[5rem] sm:px-4 py-2 md:py-2.5 z-20 top-0 left-0 box-shadow w-full flex items-center ${
         active ? "blur-active" : ""
       }`}
     >
       <div className="wrapper flex flex-wrap items-center justify-between mx-auto">
-        <div className="mobile-nav-container w-[40%] border-2 border-red-500 sm:w-[30%] md:w-[75%] md:justify-start md:border-fuchsia-500 sm:border-2 sm:border-green-500 flex justify-between items-center">
+        <div className="mobile-nav-container w-[40%] sm:w-[30%] md:w-[75%] md:justify-start flex justify-between items-center">
           <div className="mobile-menu-icon lg:hidden md:mr-8" onClick={handleNavbar}>
             <RiMenu3Line className="text-[24px] menu-icon-svg lg:hidden lg:absolute" />
           </div>

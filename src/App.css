@@ -5,6 +5,9 @@
   --nav-bg: #141218;
   --icon-color: white;
   --para-color: #aaa;
+  --boder-color: #FFFFFF;
+  --card-bg: #36343B;
+  --qoute-color: #AAAAAA;
 }
 
 .light-mode {
@@ -13,6 +16,10 @@
   --nav-bg: #FFFFFF;
   --icon-color: #000;
   --para-color: #666;
+  --aside--bg: #fff;
+  --border-color: #000000;
+  --card-bg: #EEEEEE;
+  --qoute-color: #666666;
 }
 
 .app {
@@ -32,6 +39,14 @@
   background-color: var(--nav-bg);
 }
 
+.card {
+  border-color: var(--boder-color);
+  background-color: var(--card-bg);
+}
+
+.qoute {
+  color: var(--qoute-color);
+}
 .aside {
   background-color: var(--aside--bg);
   filter: blur(2px);
