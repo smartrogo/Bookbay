@@ -10,11 +10,11 @@ export const SlideShow = ({ paragrhap, img, heading }) => {
   return (
       <SwiperSlide className="border-2 flex flex-col justify-center items-center md:flex-row">
         <div className="w-full md:w-[50%]">
-          <div className="md:[80%]">
-            <h1 className=" w-[21.1875rem] mx-auto h-[7rem] flex-shrink-0 text-[2.5rem] outfit leading-[3rem] mt-10 font-bold text-center md:text-start md:w-[76%] sm:w-[90%] md:ml-20 balance mb-0">
+          <div className="md:[80%] border-2 xl:pl-10">
+            <h1 className=" w-[21.1875rem] mx-auto h-[7rem] flex-shrink-0 text-[2.5rem] outfit leading-[3rem] mt-10 font-bold text-center md:text-start md:w[76%] sm:w-[90%] md:border-2  balance mb-0">
              {heading}
             </h1>
-            <p className="poppins leading-normal text-center text-style font-normal text-[0.875rem] mx-auto w-[19.3125rem] h-[6.5625rem] md:w-[75.5%] sm:w-[80%] md:text-justify balance">
+            <p className="poppins leading-normal text-center text-style font-normal text-[0.875rem] mx-auto w-[19.3125rem] h[6.5625rem] md:w-[90%] lg:w-[70%] lg:mx-7 xl:mx- xl:w-[62%] border-2 sm:w-[80%] md:text-justify balance">
                 {paragrhap}
             </p>
 
