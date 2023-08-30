@@ -5,7 +5,7 @@ import "@splidejs/react-splide/css";
 import { BiSolidBookAlt } from "react-icons/bi";
 import "@splidejs/react-splide/css/skyblue";
 import "@splidejs/react-splide/css/sea-green";
-import { useState, useEffect, useMemo  } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Book } from "./Book";
 
 const Slide = ({ handleClick, type }) => {
@@ -27,11 +27,14 @@ const Slide = ({ handleClick, type }) => {
 export const MiniSwipper = () => {
   // const [books, setBooks] = useState([]);
   const [displayedData, setDisplayedData] = useState([]);
+  const [test, setTest] = useState([]);
+  const [bookChunks, setBookChunks] = useState([]); 
   // const [covers, setCovers] = useState([]);
 
   useEffect(() => {
     getBooks("programming"); // Fetch programming books initially
   }, []);
+
 
   const getBooks = async (bookType) => {
     try {
@@ -39,13 +42,31 @@ export const MiniSwipper = () => {
         `https://openlibrary.org/search.json?q=${bookType}`
       );
       const data = await response.json();
-      const booksWithCovers = data.docs.filter(item => item.cover_i);
-      setDisplayedData(booksWithCovers.slice(0, 4));
+      const booksWithCovers = data.docs.filter((item) => item.cover_i);
+      setDisplayedData(booksWithCovers.slice(0, 8));
+      console.log(displayedData, "only God knows")
     } catch (error) {
       console.error("Error fetching books:", error);
     }
   };
 
+  // const getTwo = async (arr) => {
+  //   const newArr = await arr.slice(0, 2);
+  //   console.log(newArr);
+  //   setTest(newArr);
+  // };
+
+
+  useEffect(() => {
+    // Divide the displayedData into smaller chunks
+    const chunkSize = 2;
+    const chunks = [];
+    for (let i = 0; i < displayedData.length; i += chunkSize) {
+      chunks.push(displayedData.slice(i, i + chunkSize));
+    }
+    setBookChunks(chunks); // Update the bookChunks state
+    console.log(bookChunks, "please")
+  }, [displayedData]);
 
   const slidesPerPage = useMemo(() => {
     const screenWidth = window.innerWidth;
@@ -59,7 +80,6 @@ export const MiniSwipper = () => {
       return 2;
     }
   }, []);
-
 
   // useEffect(() => {
   //   setDisplayedData(books.slice(0, 4));
@@ -101,10 +121,7 @@ export const MiniSwipper = () => {
         </SplideSlide>
 
         <SplideSlide>
-          <Slide
-            handleClick={() => getBooks("biography")}
-            type="biography"
-          />
+          <Slide handleClick={() => getBooks("biography")} type="biography" />
         </SplideSlide>
 
         <SplideSlide>
@@ -115,8 +132,50 @@ export const MiniSwipper = () => {
         </SplideSlide>
       </Splide>
 
-      <div className="display border-2 border-red-500 ">
-        <div>
+      <div className="display border-2 border-red-500  justify-evenly ">
+        <div className="border-2 border-green-300 md:flex w-full">
+          <div className="flex w-full md:w-1/2 justify-evenly">
+          {bookChunks.length > 0 ? (
+              bookChunks[0].map((item, index) => (
+                <Book key={index} cover={item.cover_i} />
+              ))
+            ) : (
+              <p>testing</p>
+            )}
+          </div>
+
+          <div className="flex w-full md:w-1/2 justify-evenly">
+             {bookChunks.length > 0 ? (
+              bookChunks[1].map((item, index) => (
+                <Book key={index} cover={item.cover_i} />
+              ))
+            ) : (
+              <p>testing</p>
+            )}
+          </div>
+        </div>
+        <div className="border-2 border-green-300 md:flex w-full hidden ">
+        <div className="flex w-full md:w-1/2 justify-evenly">
+          {bookChunks.length > 0 ? (
+              bookChunks[2].map((item, index) => (
+                <Book key={index} cover={item.cover_i} />
+              ))
+            ) : (
+              <p>testing</p>
+            )}
+          </div>
+          <div className="flex w-full md:w-1/2 justify-evenly">
+          {bookChunks.length > 0 ? (
+              bookChunks[3].map((item, index) => (
+                <Book key={index} cover={item.cover_i} />
+              ))
+            ) : (
+              <p>testing</p>
+            )}
+          </div>
+        </div>
+
+        {/* <div>
           <div className="flex flex-wrap justify-evenly">
           {displayedData.length > 0 ? (
         displayedData.map((item, index) => (
@@ -126,7 +185,7 @@ export const MiniSwipper = () => {
         <p>No data available</p>
       )}
           </div>
-        </div>
+        </div> */}
         <div></div>
       </div>
     </>

@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
+import { ClerkProvider } from "@clerk/clerk-react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Home } from "./components/Home";
@@ -13,9 +14,12 @@ import { Hero } from "./components/Hero";
 import ThumbnailCarousel from "./components/ThumbnailCarousel ";
 import { ErrorPage } from "./components/ErrorPage";
 
+const clerkPubKey = import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY;
+
+
 function App() {
   const [darkMode, setDarkMode] = useState(false);
-
+console.log(clerkPubKey)
   useEffect(() => {
     const userPref = localStorage.getItem("theme");
     if (userPref == "dark") {
