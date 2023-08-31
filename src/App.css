@@ -10,6 +10,7 @@
   --qoute-color: #AAAAAA;
   --swiper-btn: #454545;
   --footer-bg: #111111;
+  --testimony-border: #1E1E1E;
 }
 
 .light-mode {
@@ -24,6 +25,7 @@
   --qoute-color: #666666;
   --swiper-btn: #b7b3b3;
   --footer-bg: #1E1E1E;
+  --testimony-border: #FFFFFF;
 }
 
 .app {
@@ -46,6 +48,10 @@
 .card {
   border-color: var(--boder-color);
   background-color: var(--card-bg);
+}
+
+.testimony {
+  border: 3.66px solid var(--testimony-border);
 }
 
 .qoute {

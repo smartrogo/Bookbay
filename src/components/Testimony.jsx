@@ -1,11 +1,11 @@
 import React from "react";
 import { Card } from "./Card";
 import tech2 from "../assets/tech2.jpeg";
-import ellipse1 from "../assets/ellipse1.png";
-import ellipse3 from "../assets/ellipse3.png";
 import { Link } from "react-router-dom";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
 import { Text } from "./Text";
+import  guy  from "../assets/guy.jpg"
+import  guy02  from "../assets/guy02.jpg"
 
 export const Testimony = () => {
   return (
@@ -20,7 +20,7 @@ export const Testimony = () => {
           <Card
             profession="Teacher"
             name="Sani muhammad"
-            img={ellipse1}
+            img={guy}
             says="Lorem ipsum dolor sit amet consectetur. Sodales risus sed condimentum aliquet eget lectus."
           />
           <Card
@@ -32,7 +32,7 @@ export const Testimony = () => {
           <Card
             profession="frontend Engineer "
             name="Muhammad Ala"
-            img={ellipse3}
+            img={guy02}
             says="Lorem ipsum dolor sit amet consectetur. Sodales risus sed condimentum aliquet eget lectus."
           />
         </div>

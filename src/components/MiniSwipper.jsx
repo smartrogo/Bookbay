@@ -137,20 +137,20 @@ export const MiniSwipper = () => {
           <div className="flex w-full md:w-1/2 justify-evenly">
           {bookChunks.length > 0 ? (
               bookChunks[0].map((item, index) => (
-                <Book key={index} cover={item.cover_i} />
+                <Book key={index} cover={item.cover_i} title={item.title.trim().split(" ").slice(0, 2).join(" ")} autor={item.author}/>
               ))
             ) : (
-              <p>testing</p>
+              <p>loading...</p>
             )}
           </div>
 
           <div className="flex w-full md:w-1/2 justify-evenly">
              {bookChunks.length > 0 ? (
               bookChunks[1].map((item, index) => (
-                <Book key={index} cover={item.cover_i} />
+                <Book key={index} cover={item.cover_i} title={item.title.trim().split(" ").slice(0, 2).join(" ")} />
               ))
             ) : (
-              <p>testing</p>
+              <p>loading....</p>
             )}
           </div>
         </div>
@@ -158,7 +158,7 @@ export const MiniSwipper = () => {
         <div className="flex w-full md:w-1/2 justify-evenly">
           {bookChunks.length > 0 ? (
               bookChunks[2].map((item, index) => (
-                <Book key={index} cover={item.cover_i} />
+                <Book key={index} cover={item.cover_i} title={item.title.trim().split(" ").slice(0, 2).join(" ")} />
               ))
             ) : (
               <p>testing</p>
@@ -167,10 +167,10 @@ export const MiniSwipper = () => {
           <div className="flex w-full md:w-1/2 justify-evenly">
           {bookChunks.length > 0 ? (
               bookChunks[3].map((item, index) => (
-                <Book key={index} cover={item.cover_i} />
+                <Book key={index} cover={item.cover_i} title={item.title.trim().split(" ").slice(0, 2).join(" ")} />
               ))
             ) : (
-              <p>testing</p>
+              <p>loading...</p>
             )}
           </div>
         </div>
