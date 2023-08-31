@@ -4,8 +4,8 @@ import { Button } from "./Button";
 
 export const BlogCart = (props) => {
   return (
-    <div className="px-7">
-      <div className="max-w-sm my-8 card box  rounded-[1rem] shadow text-start mx-auto">
+    <div className="px-4 md:px-7">
+      <div className="max-w-sm my-8 card box rounded-[1rem] shadow text-start mx-auto">
         <div className="relative">
           <Link to="/">
             <img

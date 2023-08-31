@@ -98,6 +98,16 @@
   width: 20% !important;
 }
 
+.book {
+  transition: transform 0.3s ease-in-out;
+}
+
+.book:hover {
+  transform: scale(1.1);
+}
+
+
+
 .swiper-scrollbar-drag, .swiper-scrollbar {
   display: none !important;
 }

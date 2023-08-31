@@ -12,7 +12,7 @@ export const Blogs = () => {
         body="Lorem ipsum dolor sit amet consectetur. Diam ut feugiat aliquet in varius feugiat magna dictum. Tortor diam et placerat."
       />
 
-      <div className="mt-6 md:flex md:gap-[3.3125rem] justify-center md:w-[90%] mx-auto">
+      <div className="mt-6 md:flex md:gap-[1rem] lg:gap-[3.3125rem] justify-center md:w-[90%] mx-auto">
         <BlogCart img={blog01}/>
         <BlogCart img={blogImg}/>
       </div>

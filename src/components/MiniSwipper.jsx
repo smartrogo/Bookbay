@@ -7,6 +7,8 @@ import "@splidejs/react-splide/css/skyblue";
 import "@splidejs/react-splide/css/sea-green";
 import { useState, useEffect, useMemo } from "react";
 import { Book } from "./Book";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const Slide = ({ handleClick, type }) => {
   return (
@@ -27,26 +29,29 @@ const Slide = ({ handleClick, type }) => {
 export const MiniSwipper = () => {
   // const [books, setBooks] = useState([]);
   const [displayedData, setDisplayedData] = useState([]);
-  const [test, setTest] = useState([]);
-  const [bookChunks, setBookChunks] = useState([]); 
+  const [bookChunks, setBookChunks] = useState([]);
+  const [loading, setIsLoading] = useState(true);
   // const [covers, setCovers] = useState([]);
 
   useEffect(() => {
     getBooks("programming"); // Fetch programming books initially
   }, []);
 
-
   const getBooks = async (bookType) => {
     try {
+      setIsLoading(true);
       const response = await fetch(
         `https://openlibrary.org/search.json?q=${bookType}`
       );
       const data = await response.json();
       const booksWithCovers = data.docs.filter((item) => item.cover_i);
       setDisplayedData(booksWithCovers.slice(0, 8));
-      console.log(displayedData, "only God knows")
+      console.log(displayedData, "only God knows");
     } catch (error) {
       console.error("Error fetching books:", error);
+    } finally {
+      setIsLoading(false);
+      console.log("Loading state set to false.");
     }
   };
 
@@ -56,7 +61,6 @@ export const MiniSwipper = () => {
   //   setTest(newArr);
   // };
 
-
   useEffect(() => {
     // Divide the displayedData into smaller chunks
     const chunkSize = 2;
@@ -65,7 +69,9 @@ export const MiniSwipper = () => {
       chunks.push(displayedData.slice(i, i + chunkSize));
     }
     setBookChunks(chunks); // Update the bookChunks state
-    console.log(bookChunks, "please")
+    console.log(bookChunks, "please");
+    // setIsLoading(false); // Set loading to false once data is processed
+    // console.log(bookChunks[1][0].author_name[0])
   }, [displayedData]);
 
   const slidesPerPage = useMemo(() => {
@@ -133,60 +139,69 @@ export const MiniSwipper = () => {
       </Splide>
 
       <div className="display border-2 border-red-500  justify-evenly ">
-        <div className="border-2 border-green-300 md:flex w-full">
-          <div className="flex w-full md:w-1/2 justify-evenly">
-          {bookChunks.length > 0 ? (
-              bookChunks[0].map((item, index) => (
-                <Book key={index} cover={item.cover_i} title={item.title.trim().split(" ").slice(0, 2).join(" ")} autor={item.author}/>
-              ))
-            ) : (
-              <p>loading...</p>
-            )}
-          </div>
-
-          <div className="flex w-full md:w-1/2 justify-evenly">
-             {bookChunks.length > 0 ? (
-              bookChunks[1].map((item, index) => (
-                <Book key={index} cover={item.cover_i} title={item.title.trim().split(" ").slice(0, 2).join(" ")} />
-              ))
-            ) : (
-              <p>loading....</p>
-            )}
-          </div>
-        </div>
-        <div className="border-2 border-green-300 md:flex w-full hidden ">
         <div className="flex w-full md:w-1/2 justify-evenly">
-          {bookChunks.length > 0 ? (
-              bookChunks[2].map((item, index) => (
-                <Book key={index} cover={item.cover_i} title={item.title.trim().split(" ").slice(0, 2).join(" ")} />
-              ))
-            ) : (
-              <p>testing</p>
-            )}
-          </div>
-          <div className="flex w-full md:w-1/2 justify-evenly">
-          {bookChunks.length > 0 ? (
-              bookChunks[3].map((item, index) => (
-                <Book key={index} cover={item.cover_i} title={item.title.trim().split(" ").slice(0, 2).join(" ")} />
-              ))
-            ) : (
-              <p>loading...</p>
-            )}
-          </div>
+          {loading ? (
+            <Skeleton
+              className="bg-[#b44848]"
+              height={250}
+              width="100%"
+              baseColor="#202020"
+              highlightColor="#444"
+            />
+          ) : (
+            bookChunks[0].map((item, index) => (
+              <Book
+                key={index}
+                cover={item.cover_i}
+                title={item.title.trim().split(" ").slice(0, 2).join(" ")}
+                year={item.first_publish_year}
+                loading={loading}
+              />
+            ))
+          )}
         </div>
 
-        {/* <div>
-          <div className="flex flex-wrap justify-evenly">
-          {displayedData.length > 0 ? (
-        displayedData.map((item, index) => (
-          <Book key={index} title={item.title} cover={item.cover_i}/>
-        ))
-      ) : (
-        <p>No data available</p>
-      )}
+        {/* <div className="border-2 border-green-300 md:flex w-full hidden">
+          <div className="flex w-full md:w-1/2 justify-evenly">
+            {bookChunks[2].map((item, index) => (
+              <Book
+                key={index}
+                cover={item.cover_i}
+                title={item.title.trim().split(" ").slice(0, 2).join(" ")}
+                year={item.first_publish_year}
+                loading={loading}
+              />
+            ))}
+            {loading && (
+              <Skeleton
+                height={250}
+                width="100%"
+                baseColor="#202020"
+                highlightColor="#444"
+              />
+            )}
+          </div>
+
+          <div className="flex w-full md:w-1/2 justify-evenly">
+            {bookChunks[3].map((item, index) => (
+              <Book
+                key={index}
+                cover={item.cover_i}
+                title={item.title.trim().split(" ").slice(0, 2).join(" ")}
+                year={item.first_publish_year}
+                loading={loading}
+              />
+            ))}
+            {loading && (
+              <Skeleton
+                height={250}
+                width="100%"
+                baseColor="#202020"
+                highlightColor="#444"
+              />
+            )}
           </div>
         </div> */}
-        <div></div>
       </div>
     </>
   );

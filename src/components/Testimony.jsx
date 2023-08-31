@@ -4,7 +4,8 @@ import tech2 from "../assets/tech2.jpeg";
 import { Link } from "react-router-dom";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
 import { Text } from "./Text";
-import  guy  from "../assets/guy.jpg"
+import  ellipse1  from "../assets/ellipse1.png"
+import  ellipse2  from "../assets/ellipse2.png"
 import  guy02  from "../assets/guy02.jpg"
 
 export const Testimony = () => {
@@ -20,13 +21,13 @@ export const Testimony = () => {
           <Card
             profession="Teacher"
             name="Sani muhammad"
-            img={guy}
+            img={ellipse1}
             says="Lorem ipsum dolor sit amet consectetur. Sodales risus sed condimentum aliquet eget lectus."
           />
           <Card
             profession="UI/UX Designer "
             name="Muhammad Niimatullahi"
-            img={tech2}
+            img={ellipse2}
             says="Lorem ipsum dolor sit amet consectetur. Sodales risus sed condimentum aliquet eget lectus."
           />
           <Card
