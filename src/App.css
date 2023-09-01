@@ -59,8 +59,8 @@
 }
 .aside {
   background-color: var(--aside--bg);
-  filter: blur(2px);
-  -webkit-filter: blur(2px);
+  /* filter: blur(2px); */
+  /* -webkit-filter: blur(2px); */
 }
 
 .footer {
@@ -197,6 +197,6 @@
 
 /* Header2.css */
 .blur-active .content-wrapper {
-  filter: blur(5px); /* Adjust the blur intensity as needed */
-  pointer-events: none; /* Prevent interaction with blurred content */
+  /* filter: blur(5px); Adjust the blur intensity as needed */
+  /* pointer-events: none; Prevent interaction with blurred content */
 }

@@ -15,6 +15,8 @@ import {
   UserButton,
 } from "@clerk/clerk-react";
 import { SignInPage } from "./components/SignInPage";
+import { Dashboard } from "./components/Dashboard";
+import { SignUpPage } from "./components/SignUpPage";
 
 if (!import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
@@ -22,23 +24,17 @@ if (!import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY) {
 
 const clerkPubKey = import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY;
 
-// function PublicPage() {
+
+// function ProtectedPage() {
 //   return (
 //     <>
-//       <h1>Public page</h1>
-//       <a href="/protected">Go to protected page</a>
+//       <h1>Protected page</h1>
+//       <UserButton />
 //     </>
 //   );
 // }
 
-function ProtectedPage() {
-  return (
-    <>
-      <h1>Protected page</h1>
-      <UserButton />
-    </>
-  );
-}
+
 
 function ClerkProviderWithRoutes() {
   const navigate = useNavigate();
@@ -55,11 +51,7 @@ function ClerkProviderWithRoutes() {
     localStorage.setItem("theme", darkMode ? "dark" : "light");
   }, [darkMode]);
 
-  {
-    /* <div>
-          <Header onClick={handleTheme} darkMode={darkMode} />
-        </div> */
-  }
+
   const handleTheme = () => {
     setDarkMode(!darkMode);
     console.log("he");
@@ -70,23 +62,8 @@ function ClerkProviderWithRoutes() {
           <Header onClick={handleTheme} darkMode={darkMode} />
         </div> 
     <ClerkProvider publishableKey={clerkPubKey} navigate={(to) => navigate(to)}>
-      {/* <div className={`app ${darkMode ? "dark-mode" : "light-mode"}`}></div>
-      
-      <Routes>
-       
-        <Route path="/" exact element={<Home />}></Route>
-        <Route path="/sign-in/*" element={<SignedIn />}></Route>
-        <Route path="/sign-up/*" element={<SignedOut />}></Route>
-        <Route
-          path="/"
-          element={
-            <ClerkProvider navigate={(to) => `/sign-in${to}`}>
-              <Home />
-            </ClerkProvider>
-          }
-        ></Route>
+
         
-      </Routes> */}
     <Routes>
  
     </Routes>
@@ -96,19 +73,20 @@ function ClerkProviderWithRoutes() {
           path="/sign-in/*"
           element={<SignInPage />}
         />
+        
         <Route
           path="/sign-up/*"
-          element={<SignUp routing="path" path="/sign-up" />}
+          element={<SignUpPage />}
         />
         <Route
-          path="/protected"
+          path="/dashboard"
           element={
             <>
               <SignedIn>
-                <ProtectedPage />
+                <Dashboard routing="path" path="/dashboard"/>
               </SignedIn>
               <SignedOut>
-                <RedirectToSignIn />
+                <SignInPage />
               </SignedOut>
             </>
           }

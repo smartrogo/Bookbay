@@ -5,7 +5,7 @@ import { RiCloseCircleFill } from "react-icons/ri";
 import { LuMoon } from "react-icons/lu";
 import { BsSun } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
-import { useAuth } from "@clerk/clerk-react";
+import { useUser } from '@clerk/clerk-react';
 import { useNavigate } from "react-router-dom";
 
 
@@ -13,8 +13,8 @@ export const Header = (props) => {
   const [active, setActive] = useState(false);
   const menuRef = useRef();
   const navigate = useNavigate()
-  const userId = useAuth()
-  console.log(userId)
+  // const { user } = useUser();
+  // console.log(user)
 
   const navigateToLogin = () => {
     // 👇️ navigate to /contacts
@@ -26,11 +26,18 @@ export const Header = (props) => {
     setActive(!active);
   };
 
+  const test = () => {
+    if (active === true) {
+      document.body.style = 'backgroundColor: red;'
+    }
+  }
+
   // useEffect function to handle outside click to toggle
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
         setActive(false);
+        test()
       }
     };
 
@@ -127,7 +134,7 @@ export const Header = (props) => {
               )}
             </div>
             <Button
-            onClick={navigateToLogin}
+            onClick={() => navigate("/sign-in")}
               value="Login"
               cls_name=" text-[0.825rem] md:text-[1.25rem] rounded-[6px] bg bg-transparent border-2 border-[#0F9D58] py-[0.1875rem] ml-[10px] md:ml-[10px] px-[0.75rem] md:px-[1.86519rem] roboto md:py-[0.46631rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.49744rem]"
             />
