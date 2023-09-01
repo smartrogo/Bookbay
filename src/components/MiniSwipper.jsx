@@ -7,7 +7,7 @@ import "@splidejs/react-splide/css/skyblue";
 import "@splidejs/react-splide/css/sea-green";
 import { useState, useEffect, useMemo } from "react";
 import { Book } from "./Book";
-import Skeleton from "react-loading-skeleton";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const Slide = ({ handleClick, type }) => {
@@ -74,6 +74,14 @@ export const MiniSwipper = () => {
     // console.log(bookChunks[1][0].author_name[0])
   }, [displayedData]);
 
+  useEffect(() => {
+    // Once the bookChunks are populated, loading is set to false
+    if (bookChunks.length > 0) {
+      setIsLoading(false);
+    }
+  }, [bookChunks]);
+
+
   const slidesPerPage = useMemo(() => {
     const screenWidth = window.innerWidth;
     if (screenWidth >= 1200) {
@@ -138,17 +146,29 @@ export const MiniSwipper = () => {
         </SplideSlide>
       </Splide>
 
-      <div className="display border-2 border-red-500  justify-evenly ">
-        <div className="flex w-full md:w-1/2 justify-evenly">
-          {loading ? (
+      <div className="display md:flex border-2 border-blue-500  justify-evenly ">
+      <div className="flex w-full md:w-1/2 justify-evenly">
+          {bookChunks[1] && !loading ? (
+            bookChunks[1].map((item, index) => (
+              <Book
+                key={index}
+                cover={item.cover_i}
+                title={item.title.trim().split(" ").slice(0, 2).join(" ")}
+                year={item.first_publish_year}
+                loading={loading}
+              />
+            ))
+          ) : (
             <Skeleton
-              className="bg-[#b44848]"
               height={250}
               width="100%"
               baseColor="#202020"
               highlightColor="#444"
             />
-          ) : (
+          )}
+        </div>
+      <div className="flex w-full md:w-1/2 justify-evenly">
+          {bookChunks[0] && !loading ? (
             bookChunks[0].map((item, index) => (
               <Book
                 key={index}
@@ -158,51 +178,61 @@ export const MiniSwipper = () => {
                 loading={loading}
               />
             ))
+          ) : (
+            <Skeleton
+              height={250}
+              width="100%"
+              baseColor="#202020"
+              highlightColor="#444"
+            />
           )}
         </div>
-
-        {/* <div className="border-2 border-green-300 md:flex w-full hidden">
-          <div className="flex w-full md:w-1/2 justify-evenly">
-            {bookChunks[2].map((item, index) => (
-              <Book
-                key={index}
-                cover={item.cover_i}
-                title={item.title.trim().split(" ").slice(0, 2).join(" ")}
-                year={item.first_publish_year}
-                loading={loading}
-              />
-            ))}
-            {loading && (
-              <Skeleton
-                height={250}
-                width="100%"
-                baseColor="#202020"
-                highlightColor="#444"
-              />
-            )}
-          </div>
-
-          <div className="flex w-full md:w-1/2 justify-evenly">
-            {bookChunks[3].map((item, index) => (
-              <Book
-                key={index}
-                cover={item.cover_i}
-                title={item.title.trim().split(" ").slice(0, 2).join(" ")}
-                year={item.first_publish_year}
-                loading={loading}
-              />
-            ))}
-            {loading && (
-              <Skeleton
-                height={250}
-                width="100%"
-                baseColor="#202020"
-                highlightColor="#444"
-              />
-            )}
-          </div>
-        </div> */}
+       
       </div>
+      <div className="hidden md:flex border-2 border-blue-500  justify-evenly ">
+      <div className="flex w-full md:w-1/2 justify-evenly">
+          {bookChunks[2] && !loading ? (
+            bookChunks[2].map((item, index) => (
+              <Book
+                key={index}
+                cover={item.cover_i}
+                title={item.title.trim().split(" ").slice(0, 2).join(" ")}
+                year={item.first_publish_year}
+                loading={loading}
+              />
+            ))
+          ) : (
+            <Skeleton
+              height={250}
+              width="100%"
+              baseColor="#202020"
+              highlightColor="#444"
+            />
+          )}
+        </div>
+      <div className="flex w-full md:w-1/2 justify-evenly">
+          {bookChunks[3] && !loading ? (
+            bookChunks[3].map((item, index) => (
+              <Book
+                key={index}
+                cover={item.cover_i}
+                title={item.title.trim().split(" ").slice(0, 2).join(" ")}
+                year={item.first_publish_year}
+                loading={loading}
+              />
+            ))
+          ) : (
+            <Skeleton
+              height={250}
+              width="100%"
+              baseColor="#202020"
+              highlightColor="#444"
+            />
+          )}
+        </div>
+       
+      </div>
+
     </>
   );
 };
