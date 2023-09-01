@@ -1,6 +1,6 @@
 import React from "react";
 
-const Input = ({ label, id, name, type, placeholder, label_cls_name, cls_name, value, handleChange }) => {
+const Input = ({ label, id, name, type, placeholder, label_cls_name, cls_name, value, onChange }) => {
   return (
     <div className="relative mb-4">
       <label
@@ -17,7 +17,7 @@ const Input = ({ label, id, name, type, placeholder, label_cls_name, cls_name, v
         className={cls_name}
         placeholder={placeholder}
         value={value}
-        onChange={handleChange}
+        onChange={onChange}
       />
     </div>
   );

@@ -16,9 +16,9 @@ export const Book = ({ cover, title, year, autor, loading }) => {
         />
         )}
       </div>
-      <span className="color border-2 text-center my-2 w-[80%]">{loading ? <Skeleton width={100} baseColor="#202020" highlightColor="#444"/> : title}</span>
-      <span>{loading ? <Skeleton width={100} baseColor="#202020" highlightColor="#444"/> : autor}</span>
-      <span>{loading ? <Skeleton baseColor="#202020" highlightColor="#444"/>: `year: ${year}` }</span>
+      <span className="color border-2 text-center my-2 w-[80%]">{loading ? <Skeleton width="100%" baseColor="#202020" highlightColor="#444"/> : title}</span>
+      <span>{loading ? <Skeleton width="100%" baseColor="#202020" highlightColor="#444"/> : autor}</span>
+      <span>{loading ? <Skeleton width="100%" baseColor="#202020" highlightColor="#444"/>: `year: ${year}` }</span>
     </div>
   );
 };

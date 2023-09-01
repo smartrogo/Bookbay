@@ -6,7 +6,7 @@ import { LiaLongArrowAltRightSolid } from "react-icons/lia";
 import { Text } from "./Text";
 import  ellipse1  from "../assets/ellipse1.png"
 import  ellipse2  from "../assets/ellipse2.png"
-import  guy02  from "../assets/guy02.jpg"
+import  ellipse3  from "../assets/ellipse3.png"
 
 export const Testimony = () => {
   return (
@@ -33,7 +33,7 @@ export const Testimony = () => {
           <Card
             profession="frontend Engineer "
             name="Muhammad Ala"
-            img={guy02}
+            img={ellipse3}
             says="Lorem ipsum dolor sit amet consectetur. Sodales risus sed condimentum aliquet eget lectus."
           />
         </div>

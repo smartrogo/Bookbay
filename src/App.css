@@ -106,12 +106,11 @@
   transform: scale(1.1);
 }
 
-.react-loading-skeleton {
+/* .react-loading-skeleton {
   border: 4px solid black;
   width: 100% !important;
-  height: 100%;
-  background-color: #202020 !important;
-}
+  height: 100% ;
+} */
 
 .swiper-scrollbar-drag, .swiper-scrollbar {
   display: none !important;
