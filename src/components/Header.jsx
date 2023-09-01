@@ -5,9 +5,21 @@ import { RiCloseCircleFill } from "react-icons/ri";
 import { LuMoon } from "react-icons/lu";
 import { BsSun } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
+
+
 export const Header = (props) => {
   const [active, setActive] = useState(false);
   const menuRef = useRef();
+  const navigate = useNavigate()
+  const userId = useAuth()
+  console.log(userId)
+
+  const navigateToLogin = () => {
+    // 👇️ navigate to /contacts
+    navigate('/sign-in');
+  };
 
   // sidebar toggle function
   const handleNavbar = () => {
@@ -72,22 +84,22 @@ export const Header = (props) => {
                 </NavLink>
               </li>
               <li className="roboto under text-[18px] leading-normal">
-                <NavLink to="/about" style={navLinkStyle}>
+                <NavLink to="/" style={navLinkStyle}>
                   About us
                 </NavLink>
               </li>
               <li className="roboto under text-[18px] leading-normal">
-                <NavLink to="/borrow" style={navLinkStyle}>
+                <NavLink to="/" style={navLinkStyle}>
                   Borrow
                 </NavLink>
               </li>
               <li className="roboto under text-[18px] leading-normal">
-                <NavLink to="/buy/sell" style={navLinkStyle}>
+                <NavLink to="/" style={navLinkStyle}>
                   Buy/Sell
                 </NavLink>
               </li>
               <li className="roboto under text-[18px] leading-normal balance">
-                <NavLink to="wallet-connect" style={navLinkStyle}>
+                <NavLink to="/" style={navLinkStyle}>
                   Wallet connect
                 </NavLink>
               </li>
@@ -99,7 +111,7 @@ export const Header = (props) => {
         </div>
 
         {/* Add Login Button */}
-        <div className="login-button-container flex justify-between items-center">
+        <div className="login-button-container border-3 flex justify-between items-center">
           <div className="flex items-center md:w-[48%] w-[60%] justify-between">
             <div className="">
               {props.darkMode ? (
@@ -115,6 +127,7 @@ export const Header = (props) => {
               )}
             </div>
             <Button
+            onClick={navigateToLogin}
               value="Login"
               cls_name=" text-[0.825rem] md:text-[1.25rem] rounded-[6px] bg bg-transparent border-2 border-[#0F9D58] py-[0.1875rem] ml-[10px] md:ml-[10px] px-[0.75rem] md:px-[1.86519rem] roboto md:py-[0.46631rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.49744rem]"
             />
@@ -153,7 +166,7 @@ export const Header = (props) => {
             </li>
             <li className="mb-5 text-[25px] font-medium leading-[120%] hover:underline">
               <NavLink
-                to="/about"
+                to="/"
                 onClick={() => {
                   setActive(false);
                 }}
@@ -164,7 +177,7 @@ export const Header = (props) => {
             </li>
             <li className="mb-5 text-[25px] font-medium leading-[120%] hover:underline">
               <NavLink
-                to="/borrow"
+                to="/"
                 onClick={() => {
                   setActive(false);
                 }}
@@ -175,7 +188,7 @@ export const Header = (props) => {
             </li>
             <li className="mb-5 text-[25px] font-medium leading-[120%] hover:underline">
               <NavLink
-                to="/buy/sell"
+                to="/"
                 onClick={() => {
                   setActive(false);
                 }}

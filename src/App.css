@@ -112,6 +112,10 @@
   height: 100% ;
 } */
 
+.cl-rootBox {
+  margin-top: 30%;
+}
+
 .swiper-scrollbar-drag, .swiper-scrollbar {
   display: none !important;
 }
