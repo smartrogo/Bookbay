@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Button } from "./Button";
 import Input from "./Input";
 import stay from "../assets/stay.png";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import emailjs from "@emailjs/browser";
 
 export const Contact = () => {
+  const form = useRef();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [message, setMessge] = useState("");
+  const [loading, setIsLoading] = useState(false);
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -22,13 +27,41 @@ export const Contact = () => {
     console.log(message);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (email.trim() === "" || name.trim() === "" || message.trim() === "") {
       console.log("you typed nothing");
       return false;
     }
-    console.log(name, email, message);
+    setIsLoading(true);
+    try {
+      await emailjs.sendForm(
+        import.meta.env.VITE_YOUR_SERVICE_ID,
+        import.meta.env.VITE_YOUR_TEMPLATE_ID,
+        form.current,
+        import.meta.env.VITE_YOUR_PUBLIC_ID
+      );
+      toast.success("message sent, \n will get back to you!", {
+        position: toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        style: {
+          fontSize: "14px",
+        },
+      });
+      setEmail("");
+      setName("");
+      setMessge("");
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong, try again", {
+        position:  toast.POSITION.TOP_CENTER,
+        autoClose: 3000,
+        style: {
+          fontSize: "14px",
+        },
+      });
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -40,7 +73,7 @@ export const Contact = () => {
       />
       <div className="w-[94.5%] md:w-[75%] px-5 md:px-12 pb-4 md:pb-10 mx-auto flex sm:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 flex flex-col w-full md:py-8 mt-8 md:mt-0">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} ref={form}>
             <h2 className=" poppins text-[1.03794rem] md:text-[1.75rem] text-style mb-1 font-bold leading-normal title-font capitalize">
               contact us
             </h2>
