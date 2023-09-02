@@ -17,8 +17,7 @@ export const Reasons = () => {
         Why use Bookbay ?
       </h1>
 
-      <div className="flex flex-wrap justify-center gap-6 md:justify-evenly md:w-[90%] mx-auto border-2 ">
-      {/* flex flex-wrap justify-center gap-6 md:justify-evenly */}
+      <div className="flex flex-wrap justify-center gap-6 md:justify-evenly md:w-[90%] mx-auto">
         <ReasonCard icon={read} title="read" body="Shop for both new and used books at budget-friendly prices, making it easy to expand your personal collection."/>
         <ReasonCard icon={borrow} title="borrow" body="Shop for both new and used books at budget-friendly prices, making it easy to expand your personal collection."/>
         <ReasonCard icon={buy} title="buy" body="Shop for both new and used books at budget-friendly prices, making it easy to expand your personal collection."/>
@@ -27,7 +26,7 @@ export const Reasons = () => {
       <div className="flex justify-center mt-8">
         <Button
           value="Join us today !"
-          cls_name="bg-[#0F9D58] mx-auto rounded-[0.5rem] py-[0.56563rem] px-[1.09794rem] md:py-[1.0625rem] md:px-[2.0625rem] text-center"
+          cls_name="bg-[#0F9D58] text-[#FFFFFF] mx-auto rounded-[0.5rem] py-[0.56563rem] px-[1.09794rem] md:py-[1.0625rem] md:px-[2.0625rem] text-center"
         />
       </div>
     </div>

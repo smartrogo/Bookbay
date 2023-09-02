@@ -3,7 +3,7 @@ import React from 'react'
 export const ReasonCard = ({title, body, icon}) => {
   return (
     <div
-    className="mr block border-2 rounded-[1rem] w-[20rem] md:w-[20.25rem] md:h-[17.8125rem] my-4 why mx-auto"
+    className="mr block box-sha rounded-[1rem] w-[20rem] md:w-[20.25rem] md:h-[17.8125rem] my-4 why mx-auto"
   >
     <div className="p-4 text-center">
       <div className="mx-auto flex items-center justify-center">
