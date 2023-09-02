@@ -159,7 +159,7 @@ export const Header = (props) => {
               className="close mt-7 right-4 cursor-pointer font-medium text-[40px] leading-5 not-italic absolute"
             />
           )}
-          <ul className="p-4 mt-20 w-[80%] border-2  border-red-500 ml-8">
+          <ul className="p-4 mt-20 w-[80%] ml-8">
             <li className="mb-5 text-[25px] font-medium leading-[120%] hover:underline">
               <NavLink
                 to="/"

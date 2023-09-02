@@ -3,7 +3,7 @@ import React from "react";
 export const Text = (props) => {
   return (
       <div className="roboto text-style text-center leading-normal  mb-2 md:mb-[2rem]">
-        <h1 className="font-bold text-[1.5rem] md:text-[3rem] roboto ">
+        <h1 className="font-bold text-[1.5rem] md:text-[3rem] roboto">
           {props.head}
         </h1>
 

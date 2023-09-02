@@ -1,6 +1,6 @@
 .dark-mode {
   --bg-color: #1E1E1E;
-  --aside--bg: #000;
+  --aside--bg: #161212;
   --text-color: #FFFFFF;
   --nav-bg: #141218;
   --icon-color: white;
@@ -11,6 +11,7 @@
   --swiper-btn: #454545;
   --footer-bg: #111111;
   --testimony-border: #1E1E1E;
+  
 }
 
 .light-mode {
@@ -18,8 +19,8 @@
   --text-color: #000000;
   --nav-bg: #FFFFFF;
   --icon-color: #000;
-  --para-color: #666;
-  --aside--bg: #fff;
+  --para-color: #9f9d9d;
+  --aside--bg: #d9d9d9;
   --border-color: #000000;
   --card-bg: #EEEEEE;
   --qoute-color: #666666;
