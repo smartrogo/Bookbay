@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Button } from "./Button";
 import Input from "./Input";
 import stay from "../assets/stay.png";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import emailjs from "@emailjs/browser";
@@ -13,24 +13,31 @@ export const Contact = () => {
   const [name, setName] = useState("");
   const [message, setMessge] = useState("");
   const [loading, setIsLoading] = useState(false);
+  const [msg, setMsg] = useState("");
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
-    console.log(email);
+    setMsg("")
   };
   const handleName = (e) => {
     setName(e.target.value);
-    console.log(name);
+    setMsg("")
   };
   const handleMessage = (e) => {
     setMessge(e.target.value);
-    console.log(message);
+    setMsg("")
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('hi, men')
     if (email.trim() === "" || name.trim() === "" || message.trim() === "") {
       console.log("you typed nothing");
+      setMsg("Please fill the form")
+       // Automatically remove the error message after 5 seconds
+       setTimeout(() => {
+        setMsg("");
+      }, 5000);
       return false;
     }
     setIsLoading(true);
@@ -63,6 +70,18 @@ export const Contact = () => {
     }
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    // Automatically remove the error message after 5 seconds
+    const timeoutId = setTimeout(() => {
+      setMsg("");
+    }, 5000);
+
+    return () => {
+      // Clear the timeout if the component unmounts or if a new error occurs
+      clearTimeout(timeoutId);
+    };
+  }, [msg]);
 
   return (
     <section className="relative mb-10">
@@ -119,6 +138,7 @@ export const Contact = () => {
                 placeholder="Your Message"
               ></textarea>
             </div>
+            {msg ? <p style={{color: "#ef4461"}}>{msg}</p> : ""}
 
             <Button
               type="submit"
