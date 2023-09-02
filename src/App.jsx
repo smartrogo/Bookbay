@@ -15,7 +15,7 @@ import {
   UserButton,
 } from "@clerk/clerk-react";
 import { SignInPage } from "./components/SignInPage";
-// import { Dashboard } from "./components/Dashboard";
+import { Dashboard } from "./components/Dashboard";
 import { SignUpPage } from "./components/SignUpPage";
 
 if (!import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY) {
@@ -26,14 +26,14 @@ const clerkPubKey = import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY;
 
 console.log(clerkPubKey)
 
-function ProtectedPage() {
-  return (
-    <>
-      <h1>Protected page</h1>
-      <UserButton />
-    </>
-  );
-}
+// function ProtectedPage() {
+//   return (
+//     <>
+//       <h1>Protected page</h1>
+//       <UserButton />
+//     </>
+//   );
+// }
 
 
 
@@ -70,23 +70,22 @@ function ClerkProviderWithRoutes() {
         <Route path="/" element={<Home />} />
         <Route
           path="/sign-in/*"
-          element={<SignIn routing="path" path="/sign-in" />}
+          element={<SignInPage />}
         />
         
         <Route
           path="/sign-up/*"
-          element={<SignUp routing="path" path="/sign-up" />}
+          element={<SignUpPage />}
         />
         <Route
           path="/dashboard"
           element={
             <>
               <SignedIn>
-              <ProtectedPage path="/dashboard" routing="path" />
-                {/* <Dashboard routing="path" path="/dashboard"/> */}
+                <Dashboard routing="path" path="/dashboard"/>
               </SignedIn>
               <SignedOut>
-                <RedirectToSignIn />
+                <SignInPage />
               </SignedOut>
             </>
           }
