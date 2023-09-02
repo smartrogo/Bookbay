@@ -17,7 +17,7 @@ export const Reasons = () => {
         Why use Bookbay ?
       </h1>
 
-      <div className=" border-2 flex flex-col md:flex-row md:flex-wrap justify-evenly md:w-[90%] mx-auto items-center ">
+      <div className="flex flex-col md:flex-row md:flex-wrap justify-evenly md:w-[90%] mx-auto items-center ">
         <ReasonCard icon={read} title="read" body="Shop for both new and used books at budget-friendly prices, making it easy to expand your personal collection."/>
         <ReasonCard icon={borrow} title="borrow" body="Shop for both new and used books at budget-friendly prices, making it easy to expand your personal collection."/>
         <ReasonCard icon={buy} title="buy" body="Shop for both new and used books at budget-friendly prices, making it easy to expand your personal collection."/>
