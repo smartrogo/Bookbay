@@ -11,13 +11,14 @@ import { ReasonCard } from "./ReasonCard";
 
 export const Reasons = () => {
   return (
-    <div className="mb-10 capitalize leading-normal p-[2rem] md:p-[4.2rem]">
+    <div className="mb-10 capitalize leading-normal p-[2rem] md:p-[4.2rem] border-2">
 
       <h1 className="text-center  border-2 border-red-500 mb-2 text-[1.5rem] md:text-[3rem] roboto font-bold">
         Why use Bookbay ?
       </h1>
 
-      <div className="flex flex-col md:flex-row md:flex-wrap justify-evenly md:w-[90%] mx-auto items-center ">
+      <div className="flex flex-wrap justify-center gap-6 md:justify-evenly md:w-[90%] mx-auto border-2 ">
+      {/* flex flex-wrap justify-center gap-6 md:justify-evenly */}
         <ReasonCard icon={read} title="read" body="Shop for both new and used books at budget-friendly prices, making it easy to expand your personal collection."/>
         <ReasonCard icon={borrow} title="borrow" body="Shop for both new and used books at budget-friendly prices, making it easy to expand your personal collection."/>
         <ReasonCard icon={buy} title="buy" body="Shop for both new and used books at budget-friendly prices, making it easy to expand your personal collection."/>
