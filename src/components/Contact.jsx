@@ -1,6 +1,12 @@
 import React, { useRef } from "react";
 import { Button } from "./Button";
 import Input from "./Input";
+import stay from "../assets/stay.png";
+import { useState, useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import emailjs from "@emailjs/browser";
+
 export const Contact = () => {
   const form = useRef();
   const [email, setEmail] = useState("");
