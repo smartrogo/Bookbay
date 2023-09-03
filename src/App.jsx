@@ -60,12 +60,10 @@ function ClerkProviderWithRoutes() {
   return (
     <div className={`app ${darkMode ? "dark-mode" : "light-mode"}`}>
     <div>
-          <Header onClick={handleTheme} darkMode={darkMode} />
-        </div> 
+        <Header onClick={handleTheme} darkMode={darkMode} />
+      </div> 
+
     <ClerkProvider publishableKey={clerkPubKey} navigate={(to) => navigate(to)}>
-    <Routes>
- 
-    </Routes>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
@@ -83,9 +81,11 @@ function ClerkProviderWithRoutes() {
             <>
               <SignedIn>
                 <Dashboard routing="path" path="/dashboard"/>
+                
               </SignedIn>
               <SignedOut>
-                <SignInPage />
+                
+                <Home routing="path" path="/"/>
               </SignedOut>
             </>
           }

@@ -9,7 +9,8 @@ import { useState, useEffect, useMemo } from "react";
 import { Book } from "./Book";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
+import { LiaLongArrowAltRightSolid } from "react-icons/lia";
+import { Link } from "react-router-dom";
 const Slide = ({ handleClick, type }) => {
   return (
     <div className="border-[1px] card border-solid rounded-[0.25075rem] md:rounded-[0.5rem] flex cursor-pointer hover:border-[#fff] active:bg-[#0F9D58] hover:text-[#fff] hover:bg-[#0F9D58]">
@@ -55,11 +56,6 @@ export const MiniSwipper = () => {
     }
   };
 
-  // const getTwo = async (arr) => {
-  //   const newArr = await arr.slice(0, 2);
-  //   console.log(newArr);
-  //   setTest(newArr);
-  // };
 
   useEffect(() => {
     // Divide the displayedData into smaller chunks
@@ -95,15 +91,6 @@ export const MiniSwipper = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   setDisplayedData(books.slice(0, 4));
-  // }, [books]);
-
-  // useEffect(() => {
-  //   // Extract cover_i values from displayedData
-  //   const extractedCovers = displayedData.map(item => item.cover_i);
-  //   setCovers(extractedCovers);
-  // }, [displayedData]);
 
   return (
     <>
@@ -116,7 +103,7 @@ export const MiniSwipper = () => {
           pagination: false, // Set pagination to false
         }}
         aria-label="My Favorite Images"
-        className="border-2 border-red-500"
+        className=""
       >
         <SplideSlide>
           <Slide handleClick={() => getBooks("programming")} type="textbook" />
@@ -146,7 +133,8 @@ export const MiniSwipper = () => {
         </SplideSlide>
       </Splide>
 
-      <div className="display md:flex border-2 border-blue-500  justify-evenly ">
+      <div className="display md:flex border-2 border-yellow-500  justify-evenly ">
+
       <div className="flex w-full md:w-1/2 justify-evenly">
           {bookChunks[1] && !loading ? (
             bookChunks[1].map((item, index) => (
@@ -167,6 +155,7 @@ export const MiniSwipper = () => {
             />
           )}
         </div>
+        
       <div className="flex w-full md:w-1/2 justify-evenly">
           {bookChunks[0] && !loading ? (
             bookChunks[0].map((item, index) => (
@@ -189,7 +178,9 @@ export const MiniSwipper = () => {
         </div>
        
       </div>
+
       <div className="hidden md:flex border-2 border-blue-500  justify-evenly ">
+
       <div className="flex w-full md:w-1/2 justify-evenly">
           {bookChunks[2] && !loading ? (
             bookChunks[2].map((item, index) => (
@@ -232,7 +223,10 @@ export const MiniSwipper = () => {
         </div>
        
       </div>
-
+      <Link className="my-[2px] roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#4285F4] flex justify-end w-[80%] md:w-[95%] mx-auto items-center">
+        <span className="underline">see more </span>
+        <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />
+      </Link>
     </>
   );
 };
