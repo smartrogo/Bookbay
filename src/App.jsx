@@ -17,6 +17,7 @@ import {
 import { SignInPage } from "./components/SignInPage";
 import { Dashboard } from "./components/Dashboard";
 import { SignUpPage } from "./components/SignUpPage";
+import Categories from "./components/Categories";
 
 if (!import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
@@ -25,17 +26,6 @@ if (!import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY) {
 const clerkPubKey = import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY;
 
 console.log(clerkPubKey)
-
-// function ProtectedPage() {
-//   return (
-//     <>
-//       <h1>Protected page</h1>
-//       <UserButton />
-//     </>
-//   );
-// }
-
-
 
 function ClerkProviderWithRoutes() {
   const navigate = useNavigate();
@@ -52,47 +42,39 @@ function ClerkProviderWithRoutes() {
     localStorage.setItem("theme", darkMode ? "dark" : "light");
   }, [darkMode]);
 
-
   const handleTheme = () => {
     setDarkMode(!darkMode);
     console.log("he");
   };
+
   return (
     <div className={`app ${darkMode ? "dark-mode" : "light-mode"}`}>
-    <div>
+      <div>
         <Header onClick={handleTheme} darkMode={darkMode} />
       </div> 
 
-    <ClerkProvider publishableKey={clerkPubKey} navigate={(to) => navigate(to)}>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/sign-in/*"
-          element={<SignInPage />}
-        />
-        
-        <Route
-          path="/sign-up/*"
-          element={<SignUpPage />}
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <>
-              <SignedIn>
-                <Dashboard routing="path" path="/dashboard"/>
-                
-              </SignedIn>
-              <SignedOut>
-                
-                <Home routing="path" path="/"/>
-              </SignedOut>
-            </>
-          }
-        />
-        <Route path="*" element={<ErrorPage />}></Route>
-      </Routes>
-    </ClerkProvider>
+      <ClerkProvider publishableKey={clerkPubKey} navigate={(to) => navigate(to)}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/sign-in/*" element={<SignInPage />} />
+          <Route path="/sign-up/*" element={<SignUpPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <>
+                <SignedIn>
+                  <Dashboard routing="path" path="/dashboard"/>
+                </SignedIn>
+                <SignedOut>
+                  <Home routing="path" path="/"/>
+                </SignedOut>
+              </>
+            }
+          />
+          <Route path="/category/:category" element={<Categories />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </ClerkProvider>
     </div>
   );
 }

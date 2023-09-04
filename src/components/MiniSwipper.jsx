@@ -33,6 +33,7 @@ export const MiniSwipper = () => {
   const [bookChunks, setBookChunks] = useState([]);
   const [loading, setIsLoading] = useState(true);
   // const [covers, setCovers] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("programming"); 
 
   useEffect(() => {
     getBooks("programming"); // Fetch programming books initially
@@ -106,19 +107,28 @@ export const MiniSwipper = () => {
         className=""
       >
         <SplideSlide>
-          <Slide handleClick={() => getBooks("programming")} type="textbook" />
+          <Slide handleClick={() => {getBooks("programming");
+            setSelectedCategory("programming"); 
+            console.log(selectedCategory)
+        }} type="programming" />
         </SplideSlide>
 
         <SplideSlide>
-          <Slide handleClick={() => getBooks("science")} type="history" />
+          <Slide handleClick={() => {getBooks("science");
+          setSelectedCategory("science"); 
+        }} type="science" />
         </SplideSlide>
 
         <SplideSlide>
-          <Slide handleClick={() => getBooks("history")} type="adventure" />
+          <Slide handleClick={() => {getBooks("history");
+           setSelectedCategory("history"); 
+          }} type="history" />
         </SplideSlide>
 
         <SplideSlide>
-          <Slide handleClick={() => getBooks("science")} type="science" />
+          <Slide handleClick={() => {getBooks("science");
+           setSelectedCategory("science"); 
+          }} type="science" />
         </SplideSlide>
 
         <SplideSlide>
@@ -126,10 +136,9 @@ export const MiniSwipper = () => {
         </SplideSlide>
 
         <SplideSlide>
-          <Slide
-            handleClick={() => getBooks("computer science")}
-            type="computer"
-          />
+          <Slide handleClick={() => {getBooks("computer science");
+           setSelectedCategory("computer"); 
+          }} type="computer" />
         </SplideSlide>
       </Splide>
 
@@ -223,7 +232,7 @@ export const MiniSwipper = () => {
         </div>
        
       </div>
-      <Link className="my-[2px] roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#4285F4] flex justify-end w-[80%] md:w-[95%] mx-auto items-center">
+      <Link   to={`/category/${selectedCategory}`} className="my-[2px] roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#4285F4] flex justify-end w-[80%] md:w-[95%] mx-auto items-center">
         <span className="underline">see more </span>
         <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />
       </Link>
