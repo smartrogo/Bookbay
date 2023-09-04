@@ -4,28 +4,27 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Home } from "./components/Home";
-import { ErrorPage } from "./components/ErrorPage";
+import { ErrorPage } from "./pages/ErrorPage";
 import {
   ClerkProvider,
   SignedIn,
   SignedOut,
-  RedirectToSignIn,
-  SignIn,
-  SignUp,
-  UserButton,
+  // RedirectToSignIn,
+  // SignIn,
+  // SignUp,
+  // UserButton,
 } from "@clerk/clerk-react";
-import { SignInPage } from "./components/SignInPage";
-import { Dashboard } from "./components/Dashboard";
-import { SignUpPage } from "./components/SignUpPage";
-import Categories from "./components/Categories";
+// import { SignInPage } from "./pages/SignInPage";
+import { SignUpPage } from "./pages/SignUpPage";
+import { Dashboard } from "./pages/Dashboard";
+import { SignInPage } from "./pages/SignInPage";
+import Categories from "./pages/Categories";
 
-if (!import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY) {
+const clerkPubKey = import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY;
+if (!clerkPubKey) {
   throw new Error("Missing Publishable Key");
 }
 
-const clerkPubKey = import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY;
-
-console.log(clerkPubKey)
 
 function ClerkProviderWithRoutes() {
   const navigate = useNavigate();
@@ -44,7 +43,6 @@ function ClerkProviderWithRoutes() {
 
   const handleTheme = () => {
     setDarkMode(!darkMode);
-    console.log("he");
   };
 
   return (
