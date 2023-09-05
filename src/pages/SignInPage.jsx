@@ -13,8 +13,8 @@ export const SignInPage = () => {
     }
   }, [user, navigate]);
   return (
-    <div className='h-screen bg-blue-500'>
+    
         <SignIn path="/sign-in" routing="path" className=""/>
-    </div>
+    
   )
 }

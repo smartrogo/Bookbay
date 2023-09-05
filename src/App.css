@@ -59,6 +59,16 @@
   border: 3.66px solid var(--testimony-border);
 }
 
+.cl-rootBox {
+  border: 2px solid red;
+  height: 100vh;
+  margin-top: 0;
+}
+
+.cl-card {
+  margin-top: 0;
+}
+
 .qoute {
   color: var(--qoute-color);
 }
