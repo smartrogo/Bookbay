@@ -2,7 +2,7 @@ import React from "react";
 import { Hero } from "./Hero";
 import { MiniSwipper } from "./MiniSwipper";
 import { Reasons } from "./Reasons";
-import { Testimony } from "./Testimony";
+// import { Testimony } from "./Testimony";
 import { Blogs } from "./Blogs";
 import { Text } from "./Text";
 import { Contact } from "./Contact";

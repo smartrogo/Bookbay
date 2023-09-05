@@ -17,28 +17,20 @@ export const Header = (props) => {
   const { user } = useUser();
   // console.log(user)
 
-  const navigateToLogin = () => {
-    // 👇️ navigate to /contacts
-    navigate('/sign-in');
-  };
+   
 
   // sidebar toggle function
   const handleNavbar = () => {
     setActive(!active);
   };
 
-  const test = () => {
-    if (active === true) {
-      document.body.style = 'backgroundColor: red;'
-    }
-  }
+
 
   // useEffect function to handle outside click to toggle
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
         setActive(false);
-        test()
       }
     };
 
@@ -134,7 +126,7 @@ export const Header = (props) => {
                 />
               )}
             </div>
-           {user ?  ( <UserButton />) : <Button
+           {user ?  ( <UserButton afterSignOutUrl="/"/>) : <Button
             onClick={() => navigate("/sign-in")}
               value="Login"
               cls_name=" text-[0.825rem] md:text-[1.25rem] rounded-[6px] bg bg-transparent border-2 border-[#0F9D58] text-[#008C45] py-[0.1875rem] ml-[10px] md:ml-[10px] px-[0.75rem] md:px-[1.86519rem] roboto md:py-[0.46631rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.49744rem]"

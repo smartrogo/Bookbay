@@ -5,10 +5,10 @@ import hero from "../assets/hero.png";
 
 function HeroContent() {
   return (
-    <div className="flex flex-col justify-center items-center md:flex-row md:w-[95%] mx-auto">
+    <div className="flex border-2 border-red-500 flex-col justify-center items-center md:flex-row md:w-[95%] mx-auto">
       <div className="w-full md:w-[50%]">
         <div className="lg:[80%] xl:pl-16">
-          <h1 className=" w-[21.1875rem] mx-auto h-[7rem] flex-shrink-0 text-[2.5rem] outfit leading-[3rem] mt-10 font-bold text-center md:text-start md:w[76%] sm:w-[90%]  balance mb-0">
+          <h1 className=" w-[21.1875rem] mx-auto h-[7rem] flex-shrink-0 text-[2.5rem] outfit leading-[3rem] mt-20 font-bold text-center md:text-start md:w[76%] sm:w-[90%]  balance mb-0">
             Your Ultimate
             <br /> Online
             <span className="text-[#FD6727] balance underscore">

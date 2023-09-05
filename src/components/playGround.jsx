@@ -13,6 +13,11 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { Card } from "./Card";
 import { Text } from "./Text";
+import  ellipse3  from "../assets/ellipse3.png";
+import  ellipse1  from "../assets/ellipse1.png";
+import  ellipse02  from "../assets/ellipse02.png";
+import { Link } from "react-router-dom";
+import { LiaLongArrowAltRightSolid } from "react-icons/lia"
 export const PlayGround = () => {
   return (
     <section className="w-full md:w-[95%] relative overflow-hidden mx-auto min-h-[200px] py-5 md:px-7 ">
@@ -65,24 +70,24 @@ export const PlayGround = () => {
         }}
       >
         <SwiperSlide className="flex items-center justify-center">
-          <Card />
+          <Card img={ellipse3} qoute="Bookbay is a great bookstore platform for educators: offers diverse resources, discounts, and convenience for enriching classroom learning experiences." name="Muhammad Niimatullahi"/>
+        </SwiperSlide> 
+        <SwiperSlide className="flex items-center justify-center">
+          <Card img={ellipse1} qoute="Wow! Bookbay is a Lifesaver for students! Easy borrowing, vast collection, saved me money, and made studying more enjoyable." name="Muhammad Ala"/>
         </SwiperSlide>
         <SwiperSlide className="flex items-center justify-center">
-          <Card />
+          <Card img={ellipse02} qoute="Bookbay simplifies student life. Convenient purchases with my card, affordable books, and stress-free online shopping." name="smartrogo"/>
         </SwiperSlide>
         <SwiperSlide className="flex items-center justify-center">
-          <Card />
-        </SwiperSlide>
-        <SwiperSlide className="flex items-center justify-center">
-          <Card />
-        </SwiperSlide>
-        <SwiperSlide className="flex items-center justify-center">
-          <Card />
-        </SwiperSlide>
-        <SwiperSlide className="flex items-center justify-center">
-          <Card />
+          <Card img={ellipse02} qoute="Bookbay simplifies student life. Convenient purchases with my card, affordable books, and stress-free online shopping." name="smartrogo"/>
         </SwiperSlide>
       </Swiper>
+    
+      <Link className="my-4 roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#4285F4] flex justify-end w-[80%] md:w-[86%] mx-auto items-center">
+         <span className="underline">see more </span>
+         <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />
+       </Link>
+       <hr className=" h-[1px] mt-6 mx-auto w-[90%] border-[#333] " />
     </section>
   );
 };

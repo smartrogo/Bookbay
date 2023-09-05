@@ -49,6 +49,7 @@
 .box-sha{
   box-shadow: rgba(10, 10, 10, 0.15) 2.4px 2.4px 3.2px;
 }
+
 .card {
   border-color: var(--boder-color);
   background-color: var(--card-bg);
