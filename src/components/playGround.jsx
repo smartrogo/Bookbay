@@ -24,16 +24,14 @@ export const PlayGround = () => {
       <Swiper
         className="container mx-auto "
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-        // autoplay={{
-        //   delay: 4000,
-        //   disableOnInteraction: false,
-        // }}
+        autoplay={{
+          delay: 4000,
+          disableOnInteraction: false,
+        }}
         // slidesPerView={3}
         navigation
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
-        // onSwiper={(swiper) => console.log(swiper)}
-        // onSlideChange={() => console.log('slide change')}
         breakpoints={{
           // >=200
           200: {
