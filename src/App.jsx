@@ -9,22 +9,19 @@ import {
   ClerkProvider,
   SignedIn,
   SignedOut,
-  // RedirectToSignIn,
-  // SignIn,
-  // SignUp,
-  // UserButton,
 } from "@clerk/clerk-react";
-// import { SignInPage } from "./pages/SignInPage";
 import { SignUpPage } from "./pages/SignUpPage";
-import { Dashboard } from "./pages/Dashboard";
 import { SignInPage } from "./pages/SignInPage";
+import { Dashboard } from "./pages/Dashboard";
 import Categories from "./pages/Categories";
+import { PlayGround } from "./components/playGround";
+import { Thanks } from "./pages/Thanks";
 
-const clerkPubKey = import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY;
-if (!clerkPubKey) {
+if (!import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
 }
 
+const clerkPubKey = import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY;
 
 function ClerkProviderWithRoutes() {
   const navigate = useNavigate();
@@ -32,7 +29,7 @@ function ClerkProviderWithRoutes() {
 
   useEffect(() => {
     const userPref = localStorage.getItem("theme");
-    if (userPref == "dark") {
+    if (userPref === "dark") {
       setDarkMode(true);
     }
   }, []);
@@ -47,29 +44,26 @@ function ClerkProviderWithRoutes() {
 
   return (
     <div className={`app ${darkMode ? "dark-mode" : "light-mode"}`}>
-      <div>
-        <Header onClick={handleTheme} darkMode={darkMode} />
-      </div> 
-
-      <ClerkProvider publishableKey={clerkPubKey} navigate={(to) => navigate(to)}>
+      <ClerkProvider
+        publishableKey={clerkPubKey}
+        navigate={(to) => navigate(to)}
+      >
+        <div>
+          <Header onClick={handleTheme} darkMode={darkMode} />
+        </div>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sign-in/*" element={<SignInPage />} />
           <Route path="/sign-up/*" element={<SignUpPage />} />
           <Route
             path="/dashboard"
-            element={
-              <>
-                <SignedIn>
-                  <Dashboard routing="path" path="/dashboard"/>
-                </SignedIn>
-                <SignedOut>
-                  <Home routing="path" path="/"/>
-                </SignedOut>
-              </>
-            }
+            element={<Dashboard routing="path" path="/dashboard" />}
           />
           <Route path="/category/:category" element={<Categories />} />
+          <Route path="play" element={<PlayGround />} />
+          <Route path="thank" element={<Thanks />} />
+
+          {/* Catch-all route for unmatched routes */}
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </ClerkProvider>

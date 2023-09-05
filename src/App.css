@@ -20,7 +20,7 @@
   --nav-bg: #FFFFFF;
   --icon-color: #000;
   --para-color: #9f9d9d;
-  --aside--bg: #d9d9d9;
+  --aside--bg: #f1eeee;
   --border-color: #000000;
   --card-bg: #EEEEEE;
   --qoute-color: #666666;
@@ -63,17 +63,12 @@
 }
 .aside {
   background-color: var(--aside--bg);
-  /* filter: blur(2px); */
-  /* -webkit-filter: blur(2px); */
 }
 
 .footer {
   background-color: var(--footer-bg);
 }
-/* .backdrop-blur-md {
-  --tw-backdrop-blur: blur(12px);
-  backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-} */
+
 .poppins {
   font-family: "Poppins", sans-serif;
 }
@@ -110,12 +105,6 @@
   transform: scale(1.1);
 }
 
-/* .react-loading-skeleton {
-  border: 4px solid black;
-  width: 100% !important;
-  height: 100% ;
-} */
-
 .cl-rootBox {
   margin-top: 30%;
 }
@@ -130,10 +119,8 @@
 .swiper-button-prev {
   display: none !important;
   background-color: var(--swiper-btn);
-  /* background-color: rgba(102, 102, 102, 0.4); */
   color: var(--text-color) !important;
   font-weight: 800;
-  /* margin-right: 5px; */
   width: 2.5rem !important;
   height: 3.5rem !important;
   text-align: center;
@@ -197,10 +184,4 @@
     display: block !important;
     
   }
-}
-
-/* Header2.css */
-.blur-active .content-wrapper {
-  /* filter: blur(5px); Adjust the blur intensity as needed */
-  /* pointer-events: none; Prevent interaction with blurred content */
 }

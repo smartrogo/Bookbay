@@ -8,8 +8,10 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export const Newslatter = () => {
+  const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [loading, setIsloading] = useState(false);
   const [msg, setMsg] = useState("")
@@ -40,13 +42,14 @@ export const Newslatter = () => {
       }
       await addDoc(docRef, docData)
 
-      toast.success("Subscription successful! 🎉", {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000,
-        style: {
-          fontSize: "14px"
-        }
-      })
+      // toast.success("Subscription successful! 🎉", {
+      //   position: toast.POSITION.TOP_CENTER,
+      //   autoClose: 3000,
+      //   style: {
+      //     fontSize: "14px"
+      //   }
+      // })
+      navigate(`/thank?email=${encodeURIComponent(email)}`);
       setEmail("");
     } catch (error) {
       console.error('Error adding subscriber: ', error)

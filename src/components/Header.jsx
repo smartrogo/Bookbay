@@ -5,15 +5,16 @@ import { RiCloseCircleFill } from "react-icons/ri";
 import { LuMoon } from "react-icons/lu";
 import { BsSun } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
-import { useUser } from '@clerk/clerk-react';
+import { UserButton, useUser } from '@clerk/clerk-react';
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 export const Header = (props) => {
   const [active, setActive] = useState(false);
   const menuRef = useRef();
   const navigate = useNavigate()
-  // const { user } = useUser();
+  const { user } = useUser();
   // console.log(user)
 
   const navigateToLogin = () => {
@@ -76,12 +77,12 @@ export const Header = (props) => {
 
           <div className="flex justify-between">
             <div className="">
-              <a
-                href="/"
+              <Link
+                to="/"
                 className="site-title flex items-center text-[1.125rem] md:text-[24px] md:ml-0 font-bold leading-normal poppins"
               >
                 <span>Bookbay</span>
-              </a>
+              </Link>
             </div>
 
             <ul className="hidden ml-[13.4rem] lg:flex gap-8 md:items-center lg:ml-[12rem] leading-normal items-center lg:w-[70%] xl:ml-[16rem] text-[0.875rem]">
@@ -133,11 +134,11 @@ export const Header = (props) => {
                 />
               )}
             </div>
-            <Button
+           {user ?  ( <UserButton />) : <Button
             onClick={() => navigate("/sign-in")}
               value="Login"
               cls_name=" text-[0.825rem] md:text-[1.25rem] rounded-[6px] bg bg-transparent border-2 border-[#0F9D58] text-[#008C45] py-[0.1875rem] ml-[10px] md:ml-[10px] px-[0.75rem] md:px-[1.86519rem] roboto md:py-[0.46631rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.49744rem]"
-            />
+            />}
           </div>
 
           <div className="">

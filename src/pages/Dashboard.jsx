@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserButton, useUser } from '@clerk/clerk-react';
+import {  useUser } from '@clerk/clerk-react';
 import { useNavigate, Navigate } from 'react-router-dom'; // Import Navigate
 
 export const Dashboard = () => {
@@ -14,7 +14,6 @@ export const Dashboard = () => {
     return (
         <div className='bg-yellow-500'>
             <h1 className='mt-20'>Protected page</h1>
-            <UserButton />
         </div>
     )
 }

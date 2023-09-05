@@ -2,7 +2,6 @@ import React from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css/core";
 import "@splidejs/react-splide/css";
-import { BiSolidBookAlt } from "react-icons/bi";
 import "@splidejs/react-splide/css/skyblue";
 import "@splidejs/react-splide/css/sea-green";
 import { useState, useEffect, useMemo } from "react";
@@ -11,28 +10,12 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
 import { Link } from "react-router-dom";
-const Slide = ({ handleClick, type }) => {
-  return (
-    <div className="border-[1px] card border-solid rounded-[0.25075rem] md:rounded-[0.5rem] flex cursor-pointer hover:border-[#fff] active:bg-[#0F9D58] hover:text-[#fff] hover:bg-[#0F9D58]">
-      <button
-        className="[0.25075rem] px-[0.2rem] py-[0.5rem] md:py-[0.5rem] md:px-[1rem] items-center gap-2 md:gap-[0.5rem] flex justify-evenly  "
-        onClick={handleClick}
-      >
-        <BiSolidBookAlt className=" w-[2rem] h-[2rem] md:w-[2.75rem] md:h-[2.75rem]" />{" "}
-        <span className="roboto font-bold capitalize text-[1rem] md:text-[1.5rem] leading-normal text-style">
-          {type}
-        </span>
-      </button>
-    </div>
-  );
-};
+import { Slide } from "./Slide";
 
 export const MiniSwipper = () => {
-  // const [books, setBooks] = useState([]);
   const [displayedData, setDisplayedData] = useState([]);
   const [bookChunks, setBookChunks] = useState([]);
   const [loading, setIsLoading] = useState(true);
-  // const [covers, setCovers] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("programming"); 
 
   useEffect(() => {
@@ -82,14 +65,19 @@ export const MiniSwipper = () => {
   const slidesPerPage = useMemo(() => {
     const screenWidth = window.innerWidth;
     if (screenWidth >= 1200) {
+      console.log(screenWidth)
       return 4.5;
     } else if (screenWidth >= 768) {
+   console.log(screenWidth)
       return 3;
     } else if (screenWidth >= 400) {
-      return 2.5;
+   console.log(screenWidth)
+      return 2.2;
     } else {
+   console.log(screenWidth)
       return 2;
     }
+
   }, []);
 
 
