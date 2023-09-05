@@ -13,7 +13,7 @@ export const Reasons = () => {
   return (
     <div className="mb-10 capitalize leading-normal p-[2rem] md:p-[4.2rem] border-2">
 
-      <h1 className="text-center  border-2 border-red-500 mb-2 text-[1.5rem] md:text-[3rem] roboto font-bold">
+      <h1 className="text-center mb-2 text-[1.5rem] md:text-[3rem] roboto font-bold">
         Why use Bookbay ?
       </h1>
 

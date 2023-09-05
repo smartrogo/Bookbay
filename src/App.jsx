@@ -5,11 +5,7 @@ import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Home } from "./components/Home";
 import { ErrorPage } from "./pages/ErrorPage";
-import {
-  ClerkProvider,
-  SignedIn,
-  SignedOut,
-} from "@clerk/clerk-react";
+import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-react";
 import { SignUpPage } from "./pages/SignUpPage";
 import { SignInPage } from "./pages/SignInPage";
 import { Dashboard } from "./pages/Dashboard";
@@ -53,17 +49,23 @@ function ClerkProviderWithRoutes() {
         </div>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/category/:category" element={<Categories />} />
+          <Route path="play" element={<PlayGround />} />
+          <Route path="thank" element={<Thanks />} />
           <Route path="/sign-in/*" element={<SignInPage />} />
           <Route path="/sign-up/*" element={<SignUpPage />} />
           <Route
             path="/dashboard"
             element={<Dashboard routing="path" path="/dashboard" />}
           />
-          <Route path="/category/:category" element={<Categories />} />
-          <Route path="play" element={<PlayGround />} />
-          <Route path="thank" element={<Thanks />} />
-
-          {/* Catch-all route for unmatched routes */}
+          <Route
+            path="/"
+            element={
+              <SignedOut redirectTo="/">
+                <button onClick={() => {navigate("/"); console.log("fuck")}}>Sign Out</button>
+              </SignedOut>
+            }
+          />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </ClerkProvider>

@@ -12,6 +12,7 @@ import { Footer } from "./Footer";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { PlayGround } from "./playGround";
 
 export const Home = () => {
   const { user } = useUser();
@@ -36,7 +37,7 @@ export const Home = () => {
       />
       <MiniSwipper />
       <Reasons />
-      <Testimony />
+      <PlayGround />
       <Blogs />
       <Contact />
       <Newslatter />
