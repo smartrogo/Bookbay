@@ -7,7 +7,6 @@ import { Text } from "./Text";
 import { Contact } from "./Contact";
 import { Newslatter } from "./Newslatter";
 import { Footer } from "./Footer";
-// import { Header } from "./Header";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -20,13 +19,12 @@ export const Home = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/dashboard");
+      navigate("/");
     }
   }, [user, navigate]);
 
   return (
     <div className="body relative min-h-[100vh] w-full overflow-x-hidden">
-      {/* <Header /> */}
       <Hero
         className="border-2 border-red-500" />
       <Text
