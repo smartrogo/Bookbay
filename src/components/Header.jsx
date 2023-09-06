@@ -15,7 +15,8 @@ export const Header = (props) => {
   const menuRef = useRef();
   const navigate = useNavigate()
   const { user } = useUser();
-  // console.log(user)
+
+  const profileUrl = user ? `/profile/${user.id}` : null;
 
    
 
@@ -128,7 +129,7 @@ export const Header = (props) => {
             </div>
            {user ?  ( <div className="flex items-center justify-between">
             <UserButton afterSignOutUrl="/" className="user-btn"/>
-            <Link to="/profile">profile</Link>
+            <Link to={profileUrl}>profile</Link>
            </div>) : <Button
             onClick={() => navigate("/sign-in")}
               value="Login"

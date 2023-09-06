@@ -1,7 +1,7 @@
 import React from 'react';
 import { UserProfile, useUser } from '@clerk/clerk-react';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,   } from 'react-router-dom';
 
 
 export const Profile = () => {
