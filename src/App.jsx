@@ -5,12 +5,13 @@ import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Home } from "./components/Home";
 import { ErrorPage } from "./pages/ErrorPage";
-import { ClerkProvider, SignedOut } from "@clerk/clerk-react";
+import { ClerkProvider } from "@clerk/clerk-react";
 import { SignUpPage } from "./pages/SignUpPage";
 import { SignInPage } from "./pages/SignInPage";
 import { Dashboard } from "./pages/Dashboard";
 import Categories from "./pages/Categories";
 import { Thanks } from "./pages/Thanks";
+import { Profile } from "./pages/Profile";
 
 if (!import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
@@ -52,6 +53,7 @@ function ClerkProviderWithRoutes() {
           <Route path="thank" element={<Thanks />} />
           <Route path="/sign-in/*" element={<SignInPage />} />
           <Route path="/sign-up/*" element={<SignUpPage />} />
+          <Route path="/profile/*" element={<Profile />} />
           <Route
             path="/dashboard"
             element={<Dashboard routing="path" path="/dashboard" />}/>

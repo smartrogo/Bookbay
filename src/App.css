@@ -64,6 +64,9 @@
   height: 100vh;
   margin-top: 0;
 } */
+.cl-rootBox  {
+  margin-bottom: 12px !important;
+}
 
 .cl-card {
   margin-top: 0;
