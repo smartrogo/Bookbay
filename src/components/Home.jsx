@@ -2,7 +2,6 @@ import React from "react";
 import { Hero } from "./Hero";
 import { MiniSwipper } from "./MiniSwipper";
 import { Reasons } from "./Reasons";
-// import { Testimony } from "./Testimony";
 import { Blogs } from "./Blogs";
 import { Text } from "./Text";
 import { Contact } from "./Contact";
@@ -12,7 +11,7 @@ import { Footer } from "./Footer";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { PlayGround } from "./playGround";
+import { Testimony } from "./Testimony";
 
 export const Home = () => {
   const { user } = useUser();
@@ -37,7 +36,7 @@ export const Home = () => {
       />
       <MiniSwipper />
       <Reasons />
-      <PlayGround />
+      <Testimony />
       <Blogs />
       <Contact />
       <Newslatter />

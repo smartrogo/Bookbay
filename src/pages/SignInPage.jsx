@@ -14,7 +14,7 @@ export const SignInPage = () => {
   }, [user, navigate]);
   return (
     
-        <SignIn path="/sign-in" routing="path" className=""/>
+        <SignIn path="/sign-in" routing="path" signUpUrl='/sign-up'/>
     
   )
 }
