@@ -85,22 +85,22 @@ export const Header = (props) => {
                 </NavLink>
               </li>
               <li className="roboto under text-[18px] leading-normal">
-                <NavLink to="/" style={navLinkStyle}>
+                <NavLink to="about-us" style={navLinkStyle}>
                   About us
                 </NavLink>
               </li>
               <li className="roboto under text-[18px] leading-normal">
-                <NavLink to="/" style={navLinkStyle}>
+                <NavLink to="/borrow" style={navLinkStyle}>
                   Borrow
                 </NavLink>
               </li>
               <li className="roboto under text-[18px] leading-normal">
-                <NavLink to="/" style={navLinkStyle}>
+                <NavLink to="/buy" style={navLinkStyle}>
                   Buy/Sell
                 </NavLink>
               </li>
               <li className="roboto under text-[18px] leading-normal balance">
-                <NavLink to="/" style={navLinkStyle}>
+                <NavLink to="/connect-wallet" style={navLinkStyle}>
                   Wallet connect
                 </NavLink>
               </li>
