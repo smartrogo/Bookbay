@@ -170,7 +170,7 @@ export const Header = (props) => {
             </li>
             <li className="mb-5 text-[25px] font-medium leading-[120%] hover:underline">
               <NavLink
-                to="/"
+                to="/about-us"
                 onClick={() => {
                   setActive(false);
                 }}
@@ -181,7 +181,7 @@ export const Header = (props) => {
             </li>
             <li className="mb-5 text-[25px] font-medium leading-[120%] hover:underline">
               <NavLink
-                to="/"
+                to="/borrow"
                 onClick={() => {
                   setActive(false);
                 }}
@@ -192,7 +192,7 @@ export const Header = (props) => {
             </li>
             <li className="mb-5 text-[25px] font-medium leading-[120%] hover:underline">
               <NavLink
-                to="/"
+                to="/buy"
                 onClick={() => {
                   setActive(false);
                 }}
