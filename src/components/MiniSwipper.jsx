@@ -51,7 +51,6 @@ export const MiniSwipper = () => {
     setBookChunks(chunks); // Update the bookChunks state
     console.log(bookChunks, "please");
     // setIsLoading(false); // Set loading to false once data is processed
-    // console.log(bookChunks[1][0].author_name[0])
   }, [displayedData]);
 
   useEffect(() => {
@@ -130,7 +129,7 @@ export const MiniSwipper = () => {
         </SplideSlide>
       </Splide>
 
-      <div className="display md:flex justify-evenly">
+      <div className="display book-container md:w-[95%] mx-auto md:flex justify-evenly">
 
       <div className="flex w-full md:w-1/2 justify-evenly">
           {bookChunks[1] && !loading ? (
@@ -140,6 +139,7 @@ export const MiniSwipper = () => {
                 cover={item.cover_i}
                 title={item.title.trim().split(" ").slice(0, 2).join(" ")}
                 year={item.first_publish_year}
+                autor={item.author_name[0]}
                 loading={loading}
               />
             ))
@@ -161,6 +161,7 @@ export const MiniSwipper = () => {
                 cover={item.cover_i}
                 title={item.title.trim().split(" ").slice(0, 2).join(" ")}
                 year={item.first_publish_year}
+                autor={item.author_name[0]}
                 loading={loading}
               />
             ))
@@ -176,9 +177,9 @@ export const MiniSwipper = () => {
        
       </div>
 
-      <div className="hidden md:flex justify-evenly">
+      <div className="hidden  md:flex justify-evenly md:w-[95%] mx-auto">
 
-      <div className="flex w-full md:w-1/2 justify-evenly">
+      <div className="flex w-full md:w-1/2 book-container justify-evenly">
           {bookChunks[2] && !loading ? (
             bookChunks[2].map((item, index) => (
               <Book
@@ -186,6 +187,7 @@ export const MiniSwipper = () => {
                 cover={item.cover_i}
                 title={item.title.trim().split(" ").slice(0, 2).join(" ")}
                 year={item.first_publish_year}
+                autor={item.author_name[0]}
                 loading={loading}
               />
             ))
@@ -206,6 +208,7 @@ export const MiniSwipper = () => {
                 cover={item.cover_i}
                 title={item.title.trim().split(" ").slice(0, 2).join(" ")}
                 year={item.first_publish_year}
+                autor={item.author_name[0]}
                 loading={loading}
               />
             ))

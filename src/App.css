@@ -43,8 +43,11 @@
 
 .bd {
   border: 0.2px solid var(--book-border);
+  border-radius: 1rem;
 }
-
+.splide__track {
+  width: 110%;
+}
 .icon {
   color: var(--icon-color);
 }
