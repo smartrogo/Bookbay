@@ -11,7 +11,8 @@
   --swiper-btn: #454545;
   --footer-bg: #111111;
   --testimony-border: #1E1E1E;
-  
+  --cate--bg: #fefefe;
+  --book-border: #333;
 }
 
 .light-mode {
@@ -27,11 +28,21 @@
   --swiper-btn: #b7b3b3;
   --footer-bg: #1E1E1E;
   --testimony-border: #FFFFFF;
+  --cate--bg: #FFFFFF;
+  --book-border: #e4d9d9;
 }
 
 .app {
   background-color: var(--bg-color);
   color: var(--text-color);
+}
+
+/* .category {
+  background-color: var(--cate--bg);
+} */
+
+.bd {
+  border: 0.2px solid var(--book-border);
 }
 
 .icon {
@@ -113,6 +124,7 @@
 
 .book {
   transition: transform 0.3s ease-in-out;
+  background-color: var(--cate--bg);
 }
 
 .book:hover {

@@ -130,7 +130,7 @@ export const MiniSwipper = () => {
         </SplideSlide>
       </Splide>
 
-      <div className="display md:flex border-2 border-yellow-500  justify-evenly ">
+      <div className="display md:flex justify-evenly">
 
       <div className="flex w-full md:w-1/2 justify-evenly">
           {bookChunks[1] && !loading ? (
@@ -176,7 +176,7 @@ export const MiniSwipper = () => {
        
       </div>
 
-      <div className="hidden md:flex border-2 border-blue-500  justify-evenly ">
+      <div className="hidden md:flex justify-evenly">
 
       <div className="flex w-full md:w-1/2 justify-evenly">
           {bookChunks[2] && !loading ? (
