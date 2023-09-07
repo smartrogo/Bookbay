@@ -17,7 +17,7 @@ export const BlogCart = (props) => {
 
           <Button
             value="10 october, 2023"
-            cls_name=" absolute bg-[#0F9D58] rounded-[0.30031rem] border-[1.802px] border-solid border-[#eee] w-[7.54519rem] h-[2.28981rem] py-[0.63813rem] px-[0.23875rem] roboto text-[#fff] text-[0.67569rem] text-style font-bold leading-normal left-[1.87rem] -bottom-5"
+            cls_name="absolute btn bg-[#0F9D58] rounded-[0.30031rem] border-[1.802px] border-solid border-[#eee] w-[7.54519rem] h-[2.28981rem] py-[0.63813rem] px-[0.23875rem] roboto text-[#fff] text-[0.67569rem] text-style font-bold leading-normal left-[1.87rem] -bottom-5"
           />
         </div>
 

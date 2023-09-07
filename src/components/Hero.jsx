@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "./Button";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
 import hero from "../assets/hero.png";
+import { Link } from "react-router-dom";
 
 function HeroContent() {
   return (
@@ -23,15 +24,15 @@ function HeroContent() {
           <div className="flex mx-auto w-[20rem] md:w-[89%] md:justify-start md:gap-5 justify-evenly mt-[2rem] mb-[2rem] items-center">
             <Button
               value="Join us today!"
-              cls_name=" flex justify-center items-center bg-[#0F9D58] text-[#FFFFFF] poppins text-style font-bold leading-normal rounded-[0.32494rem] py-[0.6905rem] px-[1.34038rem]"
+              cls_name=" flex justify-center btn items-center bg-[#0F9D58] text-[#FFFFFF] poppins text-style font-bold leading-normal rounded-[0.32494rem] py-[0.6905rem] px-[1.34038rem]"
             />
-            <div className="flex items-center gap-1">
-              <a
+            <div className="flex items-center btn gap-1">
+              <Link
                 href=""
                 className="text-[#4285F4] poppins text-style font-normal underline leading-normal capitalize text-[0.7595rem]"
               >
                 learn more
-              </a>{" "}
+              </Link>{" "}
               <LiaLongArrowAltRightSolid className="text-[#4285F4]" />
             </div>
           </div>

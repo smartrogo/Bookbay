@@ -26,7 +26,7 @@ export const Reasons = () => {
       <div className="flex justify-center mt-8">
         <Button
           value="Join us today !"
-          cls_name="bg-[#0F9D58] text-[#FFFFFF] mx-auto rounded-[0.5rem] py-[0.56563rem] px-[1.09794rem] md:py-[1.0625rem] md:px-[2.0625rem] text-center"
+          cls_name="bg-[#0F9D58] btn text-[#FFFFFF] mx-auto rounded-[0.5rem] py-[0.56563rem] px-[1.09794rem] md:py-[1.0625rem] md:px-[2.0625rem] text-center"
         />
       </div>
     </div>

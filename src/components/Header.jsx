@@ -133,7 +133,7 @@ export const Header = (props) => {
            </div>) : <Button
             onClick={() => navigate("/sign-in")}
               value="Login"
-              cls_name=" text-[0.825rem] md:text-[1.25rem] rounded-[6px] bg bg-transparent border-2 border-[#0F9D58] text-[#008C45] py-[0.1875rem] ml-[10px] md:ml-[10px] px-[0.75rem] md:px-[1.86519rem] roboto md:py-[0.46631rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.49744rem]"
+              cls_name=" text-[0.825rem] btn md:text-[1.25rem] rounded-[6px] bg bg-transparent border-2 border-[#0F9D58] text-[#008C45] py-[0.1875rem] ml-[10px] md:ml-[10px] px-[0.75rem] md:px-[1.86519rem] roboto md:py-[0.46631rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.49744rem]"
             />}
           </div>
 
