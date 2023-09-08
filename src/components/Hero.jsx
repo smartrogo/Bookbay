@@ -18,7 +18,7 @@ function HeroContent() {
             </span>
           </h1>
           <p className="poppins leading-normal border-2 text-center text-style font-normal text-[0.875rem] mx-auto w-[17.3125rem] h[6.5625rem] md:w-[90%] lg:w-[65%] lg:mx-7 xl:mx- xl:w-[60%] sm:w-[50%] md:text-justify ">
-          BookBay: Your one-stop platform for buying, selling, and borrowing books.
+          BookBay: Your one-stop platform for buying, selling, and borrowing books. Discover a vast selection, enjoy great deals, and join our family by signing up today.
           </p>
 
           <div className="flex mx-auto w-[20rem] md:w-[89%] md:justify-start md:gap-5 justify-evenly mt-[2rem] mb-[2rem] items-center">

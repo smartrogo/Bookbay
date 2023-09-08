@@ -1,21 +1,25 @@
 import React from 'react'
 
-export const ReasonCard = ({title, body, icon}) => {
+export const ReasonCard = ({title, body, icon, cls_name, text_color}) => {
   return (
     <div
-    className="mr block box-sha rounded-[1rem] w-[20rem] md:w-[20.25rem] md:h-[17.8125rem] my-4 why mx-auto"
+    className={cls_name}
   >
-    <div className="p-4 text-center">
-      <div className="mx-auto flex items-center justify-center">
-        <div className="border-2">
-          <img src={icon} alt="illustration" className="pt-2 pb-4 w-[40%] mx-auto" />
-          <span className=" uppercase icon outfit leading-[2rem] text-[1.5rem] text-style font-bold">{title}</span>
+
+    <div className="p-4">
+      <div className="">
+        
+        <div className="">
+          <img src={icon} alt="illustration" className="w-[2.88206rem] h-[2.93644rem] mb-2" />
+          <span style={{color: `${text_color}`}} className=" my-8 icon outfit leading-[2rem] text-[1.30506rem] text-style font-bold">{title}</span>
         </div>
+
       </div>
-      <p className="my-4 para poppins text-[1rem] font-style font-normal leading-[1.2rem]">
+      <p className="mt-2 capitalize poppins text-[0.87006rem] font-style font-normal leading-[1.04406rem]">
         {body}
       </p>
     </div>
+
   </div>
   )
 }
