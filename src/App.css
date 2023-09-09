@@ -37,10 +37,6 @@
   color: var(--text-color);
 }
 
-/* .category {
-  background-color: var(--cate--bg);
-} */
-
 .bd {
   border: 0.2px solid var(--book-border);
   border-radius: 1rem;
@@ -73,11 +69,6 @@
   border: 3.66px solid var(--testimony-border);
 }
 
-/* .cl-rootBox {
-  border: 2px solid red;
-  height: 100vh;
-  margin-top: 0;
-} */
 .cl-rootBox  {
   margin-bottom: 12px !important;
 }
@@ -149,7 +140,6 @@
 .swiper-scrollbar-drag, .swiper-scrollbar {
   display: none !important;
 }
-
 
 
 .swiper-button-next,
