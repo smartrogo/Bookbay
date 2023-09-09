@@ -227,6 +227,7 @@ export const MiniSwipper = () => {
         <span className="underline">see more </span>
         <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />
       </Link>
+      <hr className=" h-[1px] mx-auto mt-8 w-[90%] border-[#333] " />
     </>
   );
 };

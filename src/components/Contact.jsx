@@ -84,7 +84,7 @@ export const Contact = () => {
   }, [msg]);
 
   return (
-    <section className="relative mb-10">
+    <section className="relative my-10">
       <img
         src={stay}
         alt="background svg"
