@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "./Button";
 import { ReasonCard } from "./ReasonCard";
 import { reasonCardsDatas } from "../reasonCardsDatas";
 
