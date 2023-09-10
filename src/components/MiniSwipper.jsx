@@ -35,7 +35,7 @@ export const MiniSwipper = () => {
     } catch (error) {
       console.error("Error fetching books:", error);
     } finally {
-      setIsLoading(false);
+      setIsLoading(true);
       console.log("Loading state set to false.");
     }
   };
