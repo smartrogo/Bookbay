@@ -7,13 +7,13 @@ import { Link, useNavigate } from "react-router-dom";
 function HeroContent() {
   const navigate = useNavigate()
   return (
-    <div className="flex border-2 h-screen border-red-500 flex-col md:justify-center items-center md:flex-row md:w-[95%] mx-auto">
+    <div className="flex h-screen flex-col md:justify-center items-center md:flex-row md:w-[95%] mx-auto">
       <div className="w-full md:w-[50%]">
         <div className="lg:[80%] xl:pl-16">
-          <h1 className=" w-[21.1875rem] border-2 border-red-500 mx-auto h-[7rem] flex-shrink-0 text-[2.5rem] outfit leading-[3rem] mt-20 font-bold text-center md:text-start md:w[31.9375rem] sm:w-[90%]  balance mb-0">
+          <h1 className=" w-[21.1875rem] mx-auto h-[7rem] flex-shrink-0 text-[2.5rem] outfit leading-[3rem] mt-20 md:mt-10 font-bold text-center md:text-start md:w[31.9375rem] sm:w-[90%]  balance mb-0">
             Your Ultimate
             <br /> Online
-            <span className="text-[#FD6727] balance underscore">
+            <span className="text-[#DAA520] balance underscore">
               {" "}
               books-hub
             </span>
@@ -52,7 +52,7 @@ function HeroContent() {
 
 export const Hero = () => {
   return (
-    <div className="mt-[14%] border-2 border-green-500  sm:mt-[13%] md:mt-[9.5%] lg:mt-[8%] xl:mt-[6%]">
+    <div className="mt-[14%] sm:mt-[13%] md:mt-[9.5%] lg:mt-[8%] xl:mt-[6%]">
         <HeroContent />
     </div>
   );
