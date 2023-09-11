@@ -35,7 +35,7 @@ export const MiniSwipper = () => {
     } catch (error) {
       console.error("Error fetching books:", error);
     } finally {
-      setIsLoading(true);
+      setIsLoading(false);
       console.log("Loading state set to false.");
     }
   };
@@ -57,6 +57,7 @@ export const MiniSwipper = () => {
     // Once the bookChunks are populated, loading is set to false
     if (bookChunks.length > 0) {
       setIsLoading(false);
+      console.log("loading false")
     }
   }, [bookChunks]);
 

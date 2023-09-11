@@ -22,7 +22,7 @@ import { Link } from "react-router-dom";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
 export const Testimony = () => {
   return (
-    <section className="w-full md:w-[95%] relative overflow-hidden mx-auto min-h-[200px] py-5 md:px-7 ">
+    <section className="w-full mt-6 md:w-[95%] relative overflow-hidden mx-auto min-h-[200px] py-5 md:px-7 ">
       <Text
         head="Don’t just take our words !"
         body=" Lorem ipsum dolor sit amet consectetur. Diam ut feugiat aliquet in
