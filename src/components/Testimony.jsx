@@ -42,13 +42,13 @@ export const Testimony = () => {
         breakpoints={{
           // >=200
           200: {
-            slidesPerView: 1,
-            // spaceBetween: 10
+            slidesPerView: 1.2,
+            spaceBetween: 10
           },
           // >= 40px
           400: {
-            slidesPerView: 1,
-            // spaceBetween: 10
+            slidesPerView: 1.2,
+            spaceBetween: 10
           },
           // >= 640px
           640: {
