@@ -16,7 +16,7 @@ import { About } from "./pages/About";
 import { Borrow } from "./pages/Borrow";
 import { Buy } from "./pages/Buy";
 import { WalletConnect } from "./pages/WalletConnect";
-
+import { BookDetails } from "./pages/BookDetails";
 
 if (!import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
@@ -61,6 +61,7 @@ function ClerkProviderWithRoutes() {
           <Route path="/about-us" element={<About />} />
           <Route path="/borrow" element={<Borrow />} />
           <Route path="/connect-wallet" element={<WalletConnect />} />
+          <Route path="/book/:bookId" element={<BookDetails />} />
           <Route path="/buy" element={<Buy />} />
           <Route path="/profile/:userId" element={<Profile />} />
           <Route

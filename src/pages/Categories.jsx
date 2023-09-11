@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Book } from '../components/Book';
 import Skeleton from "react-loading-skeleton";
 
 const Categories = () => {
+  const navigate = useNavigate()  
   const { category } = useParams(); // Get the category from the URL
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -40,7 +41,7 @@ const Categories = () => {
         ) : (
           // Display books once data is loaded
           books.map((book, index) => (
-            <div key={index} className="w-full sm:w-1/2 md:w-1/4 lg:w-1/4 p-2">
+            <div key={index} className="w-[50%] sm:w-1/2 md:w-1/4 lg:w-1/4 p-2">
               <Book
                 cover={book.cover_i}
                 title={book.title.trim().split(" ").slice(0, 2).join(" ")}
