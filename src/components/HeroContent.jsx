@@ -5,7 +5,7 @@ import hero from "../assets/hero.png";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 export const HeroContent = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col justify-center items-center md:flex-row md:w-[95%] mx-auto">
       <div className="w-full md:w-[50%]">
@@ -18,13 +18,15 @@ export const HeroContent = () => {
               books-hub
             </span>
           </h1>
-          <p className="poppins leading-normal border-2 text-center text-style font-normal text-[0.875rem] mx-auto w-[17.3125rem] h[6.5625rem] md:w-[90%] lg:w-[65%] lg:mx-7 xl:mx- xl:w-[60%] sm:w-[50%] md:text-justify ">
-          BookBay: Your one-stop platform for buying, selling, and borrowing books.
+          <p className="poppins leading-normal border-2 text-center text-style font-normal text-[0.875rem] mx-auto w-[19.3125rem] h[6.5625rem] md:w-[90%] lg:w-[65%] lg:mx-7 xl:mx- xl:w-[60%] sm:w-[50%] md:text-justify ">
+            BookBay: Your one-stop platform for buying, selling, and borrowing
+            books. Discover a vast selection, enjoy great deals, and join our
+            family by signing up today.
           </p>
 
           <div className="flex mx-auto w-[20rem] md:w-[89%] md:justify-start md:gap-5 justify-evenly mt-[2rem] mb-[2rem] items-center">
             <Button
-            onClick={() => navigate("/sign-in")}
+              onClick={() => navigate("/sign-in")}
               value="Join us today!"
               cls_name=" flex justify-center items-center bg-[#0F9D58] text-[#FFFFFF] poppins text-style font-bold leading-normal rounded-[0.32494rem] py-[0.6905rem] px-[1.34038rem]"
             />
