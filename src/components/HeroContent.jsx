@@ -2,12 +2,15 @@ import React from "react";
 import { Button } from "./Button";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
 import hero from "../assets/hero.png";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 export const HeroContent = () => {
+  const navigate = useNavigate()
   return (
     <div className="flex flex-col justify-center items-center md:flex-row md:w-[95%] mx-auto">
       <div className="w-full md:w-[50%]">
         <div className="lg:[80%] xl:pl-16">
-          <h1 className=" w-[21.1875rem] mx-auto h-[7rem] flex-shrink-0 text-[2.5rem] outfit leading-[3rem] mt-10 font-bold text-center md:text-start md:w[76%] sm:w-[90%]  balance mb-0">
+          <h1 className=" w-[21.1875rem] mx-auto h-[7rem] flex-shrink-0 text-[2.5rem] outfit leading-[3rem] mt-10 font-bold text-center md:text-start md:w[76%] sm:w-[90%] balance mb-0">
             Your Ultimate
             <br /> Online
             <span className="text-[#FD6727] balance underscore">
@@ -21,16 +24,17 @@ export const HeroContent = () => {
 
           <div className="flex mx-auto w-[20rem] md:w-[89%] md:justify-start md:gap-5 justify-evenly mt-[2rem] mb-[2rem] items-center">
             <Button
+            onClick={() => navigate("/sign-in")}
               value="Join us today!"
               cls_name=" flex justify-center items-center bg-[#0F9D58] text-[#FFFFFF] poppins text-style font-bold leading-normal rounded-[0.32494rem] py-[0.6905rem] px-[1.34038rem]"
             />
             <div className="flex items-center gap-1">
-              <a
-                href=""
+              <Link
+                to="/"
                 className="text-[#4285F4] poppins text-style font-normal underline leading-normal capitalize text-[0.7595rem]"
               >
                 learn more
-              </a>{" "}
+              </Link>{" "}
               <LiaLongArrowAltRightSolid className="text-[#4285F4]" />
             </div>
           </div>
@@ -39,7 +43,7 @@ export const HeroContent = () => {
       <div className="w-full md:w-[50%] px-5 md:px-0 xl:pr-16">
         <img
           src={hero}
-          className=" w-[22.8125rem] sm:w-[32rem] rounded-[2rem] h-[23.95313rem] mx-auto object-cover mt-[1.5rem] mb-8  sm:mt-5 md:w-[25.5rem] xl:w-[30.5em] md:h-[20.375rem]"
+          className=" w-[22.8125rem] sm:w-[32rem] rounded-[2rem] h-[23.95313] mx-auto object-cover mt-[1.5rem] sm:mt-5 md:w-[25.5rem] xl:w-[30.5em] md:h-[20.375rem]"
         />
       </div>
     </div>
