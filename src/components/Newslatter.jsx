@@ -106,7 +106,7 @@ export const Newslatter = () => {
                 value="subscribe"
                 cls_name={
                   loading ? "bg-[#85edba] cursor-not-allowed mx-auto w-full rounded-[0.29656rem] md:rounded-[0.5rem] py-[0.37069rem] px-[0.92675rem] md:py-[0.625rem] md:px-[1.5625rem] text-center text-[#fff] poppins text-[0.66725rem] md:text-[1.125rem] text-style leading-normal font-normal capitalize" :
-                  "bg-[#0F9D58] btn mx-auto w-full rounded-[0.29656rem] md:rounded-[0.5rem] py-[1rem] px-[0.92675rem] md:py-[0.625rem] md:px-[1.5625rem] text-center text-[#fff] poppins text-[0.66725rem] md:text-[1.125rem] text-style leading-normal font-normal capitalize text-[0.59381rem]"
+                  "bg-[#0F9D58] btn mx-auto w-full rounded-[0.29656rem] md:rounded-[0.5rem] py-[0.90rem] px-[0.92675rem] md:py-[0.625rem] md:px-[1.5625rem] text-center text-[#fff] poppins text-[0.66725rem] md:text-[1.125rem] text-style leading-normal font-normal capitalize text-[0.59381rem]"
                 }
               />
           </form>
