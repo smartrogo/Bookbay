@@ -6,6 +6,16 @@ import "@splidejs/react-splide/css/skyblue";
 import "@splidejs/react-splide/css/sea-green";
 import { useState, useEffect, useMemo } from "react";
 import { Book } from "./Book";
+import history from "../assets/history.png"
+import science from "../assets/science.png"
+import textbook from "../assets/textbook.png"
+import {BiCodeAlt} from "react-icons/bi"
+import {MdHistoryEdu} from "react-icons/md"
+import {FaComputer} from "react-icons/fa6"
+import { BiBookBookmark } from "react-icons/bi"
+import {GiLevelThreeAdvanced} from "react-icons/gi"
+import {GiMaterialsScience} from "react-icons/gi"
+import adventures from "../assets/adventures.png"
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
@@ -92,42 +102,44 @@ export const MiniSwipper = () => {
           pagination: false, // Set pagination to false
         }}
         aria-label="My Favorite Images"
-        className="border-2 border-red-500"
+        className=""
       >
         <SplideSlide>
           <Slide handleClick={() => {getBooks("programming");
             setSelectedCategory("programming"); 
             console.log(selectedCategory)
-        }} type="programming" />
-        </SplideSlide>
-
-        <SplideSlide>
-          <Slide handleClick={() => {getBooks("science");
-          setSelectedCategory("science"); 
-        }} type="science" />
-        </SplideSlide>
-
-        <SplideSlide>
-          <Slide handleClick={() => {getBooks("history");
-           setSelectedCategory("history"); 
-          }} type="history" />
+        }} type="programming" icon={<BiCodeAlt className='w-[2rem] h-[2rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
         </SplideSlide>
 
         <SplideSlide>
           <Slide handleClick={() => {getBooks("science");
            setSelectedCategory("science"); 
-          }} type="science" />
+          }} type="science" icon={<GiMaterialsScience className='w-[2rem] h-[2rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
         </SplideSlide>
 
         <SplideSlide>
-          <Slide handleClick={() => getBooks("biography")} type="biography" />
+          <Slide handleClick={() => {getBooks("history");
+          setSelectedCategory("history"); 
+        }} type="history" icon={<MdHistoryEdu className='w-[2rem] h-[2rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
         </SplideSlide>
 
         <SplideSlide>
           <Slide handleClick={() => {getBooks("computer science");
            setSelectedCategory("computer"); 
-          }} type="computer" />
+          }} type="computer" icon={<FaComputer className='w-[2rem] h-[2rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
         </SplideSlide>
+
+        <SplideSlide>
+          <Slide handleClick={() => {getBooks("adventures");
+           setSelectedCategory("adventures"); 
+          }} type="adventures" icon={<GiLevelThreeAdvanced className='w-[2rem] h-[2rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
+        </SplideSlide>
+
+        <SplideSlide>
+          <Slide handleClick={() => getBooks("biography")} type="biography" icon={<BiBookBookmark className='w-[2rem] h-[2rem] md:w-[2.75rem] md:h-[2.75rem]'/> }/>
+        </SplideSlide>
+
+       
       </Splide>
 
       <div className="display book-container md:w-[95%] mx-auto md:flex justify-evenly">
