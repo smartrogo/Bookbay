@@ -75,7 +75,7 @@ export const MiniSwipper = () => {
       return 2.2;
     } else {
    console.log(screenWidth)
-      return 2;
+      return 2.2;
     }
 
   }, []);
@@ -92,7 +92,7 @@ export const MiniSwipper = () => {
           pagination: false, // Set pagination to false
         }}
         aria-label="My Favorite Images"
-        className=""
+        className="border-2 border-red-500"
       >
         <SplideSlide>
           <Slide handleClick={() => {getBooks("programming");

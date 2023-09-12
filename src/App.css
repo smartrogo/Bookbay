@@ -43,6 +43,11 @@
 }
 .splide__track {
   width: 110%;
+  /* margin-left: auto !important; */
+  /* margin-right: 50px !important; */
+}
+.splide__track ul {
+  /* margin-right: 30px !important; */
 }
 .icon {
   color: var(--icon-color);
