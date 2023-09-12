@@ -77,7 +77,10 @@ export const MiniSwipper = () => {
     if (screenWidth >= 1200) {
       console.log(screenWidth)
       return 4.5;
-    } else if (screenWidth >= 768) {
+    }else if (screen >= 1400) {
+      return 4.5;
+    }
+     else if (screenWidth >= 768) {
    console.log(screenWidth)
       return 3;
     } else if (screenWidth >= 400) {
@@ -108,35 +111,35 @@ export const MiniSwipper = () => {
           <Slide handleClick={() => {getBooks("programming");
             setSelectedCategory("programming"); 
             console.log(selectedCategory)
-        }} type="programming" icon={<BiCodeAlt className='w-[2rem] h-[2rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
+        }} type="programming" icon={<BiCodeAlt className='w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
         </SplideSlide>
 
         <SplideSlide>
           <Slide handleClick={() => {getBooks("science");
            setSelectedCategory("science"); 
-          }} type="science" icon={<GiMaterialsScience className='w-[2rem] h-[2rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
+          }} type="science" icon={<GiMaterialsScience className='w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
         </SplideSlide>
 
         <SplideSlide>
           <Slide handleClick={() => {getBooks("history");
           setSelectedCategory("history"); 
-        }} type="history" icon={<MdHistoryEdu className='w-[2rem] h-[2rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
+        }} type="history" icon={<MdHistoryEdu className='w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
         </SplideSlide>
 
         <SplideSlide>
           <Slide handleClick={() => {getBooks("computer science");
            setSelectedCategory("computer"); 
-          }} type="computer" icon={<FaComputer className='w-[2rem] h-[2rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
+          }} type="computer" icon={<FaComputer className='w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
         </SplideSlide>
 
         <SplideSlide>
           <Slide handleClick={() => {getBooks("adventures");
            setSelectedCategory("adventures"); 
-          }} type="adventures" icon={<GiLevelThreeAdvanced className='w-[2rem] h-[2rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
+          }} type="adventures" icon={<GiLevelThreeAdvanced className='w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
         </SplideSlide>
 
         <SplideSlide>
-          <Slide handleClick={() => getBooks("biography")} type="biography" icon={<BiBookBookmark className='w-[2rem] h-[2rem] md:w-[2.75rem] md:h-[2.75rem]'/> }/>
+          <Slide handleClick={() => getBooks("biography")} type="biography" icon={<BiBookBookmark className='w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]'/> }/>
         </SplideSlide>
 
        
