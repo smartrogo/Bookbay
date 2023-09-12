@@ -46,6 +46,7 @@ const Categories = () => {
                 cover={book.cover_i}
                 title={book.title.trim().split(" ").slice(0, 2).join(" ")}
                 year={book.first_publish_year}
+                bookId={book.edition_key[0]}
               />
             </div>
           ))

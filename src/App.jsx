@@ -61,7 +61,7 @@ function ClerkProviderWithRoutes() {
           <Route path="/about-us" element={<About />} />
           <Route path="/borrow" element={<Borrow />} />
           <Route path="/connect-wallet" element={<WalletConnect />} />
-          <Route path="/book/:bookId" element={<BookDetails />} />
+          <Route path="/books/:bookId" element={<BookDetails />} />
           <Route path="/buy" element={<Buy />} />
           <Route path="/profile/:userId" element={<Profile />} />
           <Route

@@ -1,9 +1,9 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
-export const Book = ({ cover, title, year, autor, loading }) => {
+export const Book = ({bookId, cover, title, year, autor, loading }) => {
   return (
-    <Link  className="w-full h-full">
+    <Link to={`/books/${bookId}`} className="w-full h-full">
 
     <div className="h-[15rem] m-2 bd w-full sm:h-[24rem] lg:h-[20rem] xl:h-[20rem] flex flex-col items-center justify-center ">
         <div className="book flex items-center justify-center w-[65%] lg:w-[55%] lg:h-[60%] h-[60%] sm:h-[70%]">
