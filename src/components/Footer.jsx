@@ -12,7 +12,7 @@ export const Footer = () => {
       <footer className="footer ">
         <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
           <div className="flex md:justify-center md:w-[] mx-auto">
-            <div className="flex flex-wrap justify-evenly w-full md:w-[90%] mb-6 md:mb-0">
+            <div className="flex flex-wrap justify-evenly w-full items-start md:w-[90%] mb-6 md:mb-0">
 
               <div className="">
                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
@@ -53,7 +53,7 @@ export const Footer = () => {
                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
                   <li>
                     <Link
-                      href="https://tailwindcss.com/"
+                    to="/"
                       className="hover:underline"
                     >
                       Contact No
@@ -61,7 +61,7 @@ export const Footer = () => {
                   </li>
                   <li>
                     <Link
-                      href="https://tailwindcss.com/"
+                    to="/"
                       className="hover:underline"
                     >
                       Contact Location
@@ -69,7 +69,7 @@ export const Footer = () => {
                   </li>
                   <li>
                     <Link
-                      href="https://tailwindcss.com/"
+                    to="/"
                       className="hover:underline"
                     >
                       Office Time
@@ -78,7 +78,7 @@ export const Footer = () => {
                 </ul>
               </div>
 
-              <div className="">
+              <div className=" border-2 border-red-500 mt-4  sm:mt-0">
                 <h2 className="mb-2 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                 Quick links
                 </h2>
