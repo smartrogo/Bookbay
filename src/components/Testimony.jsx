@@ -53,7 +53,7 @@ export const Testimony = () => {
           // >= 640px
           640: {
             slidesPerView: 2,
-            spaceBetween: 20,
+            spaceBetween: 10,
           },
           // >= 1024px
           1024: {

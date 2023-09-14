@@ -13,7 +13,7 @@ function HeroContent() {
           <h1 className=" w-[21.1875rem] mx-auto h-[7rem] flex-shrink-0 text-[2.5rem] outfit leading-[3rem] mt-20 md:mt-10 font-bold text-center md:text-start md:w[31.9375rem] sm:w-[90%]  balance mb-0">
             Your Ultimate
             <br /> Online
-            <span className="text-[#DAA520] balance underscore">
+            <span className="text-[#DAA520] capitalize balance underscore">
               {" "}
               books-hub
             </span>

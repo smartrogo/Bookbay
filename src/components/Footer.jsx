@@ -11,11 +11,15 @@ export const Footer = () => {
     <div className="mt-24">
       <footer className="footer ">
         <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
-          <div className="flex md:justify-center md:w-[] mx-auto">
-            <div className="flex flex-wrap justify-evenly w-full items-start md:w-[90%] mb-6 md:mb-0">
 
-              <div className="">
-                <ul className="text-gray-500 dark:text-gray-400 font-medium">
+          
+          <div className="flex md:justify-center md:w-[] mx-auto">
+
+            <div className=" border-2 border-green-500 sm:flex justify-evenly w-full items-start md:w-[90%] mb-6 md:mb-0">
+
+              <div className=" border-2 mx-auto border-green-500 flex md:block justify-center items-center">
+                <div className="">
+                <ul className="text-gray-500 dark:text-gray-400 mx-auto font-medium text-center sm:text-start">
                   <li className="mb-2">
                     <Link to="/" className="flex items-center hover:underline">
                       <span className="self-center font-semibold whitespace-nowrap dark:text-white text-sm text-gray-900 uppercase">
@@ -44,9 +48,11 @@ export const Footer = () => {
                     </Link>
                   </li>
                 </ul>
+                </div>
               </div>
 
-              <div className="pl-6 md:pl-0">
+              <div className="border-2 border-green-500 mx-auto flex md:block justify-center items-center text-center sm:text-start">
+                <div className="">
                 <h2 className="mb-2 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                   Address
                 </h2>
@@ -76,10 +82,43 @@ export const Footer = () => {
                     </Link>
                   </li>
                 </ul>
+                </div>
+              </div>
+              <div className="border-2 border-green-500 mx-auto flex md:block justify-center items-center text-center sm:text-start">
+                <div className="">
+
+                <ul className="text-gray-500 dark:text-gray-400 font-medium">
+                  <li>
+                    <Link
+                    to="/"
+                      className="hover:underline"
+                    >
+                      Contact No
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                    to="/"
+                      className="hover:underline"
+                    >
+                      Contact Location
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                    to="/"
+                      className="hover:underline"
+                    >
+                      Office Time
+                    </Link>
+                  </li>
+                </ul>
+                </div>
               </div>
 
-              <div className=" border-2 border-red-500 mt-4  sm:mt-0">
-                <h2 className="mb-2 text-sm font-semibold text-gray-900 uppercase dark:text-white">
+              {/* <div className=" border-2 border-red-500 flex md:block justify-center items-center">
+             <div>
+             <h2 className="mb-2 text-sm font-semibold text-gray-900 uppercase dark:text-white">
                 Quick links
                 </h2>
                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
@@ -100,11 +139,15 @@ export const Footer = () => {
                     </Link>
                   </li>
                 </ul>
-              </div>
+             </div>
+              </div> */}
+
             </div>
 
             
           </div>
+
+
           <div className="flex mt-4 justify-center">
             <div className="socials flex ">
             <IoLogoInstagram className="mr-2 md:w-[1.5rem] md:h-[1.5rem]"/>
