@@ -32,14 +32,18 @@ export const MiniSwipper = () => {
     getBooks("programming"); // Fetch programming books initially
   }, []);
 
+  // Api call to get books
   const getBooks = async (bookType) => {
     try {
       setIsLoading(true);
+      // Api endpoint
       const response = await fetch(
         `https://openlibrary.org/search.json?q=${bookType}`
       );
       const data = await response.json();
+      // Filter the data and get books with cover image
       const booksWithCovers = data.docs.filter((item) => item.cover_i);
+      //
       setDisplayedData(booksWithCovers.slice(0, 8));
       console.log(displayedData, "only God knows");
     } catch (error) {
