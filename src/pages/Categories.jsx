@@ -4,7 +4,7 @@ import { Book } from '../components/Book';
 import Skeleton from "react-loading-skeleton";
 
 const Categories = () => {
-  const navigate = useNavigate()  
+  // const navigate = useNavigate()  
   const { category } = useParams(); // Get the category from the URL
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);

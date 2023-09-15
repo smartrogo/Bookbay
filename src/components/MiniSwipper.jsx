@@ -43,7 +43,7 @@ export const MiniSwipper = () => {
       const data = await response.json();
       // Filter the data and get books with cover image
       const booksWithCovers = data.docs.filter((item) => item.cover_i);
-      //
+      // Get the first eight books to be displayed
       setDisplayedData(booksWithCovers.slice(0, 8));
       console.log(displayedData, "only God knows");
     } catch (error) {
@@ -106,7 +106,7 @@ export const MiniSwipper = () => {
           gap: "0.5rem",
           arrows: false,
           perPage: slidesPerPage,
-          pagination: false, // Set pagination to false
+          pagination: false
         }}
         aria-label="My Favorite Images"
         className=""
