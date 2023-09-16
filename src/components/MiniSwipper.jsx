@@ -6,16 +6,16 @@ import "@splidejs/react-splide/css/skyblue";
 import "@splidejs/react-splide/css/sea-green";
 import { useState, useEffect, useMemo } from "react";
 import { Book } from "./Book";
-import history from "../assets/history.png"
-import science from "../assets/science.png"
-import textbook from "../assets/textbook.png"
-import {BiCodeAlt} from "react-icons/bi"
-import {MdHistoryEdu} from "react-icons/md"
-import {FaComputer} from "react-icons/fa6"
-import { BiBookBookmark } from "react-icons/bi"
-import {GiLevelThreeAdvanced} from "react-icons/gi"
-import {GiMaterialsScience} from "react-icons/gi"
-import adventures from "../assets/adventures.png"
+import history from "../assets/history.png";
+import science from "../assets/science.png";
+import textbook from "../assets/textbook.png";
+import { BiCodeAlt } from "react-icons/bi";
+import { MdHistoryEdu } from "react-icons/md";
+import { FaComputer } from "react-icons/fa6";
+import { BiBookBookmark } from "react-icons/bi";
+import { GiLevelThreeAdvanced } from "react-icons/gi";
+import { GiMaterialsScience } from "react-icons/gi";
+import adventures from "../assets/adventures.png";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
@@ -23,80 +23,71 @@ import { Link } from "react-router-dom";
 import { Slide } from "./Slide";
 
 export const MiniSwipper = () => {
-  const [displayedData, setDisplayedData] = useState([]);
-  const [bookChunks, setBookChunks] = useState([]);
+  
+  const [bookChunks, setBookChunks] = useState([
+    [0, 0],
+    [0, 0],
+    [0, 0],
+    [0, 0],
+  ]);
   const [loading, setIsLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState("programming"); 
+  const [selectedCategory, setSelectedCategory] = useState("programming");
 
   useEffect(() => {
     getBooks("programming"); // Fetch programming books initially
   }, []);
 
+
+  const fn = (data) => {
+    const chunkSize = 2;
+    const chunks = [];
+    for (let i = 0; i < data.length; i += chunkSize) {
+      chunks.push(data.slice(i, i + chunkSize));
+    }
+    return chunks
+  };
+
   // Api call to get books
   const getBooks = async (bookType) => {
-    try {
+
       setIsLoading(true);
       // Api endpoint
       const response = await fetch(
         `https://openlibrary.org/search.json?q=${bookType}`
-      );
+      ).catch((error)=>{
+        console.log("error in catch: ", error);
+      })
       const data = await response.json();
       // Filter the data and get books with cover image
       const booksWithCovers = data.docs.filter((item) => item.cover_i);
       // Get the first eight books to be displayed
-      setDisplayedData(booksWithCovers.slice(0, 8));
-      console.log(displayedData, "only God knows");
-    } catch (error) {
-      console.error("Error fetching books:", error);
-    } finally {
+      let chunks = fn(booksWithCovers)
+      setBookChunks(chunks); // Update the bookChunks state
       setIsLoading(false);
-      console.log("Loading state set to false.");
-    }
   };
 
 
-  useEffect(() => {
-    // Divide the displayedData into smaller chunks
-    const chunkSize = 2;
-    const chunks = [];
-    for (let i = 0; i < displayedData.length; i += chunkSize) {
-      chunks.push(displayedData.slice(i, i + chunkSize));
-    }
-    setBookChunks(chunks); // Update the bookChunks state
-    console.log(bookChunks, "please");
-    // setIsLoading(false); // Set loading to false once data is processed
-  }, [displayedData]);
 
-  useEffect(() => {
-    // Once the bookChunks are populated, loading is set to false
-    if (bookChunks.length > 0) {
-      setIsLoading(false);
-      console.log("loading false")
-    }
-  }, [bookChunks]);
 
 
   const slidesPerPage = useMemo(() => {
     const screenWidth = window.innerWidth;
     if (screenWidth >= 1200) {
-      console.log(screenWidth)
+      console.log(screenWidth);
       return 4.5;
-    }else if (screen >= 1400) {
+    } else if (screen >= 1400) {
       return 4.5;
-    }
-     else if (screenWidth >= 768) {
-   console.log(screenWidth)
+    } else if (screenWidth >= 768) {
+      console.log(screenWidth);
       return 3;
     } else if (screenWidth >= 400) {
-   console.log(screenWidth)
+      console.log(screenWidth);
       return 2.2;
     } else {
-   console.log(screenWidth)
+      console.log(screenWidth);
       return 2.2;
     }
-
   }, []);
-
 
   return (
     <>
@@ -106,121 +97,142 @@ export const MiniSwipper = () => {
           gap: "0.5rem",
           arrows: false,
           perPage: slidesPerPage,
-          pagination: false
+          pagination: false,
         }}
         aria-label="My Favorite Images"
         className=""
       >
         <SplideSlide>
-          <Slide handleClick={() => {getBooks("programming");
-            setSelectedCategory("programming"); 
-            console.log(selectedCategory)
-        }} type="programming" icon={<BiCodeAlt className='w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
+          <Slide
+            handleClick={() => {
+              getBooks("programming");
+              setSelectedCategory("programming");
+              console.log(selectedCategory);
+            }}
+            type="programming"
+            icon={
+              <BiCodeAlt className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
         </SplideSlide>
 
         <SplideSlide>
-          <Slide handleClick={() => {getBooks("science");
-           setSelectedCategory("science"); 
-          }} type="science" icon={<GiMaterialsScience className='w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
+          <Slide
+            handleClick={() => {
+              getBooks("science");
+              setSelectedCategory("science");
+            }}
+            type="science"
+            icon={
+              <GiMaterialsScience className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
         </SplideSlide>
 
         <SplideSlide>
-          <Slide handleClick={() => {getBooks("history");
-          setSelectedCategory("history"); 
-        }} type="history" icon={<MdHistoryEdu className='w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
+          <Slide
+            handleClick={() => {
+              getBooks("history");
+              setSelectedCategory("history");
+            }}
+            type="history"
+            icon={
+              <MdHistoryEdu className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
         </SplideSlide>
 
         <SplideSlide>
-          <Slide handleClick={() => {getBooks("computer science");
-           setSelectedCategory("computer"); 
-          }} type="computer" icon={<FaComputer className='w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
+          <Slide
+            handleClick={() => {
+              getBooks("computer science");
+              setSelectedCategory("computer");
+            }}
+            type="computer"
+            icon={
+              <FaComputer className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
         </SplideSlide>
 
         <SplideSlide>
-          <Slide handleClick={() => {getBooks("adventures");
-           setSelectedCategory("adventures"); 
-          }} type="adventures" icon={<GiLevelThreeAdvanced className='w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]'/>}/>
+          <Slide
+            handleClick={() => {
+              getBooks("adventures");
+              setSelectedCategory("adventures");
+            }}
+            type="adventures"
+            icon={
+              <GiLevelThreeAdvanced className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
         </SplideSlide>
 
         <SplideSlide>
-          <Slide handleClick={() => getBooks("biography")} type="biography" icon={<BiBookBookmark className='w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]'/> }/>
+          <Slide
+            handleClick={() => getBooks("biography")}
+            type="biography"
+            icon={
+              <BiBookBookmark className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
         </SplideSlide>
-
-       
       </Splide>
 
       <div className="display book-container md:w-[95%] mx-auto md:flex justify-evenly">
-
-      <div className="flex w-full md:w-1/2 justify-evenly">
-          {bookChunks[1] && !loading ? (
+        <div className="flex w-full md:w-1/2 justify-evenly">
+        {bookChunks &&
             bookChunks[1].map((item, index) => (
               <Book
                 key={index}
-                cover={item.cover_i}
-                title={item.title.trim().split(" ").slice(0, 2).join(" ")}
-                year={item.first_publish_year}
-                autor={item.author_name[0]}
+                cover={item?.cover_i}
+                title={item?.title?.trim().split(" ").slice(0, 2).join(" ")}
+                year={item?.first_publish_year}
+                // autor={item?.author_name[0]}
                 loading={loading}
               />
-            ))
-          ) : (
-            <Skeleton
-              height={250}
-              width="100%"
-              baseColor="#202020"
-              highlightColor="#444"
-            />
-          )}
+            ))}
         </div>
-        
-      <div className="flex w-full md:w-1/2 justify-evenly">
-          {bookChunks[0] && !loading ? (
+
+        <div className="flex w-full md:w-1/2 justify-evenly">
+          {bookChunks &&
             bookChunks[0].map((item, index) => (
               <Book
                 key={index}
-                cover={item.cover_i}
-                title={item.title.trim().split(" ").slice(0, 2).join(" ")}
-                year={item.first_publish_year}
-                autor={item.author_name[0]}
+                cover={item?.cover_i}
+                title={item?.title?.trim().split(" ").slice(0, 2).join(" ")}
+                year={item?.first_publish_year}
+                // autor={item?.author_name[0]}
                 loading={loading}
               />
-            ))
-          ) : (
-            <Skeleton
-              height={250}
-              width="100%"
-              baseColor="#202020"
-              highlightColor="#444"
-            />
-          )}
+            ))}
         </div>
-       
       </div>
 
       <div className="hidden  md:flex justify-evenly md:w-[95%] mx-auto">
-
-      <div className="flex w-full md:w-1/2 book-container justify-evenly">
+        <div className="flex w-full md:w-1/2 book-container justify-evenly">
           {bookChunks[2] && !loading ? (
             bookChunks[2].map((item, index) => (
               <Book
                 key={index}
-                cover={item.cover_i}
-                title={item.title.trim().split(" ").slice(0, 2).join(" ")}
-                year={item.first_publish_year}
-                autor={item.author_name[0]}
+                cover={item?.cover_i}
+                title={item?.title?.trim().split(" ").slice(0, 2).join(" ")}
+                year={item?.first_publish_year}
+                // autor={item?.author_name[0]}
                 loading={loading}
               />
             ))
           ) : (
-            <Skeleton
-              height={250}
-              width="100%"
-              baseColor="#202020"
-              highlightColor="#444"
-            />
+            <h1>i am also loading...</h1>
+            // <Skeleton
+            //   height={250}
+            //   width="100%"
+            //   baseColor="#202020"
+            //   highlightColor="#444"
+            // />
           )}
         </div>
-      <div className="flex w-full md:w-1/2 justify-evenly">
+        {/* <div className="flex w-full md:w-1/2 justify-evenly">
           {bookChunks[3] && !loading ? (
             bookChunks[3].map((item, index) => (
               <Book
@@ -233,17 +245,20 @@ export const MiniSwipper = () => {
               />
             ))
           ) : (
-            <Skeleton
-              height={250}
-              width="100%"
-              baseColor="#202020"
-              highlightColor="#444"
-            />
+            <h1>i am also loading...</h1>
+            // <Skeleton
+            //   height={250}
+            //   width="100%"
+            //   baseColor="#202020"
+            //   highlightColor="#444"
+            // />
           )}
-        </div>
-       
+        </div> */}
       </div>
-      <Link   to={`/category/${selectedCategory}`} className="my-[2px] roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#4285F4] flex justify-end w-[80%] md:w-[95%] mx-auto items-center">
+      <Link
+        to={`/category/${selectedCategory}`}
+        className="my-[2px] roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#4285F4] flex justify-end w-[80%] md:w-[95%] mx-auto items-center"
+      >
         <span className="underline">see more </span>
         <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />
       </Link>

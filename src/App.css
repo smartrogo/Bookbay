@@ -198,6 +198,10 @@
   padding-bottom: 5px;
 }
 
+.test {
+  width: 100% !important;
+}
+
 .underscore::after {
   content: "";
   position: absolute;
