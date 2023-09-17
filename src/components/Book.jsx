@@ -37,7 +37,7 @@ export const Book = ({ bookId, cover, title, year, author, loading }) => {
 
         <span className="color text-xs md:text-sm mx-auto w-full md:w-[70%]">
           {loading ? (
-          <Skeleton className="mb-[4px] mt-[8px] h-[2rem] ske" baseColor="#D9D9D9" highlightColor="#fcfcfc" />
+          <Skeleton className="mb-[4px] mt-[8px] ske" baseColor="#D9D9D9" highlightColor="#fcfcfc" />
           ) : (
             <span className="color text-xs md:text-sm text-center mt-4 w-[90%]">
             {title}
@@ -46,7 +46,7 @@ export const Book = ({ bookId, cover, title, year, author, loading }) => {
         </span>
         <span className="color text-xs md:text-sm mx-auto w-full md:w-[80%]">
           {loading ? (
-          <Skeleton className="my-[4px] md:my-[2px] h-[2rem] border-blue-50 ske2" baseColor="#D9D9D9" highlightColor="#fcfcfc" />
+          <Skeleton className="my-[4px] md:my-[2px] border-blue-50 ske2" baseColor="#D9D9D9" highlightColor="#fcfcfc" />
           ) : (
             <span className="color text-xs md:text-sm text-center mt-4 w-[90%]">
             {`year: ${year}`}
@@ -55,7 +55,7 @@ export const Book = ({ bookId, cover, title, year, author, loading }) => {
         </span>
         <span className="color text-xs md:text-sm text-center w-full md:w-[80%]">
           {loading ? (
-            <Skeleton baseColor="#D9D9D9" className="ske3 h-[2rem] md:h-[3rem] my-[4px] md:my-[2px]" highlightColor="#fcfcfc" />
+            <Skeleton baseColor="#D9D9D9" className="ske3 md:h-[3rem] my-[4px] md:my-[2px]" highlightColor="#fcfcfc" />
           ) : (
             author[0]
           )}
