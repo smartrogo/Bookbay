@@ -61,6 +61,10 @@ export const MiniSwipper = () => {
       // Filter the data and get books with cover image
       const booksWithCovers = data.docs.filter((item) => item.cover_i);
       // Get the first eight books to be displayed
+      const intialAuthor = booksWithCovers.map((item, index) => {
+        return item.author_name[0]
+      })
+      console.log(intialAuthor, "authors")
       let chunks = fn(booksWithCovers)
       setBookChunks(chunks); // Update the bookChunks state
       setIsLoading(false);
@@ -182,13 +186,13 @@ export const MiniSwipper = () => {
       <div className="display book-container md:w-[95%] mx-auto md:flex justify-evenly">
         <div className="flex w-full md:w-1/2 justify-evenly">
         {bookChunks &&
-            bookChunks[1].map((item, index) => (
+            bookChunks[0].map((item, index) => (
               <Book
                 key={index}
                 cover={item?.cover_i}
                 title={item?.title?.trim().split(" ").slice(0, 2).join(" ")}
                 year={item?.first_publish_year}
-                // autor={item?.author_name[0]}
+                author={item?.author_name}
                 loading={loading}
               />
             ))}
@@ -196,13 +200,13 @@ export const MiniSwipper = () => {
 
         <div className="flex w-full md:w-1/2 justify-evenly">
           {bookChunks &&
-            bookChunks[0].map((item, index) => (
+            bookChunks[1].map((item, index) => (
               <Book
                 key={index}
                 cover={item?.cover_i}
                 title={item?.title?.trim().split(" ").slice(0, 2).join(" ")}
                 year={item?.first_publish_year}
-                // autor={item?.author_name[0]}
+                author={item?.author_name}
                 loading={loading}
               />
             ))}
@@ -210,50 +214,32 @@ export const MiniSwipper = () => {
       </div>
 
       <div className="hidden  md:flex justify-evenly md:w-[95%] mx-auto">
-        <div className="flex w-full md:w-1/2 book-container justify-evenly">
-          {bookChunks[2] && !loading ? (
+      <div className="flex w-full md:w-1/2 justify-evenly">
+          {bookChunks &&
             bookChunks[2].map((item, index) => (
               <Book
                 key={index}
                 cover={item?.cover_i}
                 title={item?.title?.trim().split(" ").slice(0, 2).join(" ")}
                 year={item?.first_publish_year}
-                // autor={item?.author_name[0]}
+                author={item?.author_name}
                 loading={loading}
               />
-            ))
-          ) : (
-            <h1>i am also loading...</h1>
-            // <Skeleton
-            //   height={250}
-            //   width="100%"
-            //   baseColor="#202020"
-            //   highlightColor="#444"
-            // />
-          )}
+            ))}
         </div>
-        {/* <div className="flex w-full md:w-1/2 justify-evenly">
-          {bookChunks[3] && !loading ? (
+        <div className="flex w-full md:w-1/2 justify-evenly">
+          {bookChunks &&
             bookChunks[3].map((item, index) => (
               <Book
                 key={index}
-                cover={item.cover_i}
-                title={item.title.trim().split(" ").slice(0, 2).join(" ")}
-                year={item.first_publish_year}
-                autor={item.author_name[0]}
+                cover={item?.cover_i}
+                title={item?.title?.trim().split(" ").slice(0, 2).join(" ")}
+                year={item?.first_publish_year}
+                author={item?.author_name}
                 loading={loading}
               />
-            ))
-          ) : (
-            <h1>i am also loading...</h1>
-            // <Skeleton
-            //   height={250}
-            //   width="100%"
-            //   baseColor="#202020"
-            //   highlightColor="#444"
-            // />
-          )}
-        </div> */}
+            ))}
+        </div>
       </div>
       <Link
         to={`/category/${selectedCategory}`}

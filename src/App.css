@@ -198,8 +198,27 @@
   padding-bottom: 5px;
 }
 
-.test {
+.react-loading-skeleton {
   width: 100% !important;
+  height: 100% !important;
+}
+
+.fit {
+  height: -webkit-fill-available;
+}
+
+.ske {
+  width: 80% !important;
+  height: -webkit-fill-available !important;
+}
+.ske2 {
+  width: 90% !important;
+  height: -webkit-fill-available !important;
+}
+.ske3 {
+  
+  width: 90% !important;
+  height: -webkit-fill-available !important;
 }
 
 .underscore::after {

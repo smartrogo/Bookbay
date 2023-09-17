@@ -1,19 +1,26 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
-export const Book = ({ bookId, cover, title, year, autor, loading }) => {
-  console.log(loading, "hy men where are you")
+export const Book = ({ bookId, cover, title, year, author, loading }) => {
+  
+    // Calculate the dimensions of the book container
+    const containerStyle = {
+      width: "100%", // Set the width to 100% of the container
+      height: "auto", // Set the height to auto for dynamic sizing
+    };
   return (
     <Link to={`/books/${bookId}`} className="w-full h-full">
-      <div className="h-[15rem] m-2 bd w-full sm:h-[24rem] lg:h-[20rem] xl:h-[20rem] flex flex-col items-center justify-center ">
+      <div className="h-[15rem] m-2 bd w-full text-center sm:h-[24rem] lg:h-[20rem] xl:h-[20rem] flex flex-col items-center justify-center ">
+
+
         <div className="book flex items-center justify-center w-[65%] lg:w-[55%] lg:h-[60%] h-[60%] sm:h-[70%]">
           {loading ? (
-            <div className="w-full">
+            <div className="w-full fit">
               <Skeleton
               baseColor="#202020"
-              height={100}
+              height="100%"
               highlightColor="#444"
-              className="border-2 border-yellow-500 w-ful"
+              className="w-ful"
             />
             </div>
           ) : (
@@ -21,33 +28,37 @@ export const Book = ({ bookId, cover, title, year, autor, loading }) => {
               <img
                 src={`https://covers.openlibrary.org/b/id/${cover}-L.jpg`}
                 alt={title}
-                className="object-scale-down h-full "
+                className="object-scale-down h-full"
               />
             </div>
           )}
         </div>
 
-        {loading ? (
-          <div>
-          <Skeleton style={{width: "100%"}} width="100px" className="border-2 border-blue-500" baseColor="#202020" highlightColor="#444" />
-          </div>
-        ) : (
-          <span className="color text-xs md:text-sm text-center mt-4 w-[90%]">
-            {title}
-          </span>
-        )}
-        <span className="color text-xs md:text-sm">
+        
+
+        <span className="color text-xs md:text-sm mx-auto w-full md:w-[40%]">
           {loading ? (
-            <Skeleton width="100%" baseColor="#202020" highlightColor="#444" />
+          <Skeleton className="my-[4px] border-2 ske border-blue-500" baseColor="#202020" highlightColor="#444" />
           ) : (
-            `year: ${year}`
+            <span className="color text-xs md:text-sm text-center mt-4 w-[90%]">
+            {title}
+            </span>
+          )}
+        </span>
+        <span className="color text-xs md:text-sm mx-auto w-full md:w-[80%]">
+          {loading ? (
+          <Skeleton className="my-[4px] border-blue-50 ske2" baseColor="#202020" highlightColor="#444" />
+          ) : (
+            <span className="color text-xs md:text-sm text-center mt-4 w-[90%]">
+            {`year: ${year}`}
+            </span>
           )}
         </span>
         <span className="color text-xs md:text-sm text-center w-full md:w-[80%]">
           {loading ? (
-            <Skeleton width="100%" baseColor="#202020" highlightColor="#444" />
+            <Skeleton baseColor="#202020" className="ske3 my-[4px] border-2 border-green-500" highlightColor="#eee" />
           ) : (
-            autor
+            author[0]
           )}
         </span>
       </div>
