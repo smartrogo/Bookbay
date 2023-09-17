@@ -204,7 +204,7 @@
 }
 
 .fit {
-  height: -webkit-fill-available;
+  height: 100% !important;
 }
 
 .ske {
