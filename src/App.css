@@ -209,15 +209,15 @@
 
 .ske {
   height: 1.1rem !important;
-  width: 80% !important;
+  width: 70% !important;
 }
 .ske2 {
   height: 1.1rem !important;
-  width: 90% !important;
+  width: 70% !important;
 }
 .ske3 {
   height: 1.1rem !important;
-  width: 90% !important;
+  width: 70% !important;
 }
 @media (min-width: 768px) {
   .md\:h-\[3rem\] {
