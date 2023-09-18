@@ -15,7 +15,7 @@ import { Card } from "./Card";
 import { Text } from "./Text";
 import ellipse3 from "../assets/ellipse3.png";
 import ellipse1 from "../assets/ellipse1.png";
-// import  ellipse02  from "../assets/ellipse02.png";
+import  ellipse02  from "../assets/ellipse02.png";
 import hero from "../assets/hero.png";
 import stay from "../assets/stay.png";
 import { Link } from "react-router-dom";
@@ -94,7 +94,7 @@ export const Testimony = () => {
         </SwiperSlide>
         <SwiperSlide className="flex items-center justify-center">
           <Card
-            img={stay}
+            img={ellipse02}
             qoute="Bookbay simplifies student life. Convenient purchases with my card, affordable books, and stress-free online shopping."
             name="smartrogo"
           />

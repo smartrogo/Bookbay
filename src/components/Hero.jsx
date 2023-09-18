@@ -7,9 +7,9 @@ import { Link, useNavigate } from "react-router-dom";
 function HeroContent() {
   const navigate = useNavigate()
   return (
-    <div className="flex h-[100vh] md:h-[75vh] lg:h-[85vh] flex-col md:gap- items-center md:flex-row md:w-[90%] xl:w-[85%] border-2 mx-auto">
+    <div className="flex h-[100vh] md:h-[75vh] lg:h-[85vh] flex-col md:gap- items-center md:flex-row md:w-[90%] xl:w-[85%] mx-auto">
       <div className="w-full md:w-[50%]">
-        <div className="lg:[70%] xl:pl-1 border-2">
+        <div className="lg:[70%] xl:pl-1">
           <h1 className=" w-[21.1875rem] text-center mx-auto md:mx-0 h-[7rem] flex-shrink-0 text-[2.5rem] outfit leading-[3rem] mt-20 md:mt-10 font-bold md:text-start md:w[31.9375rem] sm:w-[90%]  balance mb-0">
             Your Ultimate
             <br /> Online
@@ -40,7 +40,7 @@ function HeroContent() {
           </div>
         </div>
       </div>
-      <div className="w-full md:w-[50%] px-5 border-2 md:px-0 xl:mt-4 flex items-center justify-start">
+      <div className="w-full md:w-[50%] px-5 md:px-0 xl:mt-4 flex items-center justify-start">
         <img
           src={herosec}
           className="w-[23.875rem] sm:w-[32rem] h-[20.3125rem] mx-auto object-cover mt-[1rem] mb- sm:mt-5 md:w-full xl:w-[45.84006rem] md:h-fit"

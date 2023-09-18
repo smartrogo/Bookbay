@@ -15,41 +15,36 @@ export const Footer = () => {
       <footer className="footer ">
         <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
           <div className="flex md:justify-center md:w-[] mx-auto">
-            <div className=" border-2 border-green-500 flex flex-col gap-10 sm:gap-0 sm:flex-row sm:justify-evenly w-full items-start md:w-[90%] mb-6 md:mb-0">
-              <div className=" border-2 mx-auto border-green-500 flex md:block justify-center items-center">
-                <div className="">
+            <div className="flex flex-col gap-4 sm:gap-0 sm:flex-row sm:justify-evenly w-full items-start md:w-[90%] mb-6 md:mb-0">
+              <div className="mx-auto flex md:block justify-center items-center">
+                <div className="text-center md:text-start">
+                  <Link to="/">
+                    <h2 className=" text-sm font-semibold text-gray-900 uppercase dark:text-white pb-2">
+                      Bookbay
+                    </h2>
+                  </Link>
                   <ul className="text-gray-500 dark:text-gray-400 mx-auto font-medium text-center sm:text-start">
-                    <li className="">
-                      <Link
-                        to="/"
-                        className="flex items-center hover:underline"
-                      >
-                        <span className="self-center font-semibold whitespace-nowrap dark:text-white text-sm text-gray-900 uppercase">
-                          Bookbay
-                        </span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/" className="hover:underline">
+                    <li className="pb-2">
+                      <Link to="/" className="hover:underline ">
                         Home
                       </Link>
                     </li>
-                    <li>
+                    <li className="pb-2">
                       <Link to="/" className="hover:underline">
                         About Us
                       </Link>
                     </li>
-                    <li>
+                    <li className="pb-2">
                       <Link to="/" className="hover:underline">
                         Borrow
                       </Link>
                     </li>
-                    <li>
+                    <li className="pb-2">
                       <Link to="/" className="hover:underline">
                         Buy/Sell
                       </Link>
                     </li>
-                    <li>
+                    <li className="">
                       <Link to="/" className="hover:underline">
                         Wallet Connect
                       </Link>
@@ -58,16 +53,16 @@ export const Footer = () => {
                 </div>
               </div>
 
-              <div className="border-2 border-green-500 mx-auto flex md:block justify-center items-center text-center sm:text-start">
-                <div className="">
+              <div className="mx-auto flex md:block justify-center items-center text-center sm:text-start md:text-start">
+                <div className="text-center sm:text-start">
                   <h2 className=" text-sm font-semibold text-gray-900 uppercase dark:text-white">
                     Address
                   </h2>
                   <ul className="para poppins text-[1.125rem] text-style font-normal capitalize leading-normal">
-                    <li>
+                    <li >
                       <Link
                         to="/"
-                        className="hover:underline flex items-center gap-2"
+                        className="hover:underline flex items-center gap-2 py-2 justify-center sm:justify-start"
                       >
                         <BiPhoneCall className="w-[1.12506rem] h-[1.12506rem]" />
                         +2348120304001
@@ -76,20 +71,20 @@ export const Footer = () => {
                     <li>
                       <Link
                         to="/"
-                        className="hover:underline flex items-start gap-2"
+                        className="hover:underline flex items-start justify-center balance"
                       >
-                        <BiMap className="w-[1.12506rem] h-[1.12506rem]" />
-                       <p className="">
-                       No.14 Behind JIBWIS Juma'at Masjid Mariri-Wudil Rd, <br/> opp.
-                        Audu Manager Filling Station Kumbotso, 700104, <br/> Kano
-                        State - Nigeria
-                       </p>
+                        <BiMap className="w-[1.12506rem] hidden sm:block h-[1.12506rem]" />
+                        <p className=" text-center sm:text-start">
+                          No.14 Behind JIBWIS Juma'at Masjid Mariri-Wudil Rd,{" "}
+                          <br /> opp. Audu Manager Filling Station Kumbotso,
+                          700104, <br /> Kano State - Nigeria
+                        </p>
                       </Link>
                     </li>
                     <li>
                       <Link
                         to="/"
-                        className="hover:underline flex items-center gap-2"
+                        className="hover:underline flex items-center gap-2 justify-center sm:justify-start py-2"
                       >
                         <BiTime className="w-[1.12506rem] h-[1.12506rem]" />
                         Office Time
@@ -98,7 +93,7 @@ export const Footer = () => {
                   </ul>
                 </div>
               </div>
-              <div className="border-2 border-green-500 mx-auto flex md:block justify-center items-center text-center sm:text-start">
+              <div className="mx-auto flex md:block justify-center items-center text-center sm:text-start">
                 <div className="">
                   <ul className="text-gray-500 dark:text-gray-400 font-medium underline">
                     <li>
@@ -120,31 +115,7 @@ export const Footer = () => {
                 </div>
               </div>
 
-              {/* <div className=" border-2 border-red-500 flex md:block justify-center items-center">
-             <div>
-             <h2 className="mb-2 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-                Quick links
-                </h2>
-                <ul className="text-gray-500 dark:text-gray-400 font-medium">
-                
-                  <li>
-                    <Link to="/" className="hover:underline flex items-center">
-                      Terms Of Service
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/" className="hover:underline flex items-center"> 
-                      privacy Policy
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/" className="hover:underline flex items-center">
-                      FAQs
-                    </Link>
-                  </li>
-                </ul>
-             </div>
-              </div> */}
+            
             </div>
           </div>
 
