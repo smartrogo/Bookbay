@@ -13,11 +13,10 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { Card } from "./Card";
 import { Text } from "./Text";
-import ellipse3 from "../assets/ellipse3.png";
-import ellipse1 from "../assets/ellipse1.png";
-import  ellipse02  from "../assets/ellipse02.png";
+import techbro from "../assets/techbro.png";
+import techman from "../assets/techman.png";
+import techgirl from "../assets/techgirl.png"
 import hero from "../assets/hero.png";
-import stay from "../assets/stay.png";
 import { Link } from "react-router-dom";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
 export const Testimony = () => {
@@ -73,14 +72,14 @@ export const Testimony = () => {
       >
         <SwiperSlide className="flex items-center justify-center">
           <Card
-            img={ellipse3}
+            img={techbro}
             qoute="Bookbay is a great bookstore platform for educators: offers diverse resources, discounts, and convenience for enriching classroom learning experiences."
             name="Muhammad Niimatullahi"
           />
         </SwiperSlide>
         <SwiperSlide className="flex items-center justify-center">
           <Card
-            img={ellipse1}
+            img={techman}
             qoute="Wow! Bookbay is a Lifesaver for students! Easy borrowing, vast collection, saved me money, and made studying more enjoyable."
             name="Muhammad Ala"
           />
@@ -94,7 +93,7 @@ export const Testimony = () => {
         </SwiperSlide>
         <SwiperSlide className="flex items-center justify-center">
           <Card
-            img={ellipse02}
+            img={techgirl}
             qoute="Bookbay simplifies student life. Convenient purchases with my card, affordable books, and stress-free online shopping."
             name="smartrogo"
           />

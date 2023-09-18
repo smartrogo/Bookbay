@@ -5,7 +5,7 @@
   --nav-bg: #141218;
   --icon-color: white;
   --para-color: #aaa;
-  --boder-color: #FFFFFF;
+  --border-color: #FFFFFF;
   --card-bg: #36343B;
   --qoute-color: #AAAAAA;
   --swiper-btn: #454545;
@@ -68,8 +68,12 @@
 }
 
 .card {
-  border-color: var(--boder-color);
+  border-color: var(--border-color);
   background-color: var(--card-bg);
+}
+
+.tbd {
+  border: 2px solid var(--border-color);
 }
 
 .testimony {
