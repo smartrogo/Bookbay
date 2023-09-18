@@ -24,7 +24,7 @@ export const Testimony = () => {
   return (
     <section className="w-full mt-6 md:w-[95%] relative overflow-hidden mx-auto min-h-[200px] py-5 md:px-7 ">
       <Text
-        head="Don’t just take our words !"
+        head="Don’t Just Take Our Words !"
         body=" Lorem ipsum dolor sit amet consectetur. Diam ut feugiat aliquet in
           varius feugiat magna dictum. Tortor diam et placerat."
       />

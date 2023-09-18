@@ -9,7 +9,7 @@ export const Blogs = () => {
     <section className="text-style mt-6 text-center">
       <Text
         head="From Our Blogs"
-        body="Lorem ipsum dolor sit amet consectetur. Diam ut feugiat aliquet in varius feugiat magna dictum. Tortor diam et placerat."
+        body="Explore a world of knowledge and insights from our blogs. Discover fresh perspectives, tips, and inspiration for your interests and endeavors."
       />
 
       <div className="mt-6 md:flex md:gap-[1rem] lg:gap-[3.3125rem] justify-center md:w-[90%] mx-auto">
