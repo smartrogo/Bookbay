@@ -48,9 +48,7 @@
 .splide__track {
   width: 110%;
 }
-.splide__track ul {
-  /* margin-right: 30px !important; */
-}
+
 .icon {
   color: var(--icon-color);
 }
