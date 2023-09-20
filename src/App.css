@@ -79,7 +79,10 @@
 }
 
 .cl-rootBox  {
-  margin-bottom: 12px !important;
+  margin-bottom: 0 !important;
+}
+.cl-rootBox  {
+  margin-top: 0 !important;
 }
 
 .cl-card {

@@ -44,7 +44,7 @@ function ClerkProviderWithRoutes() {
   };
 
   return (
-    <div className={`app ${darkMode ? "dark-mode" : "light-mode"}`}>
+    <div className={`app min-h-screen ${darkMode ? "dark-mode" : "light-mode"}`}>
       <ClerkProvider
         publishableKey={clerkPubKey}
         navigate={(to) => navigate(to)}
