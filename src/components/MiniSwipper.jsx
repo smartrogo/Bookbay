@@ -6,7 +6,7 @@ import "@splidejs/react-splide/css/skyblue";
 import "@splidejs/react-splide/css/sea-green";
 import { useState, useEffect, useMemo } from "react";
 import { Book } from "./Book";
-import { BiCodeAlt } from "react-icons/bi";
+import { BiCode, BiCodeAlt } from "react-icons/bi";
 import { MdHistoryEdu } from "react-icons/md";
 import { FaComputer } from "react-icons/fa6";
 import { BiBookBookmark } from "react-icons/bi";
@@ -16,6 +16,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
 import { Link } from "react-router-dom";
 import { Slide } from "./Slide";
+import {Button} from "./Button"
 
 export const MiniSwipper = () => {
   
@@ -68,24 +69,24 @@ export const MiniSwipper = () => {
   };
 
 
-  const slidesPerPage = useMemo(() => {
-    const screenWidth = window.innerWidth;
-    if (screenWidth >= 1200) {
-      console.log(screenWidth);
-      return 4.5;
-    } else if (screen >= 1400) {
-      return 4.5;
-    } else if (screenWidth >= 768) {
-      console.log(screenWidth);
-      return 3;
-    } else if (screenWidth >= 400) {
-      console.log(screenWidth);
-      return 2.2;
-    } else {
-      console.log(screenWidth);
-      return 2.2;
-    }
-  }, []);
+  // const slidesPerPage = useMemo(() => {
+  //   const screenWidth = window.innerWidth;
+  //   if (screenWidth >= 1200) {
+  //     console.log(screenWidth);
+  //     return 4.5;
+  //   } else if (screen >= 1400) {
+  //     return 4.5;
+  //   } else if (screenWidth >= 768) {
+  //     console.log(screenWidth);
+  //     return 3;
+  //   } else if (screenWidth >= 400) {
+  //     console.log(screenWidth);
+  //     return 2.2;
+  //   } else {
+  //     console.log(screenWidth);
+  //     return 2.2;
+  //   }
+  // }, []);
 
   return (
     <>
@@ -94,26 +95,29 @@ export const MiniSwipper = () => {
           rewind: true,
           gap: "0.5rem",
           arrows: false,
-          perPage: slidesPerPage,
+          perPage: 3,
+          perMove: 1,
+          rewindByDrag: true,
+          rewindSpeed: 1000,
           pagination: false,
-          drag: true,
-          dragging: (()=> console.log("dragged") )
+          // drag: true,
+          drag   : 'free',
         }}
         aria-label="My Favorite Images"
         className=""
       >
         <SplideSlide>
-          <Slide
-            handleClick={() => {
-              getBooks("programming");
-              setSelectedCategory("programming");
-              console.log(selectedCategory);
-            }}
-            type="programming"
-            icon={
-              <BiCodeAlt className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
-            }
-          />
+        <div className="border-[1px] card border-solid rounded-[0.25075rem] md:rounded-[0.5rem] flex cursor-pointer hover:border-[#fff] active:bg-[#0F9D58] hover:text-[#fff] hover:bg-[#0F9D58]">
+    <button
+      className="w-full px-[0.5rem] py-[0.5rem] md:py-[0.5rem] md:px-[1rem] items-center gap-2 md:gap-[0.5rem] flex"
+      onClick={() => { getBooks("programming")}}
+    >
+      <BiCodeAlt className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]"/>
+      <span className="roboto font-bold capitalize text-[0.75219rem] md:text-[1.5rem] leading-normal text-style">
+        programming
+      </span>
+    </button>
+    </div>
         </SplideSlide>
 
         <SplideSlide>
@@ -248,3 +252,4 @@ export const MiniSwipper = () => {
     </>
   );
 };
+
