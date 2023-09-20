@@ -57,7 +57,7 @@ export const MiniSwipper = () => {
       // Filter the data and get books with cover image
       const booksWithCovers = data.docs.filter((item) => item.cover_i);
       // Get the first eight books to be displayed
-      const intialAuthor = booksWithCovers.map((item, index) => {
+      const intialAuthor = booksWithCovers.map((item) => {
         return item.author_name[0]
       })
       console.log(intialAuthor, "authors")
@@ -66,9 +66,6 @@ export const MiniSwipper = () => {
       console.log(bookChunks, "understanding ever shit")
       setIsLoading(false);
   };
-
-
-
 
 
   const slidesPerPage = useMemo(() => {

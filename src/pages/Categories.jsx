@@ -7,44 +7,41 @@ import SearchInput from '../components/SearchInput';
 const Categories = () => {
   // const navigate = useNavigate()  
   const { category } = useParams(); // Get the category from the URL
-  const [books, setBooks] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]); // Initialize with an empty array
+  const [books, setBooks] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]); // Initialize with an empty array
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParam] = useSearchParams({q: ""});
   const q = searchParams.get("q")
 
-  console.log(books)
   const testing = (data) => {
     return data.docs.filter((item) => item.cover_i);
-    
   }
-
   useEffect(() => {
     const fetchBooks = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(`https://openlibrary.org/search.json?q=${category}`);
-        const data = await response.json();
+    setLoading(true)
+    console.log(loading, "loading.....")
+      const response = await fetch(`https://openlibrary.org/search.json?q=${category}`).catch((error) => {
+        console.log("error in catch: ", error)
+      }) 
+      const data = await response.json();
         setBooks(testing(data));
-        console.log(books)
         setLoading(false);
-      } catch (error) {
-        console.error("Error fetching books:", error);
-        setLoading(false);
-      }
-    };
-    fetchBooks();
-  }, [category]);
-  console.log(books, "investigating")
-// const fn(e) => {
-//   const q = 
-//   const items = books.filter((item) => item.title.toLowerCase().includes(q.toLocaleLowerCase()))
-//  setBooks(items)
-// }
+        console.log(loading, "loading off")
+    }
+    fetchBooks()
+  }, [category])
 
 
 
- const items = books.filter((item) => item.title.toLowerCase().includes(q.toLocaleLowerCase()))
+ const items = books.filter((item) => item.title?.toLowerCase().includes(q.toLocaleLowerCase()))
  console.log(items)
+
+//  const filteredFn = (data) => {
+//   const items = data.filter((item) => item.title?.toLowerCase().includes(q.toLocaleLowerCase()))
+//  console.log(items)
+//  setBooks(items)
+//  }
+
+//  filteredFn(books)
 
   const head = `${category} Books Categories`;
 
@@ -61,7 +58,7 @@ const Categories = () => {
 
       </div>
       <div className="flex flex-wrap justify-center">
-        {items && items.map((book, index) => (
+        { books.map((book, index) => (
           <div key={index} className="w-[50%] sm:w-1/2 md:w-1/4 lg:w-1/4 p-2">
             <Book
               cover={book?.cover_i}
