@@ -40,18 +40,11 @@ const Categories = () => {
 //   const items = books.filter((item) => item.title.toLowerCase().includes(q.toLocaleLowerCase()))
 //  setBooks(items)
 // }
-const handleInputChange = (e) => {
-  setSearchParam((prev) => {
-    prev.set("q", e.target.value);
-    return prev;
-  }, { replace: true });
 
-   const items = books.filter((item) => item.title.toLowerCase().includes(q.toLocaleLowerCase()))
-   setBooks(items)
-};
 
-//  const items = books.filter((item) => item.title.toLowerCase().includes(q.toLocaleLowerCase()))
-//  console.log(items)
+
+ const items = books.filter((item) => item.title.toLowerCase().includes(q.toLocaleLowerCase()))
+ console.log(items)
 
   const head = `${category} Books Categories`;
 
@@ -61,11 +54,14 @@ const handleInputChange = (e) => {
         <Text head={head} body="Discover Diverse Genres: Your Journey Through a World of Book Categories" />
 
       <SearchInput placeholder="Search..." value={q} 
-      onChange={handleInputChange}/>
+      onChange={e => setSearchParam(prev => {
+        prev.set("q", e.target.value)
+         return prev
+      }, {replace: true})}/>
 
       </div>
       <div className="flex flex-wrap justify-center">
-        {books && books.map((book, index) => (
+        {items && items.map((book, index) => (
           <div key={index} className="w-[50%] sm:w-1/2 md:w-1/4 lg:w-1/4 p-2">
             <Book
               cover={book?.cover_i}
