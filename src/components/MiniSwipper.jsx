@@ -46,6 +46,7 @@ export const MiniSwipper = () => {
   const getBooks = async (bookType) => {
 
       setIsLoading(true);
+      console.log(bookChunks, "getting every shit")
       // Api endpoint
       const response = await fetch(
         `https://openlibrary.org/search.json?q=${bookType}`
@@ -62,6 +63,7 @@ export const MiniSwipper = () => {
       console.log(intialAuthor, "authors")
       let chunks = fn(booksWithCovers)
       setBookChunks(chunks); // Update the bookChunks state
+      console.log(bookChunks, "understanding ever shit")
       setIsLoading(false);
   };
 

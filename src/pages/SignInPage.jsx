@@ -14,7 +14,7 @@ export const SignInPage = () => {
   }, [user, navigate]);
   return (
         <div className='flex justify-center items-center mt-10 h-[100vh]'>
-        <SignIn className="border-2 border-red-500" path="/sign-in" routing="path" signUpUrl='/sign-up'/>
+        <SignIn className="" path="/sign-in" routing="path" signUpUrl='/sign-up'/>
         </div>
   )
 }
