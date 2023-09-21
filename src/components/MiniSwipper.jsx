@@ -98,8 +98,12 @@ export const MiniSwipper = () => {
           perPage: 4,
           breakpoints: {
             768: {
-              perPage: 2,
+              perPage: 2.5,
               gap: "1rem",
+            },
+            300: {
+              perPage: 2.5,
+              gap: "0.53rem",
             },
           },
           perMove: 1,
