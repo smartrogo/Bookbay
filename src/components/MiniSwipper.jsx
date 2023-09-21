@@ -93,18 +93,15 @@ export const MiniSwipper = () => {
       <Splide
         options={{
           rewind: true,
-          gap: "3rem",
+          gap: "1.5rem",
           arrows: false,
           perPage: 4,
           breakpoints: {
             768: {
-              perPage: 2.5,
+              perPage: 2,
               gap: "1rem",
             },
-            300: {
-              perPage: 2.5,
-              gap: "0.53rem",
-            },
+           
           },
           perMove: 1,
           rewindByDrag: true,
