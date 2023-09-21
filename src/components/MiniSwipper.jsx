@@ -93,9 +93,15 @@ export const MiniSwipper = () => {
       <Splide
         options={{
           rewind: true,
-          gap: "0.5rem",
+          gap: "3rem",
           arrows: false,
-          perPage: 3,
+          perPage: 4,
+          breakpoints: {
+            768: {
+              perPage: 2,
+              gap: "1rem",
+            },
+          },
           perMove: 1,
           rewindByDrag: true,
           rewindSpeed: 1000,
@@ -107,17 +113,16 @@ export const MiniSwipper = () => {
         className=""
       >
         <SplideSlide>
-        <div className="border-[1px] card border-solid rounded-[0.25075rem] md:rounded-[0.5rem] flex cursor-pointer hover:border-[#fff] active:bg-[#0F9D58] hover:text-[#fff] hover:bg-[#0F9D58]">
-    <button
-      className="w-full px-[0.5rem] py-[0.5rem] md:py-[0.5rem] md:px-[1rem] items-center gap-2 md:gap-[0.5rem] flex"
-      onClick={() => { getBooks("programming")}}
-    >
-      <BiCodeAlt className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]"/>
-      <span className="roboto font-bold capitalize text-[0.75219rem] md:text-[1.5rem] leading-normal text-style">
-        programming
-      </span>
-    </button>
-    </div>
+          <Slide
+            handleClick={() => {
+              getBooks("programming");
+              setSelectedCategory("programming");
+            }}
+            type="programming"
+            icon={
+              <BiCodeAlt className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
         </SplideSlide>
 
         <SplideSlide>

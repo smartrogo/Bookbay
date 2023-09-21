@@ -97,9 +97,11 @@
   align-items: center !important;
   transform: translate(150px) !important;
 }
-/* .flicking-viewport  {
-  -webkit-user-drag: auto !important;
-} */
+.splide__slide {
+  width: 8.07022rem !important;
+} 
+
+
 .qoute {
   color: var(--qoute-color);
 }
@@ -239,6 +241,9 @@
   .md\:h-\[3rem\] {
       height: 1.2rem /* 48px */ !important;
   }
+  .splide__slide {
+    width: 14.3125rem !important;
+  } 
 }
 
 .underscore::after {
