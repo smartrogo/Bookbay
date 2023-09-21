@@ -121,14 +121,14 @@ export const Footer = () => {
 
           <div className="flex mt-4 social justify-center">
             <div className="flex ">
-              <IoLogoInstagram className="mr-2 md:w-[1.5rem] md:h-[1.5rem]" />
-              <TiSocialLinkedinCircular className="mr-2 md:w-[1.5rem] md:h-[1.5rem]" />
-              <TiSocialTwitterCircular className="mr-2 md:w-[1.5rem] md:h-[1.5rem]" />
-              <LiaFacebook className="mr-2 md:w-[1.5rem] md:h-[1.5rem]" />
-              <MdOutlineMailOutline className="mr-2 md:w-[1.5rem] md:h-[1.5rem]" />
+              <IoLogoInstagram className="mr-2 w-[1.5rem] h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
+              <TiSocialLinkedinCircular className="mr-2 w-[1.5rem] h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
+              <TiSocialTwitterCircular className="mr-2 w-[1.5rem] h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
+              <LiaFacebook className="mr-2 w-[1.5rem] h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
+              <MdOutlineMailOutline className="mr-2 w-[1.5rem] h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
             </div>
           </div>
-          <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-4" />
+          <hr className="my-6 h-[1px]  mx-auto w-[90%] border-[#FFFFFF] lg:my-4" />
 
           <div className="w-[75%] roboto flex justify-center text-[0.5rem] md:text-[1rem] font-normal text-style leading-normal mx-auto text-center">
             <span className="text-sm para">

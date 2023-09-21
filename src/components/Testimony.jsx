@@ -104,7 +104,7 @@ export const Testimony = () => {
         <span className="underline">see more </span>
         <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />
       </Link>
-      <hr className=" h-[1px] mt-6 mx-auto w-[90%] border-[#333] " />
+      <hr className=" h-[1px] mt-6 mx-auto w-[90%] border-[#333]" />
     </section>
   );
 };
