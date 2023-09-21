@@ -89,6 +89,17 @@
   margin-top: 0;
 }
 
+.flicking-camera {
+  border: 1px solid yellow !important;
+  width: 100% !important;
+  display: flex !important;
+  justify-content: space-evenly !important;
+  align-items: center !important;
+  transform: translate(150px) !important;
+}
+/* .flicking-viewport  {
+  -webkit-user-drag: auto !important;
+} */
 .qoute {
   color: var(--qoute-color);
 }

@@ -96,6 +96,8 @@ export const MiniSwipper = () => {
           arrows: false,
           perPage: slidesPerPage,
           pagination: false,
+          drag: true,
+          dragging: (()=> console.log("dragged") )
         }}
         aria-label="My Favorite Images"
         className=""

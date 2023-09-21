@@ -7,7 +7,7 @@ import SearchInput from '../components/SearchInput';
 const Categories = () => {
   // const navigate = useNavigate()  
   const { category } = useParams(); // Get the category from the URL
-  const [books, setBooks] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]); // Initialize with an empty array
+  const [books, setBooks] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]); // Initialize with an empty array
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParam] = useSearchParams({q: ""});
   const q = searchParams.get("q")
