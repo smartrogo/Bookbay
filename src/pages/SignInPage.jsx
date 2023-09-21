@@ -13,7 +13,7 @@ export const SignInPage = () => {
     }
   }, [user, navigate]);
   return (
-        <div className='flex justify-center items-center mt-10 h-[100vh]'>
+        <div className='flex justify-center items-center mt-20 md:mt-10 h-[100vh]'>
         <SignIn className="" path="/sign-in" routing="path" signUpUrl='/sign-up'/>
         </div>
   )

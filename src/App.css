@@ -101,7 +101,6 @@
   width: 8.07022rem !important;
 } 
 
-
 .qoute {
   color: var(--qoute-color);
 }
@@ -124,7 +123,12 @@
   font-family: "Roboto", sans-serif;
   font-weight: 400;
 }
-
+.social {
+  color: #FFFFFF !important;
+}
+.foot {
+  font-size: 1.125rem !important;
+}
 .text-style {
   font-style: normal;
 }

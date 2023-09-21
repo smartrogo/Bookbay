@@ -19,11 +19,11 @@ export const Footer = () => {
               <div className="mx-auto flex md:block justify-center items-center">
                 <div className="text-center md:text-start">
                   <Link to="/">
-                    <h2 className=" text-sm font-semibold text-gray-900 uppercase dark:text-white pb-2">
+                    <h2 className="outfit text-[1.125rem] capitalize text-style leading-normal font-bold pb-2 text-[#FFF]">
                       Bookbay
                     </h2>
                   </Link>
-                  <ul className="text-gray-500 dark:text-gray-400 mx-auto font-medium text-center sm:text-start">
+                  <ul className="para text-[0.875rem] md:text-[1.125rem] mx-auto font-normal text-style leading-normal capitalize poppins text-center sm:text-start">
                     <li className="pb-2">
                       <Link to="/" className="hover:underline ">
                         Home
@@ -55,14 +55,14 @@ export const Footer = () => {
 
               <div className="mx-auto flex md:block justify-center items-center text-center sm:text-start md:text-start">
                 <div className="text-center sm:text-start">
-                  <h2 className=" text-sm font-semibold text-gray-900 uppercase dark:text-white">
+                  <h2 className=" outfit text-[1.125rem] capitalize text-style leading-normal font-bold pb-2 text-[#FFF]">
                     Address
                   </h2>
-                  <ul className="para poppins text-[1.125rem] text-style font-normal capitalize leading-normal">
+                  <ul className="para text-[0.875rem] md:text-[1.125rem] mx-auto font-normal text-style leading-normal capitalize poppins text-center sm:text-start">
                     <li >
                       <Link
                         to="/"
-                        className="hover:underline flex items-center gap-2 py-2 justify-center sm:justify-start"
+                        className=" flex items-center gap-2 py-2 justify-center sm:justify-start hover:underline"
                       >
                         <BiPhoneCall className="w-[1.12506rem] h-[1.12506rem]" />
                         +2348120304001
@@ -71,7 +71,7 @@ export const Footer = () => {
                     <li>
                       <Link
                         to="/"
-                        className="hover:underline flex items-start justify-center balance"
+                        className="flex items-start justify-center balance hover:underline"
                       >
                         <BiMap className="w-[1.12506rem] hidden sm:block h-[1.12506rem]" />
                         <p className=" text-center sm:text-start">
@@ -84,7 +84,7 @@ export const Footer = () => {
                     <li>
                       <Link
                         to="/"
-                        className="hover:underline flex items-center gap-2 justify-center sm:justify-start py-2"
+                        className="flex items-center gap-2 justify-center sm:justify-start py-2 hover:underline"
                       >
                         <BiTime className="w-[1.12506rem] h-[1.12506rem]" />
                         Office Time
@@ -95,7 +95,7 @@ export const Footer = () => {
               </div>
               <div className="mx-auto flex md:block justify-center items-center text-center sm:text-start">
                 <div className="">
-                  <ul className="text-gray-500 dark:text-gray-400 font-medium underline">
+                  <ul className="para text-[0.875rem] md:text-[1.125rem] mx-auto font-normal text-style leading-normal capitalize poppins text-center sm:text-start ">
                     <li>
                       <Link to="/" className="hover:underline">
                         Term of Service
@@ -119,8 +119,8 @@ export const Footer = () => {
             </div>
           </div>
 
-          <div className="flex mt-4 justify-center">
-            <div className="socials flex ">
+          <div className="flex mt-4 social justify-center">
+            <div className="flex ">
               <IoLogoInstagram className="mr-2 md:w-[1.5rem] md:h-[1.5rem]" />
               <TiSocialLinkedinCircular className="mr-2 md:w-[1.5rem] md:h-[1.5rem]" />
               <TiSocialTwitterCircular className="mr-2 md:w-[1.5rem] md:h-[1.5rem]" />
@@ -130,8 +130,8 @@ export const Footer = () => {
           </div>
           <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-4" />
 
-          <div className="w-[75%] flex justify-center mx-auto text-center">
-            <span className="text-sm text-gray-500 dark:text-gray-400">
+          <div className="w-[75%] roboto flex justify-center text-[0.5rem] md:text-[1rem] font-normal text-style leading-normal mx-auto text-center">
+            <span className="text-sm para">
               Copyright © 2023 . All Rights Reserved <br /> By
               <Link to="/" className="underline pl-1">
                 Bookbay
