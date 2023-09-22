@@ -17,25 +17,25 @@ export const Contact = () => {
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
-    setMsg("")
+    setMsg("");
   };
   const handleName = (e) => {
     setName(e.target.value);
-    setMsg("")
+    setMsg("");
   };
   const handleMessage = (e) => {
     setMessge(e.target.value);
-    setMsg("")
+    setMsg("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('hi, men')
+    // console.log("hi, men");
     if (email.trim() === "" || name.trim() === "" || message.trim() === "") {
-      console.log("you typed nothing");
-      setMsg("Please fill the form")
-       // Automatically remove the error message after 5 seconds
-       setTimeout(() => {
+      // console.log("you typed nothing");
+      // setMsg("Please fill the form");
+      // Automatically remove the error message after 5 seconds
+      setTimeout(() => {
         setMsg("");
       }, 5000);
       return false;
@@ -43,10 +43,10 @@ export const Contact = () => {
     setIsLoading(true);
     try {
       await emailjs.sendForm(
-        import.meta.env.VITE_YOUR_SERVICE_ID,
-        import.meta.env.VITE_YOUR_TEMPLATE_ID,
+        "service_6lmh19j",
+        "template_au3nprc",
         form.current,
-        import.meta.env.VITE_YOUR_PUBLIC_ID
+        "ZyNtOz72PPazwE0s7"
       );
       toast.success("message sent, \n will get back to you!", {
         position: toast.POSITION.TOP_CENTER,
@@ -61,7 +61,7 @@ export const Contact = () => {
     } catch (error) {
       console.log(error);
       toast.error("something went wrong, try again", {
-        position:  toast.POSITION.TOP_CENTER,
+        position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
         style: {
           fontSize: "14px",
@@ -138,14 +138,15 @@ export const Contact = () => {
                 placeholder="Your Message"
               ></textarea>
             </div>
-            {msg ? <p style={{color: "#ef4461"}}>{msg}</p> : ""}
+            {msg ? <p style={{ color: "#ef4461" }}>{msg}</p> : ""}
 
             <Button
               type="submit"
               value="send"
               cls_name={
-                loading ? "bg-[#85edba] mx-auto rounded-[0.29656rem] md:rounded-[0.5rem] py-[0.37069rem] px-[0.92675rem] md:py-[0.625rem] md:px-[1.5625rem] text-center text-[#fff] poppins text-[0.66725rem] md:text-[1.125rem] text-style leading-normal font-normal capitalize" :
-                "bg-[#0F9D58] mx-auto btn rounded-[0.29656rem] md:rounded-[0.5rem] py-[0.37069rem] px-[0.92675rem] md:py-[0.625rem] md:px-[1.5625rem] text-center text-[#fff] poppins text-[0.66725rem] md:text-[1.125rem] text-style leading-normal font-normal capitalize"
+                loading
+                  ? "bg-[#85edba] mx-auto rounded-[0.29656rem] md:rounded-[0.5rem] py-[0.37069rem] px-[0.92675rem] md:py-[0.625rem] md:px-[1.5625rem] text-center text-[#fff] poppins text-[0.66725rem] md:text-[1.125rem] text-style leading-normal font-normal capitalize"
+                  : "bg-[#0F9D58] mx-auto btn rounded-[0.29656rem] md:rounded-[0.5rem] py-[0.37069rem] px-[0.92675rem] md:py-[0.625rem] md:px-[1.5625rem] text-center text-[#fff] poppins text-[0.66725rem] md:text-[1.125rem] text-style leading-normal font-normal capitalize"
               }
             />
           </form>
