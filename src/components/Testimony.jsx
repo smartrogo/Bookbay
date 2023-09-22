@@ -100,11 +100,11 @@ export const Testimony = () => {
         </SwiperSlide>
       </Swiper>
 
-      <Link className="my-4 roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#4285F4] flex justify-end w-[80%] md:w-[86%] mx-auto items-center">
+      <Link className="my-[4rem] roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#4285F4] flex links gap-1 md:w-[9rem] absolute right-2 w-[6rem] md:right-4 items-center">
         <span className="underline">see more </span>
         <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />
       </Link>
-      <hr className=" h-[1px] mt-6 mx-auto w-[90%] border-[#333]" />
+      <hr className=" h-[1px] mt-[9rem] mx-auto w-[100%] border-[#333]" />
     </section>
   );
 };

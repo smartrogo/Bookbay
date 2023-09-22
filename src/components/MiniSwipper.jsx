@@ -68,28 +68,8 @@ export const MiniSwipper = () => {
       setIsLoading(false);
   };
 
-
-  // const slidesPerPage = useMemo(() => {
-  //   const screenWidth = window.innerWidth;
-  //   if (screenWidth >= 1200) {
-  //     console.log(screenWidth);
-  //     return 4.5;
-  //   } else if (screen >= 1400) {
-  //     return 4.5;
-  //   } else if (screenWidth >= 768) {
-  //     console.log(screenWidth);
-  //     return 3;
-  //   } else if (screenWidth >= 400) {
-  //     console.log(screenWidth);
-  //     return 2.2;
-  //   } else {
-  //     console.log(screenWidth);
-  //     return 2.2;
-  //   }
-  // }, []);
-
   return (
-    <>
+    <div className="relative">
       <Splide
         options={{
           rewind: true,
@@ -249,13 +229,13 @@ export const MiniSwipper = () => {
       </div>
       <Link
         to={`/category/${selectedCategory}`}
-        className="my-[2px] roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#4285F4] flex justify-end w-[80%] md:w-[95%] mx-auto items-center links border-2"
+        className="my-[2px] roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#4285F4] flex gap-1 md:w-[9rem] absolute right-5 w-[6rem] md:right-9 links items-center"
       >
         <span className="underline">see more </span>
         <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />
       </Link>
-      <hr className=" h-[1px] mx-auto mt-8 w-[90%] border-[#333] " />
-    </>
+      <hr className=" h-[1px] mx-auto mt-[3rem] md:mt-[4rem] w-[90%] border-[#333] " />
+    </div>
   );
 };
 
