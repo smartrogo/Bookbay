@@ -4,7 +4,7 @@ import { reasonCardsDatas } from "../reasonCardsDatas";
 
 export const Reasons = () => {
   return (
-    <div className="mt-10 mb- leading-normal p-[1.30506rem] md:p-[4.2rem]">
+    <div className="mt-6 mb- leading-normal p-[1.30506rem] md:p-[4.2rem]">
 
       <h1 className="text-center mb-8 text-[1.5rem] md:text-[3rem] roboto font-bold">
         Why Use Bookbay ?

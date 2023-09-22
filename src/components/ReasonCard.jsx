@@ -15,7 +15,7 @@ export const ReasonCard = ({title, body, icon, cls_name, text_color}) => {
         </div>
 
       </div>
-      <p className="mt-2 w-[16.15044rem] h-[4.13275rem] md:h-[4.6875rem] md:w-[18.4375rem] capitalize poppins text-[0.87006rem] text-[#333] md:text-[1rem] font-style font-normal leading-[1.04406rem]">
+      <p className="mt-2 w-[16.15044rem] h-[4.13275rem] md:h-[4.6875rem] md:w-[18.4375rem] capitalize poppins text-[0.87006rem] md:text-[1rem] font-style font-normal leading-[1.04406rem]">
         {body}
       </p>
     </div>

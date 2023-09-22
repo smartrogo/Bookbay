@@ -4,10 +4,11 @@ import { LiaFacebook } from "react-icons/lia";
 import { TiSocialTwitterCircular } from "react-icons/ti";
 import { TiSocialLinkedinCircular } from "react-icons/ti";
 import { MdOutlineMailOutline } from "react-icons/md";
-import { IoLogoInstagram } from "react-icons/io5";
+import { RiTelegramLine } from "react-icons/ri";
 import { BiTime } from "react-icons/bi";
 import { BiMap } from "react-icons/bi";
 import { BiPhoneCall } from "react-icons/bi";
+import {BsWhatsapp} from "react-icons/bs"
 
 export const Footer = () => {
   return (
@@ -113,19 +114,37 @@ export const Footer = () => {
                     </li>
                   </ul>
                 </div>
-              </div>
-
-            
+              </div>  
             </div>
           </div>
 
           <div className="flex mt-4 social justify-center">
             <div className="flex ">
-              <IoLogoInstagram className="mr-2 w-[1.5rem] h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
-              <TiSocialLinkedinCircular className="mr-2 w-[1.5rem] h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
-              <TiSocialTwitterCircular className="mr-2 w-[1.5rem] h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
-              <LiaFacebook className="mr-2 w-[1.5rem] h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
-              <MdOutlineMailOutline className="mr-2 w-[1.5rem] h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
+
+              <Link to="https://wa.me/2348120304001" className="mt-1">
+              <BsWhatsapp className="mr-2 cursor-pointer w-[1.3rem] h-[1.3rem] md:w-[1.5rem] md:h-[1.5rem]" />
+              </Link>
+              
+              <Link to="https://web.facebook.com/bookbay.application/">
+              <LiaFacebook className="mr-2 w-[1.5rem] h-[1.5rem] cursor-pointer md:w-[2rem] md:h-[2rem]" />
+              </Link>
+
+              <Link to="https://www.linkedin.com/company/bookbay/">
+              <TiSocialLinkedinCircular className="mr-2 cursor-pointer w-[1.5rem] h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
+              </Link>
+              
+              <Link to="https://twitter.com/Bookbay_App">
+              <TiSocialTwitterCircular className="mr-2 w-[1.5rem] cursor-pointer h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
+              </Link>
+              
+              <Link to="Info@bookbay.com.ng ">
+              <MdOutlineMailOutline className="mr-2 w-[1.5rem] cursor-pointer h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
+              </Link>
+
+              <Link to="https://t.me/bookbay_App">
+              <RiTelegramLine className="mr-2 w-[1.5rem] cursor-pointer h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
+              </Link>
+            
             </div>
           </div>
           <hr className="my-6 h-[1px]  mx-auto w-[90%] border-[#FFFFFF] lg:my-4" />
@@ -143,3 +162,5 @@ export const Footer = () => {
     </div>
   );
 };
+
+// Telegram:	

@@ -13,6 +13,13 @@
   --testimony-border: #1E1E1E;
   --cate--bg: #fefefe;
   --book-border: #333;
+  --earn-bg: #454157;
+  --earn-color: #F2F2F2;
+  --borrow-bg: #404855;
+  --buy-bg: #4A373E;
+  --sell-bg: #394944;
+  --audio-bg: #514C3F;
+  --secure-bg: #454157
 }
 
 .light-mode {
@@ -30,6 +37,12 @@
   --testimony-border: #FFFFFF;
   --cate--bg: #FFFFFF;
   --book-border: #e4d9d9;
+  --earn-bg: #F5F3FF;
+  --earn-color: #333;
+  --buy-bg: #FEF5F8;
+  --sell-bg: #EEFAF6;
+  --audio-bg: #FEFBF2;
+  --secure-bg: #F5F3FF;
 }
 
 .app {
@@ -40,6 +53,27 @@
 .bd {
   border: 0.2px solid var(--book-border);
   border-radius: 1rem;
+}
+.earn {
+  background-color: var(--earn-bg);
+}
+.earn-color {
+  color: var(--earn-color);
+}
+.borrow {
+  background-color: var(--borrow-bg);
+}
+.buy {
+  background-color: var(--buy-bg);
+}
+.sell {
+  background-color: var(--sell-bg);
+}
+.secure {
+  background-color: var(--secure-bg);
+}
+.audio {
+  background-color: var(--audio-bg);
 }
 .splide {
   padding-top: 20px !important;
