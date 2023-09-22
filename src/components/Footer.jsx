@@ -98,17 +98,17 @@ export const Footer = () => {
                 <div className="">
                   <ul className="para text-[0.875rem] md:text-[1.125rem] mx-auto font-normal text-style leading-normal capitalize poppins text-center sm:text-start ">
                     <li>
-                      <Link to="/" className="hover:underline">
+                      <Link to="/terms-of-service" className="hover:underline">
                         Term of Service
                       </Link>
                     </li>
                     <li>
-                      <Link to="/" className="hover:underline">
+                      <Link to="/privacy-policy" className="hover:underline">
                         Privacy Policy
                       </Link>
                     </li>
                     <li>
-                      <Link to="/" className="hover:underline">
+                      <Link to="/frequent-questions" className="hover:underline">
                         PAQs
                       </Link>
                     </li>
@@ -162,5 +162,3 @@ export const Footer = () => {
     </div>
   );
 };
-
-// Telegram:	

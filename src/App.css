@@ -186,6 +186,13 @@
 .btn:hover {
   transform: scale(1.1);
 }
+.links {
+  transition: transform 0.3s ease-in-out;
+}
+
+.links:hover {
+  gap: 8px;
+}
 
 .book {
   transition: transform 0.3s ease-in-out;

@@ -28,14 +28,14 @@ function HeroContent() {
               value="Join us today!"
               cls_name=" flex justify-center btn items-center bg-[#0F9D58] text-[#FFFFFF] poppins text-style font-bold leading-normal rounded-[0.32494rem] py-[0.6905rem] px-[1.34038rem]"
             />
-            <div className="flex items-center btn gap-1">
+            <div className="flex items-center links gap-1">
               <Link
                 href=""
                 className="text-[#4285F4] poppins text-style font-normal underline leading-normal capitalize text-[0.7595rem]"
               >
                 learn more
               </Link>{" "}
-              <LiaLongArrowAltRightSolid className="text-[#4285F4]" />
+              <LiaLongArrowAltRightSolid className="text-[#4285F4] "/>
             </div>
           </div>
         </div>

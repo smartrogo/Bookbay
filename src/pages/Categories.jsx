@@ -3,6 +3,7 @@ import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { Book } from '../components/Book';
 import { Text } from '../components/Text';
 import SearchInput from '../components/SearchInput';
+import {Footer} from "../components/Footer"
 
 const Categories = () => {
   // const navigate = useNavigate()  
@@ -70,6 +71,7 @@ const Categories = () => {
           </div>
         ))}
       </div>
+      <Footer />
     </div>
   );
 };
