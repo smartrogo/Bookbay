@@ -31,22 +31,22 @@ export const Footer = () => {
                       </Link>
                     </li>
                     <li className="pb-2">
-                      <Link to="/" className="hover:underline">
+                      <Link to="/about-us" className="hover:underline">
                         About Us
                       </Link>
                     </li>
                     <li className="pb-2">
-                      <Link to="/" className="hover:underline">
+                      <Link to="/borrow" className="hover:underline">
                         Borrow
                       </Link>
                     </li>
                     <li className="pb-2">
-                      <Link to="/" className="hover:underline">
+                      <Link to="/buy" className="hover:underline">
                         Buy/Sell
                       </Link>
                     </li>
                     <li className="">
-                      <Link to="/" className="hover:underline">
+                      <Link to="/connect-wallet" className="hover:underline">
                         Wallet Connect
                       </Link>
                     </li>

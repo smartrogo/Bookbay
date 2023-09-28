@@ -84,6 +84,7 @@
 .splide {
   padding-top: 20px !important;
   padding-bottom: 20px !important;
+  padding-left: 20px !important;
 }
 .splide__track {
   width: 110%;
@@ -140,6 +141,7 @@
 .splide__slide {
   width: 8.07022rem !important;
 } 
+
 
 .qoute {
   color: var(--qoute-color);
