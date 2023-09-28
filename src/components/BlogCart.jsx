@@ -6,7 +6,7 @@ import {LiaLongArrowAltRightSolid} from "react-icons/lia"
 export const BlogCart = (props) => {
   return (
     <div className="px-4 md:px-7">
-      <div className="max-w-sm my-8 border-2 pb-4 card box rounded-[1rem] shadow text-start mx-auto">
+      <div className="max-w-sm my-8 pb-4 card box rounded-[1rem] shadow text-start mx-auto">
         <div className="relative">
           <Link to="/">
             <img
