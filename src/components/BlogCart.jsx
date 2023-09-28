@@ -1,11 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./Button";
+import {LiaLongArrowAltRightSolid} from "react-icons/lia"
 
 export const BlogCart = (props) => {
   return (
     <div className="px-4 md:px-7">
-      <div className="max-w-sm my-8 card box rounded-[1rem] shadow text-start mx-auto">
+      <div className="max-w-sm my-8 border-2 pb-4 card box rounded-[1rem] shadow text-start mx-auto">
         <div className="relative">
           <Link to="/">
             <img
@@ -21,7 +22,7 @@ export const BlogCart = (props) => {
           />
         </div>
 
-        <div className="p-5 leading-normal text-style roboto mt-4">
+        <div className="p-5 leading-normal relative text-style roboto mt-4">
           <a href="#">
             <h2 className="font-bold text-[0.67569rem] w-[12.95063rem] md:w-[18.60425rem] md:text-[0.97063rem]">
               Unlocking Reading Adventures: Your Guide to Getting Started with
@@ -33,6 +34,14 @@ export const BlogCart = (props) => {
             mattis turpis nibh blandit. Nulla in massa sollicitudin non. Cum
             nulla et suscipit sed viverra magna magna diam.
           </p>
+
+          <Link
+        to="/"
+        className="absolute roboto mb-2 font-normal leading-normal text-[0.60031rem] md:text-[0.86281rem] capitalize text-style text-[#4285F4] flex gap-[0.2rem] md:w-[9rem]  -right-1 w-[6rem] md:-right-10 links items-center"
+      >
+        <span className="underline">see more </span>
+        <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />
+      </Link>
         </div>
       </div>
     </div>
