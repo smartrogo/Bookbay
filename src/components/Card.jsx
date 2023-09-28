@@ -22,7 +22,7 @@ export const Card = (props) => {
            </span>
          </p>
     </div>
-    <div className="px-6 py-3  text-style w-full capitalize text-end mr-8 leading-normal roboto">
+    <div className="px-6 py-3 text-style w-full capitalize text-end mr-8 leading-normal roboto">
     <a
           href="#"
              className="text-[1.09788rem]  font-bold"

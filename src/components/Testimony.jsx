@@ -15,7 +15,7 @@ import { Card } from "./Card";
 import { Text } from "./Text";
 import techbro from "../assets/techbro.png";
 import techman from "../assets/techman.png";
-import techgirl from "../assets/techgirl.png"
+import techgirl from "../assets/techgirl.png";
 import hero from "../assets/hero.png";
 import { Link } from "react-router-dom";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
@@ -31,7 +31,7 @@ export const Testimony = () => {
         className="container mx-auto "
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
         autoplay={{
-          delay: 4000,
+          delay: 30000,
           disableOnInteraction: false,
         }}
         // slidesPerView={3}
@@ -42,17 +42,17 @@ export const Testimony = () => {
           // >=200
           200: {
             slidesPerView: 1.2,
-            spaceBetween: 10
+            // spaceBetween: 50,
           },
-          // >= 40px
+          // >= 400px
           400: {
             slidesPerView: 1.2,
-            spaceBetween: 10
+            // spaceBetween: 50,
           },
           // >= 640px
           640: {
             slidesPerView: 2,
-            spaceBetween: 10,
+            // spaceBetween: 5,
           },
           // >= 1024px
           1024: {

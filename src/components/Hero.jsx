@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 function HeroContent() {
   const navigate = useNavigate()
   return (
-    <div className="flex h-[120vh] sm:h-[100vh] md:h-[75vh] lg:h-[85vh] flex-col md:gap- items-center md:flex-row md:w-[90%] xl:w-[85%] mx-auto">
+    <div className="flex h-[125vh] sm:h-[100vh] md:h-[75vh] lg:h-[85vh] flex-col md:gap- items-center md:flex-row md:w-[90%] xl:w-[85%] mx-auto">
       <div className="w-full md:w-[50%]">
         <div className="lg:[70%] xl:pl-1">
           <h1 className=" w-[21.1875rem] text-center mx-auto md:mx-0 h-[7rem] flex-shrink-0 text-[2.5rem] outfit leading-[3rem] mt-20 md:mt-10 font-bold md:text-start md:w[31.9375rem] sm:w-[90%]  balance mb-0">
