@@ -17,7 +17,7 @@ const Discription = ({title, body}) => {
 const Person = ({img, name, position, alt}) => {
   return (
     <div className='flex items-center justify-center text-center my-2 text-[#000] poppins text-style capitalize leading-normal text-[1.5rem]'>
-      <div className=''>
+      <div className='mx-auto flex flex-col justify-center items-center'>
       <img  className=" mb-6" src={img} alt={alt} />
       <span className='font-bold'>{name}</span>
       <p className=" font-normal">{position}</p>
@@ -43,20 +43,20 @@ export const About = () => {
         </div>
 
         <div className="founders p-4 w-[100%] md:w-[90%] mx-auto">
-        <h2 className='text-[#00f] mt-4 mb-10 outfit text-[1.5rem] font-bold leading-normal '>meet our amazing and <br/> hardworking bookbay team </h2>
+        <h2 className='text-[#00f] mt-4 mb-10 outfit text-[1.5rem] font-bold leading-normal md:text-center'>meet our amazing and <br/> hardworking bookbay team </h2>
 
-        <div className='flex flex-col md:flex-row gap-12'>
+        <div className='flex flex-col md:flex-row justify-between'>
          <Person img={ceo} name="Engr, M.A Sulaiman" position="CEO: Bookbsy"/>
 
          <Person img={designer} name="Muhammad Ni’imatullahi" position="Full stack designer"/>
 
-         <Person img={engineer} name="Muhammad ala" position="Frontend software engineer"/>
+         <Person img={engineer} name="Muhammad ala" position="Frontend engineer"/>
          
         </div>
 
         </div>
 
-<Footer/>
+      <Footer/>
       </div>
   )
 }
