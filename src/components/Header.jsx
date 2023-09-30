@@ -111,13 +111,13 @@ export const Header = (props) => {
             </ul>
 
 
-           {user ?  ( <div className="flex items-center md:ml-[6rem] lg:ml-[8rem] xl:ml-[14rem] justify-between gap-4">
+           {user ?  ( <div className="flex items-center md:ml-[6rem] lg:ml-[8rem] xl:ml-[14rem] justify-between gap-2 md:gap-4">
 
             <GrCart className="text-red-500 cursor-pointer w-[1.36119rem] h-[1.20313rem]"/>
 
             <UserButton afterSignOutUrl="/" className="user-btn"/>
 
-            <Link className="text-[#000] md:text-[1rem] poppins font-normal text-stlye leading-[0.49744rem] capitalize" to={profileUrl}>Hi, {user.firstName}</Link>
+            <Link className="text-[#000] text-[0.8rem] md:text-[1rem] poppins font-normal text-stlye leading-[0.49744rem] capitalize" to={profileUrl}>Hi, {user.firstName}</Link>
 
            </div>) : <div className="flex items-center gap-[6px] sm:gap-3">
 
