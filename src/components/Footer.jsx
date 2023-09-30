@@ -13,7 +13,7 @@ import {BsWhatsapp} from "react-icons/bs"
 export const Footer = () => {
   return (
     <div className="mt-24">
-      <footer className="footer ">
+      <footer className=" bg-[#1E1E1E]">
         <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
           <div className="flex md:justify-center md:w-[] mx-auto">
             <div className="flex flex-col gap-4 sm:gap-0 sm:flex-row sm:justify-evenly w-full items-start md:w-[90%] mb-6 md:mb-0">
@@ -24,7 +24,7 @@ export const Footer = () => {
                       Bookbay
                     </h2>
                   </Link>
-                  <ul className="para text-[0.875rem] md:text-[1.125rem] mx-auto font-normal text-style leading-normal capitalize poppins text-center sm:text-start">
+                  <ul className="text-[#d2cfcf] text-[0.875rem] md:text-[1.125rem] mx-auto font-normal text-style leading-normal capitalize poppins text-center sm:text-start">
                     <li className="pb-2">
                       <Link to="/" className="hover:underline ">
                         Home
@@ -59,7 +59,7 @@ export const Footer = () => {
                   <h2 className=" outfit text-[1.125rem] capitalize text-style leading-normal font-bold pb-2 text-[#FFF]">
                     Address
                   </h2>
-                  <ul className="para text-[0.875rem] md:text-[1.125rem] mx-auto font-normal text-style leading-normal capitalize poppins text-center sm:text-start">
+                  <ul className="text-[#d2cfcf] text-[0.875rem] md:text-[1.125rem] mx-auto font-normal text-style leading-normal capitalize poppins text-center sm:text-start">
                     <li >
                       <Link
                         to="/"
@@ -96,7 +96,7 @@ export const Footer = () => {
               </div>
               <div className="mx-auto flex md:block justify-center items-center text-center sm:text-start">
                 <div className="">
-                  <ul className="para text-[0.875rem] md:text-[1.125rem] mx-auto font-normal text-style leading-normal capitalize poppins text-center sm:text-start ">
+                  <ul className="text-[#d2cfcf] text-[0.875rem] md:text-[1.125rem] mx-auto font-normal text-style leading-normal capitalize poppins text-center sm:text-start ">
                     <li>
                       <Link to="/terms-of-service" className="hover:underline">
                         Term of Service
@@ -150,7 +150,7 @@ export const Footer = () => {
           <hr className="my-6 h-[1px]  mx-auto w-[90%] border-[#FFFFFF] lg:my-4" />
 
           <div className="w-[75%] roboto flex justify-center text-[0.5rem] md:text-[1rem] font-normal text-style leading-normal mx-auto text-center">
-            <span className="text-sm para">
+            <span className="text-sm text-[#d2cfcf]">
               Copyright © 2023 . All Rights Reserved <br /> By
               <Link to="/" className="underline pl-1">
                 Bookbay

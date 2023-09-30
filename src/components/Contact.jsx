@@ -106,7 +106,7 @@ export const Contact = () => {
               label_cls_name="leading-normal poppins capitalize text-[0.66725rem] font-normal"
               type="email"
               placeholder="example@gmail.com"
-              cls_name="w-full card rounded-[0.29656rem] md:rounded-[0.5rem] focus:border-[#0F9D58] focus:ring-[2px] focus:ring-[#abeacc] text-base outline-none text-[#696969] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              cls_name="w-full bg-[#EEE] rounded-[0.29656rem] md:rounded-[0.5rem] focus:border-[#4b4be6] focus:ring-[2px] focus:ring-[#9a9ae6] text-base outline-none text-[#696969] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
             />
 
             <Input
@@ -116,7 +116,7 @@ export const Contact = () => {
               value={name}
               onChange={handleName}
               label_cls_name="leading-normal poppins capitalize text-[0.66725rem] font-normal"
-              cls_name="w-full card rounded-[0.29656rem] md:rounded-[0.5rem] focus:border-[#0F9D58] focus:ring-[2px] focus:ring-[#abeacc] text-base outline-none text-[#696969] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+              cls_name="w-full bg-[#eee] rounded-[0.29656rem] md:rounded-[0.5rem] focus:border-[#4b4be6] focus:ring-[2px] focus:ring-[#9a9ae6] text-base outline-none text-[#696969] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               type="text"
               placeholder="Muhammad Ni'imatullahi"
             />
@@ -134,7 +134,7 @@ export const Contact = () => {
                 name="message"
                 value={message}
                 onChange={handleMessage}
-                className="w-full card rounded-[0.29656rem] md:rounded-[0.5rem] focus:border-[#0F9D58] focus:ring-[2px] focus:ring-[#abeacc] h-32 text-base outline-none text-[#696969] py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
+                className="w-full bg-[#eee] rounded-[0.29656rem] md:rounded-[0.5rem] focus:border-[#4b4be6] focus:ring-[2px] focus:ring-[#9a9ae6] h-32 text-base outline-none text-[#696969] py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"
                 placeholder="Your Message"
               ></textarea>
             </div>

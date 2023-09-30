@@ -28,31 +28,15 @@ const clerkPubKey = import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY;
 
 function ClerkProviderWithRoutes() {
   const navigate = useNavigate();
-  const [darkMode, setDarkMode] = useState(false);
-
-  useEffect(() => {
-    const userPref = localStorage.getItem("theme");
-    if (userPref === "dark") {
-      setDarkMode(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("theme", darkMode ? "dark" : "light");
-  }, [darkMode]);
-
-  const handleTheme = () => {
-    setDarkMode(!darkMode);
-  };
 
   return (
-    <div className={`app min-h-screen ${darkMode ? "dark-mode" : "light-mode"}`}>
+    <div className={`app min-h-screen`}>
       <ClerkProvider
         publishableKey={clerkPubKey}
         navigate={(to) => navigate(to)}
       >
         <div>
-          <Header onClick={handleTheme} darkMode={darkMode} />
+          <Header />
         </div>
         <Routes>
           <Route path="/" element={<Home />} />
