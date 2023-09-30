@@ -6,7 +6,6 @@
 
 .dark-mode {
   --bg-color: #1e1e1e;
-  --aside--bg: #161212;
   --text-color: #ffffff;
   --nav-bg: #141218;
   --icon-color: white;
@@ -28,7 +27,6 @@
   --nav-bg: #ffffff;
   --icon-color: #000;
   --para-color: #9f9d9d;
-  --aside--bg: #f1eeee;
   --border-color: #000000;
   --card-bg: #eeeeee;
   --qoute-color: #666666;
@@ -106,9 +104,6 @@
   width: 8.07022rem !important;
 }
 
-.aside {
-  background-color: var(--aside--bg);
-}
 
 .footer {
   background-color: var(--footer-bg);
