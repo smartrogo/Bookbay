@@ -10,14 +10,12 @@ function HeroContent() {
     <div className="flex h-[125vh] sm:h-[100vh] md:h-[75vh] lg:h-[85vh] flex-col md:gap- items-center md:flex-row md:w-[90%] xl:w-[85%] mx-auto">
       <div className="w-full md:w-[50%]">
         <div className="lg:[70%] xl:pl-1">
+
           <h1 className=" w-[21.1875rem] text-center mx-auto md:mx-0 h-[7rem] flex-shrink-0 text-[2.5rem] outfit leading-[3rem] mt-20 md:mt-10 font-bold md:text-start md:w[31.9375rem] sm:w-[90%]  balance mb-0">
             Your Ultimate
-            <br /> Online
-            <span className="text-[#DAA520] capitalize balance underscore">
-              {" "}
-              books-hub
-            </span>
+            <br /> Online books-hub
           </h1>
+
           <p className="poppins leading-normal text-style font-normal text-[0.875rem] text-center w-[20.3125rem] md:w-[90%] lg:w-[84%] xl:w-[80%] sm:w-[50%] md:text-start mx-auto md:mx-0">
           BookBay: Your one-stop platform for buying, selling, and borrowing books. Discover a vast selection, enjoy great deals, and join our family by signing up today.
           </p>
@@ -26,16 +24,16 @@ function HeroContent() {
             <Button
             onClick={() => navigate("/sign-in")}
               value="Join us today!"
-              cls_name=" flex justify-center btn items-center bg-[#0F9D58] text-[#FFFFFF] poppins text-style font-bold leading-normal rounded-[0.32494rem] py-[0.6905rem] px-[1.34038rem]"
+              cls_name=" flex justify-center btn items-center border-[2px] border-solid border-[#00F] text-[0.73113rem] md:text-[1.25rem] bg-transparent text-[#0000FF] poppins text-style font-bold leading-normal rounded-[0.32494rem] py-[0.6905rem] px-[1.34038rem] md:rounded-[0.5rem] md:py-[1.0625rem] md:px-[2.0625rem]"
             />
-            <div className="flex items-center links gap-1">
+            <div className="flex items-center links gap-[0.56963rem]">
               <Link
                 href=""
-                className="text-[#4285F4] poppins text-style font-normal underline leading-normal capitalize text-[0.7595rem]"
+                className="text-[#0F0] poppins text-style font-normal underline leading-normal capitalize text-[0.7595rem] md:text-[1.25rem]"
               >
                 learn more
               </Link>{" "}
-              <LiaLongArrowAltRightSolid className="text-[#4285F4] "/>
+              <LiaLongArrowAltRightSolid className="text-[#0F0] "/>
             </div>
           </div>
         </div>
