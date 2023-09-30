@@ -4,9 +4,9 @@ import "@splidejs/react-splide/css/core";
 import "@splidejs/react-splide/css";
 import "@splidejs/react-splide/css/skyblue";
 import "@splidejs/react-splide/css/sea-green";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { Book } from "./Book";
-import { BiCode, BiCodeAlt } from "react-icons/bi";
+import { BiCodeAlt } from "react-icons/bi";
 import { MdHistoryEdu } from "react-icons/md";
 import { FaComputer } from "react-icons/fa6";
 import { BiBookBookmark } from "react-icons/bi";
@@ -229,7 +229,7 @@ export const MiniSwipper = () => {
       </div>
       <Link
         to={`/category/${selectedCategory}`}
-        className="my-[2px] roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#4285F4] flex gap-[0.5rem] md:w-[9rem] absolute right-4 w-[6rem] md:right-9 links items-center"
+        className="my-[2px] roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#00FF00] flex gap-[0.5rem] md:w-[9rem] absolute right-4 w-[6rem] md:right-9 links items-center"
       >
         <span className="underline">see more </span>
         <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />

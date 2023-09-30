@@ -105,8 +105,8 @@ export const Newslatter = () => {
               <Button
                 value="subscribe"
                 cls_name={
-                  loading ? "bg-[#85edba] cursor-not-allowed mx-auto w-full rounded-[0.29656rem] py-[0.90rem] md:rounded-[0.5rem] py-[0.37069rem] px-[0.92675rem] md:py-[0.625rem] md:px-[1.5625rem] text-center text-[#fff] poppins text-[0.66725rem] md:text-[1.125rem] text-style leading-normal font-normal capitalize" :
-                  "bg-[#0F9D58] btn mx-auto w-full rounded-[0.29656rem] md:rounded-[0.5rem] py-[0.85rem] px-[0.92675rem] md:py-[0.60rem] md:px-[1.5625rem] text-center text-[#fff] poppins text-[0.76725rem] md:text-[1.125rem] text-style leading-normal font-normal capitalize text-[0.59381rem]"
+                  loading ? "cursor-not-allowed mx-auto w-full rounded-[0.29656rem] py-[0.90rem] md:rounded-[0.5rem] py-[0.37069rem] px-[0.92675rem] md:py-[0.625rem] md:px-[1.5625rem] text-center text-[#fff] poppins text-[0.66725rem] md:text-[1.125rem] text-style leading-normal font-normal capitalize" :
+                  "bg-transparent border-[2px] border-solid border-[#00F] btn mx-auto w-full rounded-[0.29656rem] md:rounded-[0.5rem] py-[0.85rem] px-[0.92675rem] md:py-[0.60rem] md:px-[1.5625rem] text-center text-[#00f] poppins text-[0.76725rem] md:text-[1.125rem] text-style leading-normal font-normal capitalize text-[0.59381rem]"
                 }
               />
           </form>

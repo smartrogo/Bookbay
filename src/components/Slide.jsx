@@ -3,7 +3,7 @@ import React from 'react';
 
 export const Slide = ({ handleClick, type, icon }) => {
   return (
-    <div className="border-[1px] card border-solid rounded-[0.25075rem] md:rounded-[0.5rem] flex cursor-pointer hover:border-[#fff] active:bg-[#0F9D58] hover:text-[#fff] hover:bg-[#0F9D58]">
+    <div className="border-[1px] text-[#000] border-solid border-[#000] rounded-[0.25075rem] md:rounded-[0.5rem] flex cursor-pointer hover:border-[#00F] active:text-[#00F] hover:text-[#00F] hover:bg-transprent">
     <button
       className="w-full px-[0.5rem] py-[0.5rem] md:py-[0.5rem] md:px-[1rem] items-center flex justify-evenly"
       onClick={handleClick}

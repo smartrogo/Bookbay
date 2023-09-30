@@ -93,7 +93,7 @@ export const Contact = () => {
       <div className="w-[94.5%] md:w-[75%] px-5 md:px-12 pb-4 md:pb-10 mx-auto flex sm:flex-nowrap flex-wrap">
         <div className="lg:w-1/2 flex flex-col w-full md:py-8 mt-8 md:mt-0">
           <form onSubmit={handleSubmit} ref={form}>
-            <h2 className=" poppins text-[1.03794rem] md:text-[1.75rem] text-style mb-1 font-bold leading-normal title-font capitalize">
+            <h2 className=" poppins text-[1.03794rem] md:text-[1.75rem] text-style mb-1 font-bold leading-normal title-font capitalize text-[#0000FF]">
               contact us
             </h2>
 
@@ -145,8 +145,8 @@ export const Contact = () => {
               value="send"
               cls_name={
                 loading
-                  ? "bg-[#85edba] mx-auto rounded-[0.29656rem] md:rounded-[0.5rem] py-[0.37069rem] px-[0.92675rem] md:py-[0.625rem] md:px-[1.5625rem] text-center text-[#fff] poppins text-[0.66725rem] md:text-[1.125rem] text-style leading-normal font-normal capitalize"
-                  : "bg-[#0F9D58] mx-auto btn rounded-[0.29656rem] md:rounded-[0.5rem] py-[0.37069rem] px-[0.92675rem] md:py-[0.625rem] md:px-[1.5625rem] text-center text-[#fff] poppins text-[0.66725rem] md:text-[1.125rem] text-style leading-normal font-normal capitalize"
+                  ? "mx-auto rounded-[0.29656rem] md:rounded-[0.5rem] py-[0.37069rem] px-[0.92675rem] md:py-[0.625rem] md:px-[1.5625rem] text-center text-[#fff] poppins text-[0.66725rem] md:text-[1.125rem] text-style leading-normal font-normal capitalize"
+                  : "bg-transparent border-[2px] border-solid border-[#00f] mx-auto btn rounded-[0.29656rem] md:rounded-[0.5rem] py-[0.37069rem] px-[0.92675rem] md:py-[0.625rem] md:px-[1.5625rem] text-center text-[#00f] poppins text-[0.66725rem] md:text-[1.125rem] text-style leading-normal font-normal capitalize"
               }
             />
           </form>

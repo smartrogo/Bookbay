@@ -18,7 +18,7 @@ export const BlogCart = (props) => {
 
           <Button
             value="10 october, 2023"
-            cls_name="absolute btn bg-[#0F9D58] rounded-[0.30031rem] border-[1.802px] border-solid border-[#eee] w-[7.54519rem] h-[2.28981rem] py-[0.63813rem] px-[0.23875rem] roboto text-[#fff] text-[0.67569rem] text-style font-bold leading-normal left-[1.87rem] -bottom-5"
+            cls_name="absolute btn bg-[#0000FF] rounded-[0.30031rem] border-[1.802px] border-solid border-[#eee] w-[7.54519rem] h-[2.28981rem] py-[0.63813rem] px-[0.23875rem] roboto text-[#fff] text-[0.67569rem] text-style font-bold leading-normal left-[1.87rem] -bottom-5"
           />
         </div>
 
@@ -37,7 +37,7 @@ export const BlogCart = (props) => {
 
           <Link
         to="/"
-        className="absolute roboto mb-2 font-normal leading-normal text-[0.60031rem] md:text-[0.86281rem] capitalize text-style text-[#4285F4] flex gap-[0.2rem] md:w-[9rem]  -right-1 w-[6rem] md:-right-10 links items-center"
+        className="absolute roboto mb-2 font-normal leading-normal text-[0.60031rem] md:text-[0.86281rem] capitalize text-style text-[#00FF00] flex gap-[0.2rem] md:w-[9rem]  -right-1 w-[6rem] md:-right-10 links items-center"
       >
         <span className="underline">see more </span>
         <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />
