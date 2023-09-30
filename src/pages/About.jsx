@@ -30,10 +30,10 @@ export const About = () => {
   return (
     <div className='mt-20 h-screen'>
       <div className='flex justify-center items-center'>
-      <img src={about} alt="about us" />
+      <img className="w-[19.625rem] h-[19.675rem] md:w-[23.25rem] md:h-[23.25rem] object-cover" src={about} alt="about us" />
       </div>
 
-      <div className='p-4 w-[100%] md:w-[90%] mx-auto'>
+      <div className='p-4 w-[100%] md:w-[87%] mx-auto'>
         <Discription title="About bookbay" body="Bookbay is a decentralized social networking textbook borrowing platform that solves the problem of textbook borrowing using a peer-to-peer protocol. At Bookbay, we understand how expensive college can be, that’s why we give student, researchers and other individuals, the option to buy, sell, barrow at cheaper rate from a verify seller ad rental providers who complete to provide the absolute prices. The average student saves a lot when buying or renting all of their required books from our platform. Bookbay also let you sell or give as browning directly to borrowers at the highest buy back price using NEAR Token. Bookbay always will be dedicated to making your college experience better." />
         <div className='md:flex md:my-20'>
         <Discription title="Our Mission" body="Our mission is to provide a seamless platform that empowers readers to discover a diverse range of books, connect with fellow book enthusiasts, and foster a vibrant community of lifelong learners through the joy of reading." />

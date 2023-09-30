@@ -6,7 +6,8 @@ import { NavLink } from "react-router-dom";
 import { UserButton, useUser } from '@clerk/clerk-react';
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import logo from "../assets/logo.png"
+import logo from "../assets/logo.png";
+import { GrCart } from "react-icons/gr"
 
 export const Header = (props) => {
   const [active, setActive] = useState(false);
@@ -110,9 +111,14 @@ export const Header = (props) => {
             </ul>
 
 
-           {user ?  ( <div className="flex items-center border-2 border-yellow-300 justify-between">
+           {user ?  ( <div className="flex items-center md:ml-[6rem] lg:ml-[8rem] xl:ml-[14rem] justify-between gap-4">
+
+            <GrCart className="text-red-500 cursor-pointer w-[1.36119rem] h-[1.20313rem]"/>
+
             <UserButton afterSignOutUrl="/" className="user-btn"/>
-            <Link to={profileUrl}>profile</Link>
+
+            <Link className="text-[#000] md:text-[1rem] poppins font-normal text-stlye leading-[0.49744rem] capitalize" to={profileUrl}>Hi, {user.firstName}</Link>
+
            </div>) : <div className="flex items-center gap-[6px] sm:gap-3">
 
            <Button
@@ -131,7 +137,7 @@ export const Header = (props) => {
 
         <ul
           ref={menuRef}
-          className={`mobile-menu border-2 ${
+          className={`mobile-menu ${
             active ? "w-[70%]" : "w-0"
           } h-screen overflow-hidden transition-all duration-300 ease-in-out z-10 absolute top-0 left-0 bg-[#f1eeee] lg:hidden`}
         >
