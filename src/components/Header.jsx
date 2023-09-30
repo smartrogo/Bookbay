@@ -118,7 +118,7 @@ export const Header = (props) => {
            <Button
             onClick={() => navigate("/connect-wallet")}
               value="connect wallet"
-              cls_name="text-[0.825rem] btn md:text-[1rem] bg-[#0000FF] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.2rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
+              cls_name="text-[0.825rem] btn md:text-[1rem] bg-[#0000FF] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
             />
             <Link to="sign-in" className="text-[#0F9D58] poppins md:text-[1rem] text-[0.625rem] text-style font-medium leading-[0.49744rem] md:leading-[0.62181rem]">log in</Link>
             </div>}
