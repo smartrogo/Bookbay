@@ -58,7 +58,7 @@ export const Header = (props) => {
       }`}
     >
       <div className="wrapper flex items-center justify-between mx-auto">
-        <div className="mobile-nav-container lg:justify-between md:justify-start flex gap-4 items-center">
+        <div className="mobile-nav-container lg:justify-between md:justify-start flex gap-2 sm:gap-4 items-center">
           <div
             className="mobile-menu-icon lg:hidden"
             onClick={handleNavbar}
@@ -80,7 +80,6 @@ export const Header = (props) => {
           </div>
           {/* Desktop View */}
 
-          <div></div>
         </div>
 
         {/* Add Login Button */}
@@ -114,12 +113,12 @@ export const Header = (props) => {
            {user ?  ( <div className="flex items-center border-2 border-yellow-300 justify-between">
             <UserButton afterSignOutUrl="/" className="user-btn"/>
             <Link to={profileUrl}>profile</Link>
-           </div>) : <div className="flex items-center gap-3">
+           </div>) : <div className="flex items-center gap-2 sm:gap-3">
 
            <Button
-            onClick={() => navigate("/sign-in")}
+            onClick={() => navigate("/connect-wallet")}
               value="connect wallet"
-              cls_name="text-[0.825rem] btn md:text-[1rem] bg-[#0000FF] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
+              cls_name="text-[0.825rem] btn md:text-[1rem] bg-[#0000FF] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.2rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
             />
             <Link to="sign-in" className="text-[#0F9D58] poppins md:text-[1rem] text-[0.625rem] text-style font-medium leading-[0.49744rem] md:leading-[0.62181rem]">log in</Link>
             </div>}
@@ -132,9 +131,9 @@ export const Header = (props) => {
 
         <ul
           ref={menuRef}
-          className={`mobile-menu ${
+          className={`mobile-menu border-2 ${
             active ? "w-[70%]" : "w-0"
-          } h-screen overflow-hidden transition-all duration-300 ease-in-out z-10 absolute top-0 left-0 aside lg:hidden`}
+          } h-screen overflow-hidden transition-all duration-300 ease-in-out z-10 absolute top-0 left-0 bg-[#f1eeee] lg:hidden`}
         >
           {active && (
             <RiCloseCircleFill
