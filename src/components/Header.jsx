@@ -192,6 +192,17 @@ export const Header = (props) => {
                 Buy/Sell
               </NavLink>
             </li>
+            <li className="mb-5 text-[25px] font-medium leading-[120%] hover:underline">
+              <NavLink
+                to="/connect-wallet"
+                onClick={() => {
+                  setActive(false);
+                }}
+                className=""
+              >
+               Wallet Connect
+              </NavLink>
+            </li>
           </ul>
           <div className="flex justify-end">
             <Button primaryGreen="#0f9d58" />
