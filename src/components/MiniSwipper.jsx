@@ -135,6 +135,19 @@ export const MiniSwipper = () => {
         <SplideSlide>
           <Slide
             handleClick={() => {
+              getBooks("religious");
+              setSelectedCategory("religious");
+            }}
+            type="religious"
+            icon={
+              <GiLevelThreeAdvanced className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+
+        <SplideSlide>
+          <Slide
+            handleClick={() => {
               getBooks("computer science");
               setSelectedCategory("computer");
             }}
@@ -157,6 +170,7 @@ export const MiniSwipper = () => {
             }
           />
         </SplideSlide>
+
 
         <SplideSlide>
           <Slide
@@ -229,7 +243,7 @@ export const MiniSwipper = () => {
       </div>
       <Link
         to={`/category/${selectedCategory}`}
-        className="my-[2px] roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#00FF00] flex gap-[0.5rem] md:w-[9rem] absolute right-4 w-[6rem] md:right-9 links items-center"
+        className="my-[2px] roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#31af31] flex gap-[0.5rem] md:w-[9rem] absolute right-4 w-[6rem] md:right-9 links items-center"
       >
         <span className="underline">see more </span>
         <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />

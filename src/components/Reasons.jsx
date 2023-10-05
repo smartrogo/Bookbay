@@ -9,7 +9,7 @@ export const Reasons = () => {
 
     <Text head="Why Use Bookbay ?"/>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-6 sm:w-[90%] md:grid-cols-2 lg:grid-cols-3 gap-6 md:w-[90%] md:gap-x-1 lg:w-[95%] lg:gap-x-10 xl:gap-x-2 xl:w-[90%] mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-6 sm:w-[90%] md:grid-cols-2 lg:grid-cols-3 gap-6 md:w-[90%] md:gap-x-1 lg:w-[95%] lg:gap-x-10 xl:gap-10 xl:w-[92%] mx-auto">
         
        {reasonCardsDatas.map((card, index)=> <ReasonCard key={index} {...card} />)}
 

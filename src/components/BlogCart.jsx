@@ -34,7 +34,7 @@ export const BlogCart = (props) => {
 
           <Link
         to="/"
-        className="absolute roboto mb-2 font-normal leading-normal text-[0.60031rem] md:text-[0.96281rem] capitalize text-style text-[#00FF00] flex gap-[0.2rem] md:w-[9rem]  -right-1 w-[6rem] md:-right-10 links items-center"
+        className="absolute roboto mb-2 font-normal leading-normal text-[0.60031rem] md:text-[0.96281rem] capitalize text-style text-[#31af31] flex gap-[0.2rem] md:w-[9rem]  -right-1 w-[6rem] md:-right-10 links items-center"
       >
         <span className="underline">see more </span>
         <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />

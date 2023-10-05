@@ -109,7 +109,7 @@ export const Footer = () => {
                     </li>
                     <li>
                       <Link to="/frequent-questions" className="hover:underline">
-                        PAQs
+                        FAQs
                       </Link>
                     </li>
                   </ul>

@@ -24,8 +24,7 @@ export const Testimony = () => {
     <section className="w-full mt-6 md:w-[95%] relative overflow-hidden mx-auto min-h-[200px] py-5 md:px-7 ">
       <Text
         head="Don’t Just Take Our Words !"
-        body=" Lorem ipsum dolor sit amet consectetur. Diam ut feugiat aliquet in
-          varius feugiat magna dictum. Tortor diam et placerat."
+        body="Readers recormendation!"
       />
       <Swiper
         className="container mx-auto "
@@ -100,7 +99,7 @@ export const Testimony = () => {
         </SwiperSlide>
       </Swiper>
 
-      <Link className="my-[4rem] roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#0F0] flex links gap-[0.5rem] md:w-[9rem] absolute right-2 w-[6rem] md:right-4 items-center">
+      <Link className="my-[4rem] roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#31af31] flex links gap-[0.5rem] md:w-[9rem] absolute right-2 w-[6rem] md:right-4 items-center">
         <span className="underline">see more </span>
         <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />
       </Link>

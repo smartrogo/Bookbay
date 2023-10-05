@@ -6,7 +6,7 @@ export const ReasonCard = ({title, body, icon, cls_name, text_color}) => {
     className={cls_name}
   >
 
-    <div className="p-4">
+    <div className="px-4 py-[3rem]">
       <div className="">
         
         <div className="">

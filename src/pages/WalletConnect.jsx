@@ -26,7 +26,7 @@ const ConnectBtn = () => {
 
 export const WalletConnect = () => {
   return (
-    <div className="mt-20">
+    <div className="mt-20 flex items-center justify-center border-2 h-screen">
     <WagmiConfig config={wagmiConfig}>
         <ConnectBtn />
       </WagmiConfig>

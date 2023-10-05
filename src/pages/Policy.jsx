@@ -25,7 +25,7 @@ export const Policy = () => {
         </p>
 
         <div>
-          <p>Information We Collect</p>
+          <p className="font-bold text-[1rem]">Information We Collect</p>
           <ul className=" list-decimal list-inside">
             <li>
               Personal Information: We may collect personal information such as

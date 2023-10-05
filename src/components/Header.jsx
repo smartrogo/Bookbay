@@ -3,28 +3,24 @@ import { RiMenu3Line } from "react-icons/ri";
 import { Button } from "./Button";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
-import { UserButton, useUser } from '@clerk/clerk-react';
+import { UserButton, useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
-import { GrCart } from "react-icons/gr"
+import { GrCart } from "react-icons/gr";
 
 export const Header = (props) => {
   const [active, setActive] = useState(false);
   const menuRef = useRef();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { user } = useUser();
 
   const profileUrl = user ? `/profile/${user.id}` : null;
-
-   
 
   // sidebar toggle function
   const handleNavbar = () => {
     setActive(!active);
   };
-
-
 
   // useEffect function to handle outside click to toggle
   useEffect(() => {
@@ -45,10 +41,10 @@ export const Header = (props) => {
   const navLinkStyle = ({ isActive }) => {
     return {
       textDecoration: isActive ? "underline" : "none",
-      textDecorationColor: isActive ? "#00FF00" : "none",
+      textDecorationColor: isActive ? "#31af31" : "none",
       textDecorationThickness: isActive ? "2px" : "0px",
       textUnderlineOffset: isActive ? "0.3em" : "none",
-      color: isActive ? "#00FF00" : "",
+      color: isActive ? "#31af31" : "",
     };
   };
 
@@ -60,10 +56,7 @@ export const Header = (props) => {
     >
       <div className="wrapper flex items-center justify-between mx-auto">
         <div className="mobile-nav-container lg:justify-between md:justify-start flex gap-2 sm:gap-4 items-center">
-          <div
-            className="mobile-menu-icon lg:hidden"
-            onClick={handleNavbar}
-          >
+          <div className="mobile-menu-icon lg:hidden" onClick={handleNavbar}>
             <RiMenu3Line className="text-[24px] menu-icon-svg lg:hidden lg:absolute" />
           </div>
 
@@ -73,22 +66,22 @@ export const Header = (props) => {
                 to="/"
                 className="site-title flex items-center text-[1.125rem] md:text-[24px] font-bold leading-normal poppins"
               >
-                <img className="w-[8rem] h-[2rem] md:w-[9.42544rem] md:h-[2.5625rem]" src={logo} alt="logo" />
+                <img
+                  className="w-[8rem] h-[2rem] md:w-[9.42544rem] md:h-[2.5625rem]"
+                  src={logo}
+                  alt="logo"
+                />
               </Link>
             </div>
-
-
           </div>
           {/* Desktop View */}
-
         </div>
 
         {/* Add Login Button */}
         <div className="login-button-container flex justify-between items-center">
-          <div className="flex gap-8 items-center justify-between">
-
-          <ul className="hidden text-[#000000] lg:flex gap-8 md:items-center leading-normal items-center text-[0.875rem]">
-              <li className="roboto font-normal text-style under text-[1.125rem] leading-normal">
+          <div className="flex gap-8 lg:gap-[8rem] xl:gap-[15rem] 2xl:gap-[24rem] items-center md:w-[] justify-between">
+            <ul className="hidden text-[#000000] lg:flex gap-8 md:items-center leading-normal items-center text-[0.875rem]">
+              <li className="poppins font-normal text-style under text-[1.125rem] leading-normal">
                 <NavLink to="/" style={navLinkStyle}>
                   Home
                 </NavLink>
@@ -105,34 +98,47 @@ export const Header = (props) => {
               </li>
               <li className="roboto font-normal text-style under text-[1.125rem] leading-normal">
                 <NavLink to="/buy" style={navLinkStyle}>
-                  Buy/Sell
+                  Buy
+                </NavLink>
+              </li>
+              <li className="roboto font-normal text-style under text-[1.125rem] leading-normal">
+                <NavLink to="/sell" style={navLinkStyle}>
+                  Sell
                 </NavLink>
               </li>
             </ul>
 
+            {user ? (
+              <div className="flex items-center md:ml-[6rem] lg:ml-[3px] xl:ml-[1rem] first-letter: justify-between gap-2 md:gap-4">
+                <GrCart className="text-red-500 cursor-pointer w-[1.36119rem] h-[1.20313rem]" />
 
-           {user ?  ( <div className="flex items-center md:ml-[6rem] lg:ml-[8rem] xl:ml-[14rem] justify-between gap-2 md:gap-4">
+                <UserButton afterSignOutUrl="/" className="user-btn" />
 
-            <GrCart className="text-red-500 cursor-pointer w-[1.36119rem] h-[1.20313rem]"/>
-
-            <UserButton afterSignOutUrl="/" className="user-btn"/>
-
-            <Link className="text-[#000] text-[0.8rem] md:text-[1rem] poppins font-normal text-stlye leading-[0.49744rem] capitalize" to={profileUrl}>Hi, {user.firstName}</Link>
-
-           </div>) : <div className="flex items-center gap-[6px] sm:gap-3">
-
-           <Button
-            onClick={() => navigate("/connect-wallet")}
-              value="connect wallet"
-              cls_name="text-[0.80rem] btn md:text-[1rem] bg-[#0000FF] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
-            />
-            <Link to="sign-in" className="text-[#0F9D58] poppins md:text-[1rem] text-[0.65rem] text-style font-medium leading-[0.49744rem] md:leading-[0.62181rem]">log in</Link>
-            </div>}
+                <Link
+                  className="text-[#000] text-[0.8rem] md:text-[1rem] poppins font-normal text-stlye leading-[0.49744rem] capitalize"
+                  to={profileUrl}
+                >
+                  Hi, {user.firstName}
+                </Link>
+              </div>
+            ) : (
+              <div className="flex items-center gap-[6px] sm:gap-3">
+                <Button
+                  onClick={() => navigate("/connect-wallet")}
+                  value="connect wallet"
+                  cls_name="text-[0.80rem] btn md:text-[1rem] bg-[#0000FF] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
+                />
+                <Link
+                  to="sign-in"
+                  className="text-[#0F9D58] poppins md:text-[1rem] text-[0.65rem] text-style font-medium leading-[0.49744rem] md:leading-[0.62181rem]"
+                >
+                  Log in
+                </Link>
+              </div>
+            )}
           </div>
 
-          <div className="">
-          </div>
-          
+          <div className=""></div>
         </div>
 
         <ul
@@ -189,7 +195,18 @@ export const Header = (props) => {
                 }}
                 className=""
               >
-                Buy/Sell
+                Buy
+              </NavLink>
+            </li>
+            <li className="mb-5 text-[25px] font-medium leading-[120%] hover:underline">
+              <NavLink
+                to="/sell"
+                onClick={() => {
+                  setActive(false);
+                }}
+                className=""
+              >
+                Sell
               </NavLink>
             </li>
             <li className="mb-5 text-[25px] font-medium leading-[120%] hover:underline">
@@ -200,7 +217,7 @@ export const Header = (props) => {
                 }}
                 className=""
               >
-               Wallet Connect
+                Wallet Connect
               </NavLink>
             </li>
           </ul>
