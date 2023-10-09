@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Home } from "./components/Home";
 import { ErrorPage } from "./pages/ErrorPage";
-import { ClerkProvider } from "@clerk/clerk-react";
+import { ClerkProvider, SignedIn } from "@clerk/clerk-react";
 import { SignUpPage } from "./pages/SignUpPage";
 import { SignInPage } from "./pages/SignInPage";
 import { Dashboard } from "./pages/Dashboard";
@@ -16,10 +16,15 @@ import { About } from "./pages/About";
 import { Borrow } from "./pages/Borrow";
 import { Buy } from "./pages/Buy";
 import { WalletConnect } from "./pages/WalletConnect";
-import {FAQs} from "./pages/FAQs"
-import {Policy} from "./pages/Policy"
+import { FAQs } from "./pages/FAQs";
+import { Policy } from "./pages/Policy";
 import { ServiceTerms } from "./pages/ServiceTerms";
 import { BookDetails } from "./pages/BookDetails";
+import { Cart } from "./pages/Cart";
+import { SignedOut, SignIn, RedirectToSignIn } from "@clerk/clerk-react";
+import { ProtectedRoute } from "./pages/ProtectedRoute";
+import { AuthProvider } from "./AuthContext";
+
 if (!import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
 }
@@ -55,8 +60,11 @@ function ClerkProviderWithRoutes() {
           <Route path="/profile/:userId" element={<Profile />} />
           <Route
             path="/dashboard"
-            element={<Dashboard routing="path" path="/dashboard" />}/>
-          <Route path="*" element={<ErrorPage />} />
+            element={<Dashboard routing="path" path="/dashboard" />}
+          />
+          <Route path="/protected" element={<ProtectedRoute />}>
+            <Route path="/protected" element={<Cart />} />
+          </Route>
         </Routes>
       </ClerkProvider>
     </div>
@@ -65,9 +73,11 @@ function ClerkProviderWithRoutes() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <ClerkProviderWithRoutes />
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <ClerkProviderWithRoutes />
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

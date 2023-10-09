@@ -3,7 +3,12 @@ import ceo from "../assets/ceo.png";
 import designer from "../assets/designer.png";
 import engineer from "../assets/engineer.png";
 import { Footer } from "../components/Footer";
+import { useEffect } from "react";
+
 const Discription = ({ title, body }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="text-style text-start my-4 capitalize">
       <h2 className="text-[#00f] outfit text-[1.5rem] font-bold leading-normal ">

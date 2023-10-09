@@ -8,17 +8,21 @@ import { Footer } from "../components/Footer";
 const Categories = () => {
   // const navigate = useNavigate()
   const { category } = useParams(); // Get the category from the URL
-  const [books, setBooks] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]); // Initialize with an empty array
+  const [books, setBooks] = useState([]); // Initialize with an empty array
+  const [searchedBooks, setSearchBooks] = useState([
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+  ]);
   const [loading, setLoading] = useState(true);
-  const [searchValue, setSearchValue] = useState(true);
-
   const [searchParams, setSearchParam] = useSearchParams({ q: "" });
   const q = searchParams.get("q");
+  // const [searchValue, setSearchValue] = useState(() => (q ? q : ""));
 
   const testing = (data) => {
     let filtered_data = data.docs.filter((item) => item.cover_i);
-    return setBooks(filtered_data);
+    console.log("filtered_data: ", filtered_data);
+    return loadBooks(q, filtered_data);
   };
+
   const fetchBooks = async () => {
     setLoading(true);
     console.log(loading, "loading.....");
@@ -34,33 +38,43 @@ const Categories = () => {
   };
 
   useEffect(() => {
+    console.log("query: ", q);
     fetchBooks();
-  }, [category]);
+    return () => {};
+  }, []);
 
-  const items = books.filter((item) =>
-    item.title?.toLowerCase().includes(q.toLocaleLowerCase())
-  );
-  console.log(items);
-
-  const search = (val) => {
-    setSearchValue(val);
+  const loadBooks = (val, data) => {
+    console.log("doing so may: ", books);
+    setBooks(data);
     if (!val) {
-      fetchBooks();
+      console.log("books: ", data, books);
+      setSearchBooks(data);
+      setSearchParam({ q: "" });
     } else {
-      let result = items(searchValue);
-      setBooks(result);
+      setSearchParam({ q: val });
+      let result = data.filter((item) =>
+        item.title?.toLowerCase().includes(val.toLocaleLowerCase())
+      );
+      console.log("result: ", result);
+      setSearchBooks(result);
     }
   };
 
-  //  const filteredFn = (data) => {
-  //   const items = data.filter((item) => item.title?.toLowerCase().includes(q.      toLocaleLowerCase()))
-  //  console.log(items)
-  //  setBooks(items)
-  //  }
-  //  filteredFn(books)
+  const search = (val) => {
+    console.log("val:", val, "books: ", books);
+    setSearchParam({ q: val });
+    let result = books.filter((item) =>
+      item.title?.toLowerCase().includes(val.toLocaleLowerCase())
+    );
+    console.log("result: ", result);
+    setSearchBooks(result);
+  };
 
   const head = `${category} Books Categories`;
-
+  const getIsbn = (isbn) => {
+    console.log("this is this books isbn's: ", typeof isbn);
+    return isbn ? isbn[0] : "";
+  };
   return (
     <div className="mt-20">
       <div className="mt-10 border-red-500 border-2 flex flex-col justify-center items-center">
@@ -71,18 +85,18 @@ const Categories = () => {
 
         <SearchInput
           placeholder="Search..."
-          value={searchValue}
+          value={q ? q : ""}
           onChange={(e) => search(e.target.value)}
         />
       </div>
       <div className="flex flex-wrap justify-center">
-        {books.map((book, index) => (
+        {searchedBooks.map((book, index) => (
           <div key={index} className="w-[50%] sm:w-1/2 md:w-1/4 lg:w-1/4 p-2">
             <Book
               cover={book?.cover_i}
               title={book?.title?.trim().split(" ").slice(0, 2).join(" ")}
               year={book?.first_publish_year}
-              // bookId={book?.edition_key[0]}
+              bookId={getIsbn(book.isbn)}
               loading={loading}
             />
           </div>

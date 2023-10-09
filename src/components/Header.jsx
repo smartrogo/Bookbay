@@ -3,19 +3,18 @@ import { RiMenu3Line } from "react-icons/ri";
 import { Button } from "./Button";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
-import { UserButton, useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { GrCart } from "react-icons/gr";
+import { AuthContext } from "../AuthContext";
+import { useContext } from "react";
 
 export const Header = (props) => {
   const [active, setActive] = useState(false);
   const menuRef = useRef();
   const navigate = useNavigate();
-  const { user } = useUser();
-
-  const profileUrl = user ? `/profile/${user.id}` : null;
+  const { userData, isAuth, isLoading } = useContext(AuthContext);
 
   // sidebar toggle function
   const handleNavbar = () => {
@@ -108,17 +107,27 @@ export const Header = (props) => {
               </li>
             </ul>
 
-            {user ? (
+            {isLoading ? (
+              <span>loading</span>
+            ) : isAuth ? (
               <div className="flex items-center md:ml-[6rem] lg:ml-[3px] xl:ml-[1rem] first-letter: justify-between gap-2 md:gap-4">
-                <GrCart className="text-red-500 cursor-pointer w-[1.36119rem] h-[1.20313rem]" />
+                <Link to="/protected">
+                  <GrCart className="text-red-500 cursor-pointer w-[1.36119rem] h-[1.20313rem]" />
+                </Link>
 
-                <UserButton afterSignOutUrl="/" className="user-btn" />
+                <Link to="/">
+                <img
+                  src={userData?.pic}
+                  alt="profile"
+                  className="w-10 h-10 rounded-full"
+                />
+                </Link>
 
                 <Link
                   className="text-[#000] text-[0.8rem] md:text-[1rem] poppins font-normal text-stlye leading-[0.49744rem] capitalize"
-                  to={profileUrl}
+                  to="#"
                 >
-                  Hi, {user.firstName}
+                  Hi, {userData?.displayName?.split(" ")[0]}
                 </Link>
               </div>
             ) : (

@@ -16,10 +16,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
 import { Link } from "react-router-dom";
 import { Slide } from "./Slide";
-import {Button} from "./Button"
+import { Button } from "./Button";
 
 export const MiniSwipper = () => {
-  
   const [bookChunks, setBookChunks] = useState([
     [0, 0],
     [0, 0],
@@ -33,39 +32,37 @@ export const MiniSwipper = () => {
     getBooks("programming"); // Fetch programming books initially
   }, []);
 
-
   const fn = (data) => {
     const chunkSize = 2;
     const chunks = [];
     for (let i = 0; i < data.length; i += chunkSize) {
       chunks.push(data.slice(i, i + chunkSize));
     }
-    return chunks
+    return chunks;
   };
 
   // Api call to get books
   const getBooks = async (bookType) => {
-
-      setIsLoading(true);
-      console.log(bookChunks, "getting every shit")
-      // Api endpoint
-      const response = await fetch(
-        `https://openlibrary.org/search.json?q=${bookType}`
-      ).catch((error)=>{
-        console.log("error in catch: ", error);
-      })
-      const data = await response.json();
-      // Filter the data and get books with cover image
-      const booksWithCovers = data.docs.filter((item) => item.cover_i);
-      // Get the first eight books to be displayed
-      const intialAuthor = booksWithCovers.map((item) => {
-        return item.author_name[0]
-      })
-      console.log(intialAuthor, "authors")
-      let chunks = fn(booksWithCovers)
-      setBookChunks(chunks); // Update the bookChunks state
-      console.log(bookChunks, "understanding ever shit")
-      setIsLoading(false);
+    setIsLoading(true);
+    console.log(bookChunks, "getting every shit");
+    // Api endpoint
+    const response = await fetch(
+      `https://openlibrary.org/search.json?q=${bookType}`
+    ).catch((error) => {
+      console.log("error in catch: ", error);
+    });
+    const data = await response.json();
+    // Filter the data and get books with cover image
+    const booksWithCovers = data.docs.filter((item) => item.cover_i);
+    // Get the first eight books to be displayed
+    const intialAuthor = booksWithCovers.map((item) => {
+      return item.author_name[0];
+    });
+    // console.log(intialAuthor, "authors")
+    let chunks = fn(booksWithCovers);
+    setBookChunks(chunks); // Update the bookChunks state
+    console.log("first", chunks, "understanding ever shit");
+    setIsLoading(false);
   };
 
   return (
@@ -81,14 +78,13 @@ export const MiniSwipper = () => {
               perPage: 2,
               gap: "1rem",
             },
-           
           },
           perMove: 1,
           rewindByDrag: true,
           rewindSpeed: 1000,
           pagination: false,
           // drag: true,
-          drag   : 'free',
+          drag: "free",
         }}
         aria-label="My Favorite Images"
         className=""
@@ -171,7 +167,6 @@ export const MiniSwipper = () => {
           />
         </SplideSlide>
 
-
         <SplideSlide>
           <Slide
             handleClick={() => getBooks("biography")}
@@ -184,37 +179,36 @@ export const MiniSwipper = () => {
       </Splide>
 
       <div className="display p-2 book-container md:w-[95%] mx-auto md:flex justify-evenly">
-  <div className="flex w-full md:w-1/2 justify-evenly">
-    {bookChunks &&
-      bookChunks[0].map((item, index) => (
-        <Book
-          key={index}
-          cover={item?.cover_i}
-          title={item?.title?.trim().split(" ").slice(0, 2).join(" ")}
-          year={item?.first_publish_year}
-          author={item?.author_name}
-          loading={loading}
-        />
-      ))}
-  </div>
-  <div className="flex w-full md:w-1/2 justify-evenly">
-    {bookChunks &&
-      bookChunks[1].map((item, index) => (
-        <Book
-          key={index}
-          cover={item?.cover_i}
-          title={item?.title?.trim().split(" ").slice(0, 2).join(" ")}
-          year={item?.first_publish_year}
-          author={item?.author_name}
-          loading={loading}
-        />
-      ))}
-  </div>
-</div>
-
+        <div className="flex w-full md:w-1/2 justify-evenly">
+          {bookChunks &&
+            bookChunks[0].map((item, index) => (
+              <Book
+                key={index}
+                cover={item?.cover_i}
+                title={item?.title?.trim().split(" ").slice(0, 2).join(" ")}
+                year={item?.first_publish_year}
+                author={item?.author_name}
+                loading={loading}
+              />
+            ))}
+        </div>
+        <div className="flex w-full md:w-1/2 justify-evenly">
+          {bookChunks &&
+            bookChunks[1].map((item, index) => (
+              <Book
+                key={index}
+                cover={item?.cover_i}
+                title={item?.title?.trim().split(" ").slice(0, 2).join(" ")}
+                year={item?.first_publish_year}
+                author={item?.author_name}
+                loading={loading}
+              />
+            ))}
+        </div>
+      </div>
 
       <div className="hidden p-2 md:flex justify-evenly md:w-[95%] mx-auto">
-      <div className="flex w-full md:w-1/2 justify-evenly">
+        <div className="flex w-full md:w-1/2 justify-evenly">
           {bookChunks &&
             bookChunks[2].map((item, index) => (
               <Book
@@ -252,4 +246,3 @@ export const MiniSwipper = () => {
     </div>
   );
 };
-

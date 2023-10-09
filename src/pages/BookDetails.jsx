@@ -1,37 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
+import { db } from "../firebase";
+import { addDoc, collection } from "firebase/firestore";
+import { AuthContext } from "../AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export const BookDetails = () => {
-  const { bookId } = useParams();
-  const [bookDetails, setBookDetails] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  useEffect(() => {
-    // Fetch book details based on bookId
-    const fetchBookDetails = async () => {
-      try {
-        const response = await fetch(
-          `https://openlibrary.org/works/${bookId}.json`
-        );
+  const { title, author, cover, year } = Object.fromEntries(searchParams);
+  console.log(title, author, cover, year, "det");
+  const { userData } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-        if (!response.ok) {
-          throw new Error(`Failed to fetch data for book ${bookId}`);
-        }
-
-        const data = await response.json();
-        setBookDetails(data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching book details:", error);
-        setError(error);
-        setLoading(false);
-      }
-    };
-
-    fetchBookDetails();
-  }, [bookId]);
+  console.log("userData: ".userData);
 
   if (loading) {
     return (
@@ -47,22 +32,31 @@ export const BookDetails = () => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
-  if (!bookDetails) {
-    return <div>Book not found.</div>;
-  }
-
+  const addToCart = async () => {
+    await addDoc(collection(db, "cart"), {
+      email: userData?.email,
+      title,
+      author,
+      cover,
+    });
+    navigate("/protected");
+  };
   return (
     <div className="book-details">
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <h1>{userData.email}</h1>
       <img
-        src={`https://covers.openlibrary.org/b/id/${bookDetails.cover_id}-L.jpg`}
-        alt={bookDetails.title}
+        src={`https://covers.openlibrary.org/b/id/${cover}-L.jpg`}
+        alt={title}
       />
-      <p>Title: {bookDetails.title}</p>
-      <p>Year: {bookDetails.first_publish_year}</p>
-      <p>
-        Author: {bookDetails.authors ? bookDetails.authors[0].name : "Unknown"}
-      </p>
+      <p>Title: {title}</p>
+      <p>Year: {year}</p>
+      <p>Author: {author}</p>
+      <button onClick={() => addToCart()}>add to cart</button>
     </div>
   );
 };
