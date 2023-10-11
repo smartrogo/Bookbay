@@ -12,9 +12,10 @@ import { useContext } from "react";
 
 export const Header = (props) => {
   const [active, setActive] = useState(false);
+  const [isMenuoPen, setIsMenuOpen] = useState(false);
   const menuRef = useRef();
   const navigate = useNavigate();
-  const { userData, isAuth, isLoading } = useContext(AuthContext);
+  const { userData, isAuth, isLoading, logout } = useContext(AuthContext);
 
   // sidebar toggle function
   const handleNavbar = () => {
@@ -46,7 +47,9 @@ export const Header = (props) => {
       color: isActive ? "#31af31" : "",
     };
   };
-
+  const toggleMenu = () => {
+    isMenuoPen ? setIsMenuOpen(false) : setIsMenuOpen(true);
+  };
   return (
     <section
       className={`header bg-[#FFF] fixed px-2 h-[5rem] sm:px-4 py-2 md:py-2.5 z-20 top-0 left-0 box-shadow w-full flex items-center ${
@@ -116,19 +119,19 @@ export const Header = (props) => {
                 </Link>
 
                 <Link to="/">
-                <img
-                  src={userData?.pic}
-                  alt="profile"
-                  className="w-10 h-10 rounded-full"
-                />
+                  <img
+                    src={userData?.pic}
+                    alt="profile"
+                    className="w-10 h-10 rounded-full"
+                  />
                 </Link>
 
-                <Link
+                <button
                   className="text-[#000] text-[0.8rem] md:text-[1rem] poppins font-normal text-stlye leading-[0.49744rem] capitalize"
-                  to="#"
+                  onClick={toggleMenu}
                 >
                   Hi, {userData?.displayName?.split(" ")[0]}
-                </Link>
+                </button>
               </div>
             ) : (
               <div className="flex items-center gap-[6px] sm:gap-3">
@@ -235,6 +238,20 @@ export const Header = (props) => {
           </div>
         </ul>
       </div>
+      {isAuth && isMenuoPen && (
+        <div className="bg-white fixed top-20 right-4 p-4 shadow-md">
+          <img
+            src={userData?.pic}
+            alt="profile"
+            className="w-20 h-20 rounded-full mx-auto"
+          />
+          <h2 className="font-bold">{userData.displayName}</h2>
+          <p>{userData?.email}</p>
+          <button className="mx-auto my-4" onClick={() => logout()}>
+            logout
+          </button>
+        </div>
+      )}
     </section>
   );
 };

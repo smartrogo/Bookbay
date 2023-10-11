@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Home } from "./components/Home";
 import { ErrorPage } from "./pages/ErrorPage";
-import { ClerkProvider, SignedIn } from "@clerk/clerk-react";
+import { ClerkProvider } from "@clerk/clerk-react";
 import { SignUpPage } from "./pages/SignUpPage";
 import { SignInPage } from "./pages/SignInPage";
 import { Dashboard } from "./pages/Dashboard";
@@ -21,10 +21,10 @@ import { Policy } from "./pages/Policy";
 import { ServiceTerms } from "./pages/ServiceTerms";
 import { BookDetails } from "./pages/BookDetails";
 import { Cart } from "./pages/Cart";
-import { SignedOut, SignIn, RedirectToSignIn } from "@clerk/clerk-react";
 import { ProtectedRoute } from "./pages/ProtectedRoute";
 import { AuthProvider } from "./AuthContext";
-
+import ScrollToTop from "./components/ScrollToTop"
+import {Forms} from "./pages/Forms"
 if (!import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
 }
@@ -54,6 +54,7 @@ function ClerkProviderWithRoutes() {
           <Route path="/connect-wallet" element={<WalletConnect />} />
           <Route path="/books/:bookId" element={<BookDetails />} />
           <Route path="/buy" element={<Buy />} />
+          <Route path="/forms" element={<Forms />} />
           <Route path="/terms-of-service" element={<ServiceTerms />} />
           <Route path="/privacy-policy" element={<Policy />} />
           <Route path="/frequent-questions" element={<FAQs />} />
@@ -73,11 +74,12 @@ function ClerkProviderWithRoutes() {
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
+      <ScrollToTop />
         <ClerkProviderWithRoutes />
-      </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

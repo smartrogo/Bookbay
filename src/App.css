@@ -57,6 +57,10 @@
   width: 110%;
 }
 
+.sha {
+  box-shadow: 6px 8px 100px 10px rgba(0, 0, 0, 0.10);;
+}
+
 .icon {
   color: var(--icon-color);
 }
@@ -136,7 +140,9 @@
 .test {
   width: 20% !important;
 }
-
+.mtp {
+  margin-top: 30px !important;
+}
 .btn {
   transition: transform 0.3s ease-in-out;
 }

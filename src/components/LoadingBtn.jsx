@@ -2,11 +2,11 @@ import React from "react";
 
 export const LoadingBtn = (props) => {
   return (
-    <div className="mx-auto flex w-full md:w-[95%] justify-center">
+    <div className="mx-auto flex w-full justify-center">
       <button
         disabled={props.loading}
         type="button"
-        className="w-full md:w-[95%] border-2 text-brand-teal border-white bg-white focus:outline-none focus:ring-brand-teal font-medium rounded-full text-sm px-5 py-2.5 text-center"
+        className="w-full text-[#fff] border-white bg-[#6c6cfd] font-bold text-style capitalize leading-normal rounded-[0.25rem] text-[0.75rem] px-[2rem] py-[0.4375rem] text-center"
       >
         <svg
           aria-hidden="true"
@@ -25,7 +25,7 @@ export const LoadingBtn = (props) => {
             fill="currentColor"
           ></path>
         </svg>
-        Loading...
+        Creating
       </button>
     </div>
   );

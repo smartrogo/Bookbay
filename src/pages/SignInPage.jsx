@@ -1,34 +1,27 @@
-import google from "../assets/audio.svg";
-import { NavLink } from "react-router-dom";
-import { useState, useEffect } from "react";
+import {Link } from "react-router-dom";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { BsEyeSlashFill } from "react-icons/bs";
-import { BsEyeFill } from "react-icons/bs";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { LoadingBtn } from "../components/LoadingBtn";
+import facebook from "../assets/facebook.svg"
+import tiktok from "../assets/tiktok.svg"
+import googleIcon from "../assets/google.svg"
 import React from "react";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
 import { useSearchParams } from "react-router-dom";
-
+import { Button } from "../components/Button";
 export const SignInPage = () => {
-  const [show, setShow] = useState(false);
   const [loading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
+  const facebook_provider = new FacebookAuthProvider()
   const [searchParams, setSearchParams] = useSearchParams();
   const { next } = Object.fromEntries(searchParams);
 
-  useEffect(() => {
-    // console.log("show", show);
-  });
-  const toggle = (bool) => {
-    // console.log("boolin", bool);
-    setShow(bool);
-  };
 
   // sign in existing user
   const SignInExistingUsers = async (values) => {
@@ -39,6 +32,7 @@ export const SignInPage = () => {
         // ...
         // console.log("what's up");
         const user = userCredential.user;
+        localStorage.setItem("isAuth", true);
         console.log(user, "loged in");
         console.log("next:", next);
         if (next) {
@@ -67,10 +61,9 @@ export const SignInPage = () => {
   };
 
   // handling form submitting
-  const handleFormSubmit = (values, { resetForm }) => {
+  const handleFormSubmit = (values) => {
     SignInExistingUsers(values);
     console.log("am here");
-    // resetForm();
   };
 
   // formik object
@@ -122,42 +115,46 @@ export const SignInPage = () => {
         // ...
       });
   };
+
+  const signInWithFacebook = () => {
+
+    signInWithPopup(auth, facebook_provider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
+    
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const credential = FacebookAuthProvider.credentialFromResult(result);
+        const accessToken = credential.accessToken;
+    
+        // IdP data available using getAdditionalUserInfo(result)
+        navigate("/");
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = FacebookAuthProvider.credentialFromError(error);
+    
+        // ...
+      });
+      }
   return (
-    <div>
-      <section className="mt-[5rem] overflow-y-hidden">
-        <div className="flex flex-col items-center mt-[5rem] mb-[2rem] lg:mt-[3rem] md:mt-[2.5rem] px-4 md:px-6 py-8 mx-auto lg:py-0">
-          <div className="w-full rounded-lg shadow border-[1px] border-zinc md:mt-0 sm:max-w-[30rem] xl:p-0">
-            <div className="p-3 md:p-6 space-y-4 sm:p-4">
-              <div className="login-section ">
-                <h1 className="text-4xl md:text-5xl center my-4 text-white">
-                  Log in
-                </h1>
-                <p className="center text-white">
-                  Dont have an account{" "}
-                  <NavLink
-                    to="/accounts/signup"
-                    className="underline text-brand-teal"
-                  >
-                    Sign up
-                  </NavLink>
-                </p>
-                <button
-                  to="#"
-                  onClick={() => signInWithGoogle()}
-                  className="rounded-full bg-white  hover:bg-opacity-30 
-          shadow-md hover:shadow-lg px-4 py-2 text-zinc 
-          font-medium my-4 flex justify-around w-60 items-center"
-                >
-                  <img src={google} alt="google" className="w-8" />
-                  Log in with Google
-                </button>{" "}
-              </div>
-              <div className="or text-center text-white">
-                <hr />
-                <span className="center">or</span>
-                <hr className="" />
-                <br />
-              </div>
+    <div className="pt-20">
+      <section className="flex items-center justify-center h-[100vh]">
+
+        <div className="w-full max-w-sm px-6 py-8 m-auto mx-auto bg-[#fff] rounded-[0.5rem] sha">
+          
+
+      <div className="flex flex-col text-center leading-normal text-style text-[#000] justify-center mx-auto">
+            <h2 className="outfit text-[1.5rem]  font-bold">Sign In</h2>
+            <p className="text-[0.87rem]">To continue to Bookbay</p>
+          </div> 
+
               <form onSubmit={formik.handleSubmit} className="space-y-4 ">
                 {errorMsg && (
                   <div
@@ -168,8 +165,11 @@ export const SignInPage = () => {
                   </div>
                 )}
 
-                <div className="my-2 flex justify-center">
-                  <div className="w-full md:w-[95%]">
+
+               
+                  
+                  <div className="w-full my-2 p-0">
+                    <label  className="cursor-pointer text-[#000] text-[1rem] font-bold leading-normal capitalize" htmlFor="email">email:</label>
                     <input
                       type="text"
                       name="email"
@@ -177,63 +177,64 @@ export const SignInPage = () => {
                       value={formik.values.email}
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
-                      placeholder="Email"
-                      className="bg-gray-50 border-2 border-zinc text-white sm:text-sm rounded-full focus:ring-brand-teal bg-brand-black focus:outline-none focus:border-brand-teal block mx-auto w-full md:w-[95%] p-2.5"
+                      placeholder="example@gmail.com"
+                      className="w-full block rounded-[0.25rem] border-[1px] border-solid placeholder:text-[#666] text-[0.875rem] text-style font-normal lowercase h-[2rem] placeholder:pl-[0.5rem] leading-normal  border-[#333]"
                     />
                     {formik.touched.email && formik.errors.email ? (
-                      <span className="text-brand-red text-xs ml-3">
+                      <span className="text-red-400 text-xs ml-3">
                         {formik.errors.email}
                       </span>
                     ) : null}
                   </div>
-                </div>
 
-                <div className="my-2 relative flex justify-center items-center">
-                  <div className="w-full md:w-[95%] mx-auto">
-                    <div>
-                      <div className="absolute text-white right-2 md:right-8 inset-y-0 flex items-center">
-                        {show ? (
-                          <BsEyeFill onClick={() => toggle(false)} />
-                        ) : (
-                          <BsEyeSlashFill onClick={() => toggle(true)} />
-                        )}
-                      </div>
+                
+                  <div className="w-full my-2 p-0">
+                  <label  className="cursor-pointer text-[#000] text-[1rem] font-bold leading-normal capitalize" htmlFor="password">Password:</label>
 
                       <input
-                        type={show ? "text" : "password"}
+                        type="password"
                         name="password"
                         id="password"
                         value={formik.values.password}
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
-                        placeholder="Password"
-                        className="bg-gray-50 border-2 border-zinc text-white sm:text-sm rounded-l-full focus:ring-brand-teal bg-brand-black focus:outline-none focus:border-brand-teal block w-[92%] md:w-[90%] p-2.5 "
+                        placeholder="********"
+                        className="w-full block rounded-[0.25rem] border-[1px] border-solid placeholder:text-[#666] text-[0.875rem] text-style font-normal lowercase h-[2rem] placeholder:pl-[0.5rem] leading-normal  border-[#333]"
                       />
-                      {formik.touched.password && formik.errors.password ? (
-                        <span className="text-brand-red text-xs ml-3">
-                          {formik.errors.password}
-                        </span>
-                      ) : null}
-                    </div>
-                  </div>
+                     
                 </div>
 
-                <div className="mx-auto flex w-full md:w-[95%] justify-center">
-                  {loading ? (
-                    <LoadingBtn loading={loading} />
-                  ) : (
-                    <button
-                      type="submit"
-                      className="w-full md:w-[95%] border-2 text-zinc border-white bg-white focus:outline-none focus:ring-brand-teal font-medium rounded-full text-sm px-5 py-2.5 text-center"
-                    >
-                      Log in
-                    </button>
-                  )}
-                </div>
+                <div className="">
+              {loading ? <LoadingBtn  loading={loading}/> : <Button
+                value="Create"
+                type="submit"
+                cls_name="text-[0.80rem] w-full md:text-[1rem] bg-[#0000FF] rounded-[0.25rem] text-[#FFFFFF] py-[0.4375rem] px-[2rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center px-4 leading-[1.23713rem]"
+              />}
+              </div>
+
+              <div className="flex gap-3 justify-center items-center mt-4">
+        <span className="w-[33%] border-b border-[#000]"></span>
+
+        <span className="text-center text-[0.75rem] text-[#000] lowercase">
+            or sign up with
+        </span>
+
+        <span className="w-[33%] border-b border-[#000]"></span>
+    </div>
+    <button type="submit"  onClick={() => signInWithGoogle()} className="flex w-full justify-center items-center gap-3 border-[1px] border-solid border-[#000] rounded-[0.25rem]">
+
+<img className="w-[1rem] h-[1rem]" width="1.5rem" height="1.5rem" src={googleIcon} alt="sign-up with google" />
+<span className="text-[0.875rem] text-style font-normal leading-normal capitalize">continue with google</span>
+
+</button>
+    <button type="submit"  onClick={() => signInWithFacebook()} className="flex w-full justify-center items-center gap-3 border-[1px] border-solid border-[#000] rounded-[0.25rem]">
+
+<img className="w-[1rem] h-[1rem]" width="1.5rem" height="1.5rem" src={facebook} alt="sign-up with google" />
+<span className="text-[0.875rem] text-style font-normal leading-normal capitalize">continue with Facebook</span>
+</button>
+  
               </form>
-            </div>
           </div>
-        </div>
       </section>
     </div>
   );
