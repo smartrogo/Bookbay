@@ -21,6 +21,7 @@ export const Cart = () => {
       res = [...res, { ...doc.data(), id: doc.id }];
     });
     setMyCartBooks(res);
+    console.log(myCartBooks);
   };
 
   useEffect(() => {

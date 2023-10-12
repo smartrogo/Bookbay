@@ -9,13 +9,36 @@ import logo from "../assets/logo.png";
 import { GrCart } from "react-icons/gr";
 import { AuthContext } from "../AuthContext";
 import { useContext } from "react";
-
+import { db } from "../firebase";
+import { collection, query, doc, where, getDocs } from "firebase/firestore";
 export const Header = (props) => {
   const [active, setActive] = useState(false);
   const [isMenuoPen, setIsMenuOpen] = useState(false);
   const menuRef = useRef();
   const navigate = useNavigate();
   const { userData, isAuth, isLoading, logout } = useContext(AuthContext);
+  const [myCartBooks, setMyCartBooks] = useState([]);
+
+  const getMyBooks = async () => {
+    
+  if (userData && userData.email) { // Check if userData and email are defined
+    const q = query(
+      collection(db, "cart"),
+      where("email", "==", userData.email) // Use userData.email if defined
+    );
+    const querySnapshot = await getDocs(q);
+    let res = [];
+    querySnapshot.forEach((doc) => {
+      res = [...res, { ...doc.data(), id: doc.id }];
+    });
+    setMyCartBooks(res);
+
+  }
+  };
+
+  useEffect(() => {
+    getMyBooks();
+  }, []);
 
   // sidebar toggle function
   const handleNavbar = () => {
@@ -81,7 +104,7 @@ export const Header = (props) => {
 
         {/* Add Login Button */}
         <div className="login-button-container flex justify-between items-center">
-          <div className="flex gap-8 lg:gap-[8rem] xl:gap-[15rem] 2xl:gap-[24rem] items-center md:w-[] justify-between">
+          <div className="flex gap-7 lg:gap-[8rem] xl:gap-[13rem] 2xl:gap-[24rem] items-center md:w-[] justify-between">
             <ul className="hidden text-[#000000] lg:flex gap-8 md:items-center leading-normal items-center text-[0.875rem]">
               <li className="poppins font-normal text-style under text-[1.125rem] leading-normal">
                 <NavLink to="/" style={navLinkStyle}>
@@ -114,38 +137,44 @@ export const Header = (props) => {
               <span>loading</span>
             ) : isAuth ? (
               <div className="flex items-center md:ml-[6rem] lg:ml-[3px] xl:ml-[1rem] first-letter: justify-between gap-2 md:gap-4">
+
                 <Link to="/protected">
-                  <GrCart className="text-red-500 cursor-pointer w-[1.36119rem] h-[1.20313rem]" />
+                  <div className="relative  ">
+                    <GrCart className="text-red-500 cursor-pointer w-[1.5rem] h-[1.5rem]" />
+
+                   <div className="absolute -top-2 left-4">
+                   <span className="flex h-[0.3rem] w-[0.3rem] items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white">
+                      {myCartBooks.length}
+                    </span>
+                   </div>
+                  </div>
                 </Link>
 
                 <Link to="/">
-                {
-  userData?.pic ? (
-    <img src={userData?.pic} alt="profile" className="w-10 h-10 rounded-full" />
-  ) : (
-    <img
-      src={`https://ui-avatars.com/api/?name=${userData?.email
-        .split("@")[0]
-        .slice(0, 2)}`}
-      alt="profile"
-      className="w-10 h-10 rounded-full"
-    />
-  )
-}
+                  {userData?.pic ? (
+                    <img
+                      src={userData?.pic}
+                      alt="profile"
+                      className="w-10 h-10 rounded-full"
+                    />
+                  ) : (
+                    <img
+                      src={`https://ui-avatars.com/api/?name=${userData?.email
+                        .split("@")[0]
+                        .slice(0, 2)}`}
+                      alt="profile"
+                      className="w-10 h-10 rounded-full"
+                    />
+                  )}
                 </Link>
 
                 <button
                   className="text-[#000] text-[0.8rem] md:text-[1rem] poppins font-normal text-stlye leading-[0.49744rem] capitalize"
                   onClick={toggleMenu}
                 >
-                 {
-  userData?.displayName ? (
-    `Hi, ${userData?.displayName.split(" ")[0]}`
-  ) : (
-   `Hi, ${userData?.email.split("@")[0]}`
-  )
-}
-
+                  {userData?.displayName
+                    ? `Hi, ${userData?.displayName.split(" ")[0]}`
+                    : `Hi, ${userData?.email.split("@")[0]}`}
                 </button>
               </div>
             ) : (
@@ -255,23 +284,25 @@ export const Header = (props) => {
       </div>
       {isAuth && isMenuoPen && (
         <div className="bg-white fixed top-20 right-4 p-4 shadow-md">
-               {
-  userData?.pic ? (
-    <div className="flex items-center justify-center">
-      <img src={userData?.pic} alt="profile" className="w-10 h-10 rounded-full" />
-    </div>
-  ) : (
-    <div className="flex items-center justify-center">
-      <img
-      src={`https://ui-avatars.com/api/?name=${userData?.email
-        .split("@")[0]
-        .slice(0, 2)}`}
-      alt="profile"
-      className="w-10 h-10 rounded-full"
-    />
-    </div>
-  )
-}
+          {userData?.pic ? (
+            <div className="flex items-center justify-center">
+              <img
+                src={userData?.pic}
+                alt="profile"
+                className="w-10 h-10 rounded-full"
+              />
+            </div>
+          ) : (
+            <div className="flex items-center justify-center">
+              <img
+                src={`https://ui-avatars.com/api/?name=${userData?.email
+                  .split("@")[0]
+                  .slice(0, 2)}`}
+                alt="profile"
+                className="w-10 h-10 rounded-full"
+              />
+            </div>
+          )}
           <h2 className="font-bold">{userData?.displayName || null}</h2>
           <p>{userData?.email}</p>
           <button className="mx-auto my-4" onClick={() => logout()}>
