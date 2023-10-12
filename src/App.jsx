@@ -61,8 +61,8 @@ function ClerkProviderWithRoutes() {
             path="/dashboard"
             element={<Dashboard routing="path" path="/dashboard" />}
           />
-          <Route path="/protected" element={<ProtectedRoute />}>
-            <Route path="/protected" element={<Cart />} />
+          <Route path="/cart" element={<ProtectedRoute />}>
+            <Route path="/cart" element={<Cart />} />
           </Route>
         </Routes>
       </ClerkProvider>

@@ -30,9 +30,12 @@ export const Header = (props) => {
     let res = [];
     querySnapshot.forEach((doc) => {
       res = [...res, { ...doc.data(), id: doc.id }];
+      
     });
     setMyCartBooks(res);
-
+    // console.log(res.length);
+    // const total = res.length
+    //   console.log(total)
   }
   };
 
@@ -138,7 +141,7 @@ export const Header = (props) => {
             ) : isAuth ? (
               <div className="flex items-center md:ml-[6rem] lg:ml-[3px] xl:ml-[1rem] first-letter: justify-between gap-2 md:gap-4">
 
-                <Link to="/protected">
+                <Link to="/cart">
                   <div className="relative  ">
                     <GrCart className="text-red-500 cursor-pointer w-[1.5rem] h-[1.5rem]" />
 
