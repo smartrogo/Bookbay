@@ -119,18 +119,33 @@ export const Header = (props) => {
                 </Link>
 
                 <Link to="/">
-                  <img
-                    src={userData?.pic}
-                    alt="profile"
-                    className="w-10 h-10 rounded-full"
-                  />
+                {
+  userData?.pic ? (
+    <img src={userData?.pic} alt="profile" className="w-10 h-10 rounded-full" />
+  ) : (
+    <img
+      src={`https://ui-avatars.com/api/?name=${userData?.email
+        .split("@")[0]
+        .slice(0, 2)}`}
+      alt="profile"
+      className="w-10 h-10 rounded-full"
+    />
+  )
+}
                 </Link>
 
                 <button
                   className="text-[#000] text-[0.8rem] md:text-[1rem] poppins font-normal text-stlye leading-[0.49744rem] capitalize"
                   onClick={toggleMenu}
                 >
-                  Hi, {userData?.displayName?.split(" ")[0]}
+                 {
+  userData?.displayName ? (
+    `Hi, ${userData?.displayName.split(" ")[0]}`
+  ) : (
+   `Hi, ${userData?.email.split("@")[0]}`
+  )
+}
+
                 </button>
               </div>
             ) : (
@@ -240,12 +255,24 @@ export const Header = (props) => {
       </div>
       {isAuth && isMenuoPen && (
         <div className="bg-white fixed top-20 right-4 p-4 shadow-md">
-          <img
-            src={userData?.pic}
-            alt="profile"
-            className="w-20 h-20 rounded-full mx-auto"
-          />
-          <h2 className="font-bold">{userData.displayName}</h2>
+               {
+  userData?.pic ? (
+    <div className="flex items-center justify-center">
+      <img src={userData?.pic} alt="profile" className="w-10 h-10 rounded-full" />
+    </div>
+  ) : (
+    <div className="flex items-center justify-center">
+      <img
+      src={`https://ui-avatars.com/api/?name=${userData?.email
+        .split("@")[0]
+        .slice(0, 2)}`}
+      alt="profile"
+      className="w-10 h-10 rounded-full"
+    />
+    </div>
+  )
+}
+          <h2 className="font-bold">{userData?.displayName || null}</h2>
           <p>{userData?.email}</p>
           <button className="mx-auto my-4" onClick={() => logout()}>
             logout

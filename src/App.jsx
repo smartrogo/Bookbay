@@ -24,7 +24,6 @@ import { Cart } from "./pages/Cart";
 import { ProtectedRoute } from "./pages/ProtectedRoute";
 import { AuthProvider } from "./AuthContext";
 import ScrollToTop from "./components/ScrollToTop"
-import {Forms} from "./pages/Forms"
 if (!import.meta.env.VITE_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
 }
@@ -54,7 +53,6 @@ function ClerkProviderWithRoutes() {
           <Route path="/connect-wallet" element={<WalletConnect />} />
           <Route path="/books/:bookId" element={<BookDetails />} />
           <Route path="/buy" element={<Buy />} />
-          <Route path="/forms" element={<Forms />} />
           <Route path="/terms-of-service" element={<ServiceTerms />} />
           <Route path="/privacy-policy" element={<Policy />} />
           <Route path="/frequent-questions" element={<FAQs />} />

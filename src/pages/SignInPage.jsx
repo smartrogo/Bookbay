@@ -44,15 +44,12 @@ export const SignInPage = () => {
       })
       .catch((error) => {
         console.log("error: ", error);
-        if (
-          error.code === "auth/wrong-password" ||
-          error.code === "auth/user-not-found"
-        ) {
+        if (error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
           setErrorMsg("Invalid email or password");
-          setErrorMsg("Invalid email or password");
-          console.log(error.code);
+          console.log(error, "hello")
         } else {
           setErrorMsg("An error occurred, try again!");
+          console.log(error, "hello")
         }
       })
       .finally(() => {
@@ -62,6 +59,7 @@ export const SignInPage = () => {
 
   // handling form submitting
   const handleFormSubmit = (values) => {
+    console.log("fuck")
     SignInExistingUsers(values);
     console.log("am here");
   };
@@ -69,7 +67,7 @@ export const SignInPage = () => {
   // formik object
   const formik = useFormik({
     initialValues: {
-      email: "",
+      email: "",  
       password: "",
     },
     // yup validation schema
@@ -84,10 +82,6 @@ export const SignInPage = () => {
       password: Yup.string()
         .min(8, "Password must be at least 8 characters")
         .required("required")
-        .matches(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()])[a-zA-Z\d!@#$%^&*()]+$/,
-          "Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character"
-        ),
     }),
     // submit function call
     onSubmit: handleFormSubmit,
@@ -144,7 +138,7 @@ export const SignInPage = () => {
       });
       }
   return (
-    <div className="pt-20">
+    <div className="pt-10">
       <section className="flex items-center justify-center h-[100vh]">
 
         <div className="w-full max-w-sm px-6 py-8 m-auto mx-auto bg-[#fff] rounded-[0.5rem] sha">
@@ -216,22 +210,36 @@ export const SignInPage = () => {
         <span className="w-[33%] border-b border-[#000]"></span>
 
         <span className="text-center text-[0.75rem] text-[#000] lowercase">
-            or sign up with
+            or sign in with
         </span>
 
         <span className="w-[33%] border-b border-[#000]"></span>
     </div>
-    <button type="submit"  onClick={() => signInWithGoogle()} className="flex w-full justify-center items-center gap-3 border-[1px] border-solid border-[#000] rounded-[0.25rem]">
+
+  <div className="flex flex-col gap-3">
+  <button type="submit"  onClick={() => signInWithGoogle()} className="flex w-full justify-center items-center gap-3 border-[1px] border-solid border-[#000] rounded-[0.25rem]">
 
 <img className="w-[1rem] h-[1rem]" width="1.5rem" height="1.5rem" src={googleIcon} alt="sign-up with google" />
 <span className="text-[0.875rem] text-style font-normal leading-normal capitalize">continue with google</span>
 
 </button>
+
     <button type="submit"  onClick={() => signInWithFacebook()} className="flex w-full justify-center items-center gap-3 border-[1px] border-solid border-[#000] rounded-[0.25rem]">
 
 <img className="w-[1rem] h-[1rem]" width="1.5rem" height="1.5rem" src={facebook} alt="sign-up with google" />
 <span className="text-[0.875rem] text-style font-normal leading-normal capitalize">continue with Facebook</span>
 </button>
+    <button type="submit" className="flex w-full justify-center items-center gap-3 border-[1px] border-solid border-[#000] rounded-[0.25rem]">
+
+<img className="w-[1rem] h-[1rem]" width="1.5rem" height="1.5rem" src={tiktok} alt="sign-up with google" />
+<span className="text-[0.875rem] text-style font-normal leading-normal capitalize">continue with Tiktok</span>
+</button>
+  </div>
+
+  <div className=" capitalize mtp leading-normal font-normal text-[0.875rem] text-center">
+                  <span>don't have an account?  </span>
+                  <Link to="/sign-up" className="text-[#00f] underline">Sign In</Link>
+                  </div>
   
               </form>
           </div>

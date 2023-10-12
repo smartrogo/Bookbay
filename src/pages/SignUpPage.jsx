@@ -34,9 +34,12 @@ export const SignUpPage = () => {
         console.log("after navigate");
       })
       .catch((error) => {
-        if (error.code === "auth/email-already-exists") {
-          setErrorMsg("email-already-exists");
-          console.log(error.code);
+        if (error.code === "auth/email-already-in-use") { // Updated error code
+          setErrorMsg("Email address is already in use. Please use a different email.");
+          console.log(error.code, "Email already in use");
+        } else {
+          setErrorMsg("An error occurred. Please try again later.");
+          console.error("Error:", error);
         }
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -147,8 +150,18 @@ signInWithPopup(auth, facebook_provider)
             <p className="text-[0.87rem]">To continue to Bookbay</p>
           </div>
 
-          <form onSubmit={formik.handleSubmit} className="space-y-4 ">
-            {errorMsg && <span className="text-red-400">{errorMsg}</span>}
+          <form onSubmit={formik.handleSubmit} className="space-y-4">
+
+          {errorMsg &&      <div className="flex items-center p-3 mb-4 text-[0.8rem] text-red-800 rounded-[0.25rem] bg-red-50" role="alert">
+  <svg className="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+  </svg>
+  <span className="sr-only">Info</span>
+  <div>
+   <span className="text-red-400">{errorMsg}</span>
+  </div>
+</div>}
+           
 
             <div className="w-full my-2 p-0">
               <label
@@ -241,21 +254,23 @@ signInWithPopup(auth, facebook_provider)
         <span className="w-[33%] border-b border-[#000]"></span>
     </div>
 
-    <button type="submit"  onClick={() => signUpWithGoogle()} className="flex w-full justify-center items-center gap-3 border-[1px] border-solid border-[#000] rounded-[0.25rem]">
+<div className="flex flex-col gap-3">
+<button type="submit"  onClick={() => signUpWithGoogle()} className="flex w-full justify-center items-center gap-3 border-[1px] border-solid border-[#000] rounded-[0.25rem]">
 
-        <img className="w-[1rem] h-[1rem]" width="1.5rem" height="1.5rem" src={googleIcon} alt="sign-up with google" />
-        <span className="text-[0.875rem] text-style font-normal leading-normal capitalize">continue with google</span>
+<img className="w-[1rem] h-[1rem]" width="1.5rem" height="1.5rem" src={googleIcon} alt="sign-up with google" />
+<span className="text-[0.875rem] text-style font-normal leading-normal capitalize">continue with google</span>
 
-    </button>
-    
-    <button type="submit" onClick={() => signUpWithFacebook()} className="flex w-full rounded-[0.25rem] border-[1px] border-solid border-[#000] justify-center items-center gap-3">
-        <img className="w-[1rem] h-[1rem]" width="1.5rem" height="1.5rem" src={facebook} alt="sign-up with google" />
-        <span className="text-[0.875rem] text-style font-normal leading-normal capitalize">continue with google</span>
-    </button>
-    <button className="flex w-full border-[1px] border-solid border-[#000] rounded-[0.25rem] justify-center items-center gap-3">
-        <img className="w-[1rem] h-[1rem]" width="1.5rem" height="1.5rem" src={tiktok} alt="sign-up with google" />
-        <span className="text-[0.875rem] text-style font-normal leading-normal capitalize">continue with google</span>
-    </button>
+</button>
+
+<button type="submit" onClick={() => signUpWithFacebook()} className="flex w-full rounded-[0.25rem] border-[1px] border-solid border-[#000] justify-center items-center gap-3">
+<img className="w-[1rem] h-[1rem]" width="1.5rem" height="1.5rem" src={facebook} alt="sign-up with google" />
+<span className="text-[0.875rem] text-style font-normal leading-normal capitalize">continue with Facebook</span>
+</button>
+<button className="flex w-full border-[1px] border-solid border-[#000] rounded-[0.25rem] justify-center items-center gap-3">
+<img className="w-[1rem] h-[1rem]" width="1.5rem" height="1.5rem" src={tiktok} alt="sign-up with google" />
+<span className="text-[0.875rem] text-style font-normal leading-normal capitalize">continue with Tiktok</span>
+</button>
+</div>
                   <div className=" capitalize mtp leading-normal font-normal text-[0.875rem] text-center">
                   <span>already have an accound  </span>
                   <Link to="/sign-in" className="text-[#00f] underline">Log In</Link>
