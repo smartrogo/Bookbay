@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useParams } from "react-router-dom";
 import { LoadingBtn } from "../components/LoadingBtn";
 import facebook from "../assets/facebook.svg"
 import tiktok from "../assets/tiktok.svg"
@@ -21,8 +22,7 @@ export const SignInPage = () => {
   const facebook_provider = new FacebookAuthProvider()
   const [searchParams, setSearchParams] = useSearchParams();
   const { next } = Object.fromEntries(searchParams);
-
-
+  const { title, author, cover, year } = useParams();
   // sign in existing user
   const SignInExistingUsers = async (values) => {
     setIsLoading(true);
