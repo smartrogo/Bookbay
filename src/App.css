@@ -128,6 +128,10 @@
   font-style: normal;
 }
 
+.usershd {
+  box-shadow: 4px 6px 80px 6px rgba(0, 0, 0, 0.15);;
+}
+
 .box {
   box-shadow: 1.4638069868087769px 2.9276139736175537px 2.9276139736175537px 0px
     rgba(0, 0, 0, 0.25);

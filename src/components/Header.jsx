@@ -11,6 +11,8 @@ import { AuthContext } from "../AuthContext";
 import { useContext } from "react";
 import { db } from "../firebase";
 import { collection, query, doc, where, getDocs } from "firebase/firestore";
+import {PiSignOutBold} from "react-icons/pi"
+import {AiFillSetting} from "react-icons/ai"
 export const Header = (props) => {
   const [active, setActive] = useState(false);
   const [isMenuoPen, setIsMenuOpen] = useState(false);
@@ -78,8 +80,21 @@ export const Header = (props) => {
       color: isActive ? "#31af31" : "",
     };
   };
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
   const toggleMenu = () => {
-    isMenuoPen ? setIsMenuOpen(false) : setIsMenuOpen(true);
+    setIsMenuOpen(!isMenuoPen);
   };
   return (
     <section
@@ -291,9 +306,10 @@ export const Header = (props) => {
         </ul>
       </div>
       {isAuth && isMenuoPen && (
-        <div className="bg-white fixed top-20 right-4 p-4 shadow-md">
+        <div className="bg-white fixed top-20 right-4 p-6 usershd rounded-[1rem] w-[20rem] h-[13rem] md:w-[26.1875rem] md:h-[15.4375rem]">
           {userData?.pic ? (
-            <div className="flex items-center justify-center">
+            <div className="flex border-2 border-green-500 items-center justify-center">
+              
               <img
                 src={userData?.pic}
                 alt="profile"
@@ -301,21 +317,43 @@ export const Header = (props) => {
               />
             </div>
           ) : (
-            <div className="flex items-center justify-center">
+            <div className="border-b-[3px] pb-4 border-[#DBDBDB] flex items-center gap-2 md:gap-4 ">
               <img
                 src={`https://ui-avatars.com/api/?name=${userData?.email
                   .split("@")[0]
                   .slice(0, 2)}`}
                 alt="profile"
-                className="w-10 h-10 rounded-full"
+                className="w-[4rem] h-[4rem] md:w-[5rem] md:h-[5rem] rounded-full"
               />
+
+<p className="text-[1rem] font-medium leading-normal text-style text-[#1f1f1f]">{userData?.displayName || null}</p>
+          <p className="text-[#333] text-[0.75rem] font-normal leading-normal">{userData?.email}</p>
             </div>
+
+            
           )}
-          <h2 className="font-bold">{userData?.displayName || null}</h2>
-          <p>{userData?.email}</p>
-          <button className="mx-auto my-4" onClick={() => logout()}>
-            logout
+
+
+<div className="flex flex-col my-4">
+
+          <div>
+          <button className="mx-auto" onClick={() => logout()}>
+           <div className="flex gap-4 items-center text-[#333] text-[1rem] text-style font-normal leading-normal">
+             <AiFillSetting />
+             Manage Account
+           </div>
           </button>
+          </div>
+          <div>
+          <button className="mx-auto" onClick={() => logout()}>
+           <div className="flex gap-4 items-center text-[#333] text-[1rem] text-style font-normal leading-normal">
+             <PiSignOutBold />
+             Sign out
+           </div>
+          </button>
+          </div>
+         
+</div>
         </div>
       )}
     </section>

@@ -127,7 +127,7 @@ Simmel's work goes beyond the mere economic aspects of money and delves into its
           <div className="flex items-center mt-4 gap-4">
 
           <div>
-          {userData?.pic ? (
+          {displayUser && userData?.pic ? (
                     <img
                       src={userData?.pic}
                       alt="profile"
