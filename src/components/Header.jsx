@@ -18,9 +18,14 @@ export const Header = (props) => {
   const navigate = useNavigate();
   const { userData, isAuth, isLoading, logout } = useContext(AuthContext);
   const [myCartBooks, setMyCartBooks] = useState([]);
+  const [numberOfCartItems, setNumberOfCartItems] = useState([])
+
+  useEffect(() => {
+  setNumberOfCartItems(myCartBooks.length)
+
+  }, [])
 
   const getMyBooks = async () => {
-    
   if (userData && userData.email) { // Check if userData and email are defined
     const q = query(
       collection(db, "cart"),
