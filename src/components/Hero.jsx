@@ -3,9 +3,15 @@ import { Button } from "./Button";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
 import herosec from "../assets/herosec.png";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../AuthContext";
+import { useContext } from "react";
 
 function HeroContent() {
+  const { userData } = useContext(AuthContext);
   const navigate = useNavigate()
+  console.log(userData? userData : "no user");
+  const value = userData ? "Explore more!" : "Join us today!";
+  const path = userData ? "/" : "sign-in"
   return (
     <div className="flex h-[115vh] sm:h-[95vh] md:h-[100vh] lg:h-[90vh] flex-col md:gap- items-center md:flex-col lg:flex-row md:w-[90%]  xl:w-[90%] mx-auto">
       <div className="w-full md:w-full border-red-500 lg:w-[50%]">
@@ -22,8 +28,8 @@ function HeroContent() {
 
           <div className="flex lg:ml-4 w-[20rem] md:w-[89%] mx-auto md:mx-auto lg:mx-0 md:justify-center lg:justify-start md:gap-5 justify-evenly mt-[2rem] mb-[1rem] items-center">
             <Button
-            onClick={() => navigate("/sign-in")}
-              value="Join us today!"
+           onClick={() => navigate(path)}
+           value={value}
               cls_name=" flex justify-center btn items-center border-[2px] border-solid border-[#00F] text-[0.73113rem] md:text-[1.25rem] bg-transparent text-[#0000FF] poppins text-style font-bold leading-normal rounded-[0.32494rem] py-[0.6905rem] px-[1.34038rem] md:rounded-[0.5rem] md:py-[1.0625rem] md:px-[2.0625rem]"
             />
             <div className="flex items-center links gap-[0.56963rem]">

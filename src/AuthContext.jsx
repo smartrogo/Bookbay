@@ -38,8 +38,6 @@ export const AuthProvider = ({ children }) => {
         console.log("coming to logout");
         localStorage.setItem("isAuth", false);
         setIsAuth(false)
-        // window.location.reload();
-        console.log("holy smokes");
         navigate("/");
       })
       .catch((error) => {
