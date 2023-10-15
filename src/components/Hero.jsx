@@ -8,28 +8,31 @@ import { useContext } from "react";
 
 function HeroContent() {
   const { userData } = useContext(AuthContext);
-  const navigate = useNavigate()
-  console.log(userData? userData : "no user");
-  const value = userData ? "Explore more!" : "Join us today!";
-  const path = userData ? "/" : "sign-in"
+  const navigate = useNavigate();
+  console.log(userData ? userData : "no user");
+  const isEmptyUserData = Object.keys(userData).length === 0;
+  const value = isEmptyUserData ? "Join us today!" : "Explore more!";
+  console.log(value);
+  const path = userData ? "/" : "sign-in";
   return (
     <div className="flex h-[115vh] sm:h-[95vh] md:h-[100vh] lg:h-[90vh] flex-col md:gap- items-center md:flex-col lg:flex-row md:w-[90%]  xl:w-[90%] mx-auto">
       <div className="w-full md:w-full border-red-500 lg:w-[50%]">
         <div className="lg:[70%] border-">
-
           <h1 className=" w-[21.1875rem] lg:ml-4 text-center mx-auto md:mx-0 h-[7rem] flex-shrink-0 text-[2.5rem] outfit leading-[3rem] mt-20 md:mt-10 font-bold md:text-center lg:text-start md:w-full md:h-[10.0625rem] lg:w-[34.9375rem] lg:h-[10.0625rem] sm:w-[90%] md:text-[4rem] md:font-bold md:leading-[4.8rem] balance mb-0">
             Your Ultimate
             <br /> Online Books hub
           </h1>
 
           <p className="poppins lg:ml-4 leading-normal text-style font-normal text-[0.875rem] text-center w-[20.3125rem] md:text-center md:w-[70%] md:mx-auto lg:mx-0 lg:w-[33.75rem] md:leading-normal sm:w-[50%] lg:text-start mx-auto md:text-[1.25rem]">
-          BookBay: Your one-stop platform for buying, selling, and borrowing books. Discover a vast selection, enjoy great deals, and join our family by signing up today.
+            BookBay: Your one-stop platform for buying, selling, and borrowing
+            books. Discover a vast selection, enjoy great deals, and join our
+            family by signing up today.
           </p>
 
           <div className="flex lg:ml-4 w-[20rem] md:w-[89%] mx-auto md:mx-auto lg:mx-0 md:justify-center lg:justify-start md:gap-5 justify-evenly mt-[2rem] mb-[1rem] items-center">
             <Button
-           onClick={() => navigate(path)}
-           value={value}
+              onClick={() => navigate(path)}
+              value={value}
               cls_name=" flex justify-center btn items-center border-[2px] border-solid border-[#00F] text-[0.73113rem] md:text-[1.25rem] bg-transparent text-[#0000FF] poppins text-style font-bold leading-normal rounded-[0.32494rem] py-[0.6905rem] px-[1.34038rem] md:rounded-[0.5rem] md:py-[1.0625rem] md:px-[2.0625rem]"
             />
             <div className="flex items-center links gap-[0.56963rem]">
@@ -39,7 +42,7 @@ function HeroContent() {
               >
                 learn more
               </Link>{" "}
-              <LiaLongArrowAltRightSolid className="text-[#31af31] "/>
+              <LiaLongArrowAltRightSolid className="text-[#31af31] " />
             </div>
           </div>
         </div>
@@ -51,13 +54,13 @@ function HeroContent() {
         />
       </div>
     </div>
-  )
+  );
 }
 
 export const Hero = () => {
   return (
     <div className="mt-[14%] sm:mt-[13%] md:mt-[9.5%] lg:mt-[8%] xl:mt-[6%]">
-        <HeroContent />
+      <HeroContent />
     </div>
   );
 };
