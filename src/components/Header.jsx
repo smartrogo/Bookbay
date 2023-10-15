@@ -191,13 +191,14 @@ const signingOut = () => {
                       className="w-10 h-10 rounded-full"
                     />
                   ) : (
-                    <img
-                      src={`https://ui-avatars.com/api/?name=${userData?.email
-                        .split("@")[0]
-                        .slice(0, 2)}`}
-                      alt="profile"
-                      className="w-10 h-10 rounded-full"
-                    />
+                    // <img
+                    //   src={`https://ui-avatars.com/api/?name=${userData?.email
+                    //     .split("@")[0]
+                    //     .slice(0, 2)}`}
+                    //   alt="profile"
+                    //   className="w-10 h-10 rounded-full"
+                    // />
+                    <p>please</p>
                   )}
                 </button>
 

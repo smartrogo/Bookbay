@@ -16,7 +16,6 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
 import { Link } from "react-router-dom";
 import { Slide } from "./Slide";
-import { Button } from "./Button";
 
 export const MiniSwipper = () => {
   const [bookChunks, setBookChunks] = useState([
