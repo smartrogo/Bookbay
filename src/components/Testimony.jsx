@@ -13,9 +13,9 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { Card } from "./Card";
 import { Text } from "./Text";
-import techbro from "../assets/techbro.png";
-import techman from "../assets/techman.png";
-import techgirl from "../assets/techgirl.png";
+import engineer from "../assets/engineer.png";
+import designer from "../assets/designer.png";
+import ceo from "../assets/ceo.png";
 import hero from "../assets/hero.png";
 import { Link } from "react-router-dom";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
@@ -71,14 +71,14 @@ export const Testimony = () => {
       >
         <SwiperSlide className="flex items-center justify-center">
           <Card
-            img={techbro}
+            img={engineer}
             qoute="Bookbay is a great bookstore platform for educators: offers diverse resources, discounts, and convenience for enriching classroom learning experiences."
             name="Muhammad Niimatullahi"
           />
         </SwiperSlide>
         <SwiperSlide className="flex items-center justify-center">
           <Card
-            img={techman}
+            img={designer}
             qoute="Wow! Bookbay is a Lifesaver for students! Easy borrowing, vast collection, saved me money, and made studying more enjoyable."
             name="Muhammad Ala"
           />
@@ -92,7 +92,7 @@ export const Testimony = () => {
         </SwiperSlide>
         <SwiperSlide className="flex items-center justify-center">
           <Card
-            img={techgirl}
+            img={ceo}
             qoute="Bookbay simplifies student life. Convenient purchases with my card, affordable books, and stress-free online shopping."
             name="smartrogo"
           />

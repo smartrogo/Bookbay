@@ -10,7 +10,7 @@ export const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState({});
-  const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
+  const [isAuth, setIsAuth] = useState(() => localStorage.getItem("isAuth"));
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,13 +30,16 @@ export const AuthProvider = ({ children }) => {
       setIsLoading(false);
     });
   }, []);
-  const logout = () => {
+
+  const logOut = () => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
         console.log("coming to logout");
-        localStorage.removeItem("isAuth");
-        window.location.reload;
+        localStorage.setItem("isAuth", false);
+        setIsAuth(false)
+        // window.location.reload();
+        console.log("holy smokes");
         navigate("/");
       })
       .catch((error) => {
@@ -51,7 +54,7 @@ export const AuthProvider = ({ children }) => {
     isLoading,
     setIsLoading,
     setIsAuth,
-    logout,
+    logOut,
   };
 
   return (

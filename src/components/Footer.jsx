@@ -12,7 +12,7 @@ import {BsWhatsapp} from "react-icons/bs"
 
 export const Footer = () => {
   return (
-    <div className="mt-24">
+    <div className="mt-24  bottom-0 w-full">
       <footer className=" bg-[#1E1E1E]">
         <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
           <div className="flex md:justify-center md:w-[] mx-auto">

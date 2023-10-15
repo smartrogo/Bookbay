@@ -4,7 +4,7 @@ import { Footer } from '../components/Footer';
 
 export const FAQs = () => {
   return (
-    <div className='pt-20 h-screen'>
+    <div className='pt-20 h-screen relative'>
       <div className='capitalize text-[#000] text-style  leading-normal w-[90%] mx-auto'>
        <h1 className='text-[1.5rem] md:text-[3rem] font-bold'>Frequently ask questions (FAQS)</h1>
        <p className='text-[0.875rem] font-normal md:text-[1.25rem]'>may be we can answer you questions here.</p>
