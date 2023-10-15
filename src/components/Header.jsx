@@ -328,13 +328,14 @@ const signingOut = () => {
             </div>
           ) : (
             <div className="border-b-[3px] pb-4 border-[#DBDBDB] flex items-center gap-2 md:gap-4 ">
-              <img
+              {/* <img
                 src={`https://ui-avatars.com/api/?name=${userData?.email
                   .split("@")[0]
                   .slice(0, 2)}`}
                 alt="profile"
                 className="w-[4rem] h-[4rem] md:w-[5rem] md:h-[5rem] rounded-full"
-              />
+              /> */}
+              <p>please</p>
 
               <p className="text-[1rem] font-medium leading-normal text-style text-[#1f1f1f]">
                 {userData?.displayName || null}

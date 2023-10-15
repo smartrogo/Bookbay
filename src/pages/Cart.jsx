@@ -149,7 +149,7 @@ export const Cart = () => {
   
 
   return (
-    <div className="pt-20 h-screen">
+    <div style={{paddingTop: isCartEmpty ? "8rem" : "5rem"}} className="h-screen">
       <div className=" border-2 w-[90%] mx-auto">
       <h1 className="text-[#000] capitalize font-bold test-style outfit text-[3rem] leading-normal">cart management </h1>
       <p className="text-[#1E1E1E] text-[1rem] text-style font-medium leading-normal">{`You have ${myCartBooks.length} item in your cart`}</p>
@@ -158,12 +158,6 @@ export const Cart = () => {
       <div className="border-2 border-green-500 w-full mx-auto bg-[#F5F5F5] rounded-[0.9375rem]">
       <CartItem />
       </div>)}
-
-      {/* {isCartEmpty ? (
-            <p>You haven't added anything to your cart!</p>
-          ) : (
-
-          )} */}
 
       </div>
 
