@@ -39,8 +39,8 @@ export const AuthProvider = ({ children }) => {
       .then(() => {
         // Sign-out successful.
         console.log("coming to logout");
-        localStorage.setItem("isAuth", false);
-        setIsAuth(false)
+        localStorage.removeItem("isAuth", false);
+        setIsAuth(false);
         navigate("/");
       })
       .catch((error) => {
@@ -51,16 +51,18 @@ export const AuthProvider = ({ children }) => {
 
   const deleteUserAccount = () => {
     const user = auth.currentUser;
-  
+
     if (user) {
       // Check if the user's token is still valid (within the last 5 minutes).
       // If not, you need to re-authenticate the user before deleting their account.
-      user.getIdTokenResult()
+      user
+        .getIdTokenResult()
         .then((idTokenResult) => {
           const authTime = idTokenResult.claims.auth_time;
           const now = Math.floor(Date.now() / 1000);
-  
-          if (now - authTime <= 300) { // 300 seconds (5 minutes)
+
+          if (now - authTime <= 300) {
+            // 300 seconds (5 minutes)
             deleteUser(user)
               .then(() => {
                 console.log("User deleted.");
@@ -82,7 +84,6 @@ export const AuthProvider = ({ children }) => {
         });
     }
   };
-  
 
   const contextData = {
     isAuth,
@@ -92,7 +93,7 @@ export const AuthProvider = ({ children }) => {
     setIsLoading,
     setIsAuth,
     logOut,
-    deleteUserAccount
+    deleteUserAccount,
   };
 
   return (
