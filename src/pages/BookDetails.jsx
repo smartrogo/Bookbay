@@ -12,8 +12,7 @@ import { LoadingBtn } from "../components/LoadingBtn";
 export const BookDetails = () => {
   const [inputText, setInputText] = useState('');
   const [displayText, setDisplayText] = useState('');
-const [text, setText] = useState("")
-const [displayUser, setDisplayUser] = useState(false); 
+  const [displayUser, setDisplayUser] = useState(false); 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -25,21 +24,13 @@ const [displayUser, setDisplayUser] = useState(false);
 
   console.log("userData: ".userData);
 
-  if (loading) {
-    return (
-      <div>
-        <Skeleton height={250} width="100%" />
-        <Skeleton height={20} width="80%" />
-        <Skeleton height={20} width="50%" />
-        <Skeleton height={20} width="70%" />
-      </div>
-    );
-  }
 
   if (error) {
     return <div>Error: {error.message}</div>;
   }
   const addToCart = async () => {
+    setLoading(true)
+    console.log("loading...")
     if (userData && userData.email) {
       await addDoc(collection(db, "cart"), {
         email: userData.email,
@@ -104,7 +95,11 @@ const [displayUser, setDisplayUser] = useState(false);
       
 
        <div className="flex items-center justify-center md:justify-start mt-10 mb-4">
-       <Button value="Add To Cart"  cls_name="text-[1rem] font-bold btn md:text-[1rem] bg-[#0000FF] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[3rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]" onClick={() => addToCart()}/>
+        {loading ? <LoadingBtn value="Adding" loading={loading} cls_name="text-[1rem] font-bold btn md:text-[1rem] bg-[#2424ff] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[3rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"/> :  <Button value= "Add To Cart"
+         cls_name="text-[1rem] font-bold btn md:text-[1rem] bg-[#0000FF] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[3rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]" onClick={() => addToCart()}/>}
+        
+
+      
         
        </div>
       </div>
@@ -134,14 +129,13 @@ Simmel's work goes beyond the mere economic aspects of money and delves into its
                       className="w-10 h-10 rounded-full"
                     />
                   ) : (
-                    // <img
-                    //   src={`https://ui-avatars.com/api/?name=${userData?.email
-                    //     .split("@")[0]
-                    //     .slice(0, 2)}`}
-                    //   alt="profile"
-                    //   className="w-10 h-10 rounded-full"
-                    // />
-                    <p>please</p>
+                    <img
+                      src={`https://ui-avatars.com/api/?name=${userData?.email
+                        .split("@")[0]
+                        .slice(0, 2)}`}
+                      alt="profile"
+                      className="w-10 h-10 rounded-full"
+                    />
                   )}
           </div>
 

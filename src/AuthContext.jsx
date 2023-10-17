@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { useState, useEffect } from "react";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut, deleteUser } from "firebase/auth";
 import { auth } from "./firebase";
 import React from "react";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -12,6 +12,9 @@ export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState({});
   const [isAuth, setIsAuth] = useState(() => localStorage.getItem("isAuth"));
   const navigate = useNavigate();
+
+  // const currentUr = auth.currentUser;
+  // console.log(currentUr, "hi")
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -45,6 +48,42 @@ export const AuthProvider = ({ children }) => {
         console.log(error, ":an error occured");
       });
   };
+
+  const deleteUserAccount = () => {
+    const user = auth.currentUser;
+  
+    if (user) {
+      // Check if the user's token is still valid (within the last 5 minutes).
+      // If not, you need to re-authenticate the user before deleting their account.
+      user.getIdTokenResult()
+        .then((idTokenResult) => {
+          const authTime = idTokenResult.claims.auth_time;
+          const now = Math.floor(Date.now() / 1000);
+  
+          if (now - authTime <= 300) { // 300 seconds (5 minutes)
+            deleteUser(user)
+              .then(() => {
+                console.log("User deleted.");
+                localStorage.setItem("isAuth", false);
+                setIsAuth(false);
+                navigate("/");
+              })
+              .catch((error) => {
+                console.error("Error deleting user:", error);
+              });
+          } else {
+            // The user's authentication has expired. Re-authenticate them.
+            // You can navigate to a re-authentication page or trigger a re-authentication flow.
+            console.log("User's authentication has expired. Re-authenticate.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error checking token validity:", error);
+        });
+    }
+  };
+  
+
   const contextData = {
     isAuth,
     userData: userData,
@@ -53,6 +92,7 @@ export const AuthProvider = ({ children }) => {
     setIsLoading,
     setIsAuth,
     logOut,
+    deleteUserAccount
   };
 
   return (

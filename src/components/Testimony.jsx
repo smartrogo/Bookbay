@@ -99,7 +99,7 @@ export const Testimony = () => {
         </SwiperSlide>
       </Swiper>
 
-      <Link className="my-[4rem] roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#31af31] flex links gap-[0.3rem] md:w-[9rem] absolute right-2 w-[6rem] md:right-4 items-center">
+      <Link className="my-[4rem] roboto font-normal leading-normal text-[0.775rem] md:text-[1.5rem] capitalize text-style text-[#31af31] flex links gap-[0.2rem] md:w-[9rem] absolute right-2 w-[6rem] md:right-4 items-center">
         <span className="underline">see more </span>
         <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />
       </Link>

@@ -7,18 +7,18 @@ import { ErrorPage } from "./pages/ErrorPage";
 import { SignUpPage } from "./pages/SignUpPage";
 import { SignInPage } from "./pages/SignInPage";
 import Categories from "./pages/Categories";
-import Thanks from "./pages/Thanks";
-import Profile from "./pages/Profile";
-import About from "./pages/About";
-import Borrow from "./pages/Borrow";
-import Buy from "./pages/Buy";
-import WalletConnect from "./pages/WalletConnect";
-import FAQs from "./pages/FAQs";
-import Policy from "./pages/Policy";
-import ServiceTerms from "./pages/ServiceTerms";
-import BookDetails from "./pages/BookDetails";
-import Cart from "./pages/Cart";
-import ProtectedRoute from "./pages/ProtectedRoute";
+import { Thanks } from "./pages/Thanks";
+import { Profile } from "./pages/Profile";
+import { About } from "./pages/About";
+import { Borrow } from "./pages/Borrow";
+import { Buy } from "./pages/Buy";
+import { WalletConnect } from "./pages/WalletConnect";
+import { FAQs } from "./pages/FAQs";
+import { Policy } from "./pages/Policy";
+import { ServiceTerms } from "./pages/ServiceTerms";
+import { BookDetails } from "./pages/BookDetails";
+import { Cart } from "./pages/Cart";
+import { ProtectedRoute } from "./pages/ProtectedRoute";
 import { AuthProvider } from "./AuthContext";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -56,4 +56,3 @@ function App() {
 }
 
 export default App;
-  

@@ -6,7 +6,7 @@ export const LoadingBtn = (props) => {
       <button
         disabled={props.loading}
         type="button"
-        className="w-full text-[#fff] border-white bg-[#6c6cfd] font-bold text-style capitalize leading-normal rounded-[0.25rem] text-[0.75rem] px-[2rem] py-[0.4375rem] text-center"
+        className={props.cls_name}
       >
         <svg
           aria-hidden="true"
@@ -25,7 +25,7 @@ export const LoadingBtn = (props) => {
             fill="currentColor"
           ></path>
         </svg>
-        Creating
+        {props.value}
       </button>
     </div>
   );

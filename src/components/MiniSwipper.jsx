@@ -54,11 +54,8 @@ export const MiniSwipper = () => {
     // Filter the data and get books with cover image
     const booksWithCovers = data.docs.filter((item) => item.cover_i);
     // Get the first eight books to be displayed
-    const intialAuthor = booksWithCovers.map((item) => {
-      return item.author_name[0];
-    });
-    // console.log(intialAuthor, "authors")
-    let chunks = fn(booksWithCovers);
+    console.log("booktype", bookType)
+       let chunks = fn(booksWithCovers);
     setBookChunks(chunks); // Update the bookChunks state
     console.log("first", chunks, "understanding ever shit");
     setIsLoading(false);
@@ -184,7 +181,7 @@ export const MiniSwipper = () => {
               <Book
                 key={index}
                 cover={item?.cover_i}
-                title={item?.title?.trim().split(" ").slice(0, 2).join(" ")}
+                title={item?.title}
                 year={item?.first_publish_year}
                 author={item?.author_name}
                 loading={loading}
@@ -236,7 +233,7 @@ export const MiniSwipper = () => {
       </div>
       <Link
         to={`/category/${selectedCategory}`}
-        className="my-[2px] roboto font-normal leading-normal text-[0.875rem] md:text-[1.5rem] capitalize text-style text-[#31af31] flex gap-[0.3rem] md:w-[9rem] absolute right-4 w-[6rem] md:right-9 links items-center"
+        className="my-[2px] roboto font-normal leading-normal text-[0.775rem] md:text-[1.5rem] capitalize text-style text-[#31af31] flex gap-[0.2rem] md:w-[9rem] absolute right-4 w-[6rem] md:right-9 links items-center"
       >
         <span className="underline">see more </span>
         <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />

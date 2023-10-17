@@ -11,7 +11,7 @@ function HeroContent() {
   const navigate = useNavigate();
   console.log(userData ? userData : "no user");
   const isEmptyUserData = Object.keys(userData).length === 0;
-  const value = isEmptyUserData ? "Join us today!" : "Explore more!";
+  const value = userData ? "Explore more!" : "Join us today!";
   console.log(value);
   const path = userData ? "/" : "sign-in";
   return (

@@ -33,7 +33,6 @@ export const SignInPage = () => {
       .then((userCredential) => {
         // Signed in
         // ...
-        // console.log("what's up");
         const user = userCredential.user;
         localStorage.setItem("isAuth", true);
         console.log(user, "loged in");
@@ -47,12 +46,10 @@ export const SignInPage = () => {
       })
       .catch((error) => {
         console.log("error: ", error);
-        if (error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
+        if (error.code === "auth/invalid-login-credentials") {
           setErrorMsg("Invalid email or password");
-          console.log(error, "hello")
         } else {
           setErrorMsg("An error occurred, try again!");
-          console.log(error, "hello")
         }
       })
       .finally(() => {
@@ -206,7 +203,7 @@ export const SignInPage = () => {
                 </div>
 
                 <div className="">
-              {loading ? <LoadingBtn  loading={loading}/> : <Button
+              {loading ? <LoadingBtn  loading={loading} value="Creating" cls_name="w-full text-[#fff] border-white bg-[#6c6cfd] font-bold text-style capitalize leading-normal rounded-[0.25rem] text-[0.75rem] px-[2rem] py-[0.4375rem] text-center"/> : <Button
                 value="Create"
                 type="submit"
                 cls_name="text-[0.80rem] w-full md:text-[1rem] bg-[#0000FF] rounded-[0.25rem] text-[#FFFFFF] py-[0.4375rem] px-[2rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center px-4 leading-[1.23713rem]"

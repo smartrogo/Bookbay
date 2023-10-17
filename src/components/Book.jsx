@@ -60,7 +60,7 @@ export const Book = ({ bookId, cover, title, year, author, loading }) => {
             </span>
           )}
         </span>
-        <span className="color text-xs md:text-sm text-center w-full md:w-[80%]">
+        <span className="color prev-text text-xs md:text-sm text-center w-full md:w-[80%]">
           {loading ? (
             <Skeleton
               className="ske3 md:h-[3rem] my-[4px] md:my-[2px]"
@@ -70,8 +70,7 @@ export const Book = ({ bookId, cover, title, year, author, loading }) => {
               duration={3.5}
             />
           ) : (
-            // author[0]
-            <p>author name</p>
+            <span className="prev-text">{author}</span>
           )}
         </span>
       </div>
