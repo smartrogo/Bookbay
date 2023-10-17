@@ -265,13 +265,13 @@ export const SignUpPage = () => {
             </div>
 
             <div className="flex gap-3 justify-center items-center mt-4">
-              <span className="w-[33%] border-b border-[#000]"></span>
+              <span className="w-[30%] md:w-[33%] border-b border-[#000]"></span>
 
-              <span className="text-center text-[0.75rem] text-[#000] lowercase">
+              <span className="text-center text-[0.70rem] text-[#000] lowercase">
                 or sign up with
               </span>
 
-              <span className="w-[33%] border-b border-[#000]"></span>
+              <span className="w-[30%] md:w-[33%] border-b border-[#000]"></span>
             </div>
 
             <div className="flex flex-col gap-3">

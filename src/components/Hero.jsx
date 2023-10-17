@@ -10,8 +10,7 @@ function HeroContent() {
   const { isAuth } = useContext(AuthContext);
   const navigate = useNavigate();
   const value = isAuth ? "Explore more!" : "Join us today!";
-  console.log(value);
-  const path = isAuth ? "/" : "sign-in";
+  const path = isAuth ? "/about-us" : "sign-in";
   return (
     <div className="flex h-[115vh] sm:h-[95vh] md:h-[100vh] lg:h-[90vh] flex-col md:gap- items-center md:flex-col lg:flex-row md:w-[90%]  xl:w-[90%] mx-auto">
       <div className="w-full md:w-full border-red-500 lg:w-[50%]">

@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { useState, useEffect } from "react";
-import { onAuthStateChanged, signOut, deleteUser } from "firebase/auth";
+import { onAuthStateChanged, signOut, deleteUser, reauthenticateWithCredential } from "firebase/auth";
 import { auth } from "./firebase";
 import React from "react";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -11,7 +11,9 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [userData, setUserData] = useState({});
   const [isAuth, setIsAuth] = useState(() => localStorage.getItem("isAuth"));
+  const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
+
 
   // const currentUr = auth.currentUser;
   // console.log(currentUr, "hi")
@@ -28,7 +30,7 @@ export const AuthProvider = ({ children }) => {
           email: user.email,
         }));
       } else {
-        console.log("no authenticated");
+        // console.log("no authenticated");
       }
       setIsLoading(false);
     });
@@ -38,7 +40,6 @@ export const AuthProvider = ({ children }) => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
-        console.log("coming to logout");
         localStorage.removeItem("isAuth", false);
         setIsAuth(false);
         navigate("/");
@@ -51,6 +52,8 @@ export const AuthProvider = ({ children }) => {
 
   const deleteUserAccount = () => {
     const user = auth.currentUser;
+    // TODO(you): prompt the user to re-provide their sign-in credentials
+    const credential = promptForCredentials();
 
     if (user) {
       // Check if the user's token is still valid (within the last 5 minutes).
@@ -65,7 +68,6 @@ export const AuthProvider = ({ children }) => {
             // 300 seconds (5 minutes)
             deleteUser(user)
               .then(() => {
-                console.log("User deleted.");
                 localStorage.setItem("isAuth", false);
                 setIsAuth(false);
                 navigate("/");
@@ -77,6 +79,13 @@ export const AuthProvider = ({ children }) => {
             // The user's authentication has expired. Re-authenticate them.
             // You can navigate to a re-authentication page or trigger a re-authentication flow.
             console.log("User's authentication has expired. Re-authenticate.");
+            setErrorMsg("User's authentication has expired. Re-authenticate.")
+            reauthenticateWithCredential(user, credential).then(() => {
+              // User re-authenticated.
+            }).catch((error) => {
+              // An error ocurred
+              // ...
+            });
           }
         })
         .catch((error) => {

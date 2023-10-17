@@ -330,7 +330,7 @@ export const Header = () => {
           ) : null}
           {userData?.pic ? (
             <div className="border-2 mt-10 border-green-500 items-center justify-center">
-              <h1 className="text-[#000]  my-4 text-[1.5rem] text-style font-bold leading-[0.49744rem] capitalize">
+              <h1 className="text-[#000] text-[1rem] my-4 md:text-[1.5rem] text-style font-bold leading-[0.49744rem] capitalize">
                 profile
               </h1>
 
@@ -340,9 +340,13 @@ export const Header = () => {
                   alt="profile"
                   className="w-[4rem] h-[4rem] rounded-full"
                 />
-                <span className="text-[#333] text-[1.5rem] text-style font-semibold leading-normal capitalize">
+
+               <div>
+                 <span className="text-[#333] text-[1rem] md:text-[1.5rem] text-style font-semibold leading-normal capitalize">
                   {userData?.displayName || userData?.email}
-                </span>
+                </span><br/>
+                <span>{userData?.email}</span>
+               </div>
               </div>
             </div>
           ) : (
