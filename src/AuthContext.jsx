@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { useState, useEffect } from "react";
-import { onAuthStateChanged, signOut, deleteUser, reauthenticateWithCredential } from "firebase/auth";
+import { onAuthStateChanged, signOut, deleteUser, updatePassword } from "firebase/auth";
 import { auth } from "./firebase";
 import React from "react";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -53,7 +53,6 @@ export const AuthProvider = ({ children }) => {
   const deleteUserAccount = () => {
     const user = auth.currentUser;
     // TODO(you): prompt the user to re-provide their sign-in credentials
-    const credential = promptForCredentials();
 
     if (user) {
       // Check if the user's token is still valid (within the last 5 minutes).
@@ -64,8 +63,8 @@ export const AuthProvider = ({ children }) => {
           const authTime = idTokenResult.claims.auth_time;
           const now = Math.floor(Date.now() / 1000);
 
-          if (now - authTime <= 300) {
-            // 300 seconds (5 minutes)
+          if (now - authTime <= 2400) {
+            // 300 seconds (40 minutes)
             deleteUser(user)
               .then(() => {
                 localStorage.setItem("isAuth", false);
@@ -80,12 +79,7 @@ export const AuthProvider = ({ children }) => {
             // You can navigate to a re-authentication page or trigger a re-authentication flow.
             console.log("User's authentication has expired. Re-authenticate.");
             setErrorMsg("User's authentication has expired. Re-authenticate.")
-            reauthenticateWithCredential(user, credential).then(() => {
-              // User re-authenticated.
-            }).catch((error) => {
-              // An error ocurred
-              // ...
-            });
+            
           }
         })
         .catch((error) => {
@@ -93,6 +87,16 @@ export const AuthProvider = ({ children }) => {
         });
     }
   };
+
+  const ChangePassword = (newPassword) => {
+    const user = auth.currentUser;
+
+    user.updatePassword(user, newPassword).then(() => {
+      console.log("Password updated successfully");
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
 
   const contextData = {
     isAuth,
@@ -103,6 +107,7 @@ export const AuthProvider = ({ children }) => {
     setIsAuth,
     logOut,
     deleteUserAccount,
+    ChangePassword
   };
 
   return (

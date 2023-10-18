@@ -31,6 +31,7 @@ export const Cart = () => {
 
   const deleteBookWithConfirmation = (id) => {
     setBookToDelete(id);
+    console.log(id)
     setShowDeleteModal(true);
   };
 
@@ -39,6 +40,7 @@ export const Cart = () => {
     console.log("dude is loading....");
     if (bookToDelete) {
       await deleteDoc(doc(db, "cart", bookToDelete));
+      console.log("hello from delete")
       setBookToDelete(null);
       setShowDeleteModal(false);
       const newCartItems = cartAtom.filter((itm) => itm.id !== bookToDelete);

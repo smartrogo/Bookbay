@@ -325,10 +325,10 @@ export const Header = () => {
       {isAuth && isMenuOpen && (
         <div
           ref={menuRef}
-          className="bg-white fixed top-20 right-4 px-6 pt-10 usershd rounded-[1rem] w-[20rem] md:w-[28.1875rem] "
+          className={` ${isManageAccountOpen && " h-[33rem] overflow-y-auto" } bg-white overflow-y-auto fixed top-20 right-4 px-6 pt-10 usershd rounded-[1rem] w-[20rem] md:w-[28.1875rem] `}
         >
           {isManageAccountOpen ? (
-            <div>
+            <div className="mb-6">
               <h1 className="text-[#000000] outfit text-[2.25rem] text-style font-bold capitalize leading-[0.49744rem]">
                 Account
               </h1>
@@ -336,13 +336,14 @@ export const Header = () => {
                 manage your account
               </h1>
             </div>
+            
           ) : null}
           {userData?.pic ? (
-            <div className="border-2 mt-10 border-green-500 items-center justify-center">
-              <h1 className="text-[#000] text-[1rem] my-4 md:text-[1.5rem] text-style font-bold leading-[0.49744rem] capitalize">
+            <div className="mt-20 items-center justify-center">
+             
+             <h1 className="text-[#000] text-[1rem] my-4 md:text-[1.2rem] text-style font-bold leading-[0.49744rem] capitalize">
                 profile
               </h1>
-
               <div className="flex items-center gap-4">
                 <img
                   src={userData?.pic}
@@ -359,8 +360,13 @@ export const Header = () => {
               </div>
             </div>
           ) : (
-            <div className="border-b-[3px] pb-4 border-[#DBDBDB] flex items-center gap-2 md:gap-4 ">
-              <img
+            
+            <div>
+               <h1 className="text-[#000] text-[1rem] my-4 md:text-[1.2rem] text-style font-bold leading-[0.49744rem] capitalize">
+                profile
+              </h1>
+             <div className="border-b-[3px] pb-4 border-[#DBDBDB] flex items-center gap-2 md:gap-4 ">
+             <img
                 src={`https://ui-avatars.com/api/?name=${userData?.email
                   ?.split("@")[0]
                   ?.slice(0, 2)}`}
@@ -373,6 +379,7 @@ export const Header = () => {
               <p className="text-[#333] text-[0.75rem] font-normal leading-normal">
                 {userData?.email}
               </p>
+             </div>
             </div>
           )}
 
@@ -412,7 +419,7 @@ export const Header = () => {
                     />
                   </div>
 
-                  <div className="border-2 flex justify-end">
+                  <div className="flex justify-end">
                     <button
                       className=""
                       onClick={() => setIsManageAccountOpen(false)}

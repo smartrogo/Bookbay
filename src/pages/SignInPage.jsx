@@ -242,7 +242,7 @@ export const SignInPage = () => {
 
   <div className=" capitalize mtp leading-normal font-normal text-[0.875rem] text-center">
                   <span>don't have an account?  </span>
-                  <Link to="/sign-up" className="text-[#00f] underline">Sign In</Link>
+                  <Link to="/sign-up" className="text-[#00f] underline">Sign Up</Link>
                   </div>
   
               </form>

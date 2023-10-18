@@ -19,11 +19,11 @@ const Discription = ({ title, body }) => {
 
 const Person = ({ img, name, position, alt }) => {
   return (
-    <div className="flex items-center justify-center text-center my-2 text-[#000] poppins text-style capitalize leading-normal text-[1.5rem]">
+    <div className="flex items-center justify-center text-center my-2 text-[#000] text-style capitalize leading-normal">
       <div className="mx-auto flex flex-col justify-center items-center">
-        <img className=" mb-6" src={img} alt={alt} />
-        <span className="font-bold">{name}</span>
-        <p className=" font-normal">{position}</p>
+        <img className="mb-6 w-[17.9375rem] object-scale-down h-[17.9375rem]" src={img} alt={alt} />
+        <span className="font-bold text-[1.25rem] md:text-1.5rem]">{name}</span>
+        <p className=" font-normal text-[1rem] md:text-1.25rem]">{position}</p>
       </div>
     </div>
   );
@@ -35,22 +35,23 @@ export const About = () => {
       <div className="p-4 w-[100%] md:w-[85%] mx-auto">
         <Discription
           title="About bookbay"
-          body="Bookbay is a decentralized social networking textbook borrowing platform that solves the problem of textbook borrowing using a peer-to-peer protocol.  At Bookbay, we understand how expensive college can be, that’s why we give student, researchers and other individuals, the option to buy, sell, borrow at cheaper rate from a verify seller."
+          body="Bookbay is a revolutionary decentralized social networking platform designed to encourage the reading culture in Africa by addressing the challenges associated with textbook borrowing, buying, and selling. Our new peer-to-peer protocol changes access to educational resources for students, researchers, and individuals alike.
+          With Bookbay, we aspire to foster a stronger reading culture in Africa, making educational resources more accessible and affordable for everyone, thus contributing to the intellectual growth and development of our continent."
         />
         <div className="md:flex md:mt-10 md:gap-4">
           <Discription
             title="Our Mission"
-            body="Our mission is to Enhence Reading Culture in Africa and provide a seamless platform that empowers readers to discover a diverse range of books, connect with fellow book enthusiasts, and foster a vibrant community of lifelong learners through the joy of reading."
+            body="Bookbay aims to revolutionize African education by providing affordable access to textbooks and fostering a community of lifelong learners. We strive to break down financial barriers and promote knowledge-sharing, making quality education accessible to all."
           />
           <Discription
             title="Our Vision"
-            body="To become the premier online destination, where readers of all backgrounds and interests can explore, connect, and share their love for literature."
+            body="We envision a future in Africa where every individual embraces a culture of reading, learning, and intellectual growth, empowered by Bookbay's platform to access affordable educational resources and connect with a global community of knowledge seekers."
           />
         </div>
       </div>
 
       <div className="founders p-4 w-[100%] md:w-[90%] mx-auto">
-        <h2 className="text-[#00f] mb-10 outfit text-[1.5rem] capitalize font-bold leading-normal md:text-center">
+        <h2 className="text-[#00f] mb-10 outfit text-[1.5rem] capitalize font-bold leading-normal">
           meet our amazing and <br /> hardworking bookbay team{" "}
         </h2>
 
