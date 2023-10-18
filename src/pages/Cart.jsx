@@ -9,6 +9,7 @@ import PaymentModal from "../components/PaymentModal";
 import { useAtom } from "jotai";
 import { LoadingBtn } from "../components/LoadingBtn";
 import { cartItems, isLoadingCartItems } from "../components/Header";
+import ClipLoader from "react-spinners/ClipLoader";
 
 export const Cart = () => {
   const [cartAtom, setCartAtom] = useAtom(cartItems);
@@ -145,8 +146,15 @@ export const Cart = () => {
       </div>
     );
   };
-  console.log("isLoading in cart: ", isLoadingCart);
-  if (isLoadingCart) return <h1 className="text-black mt-20">Loading</h1>;
+  if (isLoadingCart) return   <div className="mt-[20rem] flex justify-center items-center">
+    <ClipLoader
+  loading={isLoadingCart}
+  size={80}
+  color="#00f"
+  aria-label="Loading Spinner"
+  data-testid="loader"
+/>
+  </div>
   return (
     <div
       style={{ paddingTop: isCartEmpty ? "8rem" : "5rem" }}

@@ -14,7 +14,7 @@ import { PiSignOutBold } from "react-icons/pi";
 import { AiFillSetting, AiOutlineArrowRight } from "react-icons/ai";
 import { db } from "../firebase";
 import { atom, useAtom } from "jotai";
-
+import ClipLoader from "react-spinners/ClipLoader";
 export const cartItems = atom([]);
 export const isLoadingCartItems = atom(true);
 
@@ -32,7 +32,6 @@ export const Header = () => {
   const [loadingAvatar, setLoadingAvatar] = useState(false);
 
   useEffect(() => {
-    console.log("header.jsx");
     const getMyBooks = async () => {
       if (userData && userData.email) {
         const q = query(
@@ -48,7 +47,7 @@ export const Header = () => {
         });
         setCartAtom(res);
         setIsLoadingcartAtom(false);
-        console.log("right before jotai", res.length);
+        // console.log("right before jotai", res.length);
       }
     };
     getMyBooks();
@@ -143,7 +142,7 @@ export const Header = () => {
         </div>
 
         <div className="login-button-container flex justify-between items-center">
-          <div className="flex gap-7 lg:gap-[8rem] xl:gap-[20rem] 2xl:gap-[30rem] items-center md:w-[] justify-between">
+          <div className={` ${isLoading && "xl:gap-[24rem] 2xl:gap-[27rem]"} flex gap-7 lg:gap-[8rem] xl:gap-[18rem] 2xl:gap-[30rem] items-center md:w-[] justify-between`}>
             <ul className="hidden text-[#000000] lg:flex gap-8 md:items-center leading-normal items-center text-[0.875rem]">
               <li className="poppins font-normal text-style under text-[1.125rem] leading-normal">
                 <NavLink to="/" style={navLinkStyle}>
@@ -173,9 +172,19 @@ export const Header = () => {
             </ul>
 
             {isLoading ? (
-              <span>loading</span>
+             <div className="">
+               <ClipLoader
+              color="#00f"
+              loading={isLoading}
+              // cssOverride={override}
+              size={40}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+              
+             </div>
             ) : isAuth ? (
-              <div className="flex items-center md:ml-[6rem] lg:ml-[3px] xl:ml-[1rem] first-letter: justify-between gap-4 md:gap-8">
+              <div className={`flex items-center md:ml-[6rem] lg:ml-[3px] xl:ml-[1rem] first-letter: justify-between gap-4 md:gap-8`}>
                 <Link to="/cart">
                   <div className="relative  ">
                     <GrCart className="text-red-500 cursor-pointer w-[1.5rem] h-[1.5rem]" />

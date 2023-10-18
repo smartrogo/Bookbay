@@ -5,11 +5,12 @@ import { Button } from "./Button";
 const PaymentModal = ({ show, handleClose }) => {
   return show ? (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-600 bg-opacity-50">
-      <div className="modal-bg bg-white p-6 rounded-md w-[48rem] h-[10rem]">
+      <div className="modal-bg bg-white p-6 rounded-md w-[48rem] ">
         <h2 className="text-[1.5rem] font-bold text-[#333] mb-4">Payment Method</h2>
 
         <div>
-            backend not yet design :)
+            Checkedout!<br/>
+            Thank you for using our services 🎉
         </div>
 
         {/* Add your payment method selection UI here */}

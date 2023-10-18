@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaSearch } from 'react-icons/fa';
 
-const SearchInput = ({ placeholder, value, onChange }) => {
+const SearchInput = ({ placeholder, value, onChange, loading }) => {
   return (
     <div className="relative w-full max-w-md mx-auto my-4 flex justify-center items-center">
       <input
@@ -9,8 +9,8 @@ const SearchInput = ({ placeholder, value, onChange }) => {
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-[90%] mx-auto text-[#666666] bg-[#EEEEEE] py-2 px-4 md:py-[1rem] md:px-[1.5em] rounded-[1.5rem] outline-none focus:border-[#0F9D58] focus:ring-[2px] focus:ring-[#abeacc] poppins text-base transition-colors duration-200 ease-in-out card"
-      />
+        className={`w-[90%] mx-auto text-[#666666] bg-[#EEEEEE] py-2 px-4 md:py-[1rem] md:px-[1.5em] rounded-[1.5rem] outline-none focus:border-[#0F9D58] focus:ring-[2px] focus:ring-[#abeacc] poppins text-base transition-colors duration-200 ease-in-out card`}
+      disabled={loading}/>
       <div className="absolute top-0 right-8 flex items-center h-full pointer-events-none">
         <FaSearch className="text-[#666666]" />
       </div>

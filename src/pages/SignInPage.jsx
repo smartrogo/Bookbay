@@ -203,8 +203,8 @@ export const SignInPage = () => {
                 </div>
 
                 <div className="">
-              {loading ? <LoadingBtn  loading={loading} value="Creating" cls_name="w-full text-[#fff] border-white bg-[#6c6cfd] font-bold text-style capitalize leading-normal rounded-[0.25rem] text-[0.75rem] px-[2rem] py-[0.4375rem] text-center"/> : <Button
-                value="Create"
+              {loading ? <LoadingBtn  loading={loading} value="Sign in" cls_name="w-full text-[#fff] border-white bg-[#6c6cfd] font-bold text-style capitalize leading-normal rounded-[0.25rem] text-[0.75rem] px-[2rem] py-[0.4375rem] text-center"/> : <Button
+                value="Sign in"
                 type="submit"
                 cls_name="text-[0.80rem] w-full md:text-[1rem] bg-[#0000FF] rounded-[0.25rem] text-[#FFFFFF] py-[0.4375rem] px-[2rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center px-4 leading-[1.23713rem]"
               />}

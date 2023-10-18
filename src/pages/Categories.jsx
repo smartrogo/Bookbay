@@ -125,6 +125,7 @@ const Categories = () => {
           placeholder="Search..."
           value={q ? q : ""}
           onChange={(e) => search(e.target.value)}
+          loading={loading}
         />
       </div>
       
