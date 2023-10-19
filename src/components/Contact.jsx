@@ -32,8 +32,6 @@ export const Contact = () => {
     e.preventDefault();
     // console.log("hi, men");
     if (email.trim() === "" || name.trim() === "" || message.trim() === "") {
-      // console.log("you typed nothing");
-      // setMsg("Please fill the form");
       // Automatically remove the error message after 5 seconds
       setTimeout(() => {
         setMsg("");

@@ -15,18 +15,25 @@ import { AiFillSetting, AiOutlineArrowRight } from "react-icons/ai";
 import { db } from "../firebase";
 import { atom, useAtom } from "jotai";
 import ClipLoader from "react-spinners/ClipLoader";
+import Input from "./Input";
 export const cartItems = atom([]);
 export const isLoadingCartItems = atom(true);
+
 
 export const Header = () => {
   const [active, setActive] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isManageAccountOpen, setIsManageAccountOpen] = useState(false); // State to control "Manage Account" content
+  const [isManageAccountOpen, setIsManageAccountOpen] = useState(false);
+  const [isPasswordChangeOpen, setIsPasswordOpen] = useState(false);
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [isMatching, setIsMatching] = useState(false);
+  const [sessionTimeOut, setSessionTimeOut] = useState("")
   const menuRef = useRef();
   const navigate = useNavigate();
   const [cartAtom, setCartAtom] = useAtom(cartItems);
   const [isLoadingcartAtom, setIsLoadingcartAtom] = useAtom(isLoadingCartItems);
-  const { userData, isAuth, isLoading, logOut, deleteUserAccount } =
+  const { userData, isAuth, isLoading, logOut, deleteUserAccount, ChangePassword } =
     useContext(AuthContext);
 
   const [loadingAvatar, setLoadingAvatar] = useState(false);
@@ -71,6 +78,7 @@ export const Header = () => {
         setIsMenuOpen(false);
         // Close "Manage Account" content here if needed
         setIsManageAccountOpen(false);
+        setIsPasswordOpen(false);
       }
     };
 
@@ -110,8 +118,65 @@ export const Header = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
     // Close "Manage Account" content here if needed
-    setIsManageAccountOpen(false); // Reset "Manage Account" content when the menu is opened
+    setIsManageAccountOpen(false);
+    setIsPasswordOpen(false);
   };
+
+  const toggleManageAccount = () => {
+    setIsManageAccountOpen(false);
+    setIsPasswordOpen(true);
+  };
+
+  const toggleMe = () => {
+    setIsManageAccountOpen(false);
+    setIsPasswordOpen(false);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    setIsMatching(e.target.value === confirmPassword);
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+    setIsMatching(e.target.value === password);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (password === confirmPassword) {
+        // Passwords match, try to change the password
+        await ChangePassword(password);
+        // alert("Password changed successfully");
+        setSessionTimeOut("Password changed successfully")
+        setPassword("");
+        setConfirmPassword("")
+        // setIsPasswordOpen(false); // Close the password change section
+        // Remove the message after 5 seconds
+        setTimeout(() => {
+          setSessionTimeOut("");
+        }, 8000);
+      } else {
+        // Passwords don't match, show an error message
+        alert("Passwords do not match");
+      }
+    } catch (error) {
+      if (error.message === "Please reauthenticate to change your password") {
+        // alert("Session expired. Please log in again.");
+        setSessionTimeOut("Please log in again to change your password.")
+        setPassword("");
+        setConfirmPassword("")
+        setTimeout(() => {
+          setSessionTimeOut("");
+        }, 8000);
+      } else {
+        // Handle other errors if necessary
+        alert("An error occurred: " + error.message);
+      }
+    }
+  };
+  
 
   return (
     <section
@@ -142,7 +207,11 @@ export const Header = () => {
         </div>
 
         <div className="login-button-container flex justify-between items-center">
-          <div className={` ${isLoading && "xl:gap-[24rem] 2xl:gap-[27rem]"} flex gap-7 lg:gap-[8rem] xl:gap-[18rem] 2xl:gap-[30rem] items-center md:w-[] justify-between`}>
+          <div
+            className={` ${
+              isLoading && "xl:gap-[24rem] 2xl:gap-[27rem]"
+            } flex gap-7 lg:gap-[8rem] xl:gap-[18rem] 2xl:gap-[30rem] items-center md:w-[] justify-between`}
+          >
             <ul className="hidden text-[#000000] lg:flex gap-8 md:items-center leading-normal items-center text-[0.875rem]">
               <li className="poppins font-normal text-style under text-[1.125rem] leading-normal">
                 <NavLink to="/" style={navLinkStyle}>
@@ -172,19 +241,20 @@ export const Header = () => {
             </ul>
 
             {isLoading ? (
-             <div className="">
-               <ClipLoader
-              color="#00f"
-              loading={isLoading}
-              // cssOverride={override}
-              size={40}
-              aria-label="Loading Spinner"
-              data-testid="loader"
-            />
-              
-             </div>
+              <div className="">
+                <ClipLoader
+                  color="#00f"
+                  loading={isLoading}
+                  // cssOverride={override}
+                  size={40}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
+              </div>
             ) : isAuth ? (
-              <div className={`flex items-center md:ml-[6rem] lg:ml-[3px] xl:ml-[1rem] first-letter: justify-between gap-4 md:gap-8`}>
+              <div
+                className={`flex items-center md:ml-[6rem] lg:ml-[3px] xl:ml-[1rem] first-letter: justify-between gap-4 md:gap-8`}
+              >
                 <Link to="/cart">
                   <div className="relative  ">
                     <GrCart className="text-red-500 cursor-pointer w-[1.5rem] h-[1.5rem]" />
@@ -325,7 +395,9 @@ export const Header = () => {
       {isAuth && isMenuOpen && (
         <div
           ref={menuRef}
-          className={` ${isManageAccountOpen && " h-[33rem] overflow-y-auto" } bg-white overflow-y-auto fixed top-20 right-4 px-6 pt-10 usershd rounded-[1rem] w-[20rem] md:w-[28.1875rem] `}
+          className={` ${
+            isManageAccountOpen && "h-[30rem] sm:h-[31rem] md:h-[33rem] overflow-y-auto"
+          } bg-white overflow-y-auto fixed top-20 right-4 px-6 pt-10 usershd rounded-[1rem] w-[20rem] md:w-[28.1875rem]`}
         >
           {isManageAccountOpen ? (
             <div className="mb-6">
@@ -336,14 +408,23 @@ export const Header = () => {
                 manage your account
               </h1>
             </div>
-            
-          ) : null}
+          ) : isPasswordChangeOpen ?  (<div className="mb-8">
+          <h1 className="text-[#000000] outfit text-[2.25rem] text-style font-bold capitalize leading-[0.49744rem]">
+            Set Password
+          </h1>
+        </div>) :null}
           {userData?.pic ? (
-            <div className="mt-20 items-center justify-center">
-             
-             <h1 className="text-[#000] text-[1rem] my-4 md:text-[1.2rem] text-style font-bold leading-[0.49744rem] capitalize">
-                profile
-              </h1>
+            <div
+              className={` ${
+                isManageAccountOpen || (isPasswordChangeOpen && "mt-20")
+              } items-center justify-center`}
+            >
+              {isManageAccountOpen && (
+                <h1 className="text-[#000] text-[1rem] my-4 md:text-[1.2rem] text-style font-bold leading-[0.49744rem] capitalize">
+                  profile
+                </h1>
+              )}
+
               <div className="flex items-center gap-4">
                 <img
                   src={userData?.pic}
@@ -351,59 +432,57 @@ export const Header = () => {
                   className="w-[4rem] h-[4rem] rounded-full"
                 />
 
-               <div>
-                 <span className="text-[#333] text-[1rem] md:text-[1.5rem] text-style font-semibold leading-normal capitalize">
-                  {userData?.displayName || userData?.email}
-                </span><br/>
-                <span>{userData?.email}</span>
-               </div>
+                <div>
+                  <span className="text-[#333] text-[1rem] md:text-[1.2rem] text-style font-semibold leading-normal capitalize">
+                    {userData?.displayName || userData?.email}
+                  </span>
+                  <br />
+                  <span>{userData?.email}</span>
+                </div>
               </div>
             </div>
           ) : (
-            
             <div>
-               <h1 className="text-[#000] text-[1rem] my-4 md:text-[1.2rem] text-style font-bold leading-[0.49744rem] capitalize">
-                profile
-              </h1>
-             <div className="border-b-[3px] pb-4 border-[#DBDBDB] flex items-center gap-2 md:gap-4 ">
-             <img
-                src={`https://ui-avatars.com/api/?name=${userData?.email
-                  ?.split("@")[0]
-                  ?.slice(0, 2)}`}
-                alt="profile"
-                className="w-[4rem] h-[4rem] md:w-[5rem] md:h-[5rem] rounded-full"
-              />
-              <p className="text-[1rem] font-medium leading-normal text-style text-[#1f1f1f]">
-                {userData?.displayName || null}
-              </p>
-              <p className="text-[#333] text-[0.75rem] font-normal leading-normal">
-                {userData?.email}
-              </p>
-             </div>
+              <div className="border-b-[3px] pb-4 border-[#DBDBDB] flex items-center gap-2 md:gap-4 ">
+                <img
+                  src={`https://ui-avatars.com/api/?name=${userData?.email
+                    ?.split("@")[0]
+                    ?.slice(0, 2)}`}
+                  alt="profile"
+                  className="w-[4rem] h-[4rem] md:w-[5rem] md:h-[5rem] rounded-full"
+                />
+                <p className="text-[1rem] font-medium leading-normal text-style text-[#1f1f1f]">
+                  {userData?.displayName || null}
+                </p>
+                <p className="text-[#333] text-[0.75rem] font-normal leading-normal">
+                  {userData?.email}
+                </p>
+              </div>
             </div>
           )}
 
           <div className="flex flex-col my-4">
-            <div className="">
+            <div className="transition-opacity duration-300 ease-in-out">
               {isManageAccountOpen ? (
                 <div>
                   <div className="my-4">
-                    <p>Email</p>
-                    <span>{userData?.email}</span>
+                    <p className="text-[1.5rem] text-style font-bold capitalize leading-normal">Email</p>
+                    <span className="text-[1rem] text-style font-normal leading-normal">{userData?.email}</span>
                     <br />
-                    <span className="text-[#0000FF]">+ Add Email Address</span>
+                    {/* <span className="text-[#0000FF]">+ Add Email Address</span> */}
                   </div>
                   <div className="my-4">
-                    <p>Phone Number</p>
-                    <span>{userData?.email}</span>
-                    <br />
-                    <span className="text-[#0000FF]">Edit phone number</span>
+                    <p className="text-[1.5rem] text-style font-bold capitalize leading-normal">Phone Number</p>
+                    <p className="text-[#0000FF]">Edit phone number</p>
                   </div>
                   <div className="my-4">
-                    <p>Password</p>
-                    <span>{userData?.email}</span>
-                    <br />
-                    <span className="text-[#0000FF]">change Password</span>
+                    <p className="text-[1.5rem] text-style font-bold capitalize leading-normal">Password</p>
+                    <p>*********</p>
+                    <Button
+                      onClick={() => toggleManageAccount()}
+                      value="+ Change Password"
+                      cls_name="w-full  text-[1rem] bg-transparent text-[#00F] text-style font-normal leading-normal hover:bg-[#d7d7f7] text-start"
+                    />
                   </div>
 
                   <div className="flex justify-evenly mt-14 mb-8">
@@ -420,9 +499,66 @@ export const Header = () => {
                   </div>
 
                   <div className="flex justify-end">
+                    <button className="" onClick={() => toggleMe()}>
+                      <div className="flex gap-2 items-center text-[#333] text-[1rem] text-style font-normal leading-normal">
+                        Go Back <AiOutlineArrowRight />
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              ) : isPasswordChangeOpen ? (
+                <div>
+                 {sessionTimeOut && 
+                  <div>
+                            <div className="flex items-center p-3 mb-4 text-[0.8rem] text-red-800 rounded-[0.25rem] bg-red-50" role="alert">
+  <svg className="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+  </svg>
+  <span className="sr-only">Info</span>
+  <div>
+   <span className="text-red-400">{sessionTimeOut}</span>
+  </div>
+</div>
+                  {/* <span>{sessionTimeOut}</span> */}
+                  <div className="flex justify-end">
+                  <button className="" onClick={() => signingOut()}>
+                  <div className="flex gap-4 items-center text-[#333] text-[1rem] text-style font-normal leading-normal">
+                    <PiSignOutBold />
+                    Sign out
+                  </div>
+                </button>
+                  </div>
+                  </div>
+                 }
+                  <form onSubmit={handleSubmit} className=""> 
+                  <Input
+              label="New Password:"
+              id="new_password"
+              name="password"
+              value={password}
+              onChange={handlePasswordChange}
+              label_cls_name="leading-normal poppins capitalize text-[0.66725rem] font-normal"
+              type="password"
+              cls_name="w-full bg-[#EEE] rounded-[0.29656rem] md:rounded-[0.5rem] focus:border-[#4b4be6] focus:ring-[2px] focus:ring-[#9a9ae6] text-base outline-none text-[#696969] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+            />
+                  <Input
+              label="Comfirm Password:"
+              id="c_password"
+              name="c_password"
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
+              label_cls_name="leading-normal poppins capitalize text-[0.66725rem] font-normal"
+              type="password"
+              cls_name="w-full bg-[#EEE] rounded-[0.29656rem] md:rounded-[0.5rem] focus:border-[#4b4be6] focus:ring-[2px] focus:ring-[#9a9ae6] text-base outline-none text-[#696969] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+            />
+           <div className="flex justify-center">
+           <Button value="sumbit" disabled={!isMatching} cls_name={` ${!isMatching && "bg-[#a0a0fa]"} "text-[0.80rem] btn md:text-[1rem] bg-[#0000FF] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]`}/>
+           </div>
+                  </form>
+                  <div className="flex justify-end">
                     <button
                       className=""
-                      onClick={() => setIsManageAccountOpen(false)}
+                      onClick={() => setIsManageAccountOpen(true)}
                     >
                       <div className="flex gap-2 items-center text-[#333] text-[1rem] text-style font-normal leading-normal">
                         Go Back <AiOutlineArrowRight />
@@ -442,8 +578,8 @@ export const Header = () => {
                 </button>
               )}
             </div>
-            {!isManageAccountOpen && (
-              <div>
+            {!isManageAccountOpen && !isPasswordChangeOpen ? (
+              <div className="">
                 <button className="mx-auto" onClick={() => signingOut()}>
                   <div className="flex gap-4 items-center text-[#333] text-[1rem] text-style font-normal leading-normal">
                     <PiSignOutBold />
@@ -451,7 +587,7 @@ export const Header = () => {
                   </div>
                 </button>
               </div>
-            )}
+            ) : null}
           </div>
         </div>
       )}

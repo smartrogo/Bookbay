@@ -88,15 +88,27 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const ChangePassword = (newPassword) => {
+  const ChangePassword = async (newPassword) => {
     const user = auth.currentUser;
-
-    user.updatePassword(user, newPassword).then(() => {
-      console.log("Password updated successfully");
-    }).catch((error) => {
-      console.log(error)
-    })
-  }
+  
+    // Check if the user is signed in
+    if (user) {
+      try {
+        // Call the Firebase Authentication method to update the password
+        await updatePassword(user, newPassword);
+        console.log("Password updated successfully");
+      } catch (error) {
+        if (error.code === "auth/requires-recent-login") {
+          throw new Error("Please reauthenticate to change your password");
+        } else {
+          throw error;
+        }
+      }
+    } else {
+      throw new Error("User is not signed in");
+    }
+  };
+  
 
   const contextData = {
     isAuth,

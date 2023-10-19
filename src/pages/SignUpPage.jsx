@@ -37,7 +37,7 @@ export const SignUpPage = () => {
           phone: values.phone,
         });
         navigate("/");
-        console.log("after navigate");
+        console.log("after navigate", db,);
       })
       .catch((error) => {
         if (error.code === "auth/email-already-in-use") {
