@@ -29,6 +29,7 @@ export const Header = () => {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [isMatching, setIsMatching] = useState(false);
   const [sessionTimeOut, setSessionTimeOut] = useState("")
+  const [myNumber, setMyNumber] = useState("")
   const menuRef = useRef();
   const navigate = useNavigate();
   const [cartAtom, setCartAtom] = useAtom(cartItems);
@@ -50,15 +51,38 @@ export const Header = () => {
         querySnapshot.forEach((doc) => {
           res = [...res, { ...doc.data(), id: doc.id }];
           const total = res.length;
-          console.log(total);
+          // console.log(total);
         });
         setCartAtom(res);
         setIsLoadingcartAtom(false);
         // console.log("right before jotai", res.length);
+        console.log(cartAtom)
       }
     };
     getMyBooks();
   }, [userData, setCartAtom, setIsLoadingcartAtom]);
+
+  useEffect(() => {
+    const getPhone = async () => {
+      if (userData && userData.email) {
+        const q = query(collection(db, "userDetails"), where("email", "==", userData.email));
+        try {
+          const querySnapshot = await getDocs(q);
+          querySnapshot.forEach((doc) => {
+            console.log(doc.data(), "hello phone");
+            console.log(doc.data().phone, "hello phone");
+            const val = doc.data().phone;
+            setMyNumber(val)
+          });
+        } catch (error) {
+          console.error("Error fetching user details:", error);
+        }
+      }
+    }
+    getPhone();
+  }, [userData.email]); // Depend only on userData.email
+  
+
 
   useEffect(() => {
     // Close the menu when a user logs in
@@ -473,7 +497,8 @@ export const Header = () => {
                   </div>
                   <div className="my-4">
                     <p className="text-[1.5rem] text-style font-bold capitalize leading-normal">Phone Number</p>
-                    <p className="text-[#0000FF]">Edit phone number</p>
+                    {myNumber ? <p className="text-[#0000FF]">{`0${myNumber}`}</p> : <p>loading..</p>}
+                    {/* <p className="text-[#0000FF]">{myNumber}</p> */}
                   </div>
                   <div className="my-4">
                     <p className="text-[1.5rem] text-style font-bold capitalize leading-normal">Password</p>
