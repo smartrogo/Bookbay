@@ -22,7 +22,7 @@ const Person = ({ img, name, position, alt }) => {
     <div className="flex items-center justify-center text-center my-2 text-[#000] text-style capitalize leading-normal">
       <div className="mx-auto flex flex-col justify-center items-center">
         <img className="mb-6 w-[17.9375rem] object-scale-down h-[17.9375rem]" src={img} alt={alt} />
-        <span className="font-bold text-[1.25rem] md:text-1.5rem]">{name}</span>
+        <p className="font-bold text-[1rem] md:text-[1.5rem]">{name}</p>
         <p className=" font-normal text-[1rem] md:text-1.25rem]">{position}</p>
       </div>
     </div>
