@@ -93,7 +93,7 @@ export const Newslatter = () => {
             <div className="w-full md:w-[60%] mx-auto">
             <form onSubmit={handleSubmit} >
               <Input
-                id="email"
+                id="email3"
                 name="email"
                 value={email}
                 onChange={handleEmail}

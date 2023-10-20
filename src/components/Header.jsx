@@ -172,22 +172,22 @@ export const Header = () => {
       if (password === confirmPassword) {
         // Passwords match, try to change the password
         await ChangePassword(password);
-        // alert("Password changed successfully");
         setSessionTimeOut("Password changed successfully")
         setPassword("");
         setConfirmPassword("")
-        // setIsPasswordOpen(false); // Close the password change section
         // Remove the message after 5 seconds
         setTimeout(() => {
           setSessionTimeOut("");
         }, 8000);
       } else {
         // Passwords don't match, show an error message
-        alert("Passwords do not match");
+        setSessionTimeOut("Passwords do not match");
+        setTimeout(() => {
+          setSessionTimeOut("");
+        }, 8000);
       }
     } catch (error) {
       if (error.message === "Please reauthenticate to change your password") {
-        // alert("Session expired. Please log in again.");
         setSessionTimeOut("Please log in again to change your password.")
         setPassword("");
         setConfirmPassword("")
@@ -196,7 +196,10 @@ export const Header = () => {
         }, 8000);
       } else {
         // Handle other errors if necessary
-        alert("An error occurred: " + error.message);
+        setSessionTimeOut("An error occurred try checking your network");
+        setTimeout(() => {
+          setSessionTimeOut("");
+        }, 8000)
       }
     }
   };

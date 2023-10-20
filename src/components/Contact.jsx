@@ -97,7 +97,7 @@ export const Contact = () => {
 
             <Input
               label="Email:"
-              id="email"
+              id="email2"
               name="email"
               value={email}
               onChange={handleEmail}

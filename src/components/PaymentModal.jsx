@@ -2,10 +2,10 @@
 import React from "react";
 import { Button } from "./Button";
 
-const PaymentModal = ({ show, handleClose }) => {
+const PaymentModal = ({ show, handleClose, menuRef }) => {
   return show ? (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-600 bg-opacity-50">
-      <div className="modal-bg bg-white p-6 rounded-md w-[48rem] ">
+      <div ref={menuRef} className="modal-bg bg-white p-6 rounded-md w-[48rem] ">
         <h2 className="text-[1.5rem] font-bold text-[#333] mb-4">Payment Method</h2>
 
         <div>

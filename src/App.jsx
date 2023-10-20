@@ -21,6 +21,7 @@ import { Cart } from "./pages/Cart";
 import { ProtectedRoute } from "./pages/ProtectedRoute";
 import { AuthProvider } from "./AuthContext";
 import ScrollToTop from "./components/ScrollToTop";
+import { Sell } from "./pages/Sell";
 function App() {
   return (
     <BrowserRouter>
@@ -39,6 +40,7 @@ function App() {
             <Route path="/connect-wallet" element={<WalletConnect />} />
             <Route path="/books/:bookId" element={<BookDetails />} />
             <Route path="/buy" element={<Buy />} />
+            <Route path="/sell" element={<Sell />} />
             <Route path="/terms-of-service" element={<ServiceTerms />} />
             <Route path="/privacy-policy" element={<Policy />} />
             <Route path="/frequent-questions" element={<FAQs />} />

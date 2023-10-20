@@ -1,6 +1,6 @@
 import React from "react";
 import { db } from "../firebase";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { doc, deleteDoc } from "firebase/firestore";
 import { Button } from "../components/Button";
 import trash from "../assets/trash.svg";
@@ -18,7 +18,7 @@ export const Cart = () => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [bookToDelete, setBookToDelete] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
+  const menuRef= useRef()
   // export const cartAtom = atom(cartAtom.length)
 
   const handleShowPaymentModal = () => {
@@ -48,6 +48,25 @@ export const Cart = () => {
       // getMyBooks();
     }
   };
+
+
+   // useEffect function to handle outside click to toggle
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        // Close "Manage Account" content here if needed
+        setShowDeleteModal(false);
+        setShowPaymentModal(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [menuRef]);
+
 
   const isCartEmpty = cartAtom.length === 0;
 
@@ -99,8 +118,8 @@ export const Cart = () => {
         ))}
 
         {showDeleteModal && (
-          <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-600 bg-opacity-50">
-            <div className="modal-bg w-[20rem] md:w-[40rem] bg-white p-6 md:p-10 rounded-md">
+          <div className="fixed border-2 border-red-500 inset-0 flex items-center justify-center z-50 bg-gray-600 bg-opacity-50">
+            <div ref={menuRef} className="modal-bg  w-[20rem] md:w-[40rem] bg-white p-6 md:p-10 rounded-md">
               <div
                 className="flex items-center p-3 mb-4 text-[0.8rem] text-red-800 rounded-[0.25rem] bg-red-50"
                 role="alert"
@@ -187,6 +206,7 @@ export const Cart = () => {
         )}
       </div>
       <PaymentModal
+        menuRef={menuRef}
         show={showPaymentModal}
         handleClose={handleHidePaymentModal}
       />

@@ -102,11 +102,11 @@ export const BookDetails = () => {
           <div className=" flex  justify-center md:justify-start gap-4 items-center text-[#000] leading-normal">
             <div className="capitalize border-2 border-solid border-[#000] rounded-[0.5rem] py-[0.5rem] px-[2rem] flex flex-col gap-[0.5rem] bg-[#fff7e1]">
               <span className="text-[1rem] text-style font-normal">buy</span>
-              <span className="text-[1.25rem] font-bold">N2500</span>
+              <span className="text-[1.25rem] font-bold">$2500</span>
             </div>
             <div className="capitalize border-2 border-solid border-[#000] rounded-[0.5rem] py-[0.5rem] px-[2rem] flex flex-col gap-[0.5rem] bg-[#D9FFF5]">
               <span className="text-[1rem] text-style font-normal">borrow</span>
-              <span className="text-[1.25rem] font-bold">N2500</span>
+              <span className="text-[1.25rem] font-bold">$2500</span>
             </div>
           </div>
 

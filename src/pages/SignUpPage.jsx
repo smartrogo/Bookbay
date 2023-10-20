@@ -179,7 +179,7 @@ export const SignUpPage = () => {
 
             <div className="w-full my-2 p-0">
               <label
-                htmlFor="email"
+                htmlFor="email1"
                 className="cursor-pointer text-[#000] text-[1rem] font-bold leading-normal capitalize"
               >
                 email
@@ -187,7 +187,7 @@ export const SignUpPage = () => {
               <input
                 type="text"
                 name="email"
-                id="email"
+                id="email1"
                 value={formik.values.email}
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
