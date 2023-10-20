@@ -168,7 +168,7 @@ export const SignInPage = () => {
                
                   
                   <div className="w-full my-2 p-0">
-                    <label  className="cursor-pointer text-[#000] text-[1rem] font-bold leading-normal capitalize" htmlFor="email4">email:</label>
+                    <label className="cursor-pointer text-[#000] text-[1rem] font-bold leading-normal capitalize" htmlFor="email4">email:</label>
                     <input
                       type="text"
                       name="email"
@@ -177,7 +177,7 @@ export const SignInPage = () => {
                       onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                       placeholder="example@gmail.com"
-                      className="w-full block rounded-[0.25rem] border-[1px] border-solid placeholder:text-[#666] text-[0.875rem] text-style font-normal lowercase h-[2rem] placeholder:pl-[0.5rem] leading-normal  border-[#333]"
+                      className="w-full block rounded-[0.25rem] border-[1px] border-solid placeholder:text-[#666] text-[0.875rem] text-style font-normal lowercase h-[2rem] placeholder:pl-[0.5rem] px-2 leading-normal  border-[#333]"
                     />
                     {formik.touched.email && formik.errors.email ? (
                       <span className="text-red-400 text-xs ml-3">
@@ -198,7 +198,7 @@ export const SignInPage = () => {
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
                         placeholder="********"
-                        className="w-full block rounded-[0.25rem] border-[1px] border-solid placeholder:text-[#666] text-[0.875rem] text-style font-normal lowercase h-[2rem] placeholder:pl-[0.5rem] leading-normal  border-[#333]"
+                        className="w-full block rounded-[0.25rem] border-[1px] border-solid placeholder:text-[#666] text-[0.875rem] text-style font-normal lowercase h-[2rem] px-2 placeholder:pl-[0.5rem] leading-normal  border-[#333]"
                       />
                      
                 </div>
@@ -225,19 +225,19 @@ export const SignInPage = () => {
   <button type="submit"  onClick={() => signInWithGoogle()} className="flex w-full justify-center items-center gap-3 border-[1px] border-solid border-[#000] rounded-[0.25rem]">
 
 <img className="w-[1rem] h-[1rem]" width="1.5rem" height="1.5rem" src={googleIcon} alt="sign-up with google" />
-<span className="text-[0.875rem] text-style font-normal leading-normal capitalize">continue with google</span>
+<span className="text-[0.875rem] text-style py-1 font-normal leading-normal capitalize">continue with google</span>
 
 </button>
 
     <button type="submit"  onClick={() => signInWithFacebook()} className="flex w-full justify-center items-center gap-3 border-[1px] border-solid border-[#000] rounded-[0.25rem]">
 
 <img className="w-[1rem] h-[1rem]" width="1.5rem" height="1.5rem" src={facebook} alt="sign-up with google" />
-<span className="text-[0.875rem] text-style font-normal leading-normal capitalize">continue with Facebook</span>
+<span className="text-[0.875rem] text-style py-1 font-normal leading-normal capitalize">continue with Facebook</span>
 </button>
     <button type="submit" className="flex w-full justify-center items-center gap-3 border-[1px] border-solid border-[#000] rounded-[0.25rem]">
 
 <img className="w-[1rem] h-[1rem]" width="1.5rem" height="1.5rem" src={tiktok} alt="sign-up with google" />
-<span className="text-[0.875rem] text-style font-normal leading-normal capitalize">continue with Tiktok</span>
+<span className="text-[0.875rem] text-style py-1 font-normal leading-normal capitalize">continue with Tiktok</span>
 </button>
   </div>
 

@@ -237,7 +237,8 @@ export const Header = () => {
           <div
             className={` ${
               isLoading && "xl:gap-[24rem] 2xl:gap-[27rem]"
-            } flex gap-7 lg:gap-[8rem] xl:gap-[18rem] 2xl:gap-[30rem] items-center md:w-[] justify-between`}
+              
+            } ${isAuth && "xl:gap-[18.5rem]"} flex gap-7 lg:gap-[8rem] xl:gap-[12rem] 2xl:gap-[30rem] items-center md:w-[] justify-between`}
           >
             <ul className="hidden text-[#000000] lg:flex gap-8 md:items-center leading-normal items-center text-[0.875rem]">
               <li className="poppins font-normal text-style under text-[1.125rem] leading-normal">
@@ -424,14 +425,14 @@ export const Header = () => {
           ref={menuRef}
           className={` ${
             isManageAccountOpen && "h-[30rem] sm:h-[31rem] md:h-[33rem] overflow-y-auto"
-          } bg-white overflow-y-auto fixed top-20 right-4 px-6 pt-10 usershd rounded-[1rem] w-[20rem] md:w-[28.1875rem]`}
+          } bg-white overflow-y-auto fixed h-[17rem] top-20 right-4 px-6 pt-10 usershd rounded-[1rem] w-[20rem] md:w-[28.1875rem]`}
         >
           {isManageAccountOpen ? (
-            <div className="mb-6">
+            <div className="mb-10">
               <h1 className="text-[#000000] outfit text-[2.25rem] text-style font-bold capitalize leading-[0.49744rem]">
                 Account
               </h1>
-              <h1 className="text-[#333] font-normal text-style capitalize leading-[0.49744rem] mt-8">
+              <h1 className="text-[#333] font-normal text-style capitalize leading-[0.49744rem] mt-5 ">
                 manage your account
               </h1>
             </div>
@@ -494,7 +495,7 @@ export const Header = () => {
                 <div>
                   <div className="my-4">
                     <p className="text-[1.5rem] text-style font-bold capitalize leading-normal">Email</p>
-                    <span className="text-[1rem] text-style font-normal leading-normal">{userData?.email}</span>
+                    <span className="text-[1rem] text-[#0000FF] text-style font-normal leading-normal">{userData?.email}</span>
                     <br />
                     {/* <span className="text-[#0000FF]">+ Add Email Address</span> */}
                   </div>
@@ -599,7 +600,7 @@ export const Header = () => {
                   className="mx-auto"
                   onClick={() => setIsManageAccountOpen(true)}
                 >
-                  <div className="flex gap-4 items-center text-[#333] text-[1rem] text-style font-normal leading-normal">
+                  <div className="flex mt-4 gap-4 items-center text-[#333] text-[1rem] text-style font-normal leading-normal">
                     <AiFillSetting />
                     Manage Account
                   </div>

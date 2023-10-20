@@ -118,7 +118,7 @@ export const Cart = () => {
         ))}
 
         {showDeleteModal && (
-          <div className="fixed border-2 border-red-500 inset-0 flex items-center justify-center z-50 bg-gray-600 bg-opacity-50">
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-600 bg-opacity-50">
             <div ref={menuRef} className="modal-bg  w-[20rem] md:w-[40rem] bg-white p-6 md:p-10 rounded-md">
               <div
                 className="flex items-center p-3 mb-4 text-[0.8rem] text-red-800 rounded-[0.25rem] bg-red-50"

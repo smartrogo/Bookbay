@@ -8,7 +8,7 @@ const Accordion = ({ question, answer }) => {
   };
 
   return (
-    <div className=" bg-[#D9D9D9] rounded-[0.5rem] my-4 p-6">
+    <div className=" bg-[#eee] rounded-[0.5rem] my-4 p-6">
       <div
         className="p-4 flex justify-between cursor-pointer"
         onClick={toggleAccordion}

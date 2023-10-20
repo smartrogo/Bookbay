@@ -50,7 +50,7 @@ export const About = () => {
         </div>
       </div>
 
-      <div className="founders p-4 w-[100%] md:w-[90%] mx-auto">
+      <div className="founders p-4 w-[100%] md:w-[85%] mx-auto">
         <h2 className="text-[#00f] mb-10 outfit text-[1.5rem] capitalize font-bold leading-normal">
           meet our amazing and <br /> hardworking bookbay team{" "}
         </h2>

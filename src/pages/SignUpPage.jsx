@@ -191,7 +191,7 @@ export const SignUpPage = () => {
                 value={formik.values.email}
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
-                className="w-full block rounded-[0.25rem] border-[1px] border-solid placeholder:text-[#666] text-[0.875rem] text-style font-normal lowercase h-[2rem] placeholder:pl-[0.5rem] leading-normal  border-[#333]"
+                className="w-full block rounded-[0.25rem] px-2 border-[1px] border-solid placeholder:text-[#666] text-[0.875rem] text-style font-normal lowercase h-[2rem] placeholder:pl-[0.5rem] leading-normal  border-[#333]"
                 placeholder="example@gmail.com"
               />
               {formik.touched.email && formik.errors.email ? (
@@ -214,7 +214,7 @@ export const SignUpPage = () => {
                 value={formik.values.phone}
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
-                className="w-full block rounded-[0.25rem] border-[1px] border-solid placeholder:text-[#666] text-[0.875rem] text-style font-normal lowercase h-[2rem] placeholder:pl-[0.5rem] leading-normal  border-[#333]"
+                className="w-full block px-2 rounded-[0.25rem] border-[1px] border-solid placeholder:text-[#666] text-[0.875rem] text-style font-normal lowercase h-[2rem] placeholder:pl-[0.5rem] leading-normal  border-[#333]"
                 placeholder="07023456784"
               />
               {formik.touched.phone && formik.errors.phone ? (
@@ -239,7 +239,7 @@ export const SignUpPage = () => {
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 placeholder="***********"
-                className="w-full block rounded-[0.25rem] border-[1px] border-solid placeholder:text-[#666] text-[0.875rem] text-style font-normal lowercase h-[2rem] placeholder:pl-[0.5rem] leading-normal  border-[#333]"
+                className="w-full block px-2 rounded-[0.25rem] border-[1px] border-solid placeholder:text-[#666] text-[0.875rem] text-style font-normal lowercase h-[2rem] placeholder:pl-[0.5rem] leading-normal  border-[#333]"
               />
               {formik.touched.password && formik.errors.password ? (
                 <span className="text-red-400 text-xs ml-2">
@@ -287,7 +287,7 @@ export const SignUpPage = () => {
                   src={googleIcon}
                   alt="sign-up with google"
                 />
-                <span className="text-[0.875rem] text-style font-normal leading-normal capitalize">
+                <span className="text-[0.875rem] py-1 text-style font-normal leading-normal capitalize">
                   continue with google
                 </span>
               </button>
@@ -304,7 +304,7 @@ export const SignUpPage = () => {
                   src={facebook}
                   alt="sign-up with google"
                 />
-                <span className="text-[0.875rem] text-style font-normal leading-normal capitalize">
+                <span className="text-[0.875rem] py-1 text-style font-normal leading-normal capitalize">
                   continue with Facebook
                 </span>
               </button>
@@ -316,7 +316,7 @@ export const SignUpPage = () => {
                   src={tiktok}
                   alt="sign-up with google"
                 />
-                <span className="text-[0.875rem] text-style font-normal leading-normal capitalize">
+                <span className="text-[0.875rem] py-1 text-style font-normal leading-normal capitalize">
                   continue with Tiktok
                 </span>
               </button>
