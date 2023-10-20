@@ -3,18 +3,16 @@ import { Link } from "react-router-dom";
 import { Button } from "./Button";
 import {LiaLongArrowAltRightSolid} from "react-icons/lia"
 
-export const BlogCart = (props) => {
+export const BlogCard = (props) => {
   return (
     <div className="px-4 md:px-7">
       <div className="max-w-sm my-8 pb-4 bg-[#eee] border-[#000000] box rounded-[1rem] shadow text-start mx-auto">
         <div className="relative">
-          <Link to="/">
             <img
-              className="rounded-t-[1rem] w-full h-[16.66694rem] md:w-[33.86506rem] object-cover"
+              className="rounded-t-[1rem] w-full h-[16.66694rem] md:w-[33.86506rem] object-cover "
               src={props.img}
               alt=""
             />
-          </Link>
 
           <Button
             value={props.value}
