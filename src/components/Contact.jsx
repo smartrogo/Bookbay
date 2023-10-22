@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { Button } from "./Button";
 import Input from "./Input";
-import stay from "../assets/stay.png";
+import intouch from "../assets/intouch.png";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -84,7 +84,7 @@ export const Contact = () => {
   return (
     <section className="relative my-10">
       <img
-        src={stay}
+        src={intouch}
         alt="background svg"
         className="absolute w-[34.80581rem] md:right-[14.5rem] md:-top-[3.9rem]"
       />
@@ -143,8 +143,8 @@ export const Contact = () => {
               value="send"
               cls_name={
                 loading
-                  ? "mx-auto rounded-[0.29656rem] md:rounded-[0.5rem] py-[0.37069rem] px-[0.92675rem] md:py-[0.625rem] md:px-[1.5625rem] text-center text-[#fff] poppins text-[0.66725rem] md:text-[1.125rem] text-style leading-normal font-normal capitalize"
-                  : "bg-transparent border-[2px] border-solid border-[#00f] mx-auto btn rounded-[0.29656rem] md:rounded-[0.5rem] py-[0.37069rem] px-[0.92675rem] md:py-[0.625rem] md:px-[1.5625rem] text-center text-[#00f] poppins text-[0.66725rem] md:text-[1.125rem] text-style leading-normal font-normal capitalize"
+                  ? "mx-auto rounded-[0.29656rem] md:rounded-[0.5rem] py-[0.37069rem] px-[0.92675rem] md:py-[0.625rem] md:px-[1.5625rem] text-center text-[#00f] text-[0.66725rem] border-[2px] border-solid border-[#00f] md:text-[1.125rem] text-style leading-normal font-normal capitalize"
+                  : "bg-transparent border-[2px] border-solid border-[#00f] mx-auto btn rounded-[0.29656rem] md:rounded-[0.5rem] py-[0.37069rem] px-[0.92675rem] md:py-[0.625rem] md:px-[1.5625rem] text-center text-[#00f] text-[0.66725rem] md:text-[1.125rem] text-style leading-normal font-normal capitalize"
               }
             />
           </form>
