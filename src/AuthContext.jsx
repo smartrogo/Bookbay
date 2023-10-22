@@ -107,8 +107,7 @@ export const AuthProvider = ({ children }) => {
     } else {
       throw new Error("User is not signed in");
     }
-  };
-  
+  };  
 
   const contextData = {
     isAuth,

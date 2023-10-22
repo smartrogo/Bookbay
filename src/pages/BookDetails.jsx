@@ -44,7 +44,7 @@ export const BookDetails = () => {
 
         setCartAtom((old) => [
           ...old,
-          { email: userData.email, title, author, cover },
+          { email: userData.email, id: res.id, title,  author, cover },
         ]);
         navigate("/cart");
       });

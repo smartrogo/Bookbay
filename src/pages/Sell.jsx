@@ -2,6 +2,8 @@ import React from 'react'
 
 export const Sell = () => {
   return (
-    <div>Sell</div>
+    <div className='mt-20'>
+      sell
+    </div>
   )
 }

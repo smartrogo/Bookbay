@@ -35,9 +35,11 @@ export const Cart = () => {
     setShowDeleteModal(true);
   };
 
+
   const confirmDelete = async () => {
     // setLoading(true);
     console.log("dude is loading....");
+    console.log(bookToDelete, "book to delete")
     if (bookToDelete) {
       await deleteDoc(doc(db, "cart", bookToDelete));
       console.log("hello from delete")
