@@ -75,6 +75,7 @@ const getBooks = async (bookType) => {
     let chunks = fn(booksWithCovers);
     setBookChunks(chunks); // Update the bookChunks state
     console.log("First", chunks, "understanding every part");
+    console.log(bookType);
     setIsLoading(false);
   } catch (error) {
     console.error("Error fetching books:", error.message);

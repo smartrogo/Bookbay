@@ -16,6 +16,19 @@ import { FaComputer } from "react-icons/fa6";
 import { BiBookBookmark } from "react-icons/bi";
 import { GiLevelThreeAdvanced } from "react-icons/gi";
 import { GiMaterialsScience } from "react-icons/gi";
+import { BookOpen } from "lucide-react";
+import { PencilRuler } from "lucide-react";
+import { FaChildren } from "react-icons/fa6";
+import { GrTechnology } from "react-icons/gr";
+import { MdChangeHistory } from "react-icons/md";
+import { TbBusinessplan } from "react-icons/tb";
+import { ChefHat } from "lucide-react";
+import { HiPhotograph } from "react-icons/hi";
+import { FaPlaceOfWorship } from "react-icons/fa";
+import { GiTeacher } from "react-icons/gi";
+import { HeartPulse } from "lucide-react";
+import { IoLibrary } from "react-icons/io5";
+import { MdFamilyRestroom } from "react-icons/md";
 import "react-loading-skeleton/dist/skeleton.css";
 const Categories = () => {
   // const navigate = useNavigate()
@@ -30,6 +43,8 @@ const Categories = () => {
   const q = searchParams.get("q");
   // const [searchValue, setSearchValue] = useState(() => (q ? q : ""));
   // const [loading, setIsLoading] = useState(true);
+
+  
   useEffect(() => {
     getBooks("programming"); // Fetch programming books initially
   }, []);
@@ -48,6 +63,7 @@ const Categories = () => {
       `https://openlibrary.org/search.json?q=${category}`
     ).catch((error) => {
       console.log("error in catch: ", error);
+      console.log(category);
     });
     const data = await response.json();
     testing(data);
@@ -55,25 +71,28 @@ const Categories = () => {
     console.log(loading, "loading off");
   };
 
-    // Api call to get books
-    const getBooks = async (bookType) => {
+  const getBooks = async (bookType) => {
+    try {
       setLoading(true);
       // Api endpoint
       const response = await fetch(
         `https://openlibrary.org/search.json?q=${bookType}`
-      ).catch((error) => {
-        console.log("error in catch: ", error);
-      });
+      );
       const data = await response.json();
       // Filter the data and get books with cover image
+      console.log(bookType);
       const booksWithCovers = data.docs.filter((item) => item.cover_i);
       // Get the first eight books to be displayed
-      const intialAuthor = booksWithCovers.map((item) => {
-        return item.author_name[0];
-      });
-      // console.log(intialAuthor, "authors")
+      const initialAuthor = booksWithCovers.map((item) => item.author_name[0]);
+      // console.log(initialAuthor, "authors")
+      setBooks(booksWithCovers);
+      setSearchBooks(booksWithCovers);
       setLoading(false);
-    };
+    } catch (error) {
+      console.log("Error fetching books: ", error);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     console.log("query: ", q);
@@ -115,7 +134,7 @@ const Categories = () => {
   };
   return (
     <div className="mt-20">
-      <div className="mt-10  flex flex-col justify-center items-center">
+      <div className="mt-10 flex flex-col justify-center items-center">
         <Text
           head={head}
           body="Discover Diverse Genres: Your Journey Through a World of Book Categories"
@@ -128,7 +147,7 @@ const Categories = () => {
           loading={loading}
         />
       </div>
-      
+
       <Splide
         options={{
           rewind: true,
@@ -149,7 +168,7 @@ const Categories = () => {
           drag: "free",
         }}
         aria-label="My Favorite Images"
-        className=""
+        className=" overflow-x-hidden"
       >
         <SplideSlide>
           <Slide
@@ -206,7 +225,7 @@ const Categories = () => {
         <SplideSlide>
           <Slide
             handleClick={() => {
-              getBooks("computer science");
+              getBooks("computer+science");
               setSelectedCategory("computer");
             }}
             type="computer"
@@ -238,6 +257,124 @@ const Categories = () => {
             }
           />
         </SplideSlide>
+
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("fiction")}
+            type="Fiction"
+            icon={
+              <BookOpen className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("non-fiction")}
+            type="Non-Fiction"
+            icon={
+              <PencilRuler className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("Children/Adult")}
+            type="Children/Adult"
+            icon={
+              <FaChildren className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("science/technology")}
+            type="Sci/Tech"
+            icon={
+              <GrTechnology className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("politics/history")}
+            type="History/Politics"
+            icon={
+              <MdChangeHistory className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("business/economics")}
+            type="Biz/Economics"
+            icon={
+              <TbBusinessplan className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("cooking&food")}
+            type="Food/Cooking"
+            icon={
+              <ChefHat className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("art_and_photography")}
+            type="Art/Photograph"
+            icon={
+              <HiPhotograph className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("spirituality")}
+            type="Spirituality"
+            icon={
+              <FaPlaceOfWorship className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("education and teaching")}
+            type="Edu/Teaching"
+            icon={
+              <GiTeacher className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("Health and Wellness")}
+            type="Health"
+            icon={
+              <HeartPulse className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("Philosophy")}
+            type="Philosophy"
+            icon={
+              <IoLibrary className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("parenting and family")}
+            type="Parenting/Fam"
+            icon={
+              <MdFamilyRestroom className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
       </Splide>
 
       <div className="flex flex-wrap justify-center">
@@ -245,7 +382,7 @@ const Categories = () => {
           <div key={index} className="w-[50%] sm:w-1/2 md:w-1/4 lg:w-1/4 p-2">
             <Book
               cover={book?.cover_i}
-              title={book?.title?.trim().split(" ").slice(0, 2).join(" ")}
+              title={book?.title}
               year={book?.first_publish_year}
               bookId={getIsbn(book.isbn)}
               loading={loading}

@@ -3,7 +3,11 @@ import { useState } from "react";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  TwitterAuthProvider,
+} from "firebase/auth";
 import { auth } from "../firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { FacebookAuthProvider } from "firebase/auth";
@@ -11,7 +15,7 @@ import { Link } from "react-router-dom";
 import { Button } from "../components/Button";
 import { LoadingBtn } from "../components/LoadingBtn";
 import facebook from "../assets/facebook.svg";
-import tiktok from "../assets/tiktok.svg";
+import twitterlogo from "../assets/twitterlogo.png"
 import googleIcon from "../assets/google.svg";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../firebase";
@@ -58,6 +62,36 @@ export const SignUpPage = () => {
         setIsLoading(false); // Set loading state to false after login process completes
       });
   };
+
+
+   const signInWithTwitter = () => {
+     const twitter_provider = new TwitterAuthProvider();
+     signInWithPopup(auth, twitter_provider)
+       .then((result) => {
+         // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
+         // You can use these server side with your app's credentials to access the Twitter API.
+         const credential = TwitterAuthProvider.credentialFromResult(result);
+         const token = credential.accessToken;
+         const secret = credential.secret;
+
+         // The signed-in user info.
+         const user = result.user;
+         navigate("/");
+         // console.log("from twitter");
+         // IdP data available using getAdditionalUserInfo(result)
+         // ...
+       })
+       .catch((error) => {
+         // Handle Errors here.
+         const errorCode = error.code;
+         const errorMessage = error.message;
+         // The email of the user's account used.
+         const email = error.customData.email;
+         // The AuthCredential type that was used.
+         const credential = TwitterAuthProvider.credentialFromError(error);
+         // ...
+       });
+   };
 
   // google sign up
   const signUpWithGoogle = () => {
@@ -308,12 +342,12 @@ export const SignUpPage = () => {
                   continue with Facebook
                 </span>
               </button>
-              <button className="flex w-full border-[1px] border-solid border-[#000] rounded-[0.25rem] justify-center items-center gap-3">
+              <button type="submit" onClick={() => signInWithTwitter()} className="flex w-full border-[1px] border-solid border-[#000] rounded-[0.25rem] justify-center items-center gap-3">
                 <img
                   className="w-[1rem] h-[1rem]"
                   width="1.5rem"
                   height="1.5rem"
-                  src={tiktok}
+                  src={twitterlogo}
                   alt="sign-up with google"
                 />
                 <span className="text-[0.875rem] py-1 text-style font-normal leading-normal capitalize">

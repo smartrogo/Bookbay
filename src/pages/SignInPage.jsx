@@ -8,10 +8,10 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useParams } from "react-router-dom";
 import { LoadingBtn } from "../components/LoadingBtn";
 import facebook from "../assets/facebook.svg"
-import tiktok from "../assets/tiktok.svg"
+import twitterlogo from "../assets/twitterlogo.png"
 import googleIcon from "../assets/google.svg"
 import React from "react";
-import { GoogleAuthProvider, signInWithPopup, FacebookAuthProvider } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, FacebookAuthProvider, TwitterAuthProvider } from "firebase/auth";
 import { useSearchParams } from "react-router-dom";
 import { Button } from "../components/Button";
 import { AuthContext } from "../AuthContext";
@@ -21,7 +21,6 @@ export const SignInPage = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
-  const facebook_provider = new FacebookAuthProvider()
   const [searchParams, setSearchParams] = useSearchParams();
   const { next } = Object.fromEntries(searchParams);
   const { title, author, cover, year } = useParams();
@@ -87,6 +86,35 @@ export const SignInPage = () => {
     onSubmit: handleFormSubmit,
   });
 
+  const signInWithTwitter = () => {
+    const twitter_provider = new TwitterAuthProvider();
+    signInWithPopup(auth, twitter_provider)
+      .then((result) => {
+        // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
+        // You can use these server side with your app's credentials to access the Twitter API.
+        const credential = TwitterAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const secret = credential.secret;
+
+        // The signed-in user info.
+        const user = result.user;
+        navigate("/")
+        // console.log("from twitter");
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = TwitterAuthProvider.credentialFromError(error);
+        // ...
+      });
+
+  }
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
@@ -114,6 +142,7 @@ export const SignInPage = () => {
   };
 
   const signInWithFacebook = () => {
+    const facebook_provider = new FacebookAuthProvider();
 
     signInWithPopup(auth, facebook_provider)
       .then((result) => {
@@ -234,10 +263,10 @@ export const SignInPage = () => {
 <img className="w-[1rem] h-[1rem]" width="1.5rem" height="1.5rem" src={facebook} alt="sign-up with google" />
 <span className="text-[0.875rem] text-style py-1 font-normal leading-normal capitalize">continue with Facebook</span>
 </button>
-    <button type="submit" className="flex w-full justify-center items-center gap-3 border-[1px] border-solid border-[#000] rounded-[0.25rem]">
+    <button type="submit" onClick={() => signInWithTwitter()} className="flex w-full justify-center items-center gap-3 border-[1px] border-solid border-[#000] rounded-[0.25rem]">
 
-<img className="w-[1rem] h-[1rem]" width="1.5rem" height="1.5rem" src={tiktok} alt="sign-up with google" />
-<span className="text-[0.875rem] text-style py-1 font-normal leading-normal capitalize">continue with Tiktok</span>
+<img className="w-[1rem] h-[1rem]" width="1.5rem" height="1.5rem" src={twitterlogo} alt="sign-up with google" />
+<span className="text-[0.875rem] text-style py-1 font-normal leading-normal capitalize">continue with Twitter</span>
 </button>
   </div>
 

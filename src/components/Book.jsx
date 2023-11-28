@@ -40,7 +40,7 @@ export const Book = ({ bookId, cover, title, year, author, loading }) => {
                 duration={3.5}
             />
           ) : (
-            <span className="color text-xs md:text-sm text-center mt-4 w-[90%]">
+            <span className="color capitalize text-xs md:text-sm text-center mt-4 w-[90%]">
               {title}
             </span>
           )}
