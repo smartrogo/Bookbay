@@ -16,7 +16,19 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
 import { Link } from "react-router-dom";
 import { Slide } from "./Slide";
-
+import {BookOpen} from "lucide-react";
+import {PencilRuler} from "lucide-react";
+import {FaChildren} from "react-icons/fa6";
+import {GrTechnology } from "react-icons/gr"
+import {MdChangeHistory } from "react-icons/md";
+import {TbBusinessplan } from "react-icons/tb"
+import {ChefHat} from "lucide-react";
+import {HiPhotograph } from "react-icons/hi";
+import {FaPlaceOfWorship } from "react-icons/fa";
+import {GiTeacher } from "react-icons/gi";
+import {HeartPulse} from "lucide-react";
+import {IoLibrary} from "react-icons/io5";
+import {MdFamilyRestroom } from "react-icons/md"
 export const MiniSwipper = () => {
   const [bookChunks, setBookChunks] = useState([
     [0, 0],
@@ -41,25 +53,34 @@ export const MiniSwipper = () => {
   };
 
   // Api call to get books
-  const getBooks = async (bookType) => {
-    setIsLoading(true);
-    console.log(bookChunks, "getting every shit");
-    // Api endpoint
+const getBooks = async (bookType) => {
+  setIsLoading(true);
+
+  try {
+    // API endpoint
     const response = await fetch(
       `https://openlibrary.org/search.json?q=${bookType}`
-    ).catch((error) => {
-      console.log("error in catch: ", error);
-    });
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
     const data = await response.json();
+
     // Filter the data and get books with cover image
     const booksWithCovers = data.docs.filter((item) => item.cover_i);
+
     // Get the first eight books to be displayed
-    console.log("booktype", bookType)
-       let chunks = fn(booksWithCovers);
+    let chunks = fn(booksWithCovers);
     setBookChunks(chunks); // Update the bookChunks state
-    console.log("first", chunks, "understanding ever shit");
+    console.log("First", chunks, "understanding every part");
     setIsLoading(false);
-  };
+  } catch (error) {
+    console.error("Error fetching books:", error.message);
+    setIsLoading(false);
+  }
+};
 
   return (
     <div className="relative">
@@ -169,6 +190,123 @@ export const MiniSwipper = () => {
             type="biography"
             icon={
               <BiBookBookmark className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("fiction")}
+            type="Fiction"
+            icon={
+              <BookOpen className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("non-fiction")}
+            type="Non-Fiction"
+            icon={
+              <PencilRuler className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("Children/Adult")}
+            type="Children/Adult"
+            icon={
+              <FaChildren className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("science/technology")}
+            type="Sci/Tech"
+            icon={
+              <GrTechnology className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("politics/history")}
+            type="History/Politics"
+            icon={
+              <MdChangeHistory className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("business/economics")}
+            type="Biz/Economics"
+            icon={
+              <TbBusinessplan className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("cooking&food")}
+            type="Food/Cooking"
+            icon={
+              <ChefHat className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("art_and_photography")}
+            type="Art/Photograph"
+            icon={
+              <HiPhotograph className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("spirituality")}
+            type="Spirituality"
+            icon={
+              <FaPlaceOfWorship className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("education and teaching")}
+            type="Edu/Teaching"
+            icon={
+              <GiTeacher className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("Health and Wellness")}
+            type="Health"
+            icon={
+              <HeartPulse className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("Philosophy")}
+            type="Philosophy"
+            icon={
+              <IoLibrary className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
+            }
+          />
+        </SplideSlide>
+        <SplideSlide>
+          <Slide
+            handleClick={() => getBooks("parenting and family")}
+            type="Parenting/Fam"
+            icon={
+              <MdFamilyRestroom className="w-[1.37906rem] h-[1.37906rem] md:w-[2.75rem] md:h-[2.75rem]" />
             }
           />
         </SplideSlide>

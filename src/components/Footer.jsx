@@ -60,7 +60,7 @@ export const Footer = () => {
                     Address
                   </h2>
                   <ul className="text-[#d2cfcf] text-[0.875rem] md:text-[1.125rem] mx-auto font-normal text-style leading-normal capitalize poppins text-center sm:text-start">
-                    <li >
+                    <li>
                       <Link
                         to="/"
                         className=" flex items-center gap-2 py-2 justify-center sm:justify-start hover:underline"
@@ -76,9 +76,9 @@ export const Footer = () => {
                       >
                         <BiMap className="w-[1.12506rem] hidden sm:block h-[1.12506rem]" />
                         <p className=" text-center sm:text-start">
-                          No.14 Behind JIBWIS Juma'at Masjid Mariri-Wudil Rd,{" "}
-                          <br /> opp. Audu Manager Filling Station Kumbotso,
-                          700104, <br /> Kano State - Nigeria
+                          No.14 Opp. Audu Manager Filling Station Kumbotso,{" "}
+                          <br />
+                          700104, Kano State – Nigeria
                         </p>
                       </Link>
                     </li>
@@ -88,7 +88,7 @@ export const Footer = () => {
                         className="flex items-center gap-2 justify-center sm:justify-start py-2 hover:underline"
                       >
                         <BiTime className="w-[1.12506rem] h-[1.12506rem]" />
-                        Office Time
+                        Monday-Friday 9:00 AM -5:00 PM
                       </Link>
                     </li>
                   </ul>
@@ -108,43 +108,44 @@ export const Footer = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/frequent-questions" className="hover:underline">
+                      <Link
+                        to="/frequent-questions"
+                        className="hover:underline"
+                      >
                         FAQs
                       </Link>
                     </li>
                   </ul>
                 </div>
-              </div>  
+              </div>
             </div>
           </div>
 
           <div className="flex mt-4 social justify-center">
             <div className="flex ">
-
               <Link to="https://wa.me/2348120304001" className="mt-1">
-              <BsWhatsapp className="mr-2 cursor-pointer w-[1.3rem] h-[1.3rem] md:w-[1.5rem] md:h-[1.5rem]" />
+                <BsWhatsapp className="mr-2 cursor-pointer w-[1.3rem] h-[1.3rem] md:w-[1.5rem] md:h-[1.5rem]" />
               </Link>
-              
+
               <Link to="https://web.facebook.com/bookbay.application/">
-              <LiaFacebook className="mr-2 w-[1.5rem] h-[1.5rem] cursor-pointer md:w-[2rem] md:h-[2rem]" />
+                <LiaFacebook className="mr-2 w-[1.5rem] h-[1.5rem] cursor-pointer md:w-[2rem] md:h-[2rem]" />
               </Link>
 
               <Link to="https://www.linkedin.com/company/bookbay/">
-              <TiSocialLinkedinCircular className="mr-2 cursor-pointer w-[1.5rem] h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
+                <TiSocialLinkedinCircular className="mr-2 cursor-pointer w-[1.5rem] h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
               </Link>
-              
+
               <Link to="https://twitter.com/Bookbay_App">
-              <TiSocialTwitterCircular className="mr-2 w-[1.5rem] cursor-pointer h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
+                <TiSocialTwitterCircular className="mr-2 w-[1.5rem] cursor-pointer h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
               </Link>
-              
+
               <Link to="Info@bookbay.com.ng ">
-              <MdOutlineMailOutline className="mr-2 w-[1.5rem] cursor-pointer h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
+                <MdOutlineMailOutline className="mr-2 w-[1.5rem] cursor-pointer h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
               </Link>
 
               <Link to="https://t.me/bookbay_App">
-              <RiTelegramLine className="mr-2 w-[1.5rem] cursor-pointer h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
+                <RiTelegramLine className="mr-2 w-[1.5rem] cursor-pointer h-[1.5rem] md:w-[2rem] md:h-[2rem]" />
               </Link>
-            
             </div>
           </div>
           <hr className="my-6 h-[1px]  mx-auto w-[90%] border-[#FFFFFF] lg:my-4" />
