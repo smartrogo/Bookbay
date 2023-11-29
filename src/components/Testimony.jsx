@@ -38,7 +38,7 @@ export const Testimony = () => {
           // >=200
           200: {
             slidesPerView: 1.2,
-            spaceBetween: 30,
+            spaceBetween: 20,
           },
           // >= 400px
           400: {
