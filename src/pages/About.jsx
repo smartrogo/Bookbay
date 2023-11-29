@@ -1,8 +1,13 @@
 import React from "react";
-import ceo from "../assets/ceo.png";
-import designer from "../assets/designer.png";
-import engineer from "../assets/engineer.png";
+import sule from "../assets/sule.png";
+import niima from "../assets/niima.png";
+import baraka from "../assets/baraka.png";
 import { Footer } from "../components/Footer";
+import amin from "../assets/amin.png";
+import ala from "../assets/ala.png";
+import abdullahi from "../assets/abdullahi.png";
+import zainab from "../assets/zainab.png";
+import hauwa from "../assets/hauwa.png";
 
 const Discription = ({ title, body }) => {
 
@@ -55,19 +60,44 @@ export const About = () => {
           meet our amazing and <br /> hardworking bookbay team{" "}
         </h2>
 
-        <div className="flex flex-col md:flex-row justify-between">
-          <Person img={ceo} name="Engr, M.A Sulaiman" position="CEO: Bookbay" />
+        <div className="flex border-2 flex-col flex-wrap md:flex-row justify-between">
+          <Person img={sule} name="M.A Sulaiman" position="CEO: Bookbay" />
 
           <Person
-            img={designer}
+            img={niima}
             name="Muhammad Ni’imatullahi"
             position="Full stack designer"
           />
 
+          <Person img={ala} name="Muhammad ala" position="Frontend engineer" />
           <Person
-            img={engineer}
-            name="Muhammad ala"
-            position="Frontend engineer"
+            img={abdullahi}
+            name="Abdullahi Shehu"
+            position="CTO Bookbay"
+          />
+        </div>
+        <div className="flex border-2 flex-col flex-wrap md:flex-row justify-between">
+          <Person
+            img={amin}
+            name="Amin bin Ibrahim"
+            position="advisory board "
+          />
+
+          <Person
+            img={zainab}
+            name="zainab venessa gajere"
+            position="customer support"
+          />
+
+          <Person
+            img={baraka}
+            name="Baraka Muhammad"
+            position="Business Develop"
+          />
+          <Person
+            img={hauwa}
+            name="Hauwa musa abdullahi"
+            position="CMO Bookbay"
           />
         </div>
       </div>
