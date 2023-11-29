@@ -38,15 +38,15 @@ export const Testimony = () => {
           // >=200
           200: {
             slidesPerView: 1.2,
-            // spaceBetween: 50,
+            spaceBetween: 50,
           },
           // >= 400px
           400: {
             slidesPerView: 1.2,
-            // spaceBetween: 50,
+            spaceBetween: 30,
           },
           // >= 640px
-          640: {
+          600: {
             slidesPerView: 2,
             // spaceBetween: 5,
           },
@@ -57,7 +57,7 @@ export const Testimony = () => {
           },
           1030: {
             slidesPerView: 3,
-            spaceBetween: 25,
+            spaceBetween: 30,
           },
           // >= 1583px
           1583: {

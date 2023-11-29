@@ -32,7 +32,7 @@ import { MdFamilyRestroom } from "react-icons/md";
 import "react-loading-skeleton/dist/skeleton.css";
 const Categories = () => {
   // const navigate = useNavigate()
-    const [selectedCategory, setSelectedCategory] = useState("programming");
+  const [selectedCategory, setSelectedCategory] = useState("programming");
   const { category } = useParams(); // Get the category from the URL
   const [books, setBooks] = useState([]); // Initialize with an empty array
   const [searchedBooks, setSearchBooks] = useState([
@@ -40,6 +40,7 @@ const Categories = () => {
   ]);
   const [loading, setLoading] = useState(true);
   const [searchParams, setSearchParam] = useSearchParams({ q: "" });
+  const [me, setMe] = useState("")
   const q = searchParams.get("q");
   // const [searchValue, setSearchValue] = useState(() => (q ? q : ""));
   // const [loading, setIsLoading] = useState(true);
@@ -80,7 +81,9 @@ const Categories = () => {
       );
       const data = await response.json();
       // Filter the data and get books with cover image
-      console.log(bookType);
+      const types = bookType
+      console.log(types);
+      setMe(bookType)
       const booksWithCovers = data.docs.filter((item) => item.cover_i);
       // Get the first eight books to be displayed
       const initialAuthor = booksWithCovers.map((item) => item.author_name[0]);
@@ -127,14 +130,14 @@ const Categories = () => {
     setSearchBooks(result);
   };
 
-  const head = `${category} Books Categories`;
+  const head = `${me} Books Categories`;
   const getIsbn = (isbn) => {
     console.log("this is this books isbn's: ", typeof isbn);
     return isbn ? isbn[0] : "";
   };
   return (
     <div className="mt-20">
-      <div className="mt-10 flex flex-col justify-center items-center">
+      <div className="mt-10 flex border-2 capitalize flex-col justify-center items-center">
         <Text
           head={head}
           body="Discover Diverse Genres: Your Journey Through a World of Book Categories"

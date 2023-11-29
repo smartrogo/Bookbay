@@ -238,7 +238,7 @@ export const Header = () => {
             className={` ${
               isLoading && "xl:gap-[24rem] 2xl:gap-[27rem]"
               
-            } ${isAuth && "xl:gap-[18.5rem]"} flex gap-7 lg:gap-[8rem] xl:gap-[12rem] 2xl:gap-[30rem] items-center md:w-[] justify-between`}
+            } ${isAuth && "xl:gap-[20.5rem]"} flex gap-7 lg:gap-[8rem] xl:gap-[17rem] 2xl:gap-[30rem] items-center md:w-[] justify-between`}
           >
             <ul className="hidden text-[#000000] lg:flex gap-8 md:items-center leading-normal items-center text-[0.875rem]">
               <li className="poppins font-normal text-style under text-[1.125rem] leading-normal">
