@@ -13,10 +13,9 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { Card } from "./Card";
 import { Text } from "./Text";
-import engineer from "../assets/engineer.png";
-import designer from "../assets/designer.png";
-import ceo from "../assets/ceo.png";
-import hero from "../assets/hero.png";
+import techbro from "../assets/techbro.png";
+import techman from "../assets/techman.png";
+import techgirl from "../assets/techgirl.png";
 import { Link } from "react-router-dom";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
 export const Testimony = () => {
@@ -31,8 +30,8 @@ export const Testimony = () => {
           disableOnInteraction: false,
         }}
         // slidesPerView={3}
-        navigation
-        pagination={{ clickable: true }}
+        // navigation
+        // pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
         breakpoints={{
           // >=200
@@ -68,30 +67,26 @@ export const Testimony = () => {
       >
         <SwiperSlide className="flex items-center justify-center">
           <Card
-            img={engineer}
-            qoute="Bookbay is a great bookstore platform for educators: offers diverse resources, discounts, and convenience for enriching classroom learning experiences."
-            name="Muhammad Niimatullahi"
+            img={techbro}
+            qoute="Bookbay is a game-changer for students and researchers in Africa. It's the most affordable and convenient way to access textbooks. I highly recommend Bookbay to anyone who wants to save money on textbooks and support the reading culture in Africa."
+            name="Dr. AbenaKorkor"
+            role="~ Professor of English, University of Ghana"
           />
         </SwiperSlide>
         <SwiperSlide className="flex items-center justify-center">
           <Card
-            img={designer}
-            qoute="Wow! Bookbay is a Lifesaver for students! Easy borrowing, vast collection, saved me money, and made studying more enjoyable."
-            name="Muhammad Ala"
+            img={techman}
+            qoute="Bookbay is a lifesaver for students like me. I can finally afford to buy the textbooks I need without breaking the bank. I also love that Bookbay is a community of learners. I've been able to connect with other students and researchers who share my interests."
+            role="~ Student, University of Nairobi"
+            name="Kwame Osei"
           />
         </SwiperSlide>
         <SwiperSlide className="flex items-center justify-center">
           <Card
-            img={hero}
-            qoute="Bookbay simplifies student life. Convenient purchases with my card, affordable books, and stress-free online shopping."
-            name="smartrogo"
-          />
-        </SwiperSlide>
-        <SwiperSlide className="flex items-center justify-center">
-          <Card
-            img={ceo}
-            qoute="Bookbay simplifies student life. Convenient purchases with my card, affordable books, and stress-free online shopping."
-            name="smartrogo"
+            img={techgirl}
+            qoute="Bookbay is a brilliant platform that is making education more accessible and affordable for everyone in Africa. I'm so grateful for the opportunity to be a part of the Bookbay community."
+            name="Aisha Mohammed"
+            role="~ Researcher, Northwest University, Kano-Nigeria "
           />
         </SwiperSlide>
       </Swiper>
