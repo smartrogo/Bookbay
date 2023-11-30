@@ -529,7 +529,7 @@ export const Header = () => {
                       onChange={handleAvatarChange}
                     />
                     <MdOutlineEdit
-                      className={`absolute top-7 rounded-full bg-[#e1f3fc] left-12 w-[2rem] h-[2rem] md:w-[2rem] md:h-[2rem]`}
+                      className={`absolute top-7 left-10 rounded-full bg-[#e1f3fc] md:left-12 w-[2rem] h-[2rem] md:w-[2rem] md:h-[2rem]`}
                     />
 
                     <img
@@ -552,7 +552,7 @@ export const Header = () => {
             </div>
           ) : (
             <div>
-              <div className="border-b-[3px] pb-4 border-[#DBDBDB] flex items-center gap-2 md:gap-4 ">
+              <div className="border-b-[3px] relative pb-4 border-[#DBDBDB] flex items-center gap-2 md:gap-4 ">
                 {loadingAvatar ? (
                   <ClipLoader
                     color="#00f"
@@ -573,11 +573,7 @@ export const Header = () => {
                     />
                     <MdOutlineEdit
                       size="rem"
-                      className={`absolute bg-[#e1f3fc] top-[4.5rem] rounded-full left-[4rem] w-[2rem] h-[2rem] md:w-[2rem] md:h-[2rem] md:top-[5.5rem] md:left-[4.5rem] ${
-                        isManageAccountOpen && "top-36 md:top-40 md:left-20"
-                      } ${
-                        isPasswordChangeOpen && " top-28 md:top-32 left-[4.5rem] md:left-20"
-                      }`}
+                      className={`absolute bg-[#e1f3fc] top-7 md:left-12 left-10 rounded-full w-[2rem] h-[2rem] md:w-[2rem] md:h-[2rem]`}
                     />
 
                     <img
