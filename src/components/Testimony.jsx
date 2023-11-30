@@ -30,19 +30,19 @@ export const Testimony = () => {
           disableOnInteraction: false,
         }}
         // slidesPerView={3}
-        // navigation
+        navigation
         // pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
         breakpoints={{
           // >=200
           200: {
             slidesPerView: 1.2,
-            spaceBetween: 30,
+            spaceBetween: 40,
           },
           // >= 400px
           400: {
             slidesPerView: 1.2,
-            spaceBetween: 30,
+            spaceBetween: 40,
           },
           // >= 640px
           600: {
