@@ -11,7 +11,7 @@ export const Card = (props) => {
         />
       </div>
 
-      <div className="p-6 mt-4">
+      <div className="p-6 mt-4 pr-[2rem] md:pr-0">
         <div className='flex justify-center items-center'>
           <p className="text-sm poppins w-[16.03069rem] md:w-[17.25rem] lg:w-[17.25rem] relative text-[0.91488rem] md:text-[1rem] italic font-normal leading-[25px] text-center mx-auto text-[#000]">
             <span className="text-[#666666] font-bold text-[2.19569rem] absolute left-0 -top-1 md:top-1">
