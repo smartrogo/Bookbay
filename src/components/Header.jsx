@@ -531,7 +531,7 @@ export const Header = () => {
                     <MdOutlineEdit
                       className={`absolute top-[4.5rem] md:top-[5rem] rounded-full bg-[#e1f3fc] left-[4rem] w-[2rem] h-[2rem] md:w-[2rem] md:h-[2rem] ${
                         isManageAccountOpen && " top-44 md:top-44"
-                      } ${isPasswordChangeOpen && "top-40 md:top-40"}`}
+                      } ${isPasswordChangeOpen && "password top-40 md:top-40"}`}
                     />
 
                     <img
