@@ -101,12 +101,14 @@ export const Cart = () => {
 
                 <div className="flex md:justify-center items-center gap-6">
                   <Button
+                  onClick={handleShowPaymentModal}
                     value="Buy: N681"
                     cls_name="text-[0.80rem] btn md:text-[1rem] font-medium bg-[#0000FF] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
                   />
 
                   <Button
-                    value="Borrow:N81"
+                    onClick={handleShowPaymentModal}
+                    value="Borrow: N81"
                     cls_name="text-[0.80rem] btn md:text-[1rem] font-medium bg-[#DAA520] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
                   />
 
@@ -121,7 +123,10 @@ export const Cart = () => {
 
         {showDeleteModal && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-600 bg-opacity-50">
-            <div ref={menuRef} className="modal-bg  w-[20rem] md:w-[40rem] bg-white p-6 md:p-10 rounded-md">
+            <div
+              ref={menuRef}
+              className="modal-bg  w-[20rem] md:w-[40rem] bg-white p-6 md:p-10 rounded-md"
+            >
               <div
                 className="flex items-center p-3 mb-4 text-[0.8rem] text-red-800 rounded-[0.25rem] bg-red-50"
                 role="alert"
@@ -211,6 +216,7 @@ export const Cart = () => {
         menuRef={menuRef}
         show={showPaymentModal}
         handleClose={handleHidePaymentModal}
+        message="checked out!"
       />
 
       <Footer />

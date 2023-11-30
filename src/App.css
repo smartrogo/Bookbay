@@ -264,9 +264,9 @@
   width: 70% !important;
 }
 @media (min-width: 768px) {
-  .md\:h-\[3rem\] {
-    height: 1.2rem /* 48px */ !important;
-  }
+  /* .md\:h-\[3rem\] {
+    height: 1.2rem  !important;
+  } */
   .splide__slide {
     width: 14.3125rem !important;
   }

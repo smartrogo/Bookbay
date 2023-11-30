@@ -340,30 +340,30 @@ export const Header = () => {
                 </Link>
 
                 <button onClick={toggleMenu}>
-                    <div className="flex items-center gap-2">
-                      <ClipLoader
-                        color="#00f"
-                        loading={isLoading || loadingAvatar}
-                        size={40}
-                        aria-label="Loading Spinner"
-                        data-testid="loader"
-                      />
-                    </div>
-                      {userData?.pic ? (
-                        <img
-                          src={userData?.pic}
-                          alt="profile"
-                          className="w-10 h-10 rounded-full"
-                        />
-                      ) : (
-                        <img
-                          src={`https://ui-avatars.com/api/?name=${userData?.email
-                            ?.split("@")[0]
-                            ?.slice(0, 2)}`}
-                          alt="profile"
-                          className="w-10 h-10 rounded-full"
-                        />
-                      )}
+                  <div className="flex items-center gap-2">
+                    <ClipLoader
+                      color="#00f"
+                      loading={isLoading || loadingAvatar}
+                      size={40}
+                      aria-label="Loading Spinner"
+                      data-testid="loader"
+                    />
+                  </div>
+                  {userData?.pic ? (
+                    <img
+                      src={userData?.pic}
+                      alt="profile"
+                      className="w-10 h-10 rounded-full"
+                    />
+                  ) : (
+                    <img
+                      src={`https://ui-avatars.com/api/?name=${userData?.email
+                        ?.split("@")[0]
+                        ?.slice(0, 2)}`}
+                      alt="profile"
+                      className="w-10 h-10 rounded-full"
+                    />
+                  )}
                 </button>
               </div>
             ) : (
@@ -529,8 +529,9 @@ export const Header = () => {
                       onChange={handleAvatarChange}
                     />
                     <MdOutlineEdit
-                      size="rem"
-                      className={`absolute top-[4.5rem] md:top-[8rem] rounded-full bg-[#e1f3fc] left-[4rem] w-[2rem] h-[2rem] ${isManageAccountOpen && "top-[11rem]"} ${isPasswordChangeOpen && "top-[10rem] md:top-[14rem]"}`}
+                      className={`absolute top-[4.5rem] md:top-[5rem] rounded-full bg-[#e1f3fc] left-[4rem] w-[2rem] h-[2rem] md:w-[2rem] md:h-[2rem] ${
+                        isManageAccountOpen && " top-44 md:top-44"
+                      } ${isPasswordChangeOpen && "top-40 md:top-40"}`}
                     />
 
                     <img
@@ -574,7 +575,11 @@ export const Header = () => {
                     />
                     <MdOutlineEdit
                       size="rem"
-                      className="absolute top-[4.5rem] rounded-full bg-[#e1f3fc] left-[4rem] w-[2rem] h-[2rem]"
+                      className={`absolute bg-[#e1f3fc] top-[4.5rem] rounded-full left-[4rem] w-[2rem] h-[2rem] md:w-[2rem] md:h-[2rem] md:top-[5.5rem] md:left-[4.5rem] ${
+                        isManageAccountOpen && "top-36 md:top-40 md:left-20"
+                      } ${
+                        isPasswordChangeOpen && " top-28 md:top-32 left-[4.5rem] md:left-20"
+                      }`}
                     />
 
                     <img
@@ -587,23 +592,7 @@ export const Header = () => {
                     />
                   </>
                 )}
-                {/* <input
-                  type="file"
-                  id="avatarInput"
-                  accept="image/*"
-                  style={{ display: "none" }}
-                  onChange={handleAvatarChange}
-                />
-                <MdOutlineEdit />
 
-                <img
-                  onClick={handleAvatar}
-                  src={`https://ui-avatars.com/api/?name=${userData?.email
-                    ?.split("@")[0]
-                    ?.slice(0, 2)}`}
-                  alt="profile"
-                  className="cursor-pointer w-[4rem] h-[4rem] md:w-[5rem] md:h-[5rem] rounded-full"
-                /> */}
                 <p className="text-[1rem] font-medium leading-normal text-style text-[#1f1f1f]">
                   {userData?.displayName || null}
                 </p>
