@@ -60,7 +60,7 @@ export const About = () => {
           meet our amazing and <br /> hardworking bookbay team{" "}
         </h2>
 
-        <div className="flex flex-col flex-wrap md:flex-row justify-between">
+        <div className="flex flex-col md:flex-row justify-between">
           <Person img={sule} name="M.A Sulaiman" position="CEO: Bookbay" />
 
           <Person
@@ -76,7 +76,7 @@ export const About = () => {
             position="CTO Bookbay"
           />
         </div>
-        <div className="flex flex-col flex-wrap md:flex-row justify-between">
+        <div className="flex flex-col md:flex-row justify-between">
           <Person
             img={amin}
             name="Amin bin Ibrahim"
