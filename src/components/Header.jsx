@@ -10,6 +10,10 @@ import { GrCart } from "react-icons/gr";
 import { AuthContext } from "../AuthContext";
 import { useContext } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { MdOutlineEdit } from "react-icons/md";
+import { auth, updateProfile } from "../firebase";
+import { storage } from "../firebase";
 import { PiSignOutBold } from "react-icons/pi";
 import { AiFillSetting, AiOutlineArrowRight } from "react-icons/ai";
 import { db } from "../firebase";
@@ -19,23 +23,29 @@ import Input from "./Input";
 export const cartItems = atom([]);
 export const isLoadingCartItems = atom(true);
 
-
 export const Header = () => {
   const [active, setActive] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isManageAccountOpen, setIsManageAccountOpen] = useState(false);
   const [isPasswordChangeOpen, setIsPasswordOpen] = useState(false);
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isMatching, setIsMatching] = useState(false);
-  const [sessionTimeOut, setSessionTimeOut] = useState("")
-  const [myNumber, setMyNumber] = useState("")
+  const [sessionTimeOut, setSessionTimeOut] = useState("");
+  const [myNumber, setMyNumber] = useState("");
   const menuRef = useRef();
   const navigate = useNavigate();
   const [cartAtom, setCartAtom] = useAtom(cartItems);
   const [isLoadingcartAtom, setIsLoadingcartAtom] = useAtom(isLoadingCartItems);
-  const { userData, isAuth, isLoading, logOut, deleteUserAccount, ChangePassword } =
-    useContext(AuthContext);
+  const {
+    userData,
+    isAuth,
+    setUserData,
+    isLoading,
+    logOut,
+    deleteUserAccount,
+    ChangePassword,
+  } = useContext(AuthContext);
 
   const [loadingAvatar, setLoadingAvatar] = useState(false);
 
@@ -56,7 +66,7 @@ export const Header = () => {
         setCartAtom(res);
         setIsLoadingcartAtom(false);
         // console.log("right before jotai", res.length);
-        console.log(cartAtom)
+        console.log(cartAtom);
       }
     };
     getMyBooks();
@@ -65,24 +75,25 @@ export const Header = () => {
   useEffect(() => {
     const getPhone = async () => {
       if (userData && userData.email) {
-        const q = query(collection(db, "userDetails"), where("email", "==", userData.email));
+        const q = query(
+          collection(db, "userDetails"),
+          where("email", "==", userData.email)
+        );
         try {
           const querySnapshot = await getDocs(q);
           querySnapshot.forEach((doc) => {
             console.log(doc.data(), "hello phone");
             console.log(doc.data().phone, "hello phone");
             const val = doc.data().phone;
-            setMyNumber(val)
+            setMyNumber(val);
           });
         } catch (error) {
           console.error("Error fetching user details:", error);
         }
       }
-    }
+    };
     getPhone();
   }, [userData.email]); // Depend only on userData.email
-  
-
 
   useEffect(() => {
     // Close the menu when a user logs in
@@ -172,9 +183,9 @@ export const Header = () => {
       if (password === confirmPassword) {
         // Passwords match, try to change the password
         await ChangePassword(password);
-        setSessionTimeOut("Password changed successfully")
+        setSessionTimeOut("Password changed successfully");
         setPassword("");
-        setConfirmPassword("")
+        setConfirmPassword("");
         // Remove the message after 5 seconds
         setTimeout(() => {
           setSessionTimeOut("");
@@ -188,9 +199,9 @@ export const Header = () => {
       }
     } catch (error) {
       if (error.message === "Please reauthenticate to change your password") {
-        setSessionTimeOut("Please log in again to change your password.")
+        setSessionTimeOut("Please log in again to change your password.");
         setPassword("");
-        setConfirmPassword("")
+        setConfirmPassword("");
         setTimeout(() => {
           setSessionTimeOut("");
         }, 8000);
@@ -199,11 +210,46 @@ export const Header = () => {
         setSessionTimeOut("An error occurred try checking your network");
         setTimeout(() => {
           setSessionTimeOut("");
-        }, 8000)
+        }, 8000);
       }
     }
   };
-  
+
+  const handleAvatar = async () => {
+    try {
+      const avatarInput = document.getElementById("avatarInput");
+      avatarInput.click();
+    } catch (error) {
+      console.error("Error handling avatar click:", error.message);
+    }
+  };
+
+   const handleAvatarChange = async (e) => {
+     try {
+       const file = e.target.files[0];
+       if (file) {
+         setLoadingAvatar(true);
+
+         const storageRef = ref(storage, `avatars/${auth.currentUser.uid}`);
+         await uploadBytes(storageRef, file);
+
+         const avatarURL = await getDownloadURL(storageRef);
+
+         // Update the user's profile with the new avatar URL
+         await updateProfile(auth.currentUser, {
+           photoURL: avatarURL,
+         });
+
+         // Optionally, update the local userData state with the new avatar URL
+         setUserData({ ...userData, pic: avatarURL });
+
+         setLoadingAvatar(false);
+       }
+     } catch (error) {
+       console.error("Error changing avatar:", error.message);
+       setLoadingAvatar(false);
+     }
+   };
 
   return (
     <section
@@ -235,10 +281,9 @@ export const Header = () => {
 
         <div className="login-button-container flex justify-between items-center">
           <div
-            className={` ${
-              isLoading && "xl:gap-[24rem] 2xl:gap-[27rem]"
-              
-            } ${isAuth && "xl:gap-[20.5rem]"} flex gap-7 lg:gap-[8rem] xl:gap-[17rem] 2xl:gap-[30rem] items-center md:w-[] justify-between`}
+            className={` ${isLoading && "xl:gap-[24rem] 2xl:gap-[27rem]"} ${
+              isAuth && "xl:gap-[20.5rem]"
+            } flex gap-7 lg:gap-[8rem] xl:gap-[17rem] 2xl:gap-[30rem] items-center md:w-[] justify-between`}
           >
             <ul className="hidden text-[#000000] lg:flex gap-8 md:items-center leading-normal items-center text-[0.875rem]">
               <li className="poppins font-normal text-style under text-[1.125rem] leading-normal">
@@ -273,7 +318,6 @@ export const Header = () => {
                 <ClipLoader
                   color="#00f"
                   loading={isLoading}
-                  // cssOverride={override}
                   size={40}
                   aria-label="Loading Spinner"
                   data-testid="loader"
@@ -296,23 +340,30 @@ export const Header = () => {
                 </Link>
 
                 <button onClick={toggleMenu}>
-                  {loadingAvatar ? (
-                    <span>Loading</span>
-                  ) : userData?.pic ? (
-                    <img
-                      src={userData?.pic}
-                      alt="profile"
-                      className="w-10 h-10 rounded-full"
-                    />
-                  ) : (
-                    <img
-                      src={`https://ui-avatars.com/api/?name=${userData?.email
-                        ?.split("@")[0]
-                        ?.slice(0, 2)}`}
-                      alt="profile"
-                      className="w-10 h-10 rounded-full"
-                    />
-                  )}
+                    <div className="flex items-center gap-2">
+                      <ClipLoader
+                        color="#00f"
+                        loading={isLoading || loadingAvatar}
+                        size={40}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                      />
+                    </div>
+                      {userData?.pic ? (
+                        <img
+                          src={userData?.pic}
+                          alt="profile"
+                          className="w-10 h-10 rounded-full"
+                        />
+                      ) : (
+                        <img
+                          src={`https://ui-avatars.com/api/?name=${userData?.email
+                            ?.split("@")[0]
+                            ?.slice(0, 2)}`}
+                          alt="profile"
+                          className="w-10 h-10 rounded-full"
+                        />
+                      )}
                 </button>
               </div>
             ) : (
@@ -424,8 +475,11 @@ export const Header = () => {
         <div
           ref={menuRef}
           className={` ${
-            isManageAccountOpen && "h-[30rem] sm:h-[31rem] md:h-[33rem] overflow-y-auto"
-          } bg-white overflow-y-auto fixed h-[17rem] top-20 right-4 px-6 pt-10 usershd rounded-[1rem] w-[20rem] md:w-[28.1875rem]`}
+            isManageAccountOpen &&
+            "h-[30rem] sm:h-[31rem] md:h-[33rem] overflow-y-auto"
+          } bg-white fixed h-[17rem] top-20 right-4 px-6 pt-10 usershd rounded-[1rem] w-[22rem] md:w-[28.1875rem] ${
+            isPasswordChangeOpen && "h-[28rem]"
+          }`}
         >
           {isManageAccountOpen ? (
             <div className="mb-10">
@@ -436,14 +490,16 @@ export const Header = () => {
                 manage your account
               </h1>
             </div>
-          ) : isPasswordChangeOpen ?  (<div className="mb-8">
-          <h1 className="text-[#000000] outfit text-[2.25rem] text-style font-bold capitalize leading-[0.49744rem]">
-            Set Password
-          </h1>
-        </div>) :null}
+          ) : isPasswordChangeOpen ? (
+            <div className="mb-8">
+              <h1 className="text-[#000000] outfit text-[2.25rem] text-style font-bold capitalize leading-[0.49744rem]">
+                Set Password
+              </h1>
+            </div>
+          ) : null}
           {userData?.pic ? (
             <div
-              className={` ${
+              className={`${
                 isManageAccountOpen || (isPasswordChangeOpen && "mt-20")
               } items-center justify-center`}
             >
@@ -454,11 +510,37 @@ export const Header = () => {
               )}
 
               <div className="flex items-center gap-4">
-                <img
-                  src={userData?.pic}
-                  alt="profile"
-                  className="w-[4rem] h-[4rem] rounded-full"
-                />
+                {loadingAvatar ? (
+                  <ClipLoader
+                    color="#00f"
+                    loading={loadingAvatar}
+                    // cssOverride={override}
+                    size={40}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                ) : (
+                  <>
+                    <input
+                      type="file"
+                      id="avatarInput"
+                      accept="image/*"
+                      style={{ display: "none" }}
+                      onChange={handleAvatarChange}
+                    />
+                    <MdOutlineEdit
+                      size="rem"
+                      className={`absolute top-[4.5rem] rounded-full bg-[#e1f3fc] left-[4rem] w-[2rem] h-[2rem] ${isManageAccountOpen && "top-[11rem]"} ${isPasswordChangeOpen && "top-[10rem]"}`}
+                    />
+
+                    <img
+                      onClick={handleAvatar}
+                      src={userData?.pic}
+                      alt="profile"
+                      className="w-[4rem] cursor-pointer h-[4rem] rounded-full"
+                    />
+                  </>
+                )}
 
                 <div>
                   <span className="text-[#333] text-[1rem] md:text-[1.2rem] text-style font-semibold leading-normal capitalize">
@@ -472,13 +554,56 @@ export const Header = () => {
           ) : (
             <div>
               <div className="border-b-[3px] pb-4 border-[#DBDBDB] flex items-center gap-2 md:gap-4 ">
+                {loadingAvatar ? (
+                  <ClipLoader
+                    color="#00f"
+                    loading={loadingAvatar}
+                    // cssOverride={override}
+                    size={40}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                ) : (
+                  <>
+                    <input
+                      type="file"
+                      id="avatarInput"
+                      accept="image/*"
+                      style={{ display: "none" }}
+                      onChange={handleAvatarChange}
+                    />
+                    <MdOutlineEdit
+                      size="rem"
+                      className="absolute top-[4.5rem] rounded-full bg-[#e1f3fc] left-[4rem] w-[2rem] h-[2rem]"
+                    />
+
+                    <img
+                      onClick={handleAvatar}
+                      src={`https://ui-avatars.com/api/?name=${userData?.email
+                        ?.split("@")[0]
+                        ?.slice(0, 2)}`}
+                      alt="profile"
+                      className="cursor-pointer w-[4rem] h-[4rem] md:w-[5rem] md:h-[5rem] rounded-full"
+                    />
+                  </>
+                )}
+                {/* <input
+                  type="file"
+                  id="avatarInput"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={handleAvatarChange}
+                />
+                <MdOutlineEdit />
+
                 <img
+                  onClick={handleAvatar}
                   src={`https://ui-avatars.com/api/?name=${userData?.email
                     ?.split("@")[0]
                     ?.slice(0, 2)}`}
                   alt="profile"
-                  className="w-[4rem] h-[4rem] md:w-[5rem] md:h-[5rem] rounded-full"
-                />
+                  className="cursor-pointer w-[4rem] h-[4rem] md:w-[5rem] md:h-[5rem] rounded-full"
+                /> */}
                 <p className="text-[1rem] font-medium leading-normal text-style text-[#1f1f1f]">
                   {userData?.displayName || null}
                 </p>
@@ -494,18 +619,30 @@ export const Header = () => {
               {isManageAccountOpen ? (
                 <div>
                   <div className="my-4">
-                    <p className="text-[1.5rem] text-style font-bold capitalize leading-normal">Email</p>
-                    <span className="text-[1rem] text-[#0000FF] text-style font-normal leading-normal">{userData?.email}</span>
+                    <p className="text-[1.5rem] text-style font-bold capitalize leading-normal">
+                      Email
+                    </p>
+                    <span className="text-[1rem] text-[#0000FF] text-style font-normal leading-normal">
+                      {userData?.email}
+                    </span>
                     <br />
                     {/* <span className="text-[#0000FF]">+ Add Email Address</span> */}
                   </div>
                   <div className="my-4">
-                    <p className="text-[1.5rem] text-style font-bold capitalize leading-normal">Phone Number</p>
-                    {myNumber ? <p className="text-[#0000FF]">{`0${myNumber}`}</p> : <p>loading..</p>}
+                    <p className="text-[1.5rem] text-style font-bold capitalize leading-normal">
+                      Phone Number
+                    </p>
+                    {myNumber ? (
+                      <p className="text-[#0000FF]">{`0${myNumber}`}</p>
+                    ) : (
+                      <p>loading..</p>
+                    )}
                     {/* <p className="text-[#0000FF]">{myNumber}</p> */}
                   </div>
                   <div className="my-4">
-                    <p className="text-[1.5rem] text-style font-bold capitalize leading-normal">Password</p>
+                    <p className="text-[1.5rem] text-style font-bold capitalize leading-normal">
+                      Password
+                    </p>
                     <p>*********</p>
                     <Button
                       onClick={() => toggleManageAccount()}
@@ -537,52 +674,67 @@ export const Header = () => {
                 </div>
               ) : isPasswordChangeOpen ? (
                 <div>
-                 {sessionTimeOut && 
-                  <div>
-                            <div className="flex items-center p-3 mb-4 text-[0.8rem] text-red-800 rounded-[0.25rem] bg-red-50" role="alert">
-  <svg className="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-  </svg>
-  <span className="sr-only">Info</span>
-  <div>
-   <span className="text-red-400">{sessionTimeOut}</span>
-  </div>
-</div>
-                  {/* <span>{sessionTimeOut}</span> */}
-                  <div className="flex justify-end">
-                  <button className="" onClick={() => signingOut()}>
-                  <div className="flex gap-4 items-center text-[#333] text-[1rem] text-style font-normal leading-normal">
-                    <PiSignOutBold />
-                    Sign out
-                  </div>
-                </button>
-                  </div>
-                  </div>
-                 }
-                  <form onSubmit={handleSubmit} className=""> 
-                  <Input
-              label="New Password:"
-              id="new_password"
-              name="password"
-              value={password}
-              onChange={handlePasswordChange}
-              label_cls_name="leading-normal poppins capitalize text-[0.66725rem] font-normal"
-              type="password"
-              cls_name="w-full bg-[#EEE] rounded-[0.29656rem] md:rounded-[0.5rem] focus:border-[#4b4be6] focus:ring-[2px] focus:ring-[#9a9ae6] text-base outline-none text-[#696969] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-            />
-                  <Input
-              label="Comfirm Password:"
-              id="c_password"
-              name="c_password"
-              value={confirmPassword}
-              onChange={handleConfirmPasswordChange}
-              label_cls_name="leading-normal poppins capitalize text-[0.66725rem] font-normal"
-              type="password"
-              cls_name="w-full bg-[#EEE] rounded-[0.29656rem] md:rounded-[0.5rem] focus:border-[#4b4be6] focus:ring-[2px] focus:ring-[#9a9ae6] text-base outline-none text-[#696969] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-            />
-           <div className="flex justify-center">
-           <Button value="sumbit" disabled={!isMatching} cls_name={` ${!isMatching && "bg-[#a0a0fa]"} "text-[0.80rem] btn md:text-[1rem] bg-[#0000FF] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]`}/>
-           </div>
+                  {sessionTimeOut && (
+                    <div>
+                      <div
+                        className="flex items-center  p-3 mb-4 text-[0.8rem] text-red-800 rounded-[0.25rem] bg-red-50"
+                        role="alert"
+                      >
+                        <svg
+                          className="flex-shrink-0 inline w-4 h-4 mr-3"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                        </svg>
+                        <span className="sr-only">Info</span>
+                        <div>
+                          <span className="text-red-400">{sessionTimeOut}</span>
+                        </div>
+                      </div>
+                      {/* <span>{sessionTimeOut}</span> */}
+                      <div className="flex justify-end">
+                        <button className="" onClick={() => signingOut()}>
+                          <div className="flex gap-4 items-center text-[#333] text-[1rem] text-style font-normal leading-normal">
+                            <PiSignOutBold />
+                            Sign out
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  <form onSubmit={handleSubmit} className="">
+                    <Input
+                      label="New Password:"
+                      id="new_password"
+                      name="password"
+                      value={password}
+                      onChange={handlePasswordChange}
+                      label_cls_name="leading-normal poppins capitalize text-[0.66725rem] font-normal"
+                      type="password"
+                      cls_name="w-full bg-[#EEE] rounded-[0.29656rem] md:rounded-[0.5rem] focus:border-[#4b4be6] focus:ring-[2px] focus:ring-[#9a9ae6] text-base outline-none text-[#696969] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    />
+                    <Input
+                      label="Comfirm Password:"
+                      id="c_password"
+                      name="c_password"
+                      value={confirmPassword}
+                      onChange={handleConfirmPasswordChange}
+                      label_cls_name="leading-normal poppins capitalize text-[0.66725rem] font-normal"
+                      type="password"
+                      cls_name="w-full bg-[#EEE] rounded-[0.29656rem] md:rounded-[0.5rem] focus:border-[#4b4be6] focus:ring-[2px] focus:ring-[#9a9ae6] text-base outline-none text-[#696969] py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                    />
+                    <div className="flex justify-center">
+                      <Button
+                        value="submit"
+                        disabled={!isMatching}
+                        cls_name={` ${
+                          !isMatching && "bg-[#a0a0fa]"
+                        } "text-[0.80rem] btn md:text-[1rem] bg-[#0000FF] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]`}
+                      />
+                    </div>
                   </form>
                   <div className="flex justify-end">
                     <button

@@ -26,7 +26,7 @@ const Person = ({ img, name, position, alt }) => {
   return (
     <div className="flex items-center justify-center text-center my-2 text-[#000] text-style capitalize leading-normal">
       <div className="mx-auto flex flex-col justify-center items-center">
-        <img className="mb-6 w-[17.9375rem] object-scale-down h-[17.9375rem]" src={img} alt={alt} />
+        <img className="mb-6 md:w-[17.9375rem] object-scale-down  h-[17.9375rem]" src={img} alt={alt} />
         <p className="font-bold text-[1rem] md:text-[1.5rem]">{name}</p>
         <p className=" font-normal text-[1rem] md:text-1.25rem]">{position}</p>
       </div>
@@ -60,7 +60,7 @@ export const About = () => {
           meet our amazing and <br /> hardworking bookbay team{" "}
         </h2>
 
-        <div className="flex border-2 flex-col flex-wrap md:flex-row justify-between">
+        <div className="flex flex-col flex-wrap md:flex-row justify-between">
           <Person img={sule} name="M.A Sulaiman" position="CEO: Bookbay" />
 
           <Person
@@ -76,7 +76,7 @@ export const About = () => {
             position="CTO Bookbay"
           />
         </div>
-        <div className="flex border-2 flex-col flex-wrap md:flex-row justify-between">
+        <div className="flex flex-col flex-wrap md:flex-row justify-between">
           <Person
             img={amin}
             name="Amin bin Ibrahim"
