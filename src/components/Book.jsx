@@ -21,7 +21,7 @@ export const Book = ({ bookId, cover, title, year, author, loading }) => {
           ) : (
             <div className="h-full">
               <img
-                src={`https://covers.openlibrary.org/b/id/${cover}-L.jpg`}
+                src={`${cover}`}
                 alt={title}
                 className="object-scale-down h-full"
               />
