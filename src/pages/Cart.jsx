@@ -10,7 +10,7 @@ import { useAtom } from "jotai";
 import { LoadingBtn } from "../components/LoadingBtn";
 import { cartItems, isLoadingCartItems } from "../components/Header";
 import ClipLoader from "react-spinners/ClipLoader";
-  import axios from "axios";
+import axios from "axios";
 
 export const Cart = () => {
   const [book, setBook] = useState("");
@@ -20,30 +20,30 @@ export const Cart = () => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [bookToDelete, setBookToDelete] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const menuRef = useRef();
 
   // export const cartAtom = atom(cartAtom.length)
-  const userId = "EgwfHOMEhR8JXUQcnY0L";
+  const userId = "6biOYEOVPEhwBWbZaBRC";
   const bookId = "HGt99ThURxEhOHMqRq1L";
 
   const handleShowPaymentModal = () => {
-   
-   axios
-     .post(`http://localhost:4000/api/startPayment/${userId}`, {
-       bookId: bookId,
-     })
-     .then((response) => {
-     console.log(response);
-       const authorizationUrl = response.data.data.data.authorization_url;
-       console.log(authorizationUrl);
-       window.location.href = authorizationUrl;
-     })
-     .catch((error) => {
-       console.error("Error starting payment:", error);
-       // Handle error here
-     });
-
-
+    setLoading(true);
+    axios
+      .post(`http://localhost:4000/api/startPayment/${userId}`, {
+        bookId: bookId,
+      })
+      .then((response) => {
+        console.log(response);
+        const authorizationUrl = response.data.data.data.authorization_url;
+        console.log(authorizationUrl);
+        window.location.href = authorizationUrl;
+      })
+      .catch((error) => {
+        console.error("Error starting payment:", error);
+        setLoading(false);
+        // Handle error here
+      });
   };
 
   const handleHidePaymentModal = () => {
@@ -100,7 +100,6 @@ export const Cart = () => {
             key={index}
             className="box-content flex gap-10 bg-[#fff] rounded-[0.9375rem] shwd"
           >
-           
             <div className="w-full p-2">
               <div className="flex flex-col gap-4 md:flex-row md:justify-between">
                 <div className="flex md:justify-center items-center">
@@ -122,11 +121,19 @@ export const Cart = () => {
                 </div>
 
                 <div className="flex md:justify-center items-center gap-6">
-                  <Button
-                    onClick={handleShowPaymentModal}
-                    value={`Buy ${item.priceBuy}`}
-                    cls_name="text-[0.80rem] btn md:text-[1rem] font-medium bg-[#0000FF] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
-                  />
+                  {loading ? (
+                    <LoadingBtn
+                      value="Checking Out"
+                      loading={loading}
+                      cls_name="text-[1rem] font-bold btn md:text-[1rem] bg-[#2424ff] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[3rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
+                    />
+                  ) : (
+                    <Button
+                      onClick={handleShowPaymentModal}
+                      value={`Buy ${item.priceBuy}`}
+                      cls_name="text-[0.80rem] btn md:text-[1rem] font-medium bg-[#0000FF] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
+                    />
+                  )}
 
                   <Button
                     onClick={handleShowPaymentModal}
@@ -229,13 +236,20 @@ export const Cart = () => {
       </div>
 
       <div className="mt-14 flex justify-center items-center">
-        {!isCartEmpty && (
+        {/* {!isCartEmpty && (
           <Button
             onClick={handleShowPaymentModal}
             value="Go to Checkout"
             cls_name="text-[0.80rem] btn md:text-[1rem] font-medium bg-[#31AF31] px-[5rem] py-[1.2rem] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem]  poppins text-center text-style capitalize  text-center flex items-center leading-[1.23713rem] md:leading[0.62181rem]"
           />
-        )}
+        )} */}
+      </div>
+      <div className="flex md:justify-center items-center gap-6">
+        <img
+          src="https://www.aqskill.com/wp-content/plugins/woo-paystack/assets/images/paystack-wc.png"
+          alt="Paystack Logo"
+          style={{ marginBottom: "5px" }}
+        />
       </div>
       <PaymentModal
         menuRef={menuRef}

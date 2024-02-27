@@ -11,6 +11,7 @@ import { Thanks } from "./pages/Thanks";
 import { Profile } from "./pages/Profile";
 import { About } from "./pages/About";
 import { Success } from "./pages/Success";
+import { MyBooks } from "./pages/MyBooks";
 import { Borrow } from "./pages/Borrow";
 import { Buy } from "./pages/Buy";
 import { WalletConnect } from "./pages/WalletConnect";
@@ -43,6 +44,7 @@ function App() {
             <Route path="/buy" element={<Buy />} />
             <Route path="/sell" element={<Sell />} />
             <Route path="/success" element={<Success />} />
+            <Route path="/my-books" element={<MyBooks />} />
             <Route path="/terms-of-service" element={<ServiceTerms />} />
             <Route path="/privacy-policy" element={<Policy />} />
             <Route path="/frequent-questions" element={<FAQs />} />

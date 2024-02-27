@@ -1,11 +1,8 @@
-import React, {useEffect} from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import { Book } from "../components/Book";
 
 import { Footer } from "../components/Footer";
-
-import { LiaLongArrowAltRightSolid } from "react-icons/lia";
-import { Link } from "react-router-dom";
 
 const Discription = ({ title, body }) => {
   return (
@@ -18,62 +15,54 @@ const Discription = ({ title, body }) => {
   );
 };
 
-export const Success = () => {
-  const userId = "";
-  const courseId = "";
+export const MyBooks = () => {
+  const userId = "3a1vyPCDCAMYgDiL11ee";
+  const [books, setBooks] = useState([]);
+  const [loading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const reference = queryParams.get("reference");
-    setRef(reference);
-  }, [location.search]);
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          `http://localhost:4000/api/books/user/3a1vyPCDCAMYgDiL11ee`
+        );
 
-  // if (!ref) {
-  //   navigate("/");
-  //   return;
-  // }
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-  if (ref) {
-    axios
-      .get(
-        `http://localhost:4000/api/createPayment/${userId}/${courseId}?reference=${ref}`,
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => {
-        if (response.data.status === "Success") {
-          setResponse("Purchase Succesfully");
-        } else {
-          setResponse("Not Successfully");
-        }
-      })
-      .catch((error) => {
+        const data = await response.json();
+        setBooks(data.data);
+        setIsLoading(false);
+        // Process the data as needed
+      } catch (error) {
         console.error(error);
-      });
-  }
+        setIsLoading(false);
+      }
+    };
 
-   const location = useLocation();
-   const navigate = useNavigate();
-   const [ref, setRef] = useState("");
-   const [response, setResponse] = useState("");
-
-
+    fetchData();
+  }, []);
 
   return (
     <div className="mt-20 h-screen">
-      <div className="p-4 w-[100%] md:w-[85%] mx-auto">
-        <Discription title="Book Purchase Successfully" body="Go to my book" />
+      <div className="display p-2 book-container md:w-[95%] mx-auto md:flex justify-evenly">
+        <div className="flex w-full md:w-1/2 justify-evenly">
+          {books &&
+            books.map((item, index) => (
+              <Book
+                key={index}
+                bookId={item?.id}
+                cover={item?.coverPic}
+                title={item?.name}
+                year={item?.releaseDate}
+                author={item?.author}
+                loading={loading}
+              />
+            ))}
+        </div>
       </div>
-
-      <Link
-        to={`/my-books`}
-        className="my-[2px] roboto font-normal leading-normal text-[0.775rem] md:text-[1.5rem] capitalize text-style text-[#31af31] flex gap-[0.2rem] md:w-[9rem] absolute right-4 w-[6rem] md:right-9 links items-center"
-      >
-        <span className="underline">My Books </span>
-        <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />
-      </Link>
-
       <Footer />
     </div>
   );
