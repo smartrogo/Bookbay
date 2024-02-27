@@ -10,10 +10,10 @@ import { useAtom } from "jotai";
 import { LoadingBtn } from "../components/LoadingBtn";
 import { cartItems, isLoadingCartItems } from "../components/Header";
 import ClipLoader from "react-spinners/ClipLoader";
+  import axios from "axios";
 
 export const Cart = () => {
   const [book, setBook] = useState("");
-  const [bookId, setBookId] = useState("");
   const [cartAtom, setCartAtom] = useAtom(cartItems);
   const [isLoadingCart] = useAtom(isLoadingCartItems);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -21,10 +21,29 @@ export const Cart = () => {
   const [bookToDelete, setBookToDelete] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const menuRef = useRef();
+
   // export const cartAtom = atom(cartAtom.length)
+  const userId = "EgwfHOMEhR8JXUQcnY0L";
+  const bookId = "HGt99ThURxEhOHMqRq1L";
 
   const handleShowPaymentModal = () => {
-    setShowPaymentModal(true);
+   
+   axios
+     .post(`http://localhost:4000/api/startPayment/${userId}`, {
+       bookId: bookId,
+     })
+     .then((response) => {
+     console.log(response);
+       const authorizationUrl = response.data.data.data.authorization_url;
+       console.log(authorizationUrl);
+       window.location.href = authorizationUrl;
+     })
+     .catch((error) => {
+       console.error("Error starting payment:", error);
+       // Handle error here
+     });
+
+
   };
 
   const handleHidePaymentModal = () => {
@@ -81,7 +100,7 @@ export const Cart = () => {
             key={index}
             className="box-content flex gap-10 bg-[#fff] rounded-[0.9375rem] shwd"
           >
-            {setBookId(item.id)}
+           
             <div className="w-full p-2">
               <div className="flex flex-col gap-4 md:flex-row md:justify-between">
                 <div className="flex md:justify-center items-center">
