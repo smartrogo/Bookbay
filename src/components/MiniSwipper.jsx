@@ -345,6 +345,7 @@ export const MiniSwipper = () => {
             books.map((item, index) => (
               <Book
                 key={index}
+                bookId={item?.id}
                 cover={item?.coverPic}
                 title={item?.name}
                 year={item?.releaseDate}
@@ -365,7 +366,6 @@ export const MiniSwipper = () => {
             ))} */}
         </div>
         <div className="flex w-full md:w-1/2 justify-evenly">
-         
           {/* {bookChunks &&
             bookChunks[1].map((item, index) => (
               <Book

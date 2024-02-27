@@ -1,13 +1,18 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
-export const Book = ({ bookId, cover, title, year, author, loading }) => {
+export const Book = ({ bookId, cover, title, year, author, loading, price }) => {
   return (
-       <Link  style={{pointerEvents: loading ? "none" : ""}} to={loading ? `/` : `/books/${bookId}?title=${title}&cover=${cover}&year${year}&author=${author}`} className="w-full h-full">
-
+    <Link
+      style={{ pointerEvents: loading ? "none" : "" }}
+      to={
+        loading
+          ? `/`
+          : `/books/${bookId}?title=${title}&cover=${cover}&year=${year}&author=${author}&price=${price}`
+      }
+      className="w-full h-full"
+    >
       <div className="h-[15rem] bd w-full text-center sm:h-[24rem] lg:h-[20rem] xl:h-[20rem] flex flex-col items-center justify-center">
-
-      
         <div className="book flex items-center mb-3 justify-center w-[65%] lg:w-[55%] lg:h-[60%] rounded h-[60%] sm:h-[70%]">
           {loading ? (
             <div className="w-full fit mb-2">
@@ -29,15 +34,14 @@ export const Book = ({ bookId, cover, title, year, author, loading }) => {
           )}
         </div>
 
-
         <span className="color text-xs md:text-sm mx-auto w-full md:w-[70%]">
           {loading ? (
             <Skeleton
               className="mb-[2px] mt-[8px] ske"
               baseColor="#D9D9D9"
-                height="100%"
-                highlightColor="#c7c7c7"
-                duration={3.5}
+              height="100%"
+              highlightColor="#c7c7c7"
+              duration={3.5}
             />
           ) : (
             <span className="color capitalize text-xs md:text-sm text-center mt-4 w-[90%]">
@@ -50,9 +54,9 @@ export const Book = ({ bookId, cover, title, year, author, loading }) => {
             <Skeleton
               className="my-[4px] md:my-[2px] border-blue-50 ske2"
               baseColor="#D9D9D9"
-                height="100%"
-                highlightColor="#c7c7c7"
-                duration={3.5}
+              height="100%"
+              highlightColor="#c7c7c7"
+              duration={3.5}
             />
           ) : (
             <span className="color text-xs md:text-sm text-center mt-4 w-[90%]">
@@ -74,7 +78,6 @@ export const Book = ({ bookId, cover, title, year, author, loading }) => {
           )}
         </span>
       </div>
-
     </Link>
   );
 };
