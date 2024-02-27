@@ -408,13 +408,13 @@ export const MiniSwipper = () => {
             ))}
         </div> */}
       </div>
-      <Link
+      {/* <Link
         to={`/category/${selectedCategory}`}
         className="my-[2px] roboto font-normal leading-normal text-[0.775rem] md:text-[1.5rem] capitalize text-style text-[#31af31] flex gap-[0.2rem] md:w-[9rem] absolute right-4 w-[6rem] md:right-9 links items-center"
       >
         <span className="underline">see more </span>
         <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />
-      </Link>
+      </Link> */}
       <hr className=" h-[1px] mx-auto mt-[3rem] md:mt-[4rem] w-[90%] border-[#333] " />
     </div>
   );

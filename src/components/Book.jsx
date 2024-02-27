@@ -1,14 +1,23 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router-dom";
-export const Book = ({ bookId, cover, title, year, author, loading, price }) => {
+export const Book = ({
+  bookId,
+  cover,
+  title,
+  year,
+  author,
+  loading,
+  priceBuy,
+  priceBorrow,
+}) => {
   return (
     <Link
       style={{ pointerEvents: loading ? "none" : "" }}
       to={
         loading
           ? `/`
-          : `/books/${bookId}?title=${title}&cover=${cover}&year=${year}&author=${author}&price=${price}`
+          : `/books/${bookId}?title=${title}&cover=${cover}&year=${year}&author=${author}&priceBuy=${priceBuy}&priceBorrow=${priceBorrow}`
       }
       className="w-full h-full"
     >

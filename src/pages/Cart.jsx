@@ -12,13 +12,15 @@ import { cartItems, isLoadingCartItems } from "../components/Header";
 import ClipLoader from "react-spinners/ClipLoader";
 
 export const Cart = () => {
+  const [book, setBook] = useState("");
+  const [bookId, setBookId] = useState("");
   const [cartAtom, setCartAtom] = useAtom(cartItems);
   const [isLoadingCart] = useAtom(isLoadingCartItems);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [bookToDelete, setBookToDelete] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const menuRef= useRef()
+  const menuRef = useRef();
   // export const cartAtom = atom(cartAtom.length)
 
   const handleShowPaymentModal = () => {
@@ -31,18 +33,17 @@ export const Cart = () => {
 
   const deleteBookWithConfirmation = (id) => {
     setBookToDelete(id);
-    console.log(id)
+    console.log(id);
     setShowDeleteModal(true);
   };
-
 
   const confirmDelete = async () => {
     // setLoading(true);
     console.log("dude is loading....");
-    console.log(bookToDelete, "book to delete")
+    console.log(bookToDelete, "book to delete");
     if (bookToDelete) {
       await deleteDoc(doc(db, "cart", bookToDelete));
-      console.log("hello from delete")
+      console.log("hello from delete");
       setBookToDelete(null);
       setShowDeleteModal(false);
       const newCartItems = cartAtom.filter((itm) => itm.id !== bookToDelete);
@@ -51,8 +52,7 @@ export const Cart = () => {
     }
   };
 
-
-   // useEffect function to handle outside click to toggle
+  // useEffect function to handle outside click to toggle
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -69,8 +69,9 @@ export const Cart = () => {
     };
   }, [menuRef]);
 
-
   const isCartEmpty = cartAtom.length === 0;
+
+  console.log("Atom", cartAtom);
 
   const CartItem = () => {
     return (
@@ -80,11 +81,12 @@ export const Cart = () => {
             key={index}
             className="box-content flex gap-10 bg-[#fff] rounded-[0.9375rem] shwd"
           >
+            {setBookId(item.id)}
             <div className="w-full p-2">
               <div className="flex flex-col gap-4 md:flex-row md:justify-between">
                 <div className="flex md:justify-center items-center">
                   <img
-                    src={`https://covers.openlibrary.org/b/id/${item.cover}-L.jpg`}
+                    src={`${item.cover}`}
                     alt={item.title}
                     className="w-[5rem] h-[5.14288rem] object-scale-down"
                   />
@@ -92,6 +94,7 @@ export const Cart = () => {
                   <div className="text-[#1E1E1E]">
                     <span className="text  font-medium text-[1.125rem] text-style leading-normal">
                       {item.title}
+                      {console.log("from cart", item)}
                     </span>
                     <p className="text-[0.75rem] font-normal leading-normal capitalize text-style">
                       Only for sale
@@ -101,14 +104,14 @@ export const Cart = () => {
 
                 <div className="flex md:justify-center items-center gap-6">
                   <Button
-                  onClick={handleShowPaymentModal}
-                    value="Buy: N681"
+                    onClick={handleShowPaymentModal}
+                    value={`Buy ${item.priceBuy}`}
                     cls_name="text-[0.80rem] btn md:text-[1rem] font-medium bg-[#0000FF] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
                   />
 
                   <Button
                     onClick={handleShowPaymentModal}
-                    value="Borrow: N81"
+                    value={`Borrow ${item.priceBorrow}`}
                     cls_name="text-[0.80rem] btn md:text-[1rem] font-medium bg-[#DAA520] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
                   />
 
@@ -174,15 +177,18 @@ export const Cart = () => {
       </div>
     );
   };
-  if (isLoadingCart) return   <div className="mt-[20rem] flex justify-center items-center">
-    <ClipLoader
-  loading={isLoadingCart}
-  size={80}
-  color="#00f"
-  aria-label="Loading Spinner"
-  data-testid="loader"
-/>
-  </div>
+  if (isLoadingCart)
+    return (
+      <div className="mt-[20rem] flex justify-center items-center">
+        <ClipLoader
+          loading={isLoadingCart}
+          size={80}
+          color="#00f"
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
+    );
   return (
     <div
       style={{ paddingTop: isCartEmpty ? "8rem" : "5rem" }}

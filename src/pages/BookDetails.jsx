@@ -13,6 +13,8 @@ import { useAtom } from "jotai";
 
 export const BookDetails = () => {
   const [book, setBook] = useState([]);
+  const [priceBuy, setPriceBuy] = useState([]);
+  const [priceBorrow, setPriceBorrow] = useState([]);
   const [inputText, setInputText] = useState("");
   const [displayText, setDisplayText] = useState("");
   const [displayUser, setDisplayUser] = useState(false);
@@ -22,7 +24,8 @@ export const BookDetails = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { bookId } = useParams();
 
-  const { title, author, cover, year } = Object.fromEntries(searchParams);
+  const { title, author, cover, year } =
+    Object.fromEntries(searchParams);
   console.log(title, author, cover, year, "det");
   console.log("Book Id", bookId);
   const { userData } = useContext(AuthContext);
@@ -40,8 +43,10 @@ export const BookDetails = () => {
         }
 
         const data = await response.json();
-        console.log(data);
+
         setBook(data);
+        setPriceBorrow(data.priceBorrow)
+        setPriceBuy(data.priceBuy)
 
         // Process the data as needed
       } catch (error) {
@@ -72,7 +77,7 @@ export const BookDetails = () => {
 
         setCartAtom((old) => [
           ...old,
-          { email: userData.emailc, id: res.id, title, author, cover },
+          { email: userData.emailc, id: res.id, title, author, cover, priceBuy, priceBorrow },
         ]);
         navigate("/cart");
       });
@@ -134,7 +139,9 @@ export const BookDetails = () => {
             </div>
             <div className="capitalize border-2 border-solid border-[#000] rounded-[0.5rem] py-[0.5rem] px-[2rem] flex flex-col gap-[0.5rem] bg-[#D9FFF5]">
               <span className="text-[1rem] text-style font-normal">borrow</span>
-              <span className="text-[1.25rem] font-bold">N{book.priceBorrow}</span>
+              <span className="text-[1.25rem] font-bold">
+                N{book.priceBorrow}
+              </span>
             </div>
           </div>
 
