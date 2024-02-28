@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
@@ -19,8 +19,12 @@ const Discription = ({ title, body }) => {
 };
 
 export const Success = () => {
-  const userId = "";
-  const courseId = "";
+ const userId = "7We2EnhANeS5DQBPimbf";
+ const bookId = "HGt99ThURxEhOHMqRq1L";
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [ref, setRef] = useState("");
+  const [response, setResponse] = useState("");
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -28,15 +32,15 @@ export const Success = () => {
     setRef(reference);
   }, [location.search]);
 
-  // if (!ref) {
-  //   navigate("/");
-  //   return;
-  // }
+   if (!ref) {
+     navigate("/");
+     return;
+   }
 
   if (ref) {
     axios
       .get(
-        `http://localhost:4000/api/createPayment/${userId}/${courseId}?reference=${ref}`,
+        `http://localhost:4000/api/createPayment/${userId}/${bookId}?reference=${ref}`,
         {
           withCredentials: true,
         }
@@ -53,10 +57,7 @@ export const Success = () => {
       });
   }
 
-   const location = useLocation();
-   const navigate = useNavigate();
-   const [ref, setRef] = useState("");
-   const [response, setResponse] = useState("");
+   
 
 
 
