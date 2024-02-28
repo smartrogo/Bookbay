@@ -1,6 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import { BookContext } from "../BookContext";
+import { AuthContext } from "../AuthContext";
+import { UserContext } from "../UserContext";
 
 import { Footer } from "../components/Footer";
 
@@ -19,8 +22,10 @@ const Discription = ({ title, body }) => {
 };
 
 export const Success = () => {
- const userId = "7We2EnhANeS5DQBPimbf";
- const bookId = "HGt99ThURxEhOHMqRq1L";
+  const { booksId } = useContext(BookContext);
+  const { userId } = useContext(UserContext);
+  //  const userId = "7We2EnhANeS5DQBPimbf";
+  //  const bookId = "HGt99ThURxEhOHMqRq1L";
   const location = useLocation();
   const navigate = useNavigate();
   const [ref, setRef] = useState("");
@@ -32,15 +37,15 @@ export const Success = () => {
     setRef(reference);
   }, [location.search]);
 
-   if (!ref) {
-     navigate("/");
-     return;
-   }
+  if (!ref) {
+    navigate("/");
+    return;
+  }
 
   if (ref) {
     axios
       .get(
-        `http://localhost:4000/api/createPayment/${userId}/${bookId}?reference=${ref}`,
+        `https://bookbayapp.onrender.com/api/createPayment/${userId}/${booksId}?reference=${ref}`,
         {
           withCredentials: true,
         }
@@ -56,10 +61,6 @@ export const Success = () => {
         console.error(error);
       });
   }
-
-   
-
-
 
   return (
     <div className="mt-20 h-screen">

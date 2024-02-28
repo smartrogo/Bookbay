@@ -9,9 +9,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { LoadingBtn } from "../components/LoadingBtn";
 import { cartItems } from "../components/Header";
+import { BookContext } from "../BookContext";
 import { useAtom } from "jotai";
 
 export const BookDetails = () => {
+  const { booksId, setBooksId } = useContext(BookContext);
   const [book, setBook] = useState([]);
   const [priceBuy, setPriceBuy] = useState([]);
   const [priceBorrow, setPriceBorrow] = useState([]);
@@ -24,10 +26,10 @@ export const BookDetails = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const { bookId } = useParams();
 
-  const { title, author, cover, year } =
-    Object.fromEntries(searchParams);
+  const { title, author, cover, year } = Object.fromEntries(searchParams);
   console.log(title, author, cover, year, "det");
-  console.log("Book Id", bookId);
+  setBooksId(bookId);
+  console.log("Book Id", booksId, bookId);
   const { userData } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -35,7 +37,7 @@ export const BookDetails = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/api/books/${bookId}`
+          `https://bookbayapp.onrender.com/api/books/${bookId}`
         );
 
         if (!response.ok) {
@@ -45,8 +47,8 @@ export const BookDetails = () => {
         const data = await response.json();
 
         setBook(data);
-        setPriceBorrow(data.priceBorrow)
-        setPriceBuy(data.priceBuy)
+        setPriceBorrow(data.priceBorrow);
+        setPriceBuy(data.priceBuy);
 
         // Process the data as needed
       } catch (error) {
@@ -77,7 +79,15 @@ export const BookDetails = () => {
 
         setCartAtom((old) => [
           ...old,
-          { email: userData.emailc, id: res.id, title, author, cover, priceBuy, priceBorrow },
+          {
+            email: userData.emailc,
+            id: res.id,
+            title,
+            author,
+            cover,
+            priceBuy,
+            priceBorrow,
+          },
         ]);
         navigate("/cart");
       });

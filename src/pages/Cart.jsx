@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { db } from "../firebase";
 import { useState, useEffect, useRef } from "react";
-import { doc, deleteDoc } from "firebase/firestore";
+import {
+  doc,
+  deleteDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { Button } from "../components/Button";
 import trash from "../assets/trash.svg";
 import { Footer } from "../components/Footer";
@@ -11,9 +18,16 @@ import { LoadingBtn } from "../components/LoadingBtn";
 import { cartItems, isLoadingCartItems } from "../components/Header";
 import ClipLoader from "react-spinners/ClipLoader";
 import axios from "axios";
+import { BookContext } from "../BookContext";
+import { AuthContext } from "../AuthContext";
+import { UserContext } from "../UserContext";
 
 export const Cart = () => {
   const [book, setBook] = useState("");
+  // const [userId, setUserId] = useState("");
+  const { booksId } = useContext(BookContext);
+  const { userData } = useContext(AuthContext);
+  const { userId, setUserId } = useContext(UserContext);
   const [cartAtom, setCartAtom] = useAtom(cartItems);
   const [isLoadingCart] = useAtom(isLoadingCartItems);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -24,14 +38,39 @@ export const Cart = () => {
   const menuRef = useRef();
 
   // export const cartAtom = atom(cartAtom.length)
-  const userId = "6biOYEOVPEhwBWbZaBRC";
-  const bookId = "HGt99ThURxEhOHMqRq1L";
+  // const userId = "6biOYEOVPEhwBWbZaBRC";
+  // const bookId = "HGt99ThURxEhOHMqRq1L";
+
+  const fetchUserIdByEmail = async () => {
+    try {
+      const q = query(
+        collection(db, "userDetails"),
+        where("email", "==", userData.email)
+      );
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        const user = querySnapshot.docs[0].id;
+        setUserId(user);
+        console.log("User ID:", userId);
+        console.log("Book ID:", booksId);
+
+        return user;
+      } else {
+        throw new Error("User not found");
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      throw error;
+    }
+  };
+
+  fetchUserIdByEmail();
 
   const handleShowPaymentModal = () => {
     setLoading(true);
     axios
-      .post(`http://localhost:4000/api/startPayment/${userId}`, {
-        bookId: bookId,
+      .post(`https://bookbayapp.onrender.com/api/startPayment/${userId}`, {
+        bookId: booksId,
       })
       .then((response) => {
         console.log(response);

@@ -28,6 +28,7 @@ export const AuthProvider = ({ children }) => {
           pic: user.photoURL,
           displayName: user.displayName,
           email: user.email,
+          userId: user.uid,
         }));
       } else {
         // console.log("no authenticated");

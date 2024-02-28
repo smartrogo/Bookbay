@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 import { RiMenu3Line } from "react-icons/ri";
 import { Button } from "./Button";
 import { RiCloseCircleFill } from "react-icons/ri";
@@ -22,8 +23,10 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Input from "./Input";
 export const cartItems = atom([]);
 export const isLoadingCartItems = atom(true);
+import { setUserId } from "../store/reducers/setUserId";
 
 export const Header = () => {
+  const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isManageAccountOpen, setIsManageAccountOpen] = useState(false);
@@ -56,6 +59,7 @@ export const Header = () => {
           collection(db, "cart"),
           where("email", "==", userData.email)
         );
+       
         const querySnapshot = await getDocs(q);
         let res = [];
         querySnapshot.forEach((doc) => {
@@ -79,11 +83,15 @@ export const Header = () => {
           collection(db, "userDetails"),
           where("email", "==", userData.email)
         );
+
         try {
           const querySnapshot = await getDocs(q);
           querySnapshot.forEach((doc) => {
+            console.log("User ID:", doc.id);
+              setUserData({ ...userData, userId: doc.id });
             console.log(doc.data(), "hello phone");
             console.log(doc.data().phone, "hello phone");
+            console.log("here",userData);
             const val = doc.data().phone;
             setMyNumber(val);
           });
@@ -224,32 +232,32 @@ export const Header = () => {
     }
   };
 
-   const handleAvatarChange = async (e) => {
-     try {
-       const file = e.target.files[0];
-       if (file) {
-         setLoadingAvatar(true);
+  const handleAvatarChange = async (e) => {
+    try {
+      const file = e.target.files[0];
+      if (file) {
+        setLoadingAvatar(true);
 
-         const storageRef = ref(storage, `avatars/${auth.currentUser.uid}`);
-         await uploadBytes(storageRef, file);
+        const storageRef = ref(storage, `avatars/${auth.currentUser.uid}`);
+        await uploadBytes(storageRef, file);
 
-         const avatarURL = await getDownloadURL(storageRef);
+        const avatarURL = await getDownloadURL(storageRef);
 
-         // Update the user's profile with the new avatar URL
-         await updateProfile(auth.currentUser, {
-           photoURL: avatarURL,
-         });
+        // Update the user's profile with the new avatar URL
+        await updateProfile(auth.currentUser, {
+          photoURL: avatarURL,
+        });
 
-         // Optionally, update the local userData state with the new avatar URL
-         setUserData({ ...userData, pic: avatarURL });
+        // Optionally, update the local userData state with the new avatar URL
+        setUserData({ ...userData, pic: avatarURL });
 
-         setLoadingAvatar(false);
-       }
-     } catch (error) {
-       console.error("Error changing avatar:", error.message);
-       setLoadingAvatar(false);
-     }
-   };
+        setLoadingAvatar(false);
+      }
+    } catch (error) {
+      console.error("Error changing avatar:", error.message);
+      setLoadingAvatar(false);
+    }
+  };
 
   return (
     <section

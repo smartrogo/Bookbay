@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Book } from "../components/Book";
+import { UserContext } from "../UserContext";
 
 import { Footer } from "../components/Footer";
 
@@ -16,7 +17,9 @@ const Discription = ({ title, body }) => {
 };
 
 export const MyBooks = () => {
-  const userId = "3a1vyPCDCAMYgDiL11ee";
+  const { userId } = useContext(UserContext);
+  // const userId = "3a1vyPCDCAMYgDiL11ee";
+
   const [books, setBooks] = useState([]);
   const [loading, setIsLoading] = useState(true);
 
@@ -25,7 +28,7 @@ export const MyBooks = () => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          `http://localhost:4000/api/books/user/3a1vyPCDCAMYgDiL11ee`
+          `https://bookbayapp.onrender.com/api/books/user/3a1vyPCDCAMYgDiL11ee`
         );
 
         if (!response.ok) {
