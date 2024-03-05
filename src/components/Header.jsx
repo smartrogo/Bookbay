@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
 import { RiMenu3Line } from "react-icons/ri";
 import { Button } from "./Button";
 import { RiCloseCircleFill } from "react-icons/ri";
@@ -9,6 +8,7 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { GrCart } from "react-icons/gr";
 import { AuthContext } from "../AuthContext";
+import { UserContext } from "../UserContext";
 import { useContext } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -23,7 +23,9 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Input from "./Input";
 export const cartItems = atom([]);
 export const isLoadingCartItems = atom(true);
-import { setUserId } from "../store/reducers/setUserId";
+import { useDispatch } from "react-redux";
+import { setUserId } from "../store/actions/userAction";
+import { clearUserId } from "../store/actions/userAction";
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -52,14 +54,39 @@ export const Header = () => {
 
   const [loadingAvatar, setLoadingAvatar] = useState(false);
 
+ useEffect(() => {
+   const fetchUserIdByEmail = async () => {
+     try {
+       const q = query(
+         collection(db, "userDetails"),
+         where("email", "==", userData.email)
+       );
+       const querySnapshot = await getDocs(q);
+
+       if (!querySnapshot.empty) {
+         const user = querySnapshot.docs[0].id;
+         dispatch(setUserId(user));
+         console.log("User ID here:", user);
+       } else {
+         throw new Error("User not found");
+       }
+     } catch (error) {
+       console.error("Error fetching user:", error);
+     }
+   };
+
+   fetchUserIdByEmail();
+ }, [userData.email, dispatch]);
+
   useEffect(() => {
+   
     const getMyBooks = async () => {
       if (userData && userData.email) {
         const q = query(
           collection(db, "cart"),
           where("email", "==", userData.email)
         );
-       
+
         const querySnapshot = await getDocs(q);
         let res = [];
         querySnapshot.forEach((doc) => {
@@ -87,11 +114,10 @@ export const Header = () => {
         try {
           const querySnapshot = await getDocs(q);
           querySnapshot.forEach((doc) => {
-            console.log("User ID:", doc.id);
-              setUserData({ ...userData, userId: doc.id });
+            setUserData({ ...userData });
             console.log(doc.data(), "hello phone");
             console.log(doc.data().phone, "hello phone");
-            console.log("here",userData);
+            console.log("here", userData);
             const val = doc.data().phone;
             setMyNumber(val);
           });
@@ -145,6 +171,7 @@ export const Header = () => {
 
   const signingOut = () => {
     setIsMenuOpen(false);
+     dispatch(clearUserId());
     logOut();
   };
 
