@@ -10,6 +10,10 @@ import { BiMap } from "react-icons/bi";
 import { BiPhoneCall } from "react-icons/bi";
 import {BsWhatsapp} from "react-icons/bs"
 
+const getCurrentYear = () => {
+  return new Date().getFullYear();
+};
+
 export const Footer = () => {
   return (
     <div className="mt-24  bottom-0 w-full">
@@ -152,7 +156,7 @@ export const Footer = () => {
 
           <div className="w-[75%] roboto flex justify-center text-[0.5rem] md:text-[1rem] font-normal text-style leading-normal mx-auto text-center">
             <span className="text-sm text-[#d2cfcf]">
-              Copyright © 2023 . All Rights Reserved <br /> By
+              Copyright © {getCurrentYear()} . All Rights Reserved <br /> By
               <Link to="/" className="underline pl-1">
                 Bookbay
               </Link>
