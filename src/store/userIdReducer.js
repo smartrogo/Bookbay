@@ -6,6 +6,9 @@ const userIdReducer = (state = initialState, action) => {
     case "SET_USER_ID":
       localStorage.setItem("userId", action.payload);
       return action.payload;
+    case "CLEAR_USER_ID":
+      localStorage.removeItem("userId");
+      return null;
     default:
       return state;
   }

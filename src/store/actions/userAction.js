@@ -4,3 +4,9 @@ export const setUserId = (userId) => {
     payload: userId,
   };
 };
+
+export const clearUserId = () => {
+  return {
+    type: "CLEAR_USER_ID",
+  };
+};
