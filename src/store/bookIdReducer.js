@@ -6,6 +6,9 @@ const bookIdReducer = (state = initialState, action) => {
     case "SET_BOOK_ID":
       localStorage.setItem("bookId", action.payload);
       return action.payload;
+    case "CLEAR_BOOK_ID":
+      localStorage.removeItem("bookId");
+      return null;
     default:
       return state;
   }

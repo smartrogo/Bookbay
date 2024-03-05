@@ -4,3 +4,9 @@ export const setBookId = (bookId) => {
     payload: bookId,
   };
 };
+
+export const clearBookId = () => {
+  return {
+    type: "CLEAR_BOOK_ID",
+  };
+};
