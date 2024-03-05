@@ -1,14 +1,18 @@
 // bookIdReducer.js
-const initialState = localStorage.getItem("bookId") || null;
+const initialState = localStorage.getItem("bookId")
+  ? JSON.parse(localStorage.getItem("bookId"))
+  : [];
 
 const bookIdReducer = (state = initialState, action) => {
+  let updatedState;
   switch (action.type) {
     case "SET_BOOK_ID":
-      localStorage.setItem("bookId", action.payload);
-      return action.payload;
+      updatedState = [...state, action.payload];
+      localStorage.setItem("bookId", JSON.stringify(updatedState));
+      return updatedState;
     case "CLEAR_BOOK_ID":
       localStorage.removeItem("bookId");
-      return null;
+      return [];
     default:
       return state;
   }
