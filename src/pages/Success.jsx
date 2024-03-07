@@ -4,6 +4,7 @@ import axios from "axios";
 import { BookContext } from "../BookContext";
 import { AuthContext } from "../AuthContext";
 import { UserContext } from "../UserContext";
+import { useSelector } from "react-redux";
 
 import { Footer } from "../components/Footer";
 
@@ -22,8 +23,10 @@ const Discription = ({ title, body }) => {
 };
 
 export const Success = () => {
-  const { booksId } = useContext(BookContext);
-  const { userId } = useContext(UserContext);
+  const bookId = useSelector((state) => state.bookId);
+  const userId = useSelector((state) => state.userId);
+  // const { booksId } = useContext(BookContext);
+  // const { userId } = useContext(UserContext);
   //  const userId = "7We2EnhANeS5DQBPimbf";
   //  const bookId = "HGt99ThURxEhOHMqRq1L";
   const location = useLocation();
@@ -43,11 +46,18 @@ export const Success = () => {
   }
 
   if (ref) {
+    const bookIdsString = JSON.stringify(bookId);
+    const cleanedBookIdsString = bookIdsString
+      .replace(/\\/g, "") // Remove backslashes
+      .replace(/^\"|\"$/g, ""); // Remove double quotes at the beginning and end
+
+    console.log("Clean id:", cleanedBookIdsString, "user id:", userId, "ref:", ref);
+
     axios
-      .get(
-        `https://bookbayapp.onrender.com/api/createPayment/${userId}/${booksId}?reference=${ref}`,
+      .post(
+        `http://localhost:4000/api/createPayment/${userId}?reference=${ref}`,
         {
-          withCredentials: true,
+          bookIds: JSON.parse(`${cleanedBookIdsString}`),
         }
       )
       .then((response) => {
