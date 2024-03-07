@@ -11,10 +11,13 @@ import { LoadingBtn } from "../components/LoadingBtn";
 import { cartItems } from "../components/Header";
 import { BookContext } from "../BookContext";
 import { useAtom } from "jotai";
+import { useDispatch } from "react-redux";
+import { setBookId, clearBookId } from "../store/actions/bookAction";
 
 export const BookDetails = () => {
   const { booksId, setBooksId } = useContext(BookContext);
   const [book, setBook] = useState([]);
+  const [id, setId] = useState([]);
   const [priceBuy, setPriceBuy] = useState([]);
   const [priceBorrow, setPriceBorrow] = useState([]);
   const [inputText, setInputText] = useState("");
@@ -25,19 +28,26 @@ export const BookDetails = () => {
   const [error, setError] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const { bookId } = useParams();
+  const dispatch = useDispatch();
 
   const { title, author, cover, year } = Object.fromEntries(searchParams);
   console.log(title, author, cover, year, "det");
-  setBooksId(bookId);
-  console.log("Book Id", booksId, bookId);
+  // setBooksId(bookId);
+
+  // console.log("Book Id", booksId, bookId);
   const { userData } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setBooksId(bookId);
+    setId(bookId);
+  }, [bookId, setBooksId]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://bookbayapp.onrender.com/api/books/${bookId}`
+          ` https://bookbayapp.onrender.com/api/books/${bookId}`
         );
 
         if (!response.ok) {
@@ -69,13 +79,16 @@ export const BookDetails = () => {
     setLoading(true);
     console.log("loading...");
     if (userData && userData.email) {
+      console.log(userData.email, "from add to cart");
       await addDoc(collection(db, "cart"), {
         email: userData.email,
         title,
         author,
         cover,
       }).then((res) => {
-        console.log("resss", res.id);
+        // dispatch(clearBookId());
+        console.log("Id", id);
+        dispatch(setBookId(id));
 
         setCartAtom((old) => [
           ...old,
