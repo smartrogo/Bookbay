@@ -21,13 +21,20 @@ import axios from "axios";
 import { BookContext } from "../BookContext";
 import { AuthContext } from "../AuthContext";
 import { UserContext } from "../UserContext";
+import { useDispatch } from "react-redux";
+import { setBookId } from "../store/actions/bookAction";
+import { useSelector } from "react-redux";
+import { removeBookId } from "../store/actions/bookAction";
 
 export const Cart = () => {
+  const dispatch = useDispatch();
+
   const [book, setBook] = useState("");
+  const [price, setPrice] = useState("");
   // const [userId, setUserId] = useState("");
-  const { booksId } = useContext(BookContext);
   const { userData } = useContext(AuthContext);
-  const { userId, setUserId } = useContext(UserContext);
+  console.log("Cart:", userData.email);
+  // const { userId, setUserId } = useContext(UserContext);
   const [cartAtom, setCartAtom] = useAtom(cartItems);
   const [isLoadingCart] = useAtom(isLoadingCartItems);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -36,41 +43,27 @@ export const Cart = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const menuRef = useRef();
+  const bookId = useSelector((state) => state.bookId);
+  const userId = useSelector((state) => state.userId);
 
   // export const cartAtom = atom(cartAtom.length)
-  // const userId = "6biOYEOVPEhwBWbZaBRC";
-  // const bookId = "HGt99ThURxEhOHMqRq1L";
 
-  const fetchUserIdByEmail = async () => {
-    try {
-      const q = query(
-        collection(db, "userDetails"),
-        where("email", "==", userData.email)
-      );
-      const querySnapshot = await getDocs(q);
-      if (!querySnapshot.empty) {
-        const user = querySnapshot.docs[0].id;
-        setUserId(user);
-        console.log("User ID:", userId);
-        console.log("Book ID:", booksId);
-
-        return user;
-      } else {
-        throw new Error("User not found");
-      }
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      throw error;
-    }
-  };
-
-  fetchUserIdByEmail();
+  console.log("Redux Book ID:", bookId);
+  console.log("Redux User ID:", userId);
 
   const handleShowPaymentModal = () => {
     setLoading(true);
+
+    const bookIdsString = JSON.stringify(bookId);
+    const cleanedBookIdsString = bookIdsString
+      .replace(/\\/g, "") // Remove backslashes
+      .replace(/^\"|\"$/g, ""); // Remove double quotes at the beginning and end
+
+    console.log("Clean id", cleanedBookIdsString);
+
     axios
-      .post(`https://bookbayapp.onrender.com/api/startPayment/${userId}`, {
-        bookId: booksId,
+      .post(`http://localhost:4000/api/startPayment/${userId}`, {
+        bookIds: JSON.parse(`${cleanedBookIdsString}`),
       })
       .then((response) => {
         console.log(response);
@@ -106,6 +99,7 @@ export const Cart = () => {
       setShowDeleteModal(false);
       const newCartItems = cartAtom.filter((itm) => itm.id !== bookToDelete);
       setCartAtom(newCartItems);
+      dispatch(removeBookId("HGt99ThURxEhOHMqRq1L"));
       // getMyBooks();
     }
   };
@@ -130,6 +124,10 @@ export const Cart = () => {
   const isCartEmpty = cartAtom.length === 0;
 
   console.log("Atom", cartAtom);
+  useEffect(() => {
+    const totalPrice = cartAtom.reduce((acc, item) => item.priceBuy, 0);
+    setPrice(totalPrice);
+  }, [cartAtom]);
 
   const CartItem = () => {
     return (
@@ -160,22 +158,14 @@ export const Cart = () => {
                 </div>
 
                 <div className="flex md:justify-center items-center gap-6">
-                  {loading ? (
-                    <LoadingBtn
-                      value="Checking Out"
-                      loading={loading}
-                      cls_name="text-[1rem] font-bold btn md:text-[1rem] bg-[#2424ff] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[3rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
-                    />
-                  ) : (
-                    <Button
-                      onClick={handleShowPaymentModal}
-                      value={`Buy ${item.priceBuy}`}
-                      cls_name="text-[0.80rem] btn md:text-[1rem] font-medium bg-[#0000FF] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
-                    />
-                  )}
+                  <Button
+                    // onClick={handleShowPaymentModal}
+                    value={`Buy ${item.priceBuy}`}
+                    cls_name="text-[0.80rem] btn md:text-[1rem] font-medium bg-[#0000FF] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
+                  />
 
                   <Button
-                    onClick={handleShowPaymentModal}
+                    // onClick={handleShowPaymentModal}
                     value={`Borrow ${item.priceBorrow}`}
                     cls_name="text-[0.80rem] btn md:text-[1rem] font-medium bg-[#DAA520] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
                   />
@@ -188,6 +178,12 @@ export const Cart = () => {
             </div>
           </div>
         ))}
+
+        <div className="flex justify-end mt-4">
+          <p className="text-[#1E1E1E] font-medium text-lg">
+            Total: NGN {price} {/* Display total price */}
+          </p>
+        </div>
 
         {showDeleteModal && (
           <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-600 bg-opacity-50">
@@ -274,22 +270,31 @@ export const Cart = () => {
         )}
       </div>
 
-      <div className="mt-14 flex justify-center items-center">
-        {/* {!isCartEmpty && (
-          <Button
-            onClick={handleShowPaymentModal}
-            value="Go to Checkout"
-            cls_name="text-[0.80rem] btn md:text-[1rem] font-medium bg-[#31AF31] px-[5rem] py-[1.2rem] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem]  poppins text-center text-style capitalize  text-center flex items-center leading-[1.23713rem] md:leading[0.62181rem]"
-          />
-        )} */}
-      </div>
       <div className="flex md:justify-center items-center gap-6">
         <img
           src="https://www.aqskill.com/wp-content/plugins/woo-paystack/assets/images/paystack-wc.png"
           alt="Paystack Logo"
-          style={{ marginBottom: "5px" }}
+          style={{ marginBottom: "5px", height: "70px", width: "270px" }}
         />
       </div>
+
+      <div className="mt-14 flex justify-center items-center">
+        {!isCartEmpty &&
+          (loading ? (
+            <LoadingBtn
+              value="Checking Out.."
+              loading={loading}
+              cls_name="text-[1rem] font-bold btn md:text-[1rem] bg-[#2424ff] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[3rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
+            />
+          ) : (
+            <Button
+              onClick={handleShowPaymentModal}
+              value="Go to Checkout"
+              cls_name="text-[0.80rem] btn md:text-[1rem] font-medium bg-[#31AF31] px-[5rem] py-[1.2rem] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem]  poppins text-center text-style capitalize  text-center flex items-center leading-[1.23713rem] md:leading[0.62181rem]"
+            />
+          ))}
+      </div>
+
       <PaymentModal
         menuRef={menuRef}
         show={showPaymentModal}
