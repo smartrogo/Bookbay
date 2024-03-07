@@ -5,6 +5,11 @@ export const setBookId = (bookId) => {
   };
 };
 
+export const removeBookId = () => {
+  return {
+    type: "REMOVE_BOOK_ID",
+  };
+};
 export const clearBookId = () => {
   return {
     type: "CLEAR_BOOK_ID",

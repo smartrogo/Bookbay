@@ -3,7 +3,7 @@ import rootReducer from "./reducers";
 
 const initialState = {
   userId: localStorage.getItem("userId") || null,
-  bookId: localStorage.getItem("bookId") || null,
+  bookId: localStorage.getItem("bookIds") || [],
 };
 
 const store = createStore(
