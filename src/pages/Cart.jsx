@@ -28,7 +28,9 @@ import { removeBookId } from "../store/actions/bookAction";
 
 export const Cart = () => {
   const dispatch = useDispatch();
-
+  const [selectedPriceType, setSelectedPriceType] = useState("priceBuy");
+  const [buySelected, setBuySelected] = useState(true);
+  const [borrowSelected, setBorrowSelected] = useState(false);
   const [book, setBook] = useState("");
   const [price, setPrice] = useState("");
   // const [userId, setUserId] = useState("");
@@ -51,6 +53,18 @@ export const Cart = () => {
   console.log("Redux Book ID:", bookId);
   console.log("Redux User ID:", userId);
 
+  const handleBuy = () => {
+    setSelectedPriceType("priceBuy");
+    setBuySelected(true);
+    setBorrowSelected(false);
+  };
+
+  const handleBorrow = () => {
+    setSelectedPriceType("priceBorrow");
+    setBuySelected(false);
+    setBorrowSelected(true);
+  };
+
   const handleShowPaymentModal = () => {
     setLoading(true);
 
@@ -64,6 +78,7 @@ export const Cart = () => {
     axios
       .post(`http://localhost:4000/api/startPayment/${userId}`, {
         bookIds: JSON.parse(`${cleanedBookIdsString}`),
+        priceType: selectedPriceType,
       })
       .then((response) => {
         console.log(response);
@@ -159,15 +174,29 @@ export const Cart = () => {
 
                 <div className="flex md:justify-center items-center gap-6">
                   <Button
-                    // onClick={handleShowPaymentModal}
-                    value={`Buy ${item.priceBuy}`}
-                    cls_name="text-[0.80rem] btn md:text-[1rem] font-medium bg-[#0000FF] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
+                    onClick={handleBuy}
+                    value={`Buy`}
+                    // value={`Buy ${item.priceBuy}`}
+                    cls_name={`text-[0.80rem] btn md:text-[1rem] font-medium ${
+                      buySelected ? "bg-[#31AF31]" : "bg-[#0000FF]"
+                    } rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem] ${
+                      buySelected
+                        ? "disabled:opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
                   />
 
                   <Button
-                    // onClick={handleShowPaymentModal}
-                    value={`Borrow ${item.priceBorrow}`}
-                    cls_name="text-[0.80rem] btn md:text-[1rem] font-medium bg-[#DAA520] rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem]"
+                    onClick={handleBorrow}
+                    value={`Borrow`}
+                    // value={`Borrow ${item.priceBorrow}`}
+                    cls_name={`text-[0.80rem] btn md:text-[1rem] font-medium ${
+                      borrowSelected ? "bg-[#31AF31]" : "bg-[#DAA520]"
+                    } rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem] ${
+                      borrowSelected
+                        ? "disabled:opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
                   />
 
                   <button onClick={() => deleteBookWithConfirmation(item.id)}>
