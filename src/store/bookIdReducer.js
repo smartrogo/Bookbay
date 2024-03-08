@@ -1,12 +1,14 @@
-// bookIdReducer.js
 const storedBookIds = localStorage.getItem("bookIds");
 const initialState = storedBookIds ? JSON.parse(storedBookIds) : [];
 
-const bookIdReducer = (state = initialState, action) => {
+// Ensure all initial values are strings
+const parsedInitialIds = initialState.map((id) => id.toString());
+
+const bookIdReducer = (state = parsedInitialIds, action) => {
   switch (action.type) {
     case "SET_BOOK_ID":
-    // eslint-disable-next-line no-case-declarations
-      const updatedStateSet = [...state, action.payload];
+      // eslint-disable-next-line no-case-declarations
+      const updatedStateSet = [...state, action.payload.toString()];
       localStorage.setItem("bookIds", JSON.stringify(updatedStateSet));
       return updatedStateSet;
     case "REMOVE_BOOK_ID":

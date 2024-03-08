@@ -88,7 +88,7 @@ export const BookDetails = () => {
       }).then((res) => {
         // dispatch(clearBookId());
         console.log("Id", id);
-        dispatch(setBookId(id));
+        dispatch(setBookId(id.toString()));
 
         setCartAtom((old) => [
           ...old,
