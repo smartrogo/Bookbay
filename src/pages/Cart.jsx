@@ -17,6 +17,7 @@ import { useAtom } from "jotai";
 import { LoadingBtn } from "../components/LoadingBtn";
 import { cartItems, isLoadingCartItems } from "../components/Header";
 import ClipLoader from "react-spinners/ClipLoader";
+import { FiCheck } from "react-icons/fi";
 import axios from "axios";
 import { BookContext } from "../BookContext";
 import { AuthContext } from "../AuthContext";
@@ -175,10 +176,10 @@ export const Cart = () => {
                 <div className="flex md:justify-center items-center gap-6">
                   <Button
                     onClick={handleBuy}
-                    value={`Buy`}
+                    value={buySelected ? "✓ Buy" : "Buy"}
                     // value={`Buy ${item.priceBuy}`}
                     cls_name={`text-[0.80rem] btn md:text-[1rem] font-medium ${
-                      buySelected ? "bg-[#31AF31]" : "bg-[#0000FF]"
+                      buySelected ? "bg-[#31AF31]" : "bg-[#DAA520]"
                     } rounded-[0.25rem] md:rounded-[0.3125rem] text-[#FFFFFF] py-[0.5rem] px-[0.5rem] sm:py-[0.5rem] sm:px-[1rem] md:px-[1.25rem] poppins text-center text-style capitalize md:py-[0.625rem] text-center flex items-center px-4 leading-[1.23713rem] md:leading[0.62181rem] ${
                       buySelected
                         ? "disabled:opacity-50 cursor-not-allowed"
@@ -188,7 +189,7 @@ export const Cart = () => {
 
                   <Button
                     onClick={handleBorrow}
-                    value={`Borrow`}
+                    value={borrowSelected ? "✓ Borrow" : "Borrow"}
                     // value={`Borrow ${item.priceBorrow}`}
                     cls_name={`text-[0.80rem] btn md:text-[1rem] font-medium ${
                       borrowSelected ? "bg-[#31AF31]" : "bg-[#DAA520]"
