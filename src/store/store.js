@@ -1,9 +1,12 @@
 import { createStore } from "redux";
 import rootReducer from "./reducers";
 
+const storedBookIds = localStorage.getItem("bookIds");
+const initialBookIds = storedBookIds ? JSON.parse(storedBookIds) : [];
+
 const initialState = {
   userId: localStorage.getItem("userId") || null,
-  bookId: localStorage.getItem("bookIds") || [],
+  bookId: Array.isArray(initialBookIds) ? initialBookIds : [],
 };
 
 const store = createStore(
