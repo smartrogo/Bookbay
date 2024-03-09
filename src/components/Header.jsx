@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { GrCart } from "react-icons/gr";
 import { AuthContext } from "../AuthContext";
+import { UserContext } from "../UserContext";
 import { useContext } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -22,8 +23,12 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Input from "./Input";
 export const cartItems = atom([]);
 export const isLoadingCartItems = atom(true);
+import { useDispatch } from "react-redux";
+import { setUserId } from "../store/actions/userAction";
+import { clearUserId } from "../store/actions/userAction";
 
 export const Header = () => {
+  const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isManageAccountOpen, setIsManageAccountOpen] = useState(false);
@@ -49,13 +54,39 @@ export const Header = () => {
 
   const [loadingAvatar, setLoadingAvatar] = useState(false);
 
+ useEffect(() => {
+   const fetchUserIdByEmail = async () => {
+     try {
+       const q = query(
+         collection(db, "userDetails"),
+         where("email", "==", userData.email)
+       );
+       const querySnapshot = await getDocs(q);
+
+       if (!querySnapshot.empty) {
+         const user = querySnapshot.docs[0].id;
+         dispatch(setUserId(user));
+         console.log("User ID here:", user);
+       } else {
+         throw new Error("User not found");
+       }
+     } catch (error) {
+       console.error("Error fetching user:", error);
+     }
+   };
+
+   fetchUserIdByEmail();
+ }, [userData.email, dispatch]);
+
   useEffect(() => {
+   
     const getMyBooks = async () => {
       if (userData && userData.email) {
         const q = query(
           collection(db, "cart"),
           where("email", "==", userData.email)
         );
+
         const querySnapshot = await getDocs(q);
         let res = [];
         querySnapshot.forEach((doc) => {
@@ -79,11 +110,14 @@ export const Header = () => {
           collection(db, "userDetails"),
           where("email", "==", userData.email)
         );
+
         try {
           const querySnapshot = await getDocs(q);
           querySnapshot.forEach((doc) => {
+            setUserData({ ...userData });
             console.log(doc.data(), "hello phone");
             console.log(doc.data().phone, "hello phone");
+            console.log("here", userData);
             const val = doc.data().phone;
             setMyNumber(val);
           });
@@ -137,6 +171,7 @@ export const Header = () => {
 
   const signingOut = () => {
     setIsMenuOpen(false);
+     dispatch(clearUserId());
     logOut();
   };
 
@@ -224,32 +259,32 @@ export const Header = () => {
     }
   };
 
-   const handleAvatarChange = async (e) => {
-     try {
-       const file = e.target.files[0];
-       if (file) {
-         setLoadingAvatar(true);
+  const handleAvatarChange = async (e) => {
+    try {
+      const file = e.target.files[0];
+      if (file) {
+        setLoadingAvatar(true);
 
-         const storageRef = ref(storage, `avatars/${auth.currentUser.uid}`);
-         await uploadBytes(storageRef, file);
+        const storageRef = ref(storage, `avatars/${auth.currentUser.uid}`);
+        await uploadBytes(storageRef, file);
 
-         const avatarURL = await getDownloadURL(storageRef);
+        const avatarURL = await getDownloadURL(storageRef);
 
-         // Update the user's profile with the new avatar URL
-         await updateProfile(auth.currentUser, {
-           photoURL: avatarURL,
-         });
+        // Update the user's profile with the new avatar URL
+        await updateProfile(auth.currentUser, {
+          photoURL: avatarURL,
+        });
 
-         // Optionally, update the local userData state with the new avatar URL
-         setUserData({ ...userData, pic: avatarURL });
+        // Optionally, update the local userData state with the new avatar URL
+        setUserData({ ...userData, pic: avatarURL });
 
-         setLoadingAvatar(false);
-       }
-     } catch (error) {
-       console.error("Error changing avatar:", error.message);
-       setLoadingAvatar(false);
-     }
-   };
+        setLoadingAvatar(false);
+      }
+    } catch (error) {
+      console.error("Error changing avatar:", error.message);
+      setLoadingAvatar(false);
+    }
+  };
 
   return (
     <section

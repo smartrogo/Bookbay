@@ -1,7 +1,12 @@
-import React from 'react'
+import React from "react";
+import { useSelector } from "react-redux";
+
 
 export const Buy = () => {
-  return (
-    <div>Buy</div>
-  )
-}
+  const userId = useSelector((state) => state.userReducer.userId);
+ 
+
+  
+
+  return <div>Buy {userId}</div>;
+};

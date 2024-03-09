@@ -16,20 +16,22 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
 import { Link } from "react-router-dom";
 import { Slide } from "./Slide";
-import {BookOpen} from "lucide-react";
-import {PencilRuler} from "lucide-react";
-import {FaChildren} from "react-icons/fa6";
-import {GrTechnology } from "react-icons/gr"
-import {MdChangeHistory } from "react-icons/md";
-import {TbBusinessplan } from "react-icons/tb"
-import {ChefHat} from "lucide-react";
-import {HiPhotograph } from "react-icons/hi";
-import {FaPlaceOfWorship } from "react-icons/fa";
-import {GiTeacher } from "react-icons/gi";
-import {HeartPulse} from "lucide-react";
-import {IoLibrary} from "react-icons/io5";
-import {MdFamilyRestroom } from "react-icons/md"
+import { BookOpen } from "lucide-react";
+import { PencilRuler } from "lucide-react";
+import { FaChildren } from "react-icons/fa6";
+import { GrTechnology } from "react-icons/gr";
+import { MdChangeHistory } from "react-icons/md";
+import { TbBusinessplan } from "react-icons/tb";
+import { ChefHat } from "lucide-react";
+import { HiPhotograph } from "react-icons/hi";
+import { FaPlaceOfWorship } from "react-icons/fa";
+import { GiTeacher } from "react-icons/gi";
+import { HeartPulse } from "lucide-react";
+import { IoLibrary } from "react-icons/io5";
+import { MdFamilyRestroom } from "react-icons/md";
+
 export const MiniSwipper = () => {
+  const [books, setBooks] = useState([]);
   const [bookChunks, setBookChunks] = useState([
     [0, 0],
     [0, 0],
@@ -53,35 +55,61 @@ export const MiniSwipper = () => {
   };
 
   // Api call to get books
-const getBooks = async (bookType) => {
-  setIsLoading(true);
+  const getBooks = async (bookType) => {
+    // setIsLoading(true);
 
-  try {
-    // API endpoint
-    const response = await fetch(
-      `https://openlibrary.org/search.json?q=${bookType}`
-    );
+    try {
+      // API endpoint
+      const response = await fetch(
+        `https://openlibrary.org/search.json?q=${bookType}`
+      );
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      // Filter the data and get books with cover image
+      const booksWithCovers = data.docs.filter((item) => item.cover_i);
+
+      // Get the first eight books to be displayed
+      let chunks = fn(booksWithCovers);
+      setBookChunks(chunks); // Update the bookChunks state
+      console.log("First", chunks, "understanding every part");
+      console.log(bookType);
+      // setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching books:", error.message);
+      // setIsLoading(false);
     }
+  };
 
-    const data = await response.json();
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          ` https://bookbayapp.onrender.com/api/books`
+        );
 
-    // Filter the data and get books with cover image
-    const booksWithCovers = data.docs.filter((item) => item.cover_i);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-    // Get the first eight books to be displayed
-    let chunks = fn(booksWithCovers);
-    setBookChunks(chunks); // Update the bookChunks state
-    console.log("First", chunks, "understanding every part");
-    console.log(bookType);
-    setIsLoading(false);
-  } catch (error) {
-    console.error("Error fetching books:", error.message);
-    setIsLoading(false);
-  }
-};
+        const data = await response.json();
+        console.log(data);
+        setBooks(data);
+        setIsLoading(false);
+        // Process the data as needed
+      } catch (error) {
+        console.error(error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="relative">
@@ -315,7 +343,19 @@ const getBooks = async (bookType) => {
 
       <div className="display p-2 book-container md:w-[95%] mx-auto md:flex justify-evenly">
         <div className="flex w-full md:w-1/2 justify-evenly">
-          {bookChunks &&
+          {books &&
+            books.map((item, index) => (
+              <Book
+                key={index}
+                bookId={item?.id}
+                cover={item?.coverPic}
+                title={item?.name}
+                year={item?.releaseDate}
+                author={item?.author}
+                loading={loading}
+              />
+            ))}
+          {/* {bookChunks &&
             bookChunks[0].map((item, index) => (
               <Book
                 key={index}
@@ -325,10 +365,10 @@ const getBooks = async (bookType) => {
                 author={item?.author_name}
                 loading={loading}
               />
-            ))}
+            ))} */}
         </div>
         <div className="flex w-full md:w-1/2 justify-evenly">
-          {bookChunks &&
+          {/* {bookChunks &&
             bookChunks[1].map((item, index) => (
               <Book
                 key={index}
@@ -338,12 +378,12 @@ const getBooks = async (bookType) => {
                 author={item?.author_name}
                 loading={loading}
               />
-            ))}
+            ))} */}
         </div>
       </div>
 
       <div className="hidden p-2 md:flex justify-evenly md:w-[95%] mx-auto">
-        <div className="flex w-full md:w-1/2 justify-evenly">
+        {/* <div className="flex w-full md:w-1/2 justify-evenly">
           {bookChunks &&
             bookChunks[2].map((item, index) => (
               <Book
@@ -355,8 +395,8 @@ const getBooks = async (bookType) => {
                 loading={loading}
               />
             ))}
-        </div>
-        <div className="flex w-full md:w-1/2 justify-evenly">
+        </div> */}
+        {/* <div className="flex w-full md:w-1/2 justify-evenly">
           {bookChunks &&
             bookChunks[3].map((item, index) => (
               <Book
@@ -368,15 +408,15 @@ const getBooks = async (bookType) => {
                 loading={loading}
               />
             ))}
-        </div>
+        </div> */}
       </div>
-      <Link
+      {/* <Link
         to={`/category/${selectedCategory}`}
         className="my-[2px] roboto font-normal leading-normal text-[0.775rem] md:text-[1.5rem] capitalize text-style text-[#31af31] flex gap-[0.2rem] md:w-[9rem] absolute right-4 w-[6rem] md:right-9 links items-center"
       >
         <span className="underline">see more </span>
         <LiaLongArrowAltRightSolid className="w-[1.5rem] mt-1" />
-      </Link>
+      </Link> */}
       <hr className=" h-[1px] mx-auto mt-[3rem] md:mt-[4rem] w-[90%] border-[#333] " />
     </div>
   );

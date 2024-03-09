@@ -1,50 +1,105 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
-import Skeleton from "react-loading-skeleton";
+import { useSearchParams } from "react-router-dom";
 import { db } from "../firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { Button } from "../components/Button";
 import { AuthContext } from "../AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { LoadingBtn } from "../components/LoadingBtn";
 import { cartItems } from "../components/Header";
+import { BookContext } from "../BookContext";
 import { useAtom } from "jotai";
+import { useDispatch } from "react-redux";
+import { setBookId } from "../store/actions/bookAction";
 
 export const BookDetails = () => {
+  const { setBooksId } = useContext(BookContext);
+  const [book, setBook] = useState([]);
+  const [id, setId] = useState([]);
+  const [priceBuy, setPriceBuy] = useState([]);
+  const [priceBorrow, setPriceBorrow] = useState([]);
   const [inputText, setInputText] = useState("");
   const [displayText, setDisplayText] = useState("");
   const [displayUser, setDisplayUser] = useState(false);
   const [loading, setLoading] = useState(false);
   const [cartAtom, setCartAtom] = useAtom(cartItems);
-  const [error, setError] = useState(null);
+  const [error] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
+  const { bookId } = useParams();
+  const dispatch = useDispatch();
 
   const { title, author, cover, year } = Object.fromEntries(searchParams);
   console.log(title, author, cover, year, "det");
+  // setBooksId(bookId);
+
+  // console.log("Book Id", booksId, bookId);
   const { userData } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setBooksId(bookId);
+    setId(bookId);
+  }, [bookId, setBooksId]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          ` https://bookbayapp.onrender.com/api/books/${bookId}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        setBook(data);
+        setPriceBorrow(data.priceBorrow);
+        setPriceBuy(data.priceBuy);
+
+        // Process the data as needed
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [bookId]);
 
   console.log("userData: ".userData);
 
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+
   const addToCart = async () => {
     setLoading(true);
     console.log("loading...");
     if (userData && userData.email) {
+      console.log(userData.email, "from add to cart");
       await addDoc(collection(db, "cart"), {
         email: userData.email,
         title,
         author,
         cover,
       }).then((res) => {
-        console.log("resss", res.id);
+        // dispatch(clearBookId());
+        console.log("Id", id);
+        dispatch(setBookId(id.toString()));
 
         setCartAtom((old) => [
           ...old,
-          { email: userData.emailc, id: res.id, title,  author, cover },
+          {
+            email: userData.emailc,
+            id: res.id,
+            title,
+            author,
+            cover,
+            priceBuy,
+            priceBorrow,
+          },
         ]);
         navigate("/cart");
       });
@@ -66,13 +121,13 @@ export const BookDetails = () => {
   console.log(userData);
 
   return (
-    <div className="book-details pt-20 h-screen">
-      <h1>{userData.email || userData.displayName}</h1>
+    <div className="book-details pt-20 h-screen mt-4">
+      {/* <h1>{userData.email || userData.displayName}</h1> */}
 
       <div className="w-[80%] md:w-[90%] mx-auto flex flex-col md:flex-row md:gap-[2.375rem]">
         <div className="flex justify-center items-center rounded-[1rem] bg-[#D9D9D9]">
           <img
-            src={`https://covers.openlibrary.org/b/id/${cover}-L.jpg`}
+            src={`${cover}`}
             alt={title}
             className="w-[18.75rem] h-[18.75rem] object-scale-down"
           />
@@ -82,10 +137,10 @@ export const BookDetails = () => {
           <div className="my-4">
             <span className="text-[#000] outfit text-[2rem] font-semibold leading-normal font-style md:text-[3rem]">
               {" "}
-              {title}
+              {`${title}`}
             </span>
             <p className="capitalize text-[#000] text-[1rem] italic font-normal leading-normal md:text-[1.5rem]">
-              Released - May 26, 2022
+              Released - {`${year}`}
             </p>
             <span className="text-[#00f] text-[1rem] text-style font-normal leading-normal md:text-[1.25rem] ">
               {`by ${author} `} <span className="text-[#666]">(Author)</span>
@@ -102,11 +157,13 @@ export const BookDetails = () => {
           <div className=" flex  justify-center md:justify-start gap-4 items-center text-[#000] leading-normal">
             <div className="capitalize border-2 border-solid border-[#000] rounded-[0.5rem] py-[0.5rem] px-[2rem] flex flex-col gap-[0.5rem] bg-[#fff7e1]">
               <span className="text-[1rem] text-style font-normal">buy</span>
-              <span className="text-[1.25rem] font-bold">N2500</span>
+              <span className="text-[1.25rem] font-bold">N{book.priceBuy}</span>
             </div>
             <div className="capitalize border-2 border-solid border-[#000] rounded-[0.5rem] py-[0.5rem] px-[2rem] flex flex-col gap-[0.5rem] bg-[#D9FFF5]">
               <span className="text-[1rem] text-style font-normal">borrow</span>
-              <span className="text-[1.25rem] font-bold">N2500</span>
+              <span className="text-[1.25rem] font-bold">
+                N{book.priceBorrow}
+              </span>
             </div>
           </div>
 
@@ -133,21 +190,8 @@ export const BookDetails = () => {
         <h1 className="text-[1.5rem] text-style font-bold capitalize">
           Description:{" "}
         </h1>
-        <p className="text-[1rem] text-style font-normal">
-          "The Philosophy of Money" is a seminal work written by German
-          sociologist and philosopher Georg Simmel in 1900. This book explores
-          the intricate relationship between money and society, delving into the
-          profound impact that money has on human behavior, culture, and social
-          structures. Simmel's work goes beyond the mere economic aspects of
-          money and delves into its philosophical and sociological dimensions.
-          He argues that money is not merely a medium of exchange or a unit of
-          value but a powerful force that shapes human interactions and social
-          dynamics. Simmel explores how money can both connect and isolate
-          individuals, how it influences our perception of value and worth, and
-          how it can lead to a range of social phenomena, from individualism to
-          social stratification.
-        </p>{" "}
-        <Link className="text-[#004E7C] font-semibold">Read more</Link>
+        <p className="text-[1rem] text-style font-normal">{book.description}</p>{" "}
+        {/* <Link className="text-[#004E7C] font-semibold">Read more</Link> */}
       </div>
 
       <div className="leading-normal w-[90%] mx-auto my-8">
