@@ -8,6 +8,7 @@ import {
   query,
   where,
   getDocs,
+  getDoc,
 } from "firebase/firestore";
 import { Button } from "../components/Button";
 import trash from "../assets/trash.svg";
@@ -17,13 +18,9 @@ import { useAtom } from "jotai";
 import { LoadingBtn } from "../components/LoadingBtn";
 import { cartItems, isLoadingCartItems } from "../components/Header";
 import ClipLoader from "react-spinners/ClipLoader";
-import { FiCheck } from "react-icons/fi";
 import axios from "axios";
-import { BookContext } from "../BookContext";
 import { AuthContext } from "../AuthContext";
-import { UserContext } from "../UserContext";
 import { useDispatch } from "react-redux";
-import { setBookId } from "../store/actions/bookAction";
 import { useSelector } from "react-redux";
 import { removeBookId } from "../store/actions/bookAction";
 
@@ -32,12 +29,9 @@ export const Cart = () => {
   const [selectedPriceType, setSelectedPriceType] = useState("priceBuy");
   const [buySelected, setBuySelected] = useState(true);
   const [borrowSelected, setBorrowSelected] = useState(false);
-  const [book, setBook] = useState("");
   const [price, setPrice] = useState("");
-  // const [userId, setUserId] = useState("");
   const { userData } = useContext(AuthContext);
   console.log("Cart:", userData.email);
-  // const { userId, setUserId } = useContext(UserContext);
   const [cartAtom, setCartAtom] = useAtom(cartItems);
   const [isLoadingCart] = useAtom(isLoadingCartItems);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -77,7 +71,7 @@ export const Cart = () => {
     console.log("Clean id", cleanedBookIdsString);
 
     axios
-      .post(`http://localhost:4000/api/startPayment/${userId}`, {
+      .post(`https://bookbayapp.onrender.com/api/startPayment/${userId}`, {
         bookIds: JSON.parse(`${cleanedBookIdsString}`),
         priceType: selectedPriceType,
       })
@@ -105,18 +99,35 @@ export const Cart = () => {
   };
 
   const confirmDelete = async () => {
-    // setLoading(true);
-    console.log("dude is loading....");
-    console.log(bookToDelete, "book to delete");
+    console.log("Deleting book...");
+
     if (bookToDelete) {
+      // Step 1: Find the book name in the cart collection
+      const cartDoc = await getDoc(doc(db, "cart", bookToDelete));
+      const bookName = cartDoc.data().title;
+
+      // Step 2: Find the book ID in the books collection
+      const booksQuery = query(
+        collection(db, "books"),
+        where("name", "==", bookName)
+      );
+      const booksSnapshot = await getDocs(booksQuery);
+      let bookIdToRemove;
+      booksSnapshot.forEach((doc) => {
+        bookIdToRemove = doc.id;
+      });
+
+      // Step 3: Remove the book ID from the Redux store
+      if (bookIdToRemove) {
+        dispatch(removeBookId(bookIdToRemove));
+      }
+
+      // Other cleanup code: Delete from cart collection and cart item
       await deleteDoc(doc(db, "cart", bookToDelete));
-      console.log("hello from delete");
       setBookToDelete(null);
       setShowDeleteModal(false);
-      const newCartItems = cartAtom.filter((itm) => itm.id !== bookToDelete);
+      const newCartItems = cartAtom.filter((item) => item.id !== bookToDelete);
       setCartAtom(newCartItems);
-      dispatch(removeBookId("HGt99ThURxEhOHMqRq1L"));
-      // getMyBooks();
     }
   };
 
