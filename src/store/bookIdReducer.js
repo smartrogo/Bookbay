@@ -12,8 +12,11 @@ const bookIdReducer = (state = parsedInitialIds, action) => {
       localStorage.setItem("bookIds", JSON.stringify(updatedStateSet));
       return updatedStateSet;
     case "REMOVE_BOOK_ID":
+      console.log("Current state:", state);
+      console.log("ID to remove:", action.payload);
       // eslint-disable-next-line no-case-declarations
       const filteredState = state.filter((id) => id !== action.payload);
+      console.log("Filtered state:", filteredState);
       localStorage.setItem("bookIds", JSON.stringify(filteredState));
       return filteredState;
     case "CLEAR_BOOK_ID":
