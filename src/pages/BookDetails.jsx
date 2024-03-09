@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import Skeleton from "react-loading-skeleton";
+import { useSearchParams } from "react-router-dom";
 import { db } from "../firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { Button } from "../components/Button";
@@ -12,10 +11,10 @@ import { cartItems } from "../components/Header";
 import { BookContext } from "../BookContext";
 import { useAtom } from "jotai";
 import { useDispatch } from "react-redux";
-import { setBookId, clearBookId } from "../store/actions/bookAction";
+import { setBookId } from "../store/actions/bookAction";
 
 export const BookDetails = () => {
-  const { booksId, setBooksId } = useContext(BookContext);
+  const { setBooksId } = useContext(BookContext);
   const [book, setBook] = useState([]);
   const [id, setId] = useState([]);
   const [priceBuy, setPriceBuy] = useState([]);
@@ -25,7 +24,7 @@ export const BookDetails = () => {
   const [displayUser, setDisplayUser] = useState(false);
   const [loading, setLoading] = useState(false);
   const [cartAtom, setCartAtom] = useAtom(cartItems);
-  const [error, setError] = useState(null);
+  const [error] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const { bookId } = useParams();
   const dispatch = useDispatch();
