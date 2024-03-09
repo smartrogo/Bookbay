@@ -51,11 +51,18 @@ export const Success = () => {
       .replace(/\\/g, "") // Remove backslashes
       .replace(/^\"|\"$/g, ""); // Remove double quotes at the beginning and end
 
-    console.log("Clean id:", cleanedBookIdsString, "user id:", userId, "ref:", ref);
+    console.log(
+      "Clean id:",
+      cleanedBookIdsString,
+      "user id:",
+      userId,
+      "ref:",
+      ref
+    );
 
     axios
       .post(
-        `http://localhost:4000/api/createPayment/${userId}?reference=${ref}`,
+        `https://bookbayapp.onrender.com/api/createPayment/${userId}?reference=${ref}`,
         {
           bookIds: JSON.parse(`${cleanedBookIdsString}`),
         }
