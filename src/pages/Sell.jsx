@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useContext } from "react";
 import { useDispatch } from "react-redux";
 import { setUserId } from "../store/actions/userAction";
-import { setBookId, clearBookId, removeBookId} from "../store/actions/bookAction";
+import { clearBookId} from "../store/actions/bookAction";
 import { AuthContext } from "../AuthContext";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
