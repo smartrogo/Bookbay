@@ -9,15 +9,40 @@ import {
   updateAdminBorrowRequest,
   updateAdminBookStatus,
 } from "../services/adminService";
+import { fetchUserBooks } from "../services/bookService";
+import { fetchBorrowRequests } from "../services/borrowService";
+import { fetchWallet } from "../services/walletService";
+import {
+  fetchExchangeRequests,
+  unwrapExchangeRequests,
+  normalizeExchange,
+} from "../services/exchangeService";
+import {
+  fetchConversations,
+  unwrapConversations,
+  normalizeConversation,
+} from "../services/messageService";
+import ExchangePanel from "../components/dashboard/ExchangePanel";
+import MessagesPanel from "../components/dashboard/MessagesPanel";
 import logo from "../assets/logo.png";
 
 /* ------------------------------ helpers ------------------------------ */
 
-const navItems = [
+const ADMIN_NAV = [
   { id: "overview", label: "Overview", icon: "📊" },
   { id: "books", label: "Books", icon: "📚" },
   { id: "users", label: "Users", icon: "👥" },
   { id: "borrow", label: "Borrow Requests", icon: "🔁" },
+  { id: "exchange", label: "Exchange", icon: "🔄" },
+  { id: "messages", label: "Messages", icon: "💬" },
+];
+
+const USER_NAV = [
+  { id: "overview", label: "Overview", icon: "📊" },
+  { id: "mybooks", label: "My Books", icon: "📚" },
+  { id: "borrow", label: "Borrow", icon: "🔁" },
+  { id: "exchange", label: "Exchange", icon: "🔄" },
+  { id: "messages", label: "Messages", icon: "💬" },
 ];
 
 const statusStyles = {
@@ -30,7 +55,8 @@ const statusStyles = {
   suspended: "bg-red-100 text-red-700",
   overdue: "bg-red-100 text-red-700",
   cancelled: "bg-slate-200 text-slate-600",
-  declined: "bg-red-100 text-red-700",
+  declined: "bg-rose-100 text-rose-700",
+  rejected: "bg-rose-100 text-rose-700",
   inactive: "bg-slate-200 text-slate-600",
 };
 
@@ -59,19 +85,37 @@ export const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // admin state
   const [dashboard, setDashboard] = useState(null);
   const [books, setBooks] = useState([]);
   const [users, setUsers] = useState([]);
   const [borrows, setBorrows] = useState([]);
+
+  // user state
+  const [wallet, setWallet] = useState(null);
+  const [myBooks, setMyBooks] = useState([]);
+  const [myBorrows, setMyBorrows] = useState([]);
+  const [exchangeRequests, setExchangeRequests] = useState([]);
+  const [conversations, setConversations] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [bookSearch, setBookSearch] = useState("");
   const [userSearch, setUserSearch] = useState("");
 
-  const quickActions = [
+  const navItems = isAdmin ? ADMIN_NAV : USER_NAV;
+  const currentUserId = userData?.id;
+
+  const adminQuickActions = [
     { label: "Review requests", tab: "borrow" },
     { label: "Manage books", tab: "books" },
     { label: "View users", tab: "users" },
+  ];
+
+  const userQuickActions = [
+    { label: "List a book", to: "/sell" },
+    { label: "Borrow a book", to: "/borrow" },
+    { label: "My wallet", to: "/wallet" },
   ];
 
   const loadAdminData = useCallback(async (showLoader = true) => {
@@ -89,14 +133,41 @@ export const Dashboard = () => {
     if (showLoader) setLoading(false);
   }, []);
 
-  useEffect(() => {
-    if (!isAuth || !isAdmin) {
-      navigate("/admin/login");
-      return;
+  const loadUserData = useCallback(async (showLoader = true) => {
+    if (!currentUserId) return;
+    if (showLoader) setLoading(true);
+
+    const [walletRes, booksRes, borrowRes, exchangeRes, convRes] = await Promise.allSettled([
+      fetchWallet(currentUserId),
+      fetchUserBooks(currentUserId),
+      fetchBorrowRequests(),
+      fetchExchangeRequests(),
+      fetchConversations(currentUserId),
+    ]);
+
+    if (walletRes.status === "fulfilled") setWallet(walletRes.value?.wallet || null);
+    if (booksRes.status === "fulfilled") setMyBooks(booksRes.value?.books || []);
+    if (borrowRes.status === "fulfilled") setMyBorrows(borrowRes.value?.borrow_requests || []);
+    if (exchangeRes.status === "fulfilled") {
+      setExchangeRequests(unwrapExchangeRequests(exchangeRes.value).map(normalizeExchange));
+    }
+    if (convRes.status === "fulfilled") {
+      setConversations(unwrapConversations(convRes.value).map(normalizeConversation));
     }
 
-    loadAdminData(true);
-  }, [isAuth, isAdmin, loadAdminData, navigate]);
+    if (showLoader) setLoading(false);
+  }, [currentUserId]);
+
+  useEffect(() => {
+    if (!isAuth) return;
+    if (isAdmin) loadAdminData(true);
+    else loadUserData(true);
+  }, [isAuth, isAdmin, loadAdminData, loadUserData]);
+
+  useEffect(() => {
+    setActiveTab("overview");
+    setSidebarOpen(false);
+  }, [isAdmin]);
 
   const handleLogout = () => {
     logOut();
@@ -105,7 +176,8 @@ export const Dashboard = () => {
 
   const handleRefresh = async () => {
     setRefreshing(true);
-    await loadAdminData(false);
+    if (isAdmin) await loadAdminData(false);
+    else await loadUserData(false);
     setRefreshing(false);
   };
 
@@ -146,13 +218,22 @@ export const Dashboard = () => {
     }
   };
 
-  const filteredBooks = books.filter(
-    (b) =>
-      `${b.title || ""} ${b.author || ""}`.toLowerCase().includes(bookSearch.toLowerCase())
+  const handleCancelMyBorrow = async (id) => {
+    // Local removal; the dedicated cancel endpoint persists server-side.
+    setMyBorrows((current) => current.filter((b) => b.id !== id));
+    try {
+      const { cancelBorrowRequest } = await import("../services/borrowService");
+      await cancelBorrowRequest(id);
+    } catch (error) {
+      console.warn("Unable to persist borrow cancellation.", error);
+    }
+  };
+
+  const filteredBooks = books.filter((b) =>
+    `${b.title || ""} ${b.author || ""}`.toLowerCase().includes(bookSearch.toLowerCase())
   );
-  const filteredUsers = users.filter(
-    (u) =>
-      `${u.name || ""} ${u.email || ""}`.toLowerCase().includes(userSearch.toLowerCase())
+  const filteredUsers = users.filter((u) =>
+    `${u.name || ""} ${u.email || ""}`.toLowerCase().includes(userSearch.toLowerCase())
   );
 
   const stats = dashboard?.stats || {};
@@ -160,7 +241,10 @@ export const Dashboard = () => {
   const recentOrders = dashboard?.recent_orders || [];
   const maxRevenue = Math.max(...revenueByMonth.map((r) => r.amount), 1);
 
-  if (!isAuth || !isAdmin) return null;
+  const pendingBorrows = myBorrows.filter((b) => b.status === "pending").length;
+  const pendingExchanges = exchangeRequests.filter((r) => r.status === "pending").length;
+
+  if (!isAuth) return null;
 
   return (
     <div className="min-h-screen bg-slate-100 flex">
@@ -175,7 +259,7 @@ export const Dashboard = () => {
             <img src={logo} alt="BookBay" className="w-24 h-auto" />
             <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wider text-emerald-300">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              Admin Panel
+              {isAdmin ? "Admin Panel" : "My Dashboard"}
             </div>
           </div>
 
@@ -195,6 +279,11 @@ export const Dashboard = () => {
               >
                 <span className="text-[1.05rem]">{item.icon}</span>
                 {item.label}
+                {item.id === "messages" && conversations.length > 0 && (
+                  <span className="ml-auto text-[0.68rem] bg-white/15 rounded-full px-2 py-0.5">
+                    {conversations.length}
+                  </span>
+                )}
               </button>
             ))}
           </nav>
@@ -202,11 +291,11 @@ export const Dashboard = () => {
           <div className="px-4 py-4 border-t border-white/10">
             <div className="flex items-center gap-3 mb-3 px-1">
               <div className="w-9 h-9 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold text-[0.85rem]">
-                {userData?.email?.charAt(0)?.toUpperCase() || "A"}
+                {userData?.email?.charAt(0)?.toUpperCase() || "U"}
               </div>
               <div className="min-w-0">
                 <p className="text-white text-[0.85rem] font-semibold truncate">
-                  {userData?.name || userData?.email || "Admin"}
+                  {userData?.name || userData?.email || "User"}
                 </p>
                 <p className="text-slate-400 text-[0.7rem] truncate">{userData?.email}</p>
               </div>
@@ -279,10 +368,11 @@ export const Dashboard = () => {
         </header>
 
         {loading ? (
-          /* ------------------------- loading ------------------------- */
           <div className="flex flex-col items-center justify-center py-32">
             <div className="w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" />
-            <p className="mt-4 text-slate-500 text-[0.9rem]">Loading admin data...</p>
+            <p className="mt-4 text-slate-500 text-[0.9rem]">
+              {isAdmin ? "Loading admin data..." : "Loading your dashboard..."}
+            </p>
           </div>
         ) : (
           <>
@@ -293,146 +383,235 @@ export const Dashboard = () => {
                   <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                     <div>
                       <p className="text-[0.75rem] font-semibold uppercase tracking-[0.25em] text-indigo-200">
-                        BookBay admin control center
+                        {isAdmin ? "BookBay admin control center" : "Your BookBay dashboard"}
                       </p>
                       <h2 className="mt-2 text-[1.35rem] font-semibold">
-                        Welcome back, {userData?.name || userData?.email || "Admin"}
+                        Welcome back, {userData?.name || userData?.email || (isAdmin ? "Admin" : "User")}
                       </h2>
                       <p className="mt-2 max-w-2xl text-[0.9rem] text-indigo-100">
-                        Monitor sales, inventory, new members, and borrow approvals from a single place.
+                        {isAdmin
+                          ? "Monitor sales, inventory, new members, and borrow approvals from a single place."
+                          : "Keep an eye on your books, borrow requests, exchanges, and messages — all in one place."}
                       </p>
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      {quickActions.map((action) => (
-                        <button
-                          key={action.tab}
-                          onClick={() => setActiveTab(action.tab)}
-                          className="rounded-full bg-white/15 px-3 py-2 text-[0.8rem] font-medium text-white/90 transition hover:bg-white/25"
-                        >
-                          {action.label}
-                        </button>
-                      ))}
+                      {(isAdmin ? adminQuickActions : userQuickActions).map((action) =>
+                        action.tab ? (
+                          <button
+                            key={action.tab}
+                            onClick={() => setActiveTab(action.tab)}
+                            className="rounded-full bg-white/15 px-3 py-2 text-[0.8rem] font-medium text-white/90 transition hover:bg-white/25"
+                          >
+                            {action.label}
+                          </button>
+                        ) : (
+                          <button
+                            key={action.to}
+                            onClick={() => navigate(action.to)}
+                            className="rounded-full bg-white/15 px-3 py-2 text-[0.8rem] font-medium text-white/90 transition hover:bg-white/25"
+                          >
+                            {action.label}
+                          </button>
+                        )
+                      )}
                     </div>
                   </div>
                 </div>
 
-                {/* stat cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-                  <StatCard label="Total Books" value={stats.total_books ?? books.length} sub="Across all categories" accent="bg-indigo-500" />
-                  <StatCard label="Total Users" value={stats.total_users ?? users.length} sub="Registered accounts" accent="bg-emerald-500" />
-                  <StatCard label="Orders" value={stats.total_orders ?? "-"} sub={`${stats.pending_orders ?? 0} pending`} accent="bg-amber-500" />
-                  <StatCard label="Revenue" value={formatCurrency(stats.total_revenue)} sub={`${stats.pending_borrow_requests ?? 0} borrow requests pending`} accent="bg-rose-500" />
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  {/* revenue chart */}
-                  <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-                    <div className="flex items-center justify-between mb-6">
-                      <div>
-                        <h3 className="font-semibold text-slate-900">Revenue overview</h3>
-                        <p className="text-[0.8rem] text-slate-400">Monthly revenue for the current year</p>
-                      </div>
-                      <span className="text-[0.75rem] font-medium bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full">
-                        {revenueByMonth.length} months
-                      </span>
+                {isAdmin ? (
+                  <>
+                    {/* admin stat cards */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+                      <StatCard label="Total Books" value={stats.total_books ?? books.length} sub="Across all categories" accent="bg-indigo-500" />
+                      <StatCard label="Total Users" value={stats.total_users ?? users.length} sub="Registered accounts" accent="bg-emerald-500" />
+                      <StatCard label="Orders" value={stats.total_orders ?? "-"} sub={`${stats.pending_orders ?? 0} pending`} accent="bg-amber-500" />
+                      <StatCard label="Revenue" value={formatCurrency(stats.total_revenue)} sub={`${stats.pending_borrow_requests ?? 0} borrow requests pending`} accent="bg-rose-500" />
                     </div>
-                    <div className="flex items-end gap-2 sm:gap-3 h-44">
-                      {revenueByMonth.map((month, i) => (
-                        <div key={month.month} className="flex-1 flex flex-col items-center gap-2 group">
-                          <span className="text-[0.68rem] text-slate-500 font-medium opacity-0 group-hover:opacity-100 transition">
-                            {formatCurrency(month.amount)}
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                      {/* revenue chart */}
+                      <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                        <div className="flex items-center justify-between mb-6">
+                          <div>
+                            <h3 className="font-semibold text-slate-900">Revenue overview</h3>
+                            <p className="text-[0.8rem] text-slate-400">Monthly revenue for the current year</p>
+                          </div>
+                          <span className="text-[0.75rem] font-medium bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full">
+                            {revenueByMonth.length} months
                           </span>
-                          <div
-                            className="w-full rounded-t-md bg-gradient-to-t from-indigo-600 to-indigo-400 hover:from-indigo-700 hover:to-indigo-500 transition-all duration-300"
-                            style={{
-                              height: `${Math.max((month.amount / maxRevenue) * 100, 4)}%`,
-                            }}
-                          />
-                          <span className="text-[0.7rem] text-slate-400">{month.month}</span>
                         </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* quick stats */}
-                  <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-                    <h3 className="font-semibold text-slate-900 mb-4">Quick overview</h3>
-                    <div className="space-y-4">
-                      {[
-                        { label: "Pending orders", value: stats.pending_orders ?? 0, color: "text-amber-600" },
-                        { label: "Borrow requests", value: stats.pending_borrow_requests ?? 0, color: "text-indigo-600" },
-                        { label: "New messages", value: stats.new_messages ?? 0, color: "text-emerald-600" },
-                      ].map((item) => (
-                        <div key={item.label} className="flex items-center justify-between p-3 rounded-lg bg-slate-50 border border-slate-100">
-                          <span className="text-[0.9rem] text-slate-600">{item.label}</span>
-                          <span className={`text-[1.1rem] font-bold ${item.color}`}>{item.value}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="mt-5 rounded-lg bg-gradient-to-br from-indigo-600 to-violet-600 p-4 text-white">
-                      <p className="text-[0.8rem] font-semibold">Tip of the day</p>
-                      <p className="text-[0.8rem] text-indigo-100 mt-1">
-                        Approve pending borrow requests quickly to keep users happy.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* recent orders */}
-                <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-                  <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-                    <h3 className="font-semibold text-slate-900">Recent orders</h3>
-                    <button
-                      onClick={() => setActiveTab("books")}
-                      className="text-[0.8rem] text-indigo-600 hover:text-indigo-800 font-medium transition"
-                    >
-                      View all →
-                    </button>
-                  </div>
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-left text-[0.875rem]">
-                      <thead>
-                        <tr className="text-[0.75rem] uppercase tracking-wide text-slate-400 border-b border-slate-100">
-                          <th className="px-6 py-3 font-semibold">Order</th>
-                          <th className="px-6 py-3 font-semibold">Customer</th>
-                          <th className="px-6 py-3 font-semibold">Book</th>
-                          <th className="px-6 py-3 font-semibold">Amount</th>
-                          <th className="px-6 py-3 font-semibold">Status</th>
-                          <th className="px-6 py-3 font-semibold">Date</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {recentOrders.slice(0, 6).map((order) => (
-                          <tr key={order.id} className="border-b border-slate-50 hover:bg-slate-50 transition">
-                            <td className="px-6 py-3.5 font-medium text-indigo-600">{order.id}</td>
-                            <td className="px-6 py-3.5 text-slate-700">{order.customer}</td>
-                            <td className="px-6 py-3.5 text-slate-600">{order.book}</td>
-                            <td className="px-6 py-3.5 font-medium text-slate-900">{formatCurrency(order.amount)}</td>
-                            <td className="px-6 py-3.5">
-                              <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[0.75rem] font-medium ${statusClass(order.status)}`}>
-                                <span className="w-1.5 h-1.5 rounded-full bg-current opacity-60" />
-                                {order.status}
+                        <div className="flex items-end gap-2 sm:gap-3 h-44">
+                          {revenueByMonth.map((month) => (
+                            <div key={month.month} className="flex-1 flex flex-col items-center gap-2 group">
+                              <span className="text-[0.68rem] text-slate-500 font-medium opacity-0 group-hover:opacity-100 transition">
+                                {formatCurrency(month.amount)}
                               </span>
-                            </td>
-                            <td className="px-6 py-3.5 text-slate-500">{order.date}</td>
-                          </tr>
-                        ))}
-                        {recentOrders.length === 0 && (
-                          <tr>
-                            <td colSpan="6" className="px-6 py-10 text-center text-slate-400">
-                              No orders yet.
-                            </td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+                              <div
+                                className="w-full rounded-t-md bg-gradient-to-t from-indigo-600 to-indigo-400 hover:from-indigo-700 hover:to-indigo-500 transition-all duration-300"
+                                style={{ height: `${Math.max((month.amount / maxRevenue) * 100, 4)}%` }}
+                              />
+                              <span className="text-[0.7rem] text-slate-400">{month.month}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* quick stats */}
+                      <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                        <h3 className="font-semibold text-slate-900 mb-4">Quick overview</h3>
+                        <div className="space-y-4">
+                          {[
+                            { label: "Pending orders", value: stats.pending_orders ?? 0, color: "text-amber-600" },
+                            { label: "Borrow requests", value: stats.pending_borrow_requests ?? 0, color: "text-indigo-600" },
+                            { label: "New messages", value: stats.new_messages ?? 0, color: "text-emerald-600" },
+                          ].map((item) => (
+                            <div key={item.label} className="flex items-center justify-between p-3 rounded-lg bg-slate-50 border border-slate-100">
+                              <span className="text-[0.9rem] text-slate-600">{item.label}</span>
+                              <span className={`text-[1.1rem] font-bold ${item.color}`}>{item.value}</span>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="mt-5 rounded-lg bg-gradient-to-br from-indigo-600 to-violet-600 p-4 text-white">
+                          <p className="text-[0.8rem] font-semibold">Tip of the day</p>
+                          <p className="text-[0.8rem] text-indigo-100 mt-1">
+                            Approve pending borrow requests quickly to keep users happy.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* recent orders */}
+                    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                      <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+                        <h3 className="font-semibold text-slate-900">Recent orders</h3>
+                        <button
+                          onClick={() => setActiveTab("books")}
+                          className="text-[0.8rem] text-indigo-600 hover:text-indigo-800 font-medium transition"
+                        >
+                          View all →
+                        </button>
+                      </div>
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-left text-[0.875rem]">
+                          <thead>
+                            <tr className="text-[0.75rem] uppercase tracking-wide text-slate-400 border-b border-slate-100">
+                              <th className="px-6 py-3 font-semibold">Order</th>
+                              <th className="px-6 py-3 font-semibold">Customer</th>
+                              <th className="px-6 py-3 font-semibold">Book</th>
+                              <th className="px-6 py-3 font-semibold">Amount</th>
+                              <th className="px-6 py-3 font-semibold">Status</th>
+                              <th className="px-6 py-3 font-semibold">Date</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {recentOrders.slice(0, 6).map((order) => (
+                              <tr key={order.id} className="border-b border-slate-50 hover:bg-slate-50 transition">
+                                <td className="px-6 py-3.5 font-medium text-indigo-600">{order.id}</td>
+                                <td className="px-6 py-3.5 text-slate-700">{order.customer}</td>
+                                <td className="px-6 py-3.5 text-slate-600">{order.book}</td>
+                                <td className="px-6 py-3.5 font-medium text-slate-900">{formatCurrency(order.amount)}</td>
+                                <td className="px-6 py-3.5">
+                                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[0.75rem] font-medium ${statusClass(order.status)}`}>
+                                    <span className="w-1.5 h-1.5 rounded-full bg-current opacity-60" />
+                                    {order.status}
+                                  </span>
+                                </td>
+                                <td className="px-6 py-3.5 text-slate-500">{order.date}</td>
+                              </tr>
+                            ))}
+                            {recentOrders.length === 0 && (
+                              <tr>
+                                <td colSpan="6" className="px-6 py-10 text-center text-slate-400">
+                                  No orders yet.
+                                </td>
+                              </tr>
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* user stat cards */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+                      <StatCard
+                        label="Wallet Balance"
+                        value={formatCurrency(wallet?.balance)}
+                        sub="Available funds"
+                        accent="bg-emerald-500"
+                      />
+                      <StatCard label="My Books" value={myBooks.length} sub="Active listings" accent="bg-indigo-500" />
+                      <StatCard label="Borrow Requests" value={myBorrows.length} sub={`${pendingBorrows} pending`} accent="bg-amber-500" />
+                      <StatCard label="Exchanges" value={exchangeRequests.length} sub={`${pendingExchanges} pending`} accent="bg-rose-500" />
+                    </div>
+
+                    {/* activity */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+                          <h3 className="font-semibold text-slate-900">Recent conversations</h3>
+                          <button
+                            onClick={() => setActiveTab("messages")}
+                            className="text-[0.8rem] text-indigo-600 hover:text-indigo-800 font-medium transition"
+                          >
+                            Open messages →
+                          </button>
+                        </div>
+                        <ul className="divide-y divide-slate-50">
+                          {conversations.slice(0, 4).map((c) => (
+                            <li key={c.id} className="px-6 py-3.5 flex items-center gap-3">
+                              <div className="w-9 h-9 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-[0.8rem] font-bold shrink-0">
+                                {(c.user_name || "?").charAt(0).toUpperCase()}
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <p className="font-medium text-slate-800 text-[0.9rem] truncate">{c.user_name}</p>
+                                <p className="text-[0.8rem] text-slate-500 truncate">{c.last_message || "—"}</p>
+                              </div>
+                            </li>
+                          ))}
+                          {conversations.length === 0 && (
+                            <li className="px-6 py-10 text-center text-slate-400 text-[0.85rem]">No conversations yet.</li>
+                          )}
+                        </ul>
+                      </div>
+
+                      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+                          <h3 className="font-semibold text-slate-900">Recent exchanges</h3>
+                          <button
+                            onClick={() => setActiveTab("exchange")}
+                            className="text-[0.8rem] text-indigo-600 hover:text-indigo-800 font-medium transition"
+                          >
+                            Open exchange →
+                          </button>
+                        </div>
+                        <ul className="divide-y divide-slate-50">
+                          {exchangeRequests.slice(0, 4).map((r) => (
+                            <li key={r.id} className="px-6 py-3.5">
+                              <div className="flex flex-wrap items-center gap-2">
+                                <span className="font-medium text-slate-800 text-[0.9rem] truncate">{r.offered_book_title}</span>
+                                <span className="text-slate-400 text-[0.85rem]">⇄</span>
+                                <span className="font-medium text-slate-800 text-[0.9rem] truncate">{r.wanted_book_title}</span>
+                                <span className={`inline-flex px-2.5 py-0.5 rounded-full text-[0.72rem] font-medium ${statusClass(r.status)}`}>
+                                  {r.status}
+                                </span>
+                              </div>
+                            </li>
+                          ))}
+                          {exchangeRequests.length === 0 && (
+                            <li className="px-6 py-10 text-center text-slate-400 text-[0.85rem]">No exchange requests yet.</li>
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             )}
 
-            {/* -------------------- BOOKS TAB -------------------- */}
-            {activeTab === "books" && (
+            {/* -------------------- BOOKS TAB (admin) -------------------- */}
+            {activeTab === "books" && isAdmin && (
               <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 border-b border-slate-100">
                   <h3 className="font-semibold text-slate-900">All books</h3>
@@ -505,8 +684,67 @@ export const Dashboard = () => {
               </div>
             )}
 
-            {/* -------------------- USERS TAB -------------------- */}
-            {activeTab === "users" && (
+            {/* -------------------- MY BOOKS TAB (user) -------------------- */}
+            {activeTab === "mybooks" && !isAdmin && (
+              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 border-b border-slate-100">
+                  <div>
+                    <h3 className="font-semibold text-slate-900">My books</h3>
+                    <p className="text-[0.8rem] text-slate-400 mt-0.5">Books you have listed for sale or borrow.</p>
+                  </div>
+                  <button
+                    onClick={() => navigate("/sell")}
+                    className="inline-flex items-center gap-2 rounded-full bg-indigo-600 text-white px-4 py-2 text-[0.8rem] font-semibold transition hover:bg-indigo-700"
+                  >
+                    + List a book
+                  </button>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-[0.875rem]">
+                    <thead>
+                      <tr className="text-[0.75rem] uppercase tracking-wide text-slate-400 border-b border-slate-100">
+                        <th className="px-6 py-3 font-semibold">#</th>
+                        <th className="px-6 py-3 font-semibold">Title</th>
+                        <th className="px-6 py-3 font-semibold">Author</th>
+                        <th className="px-6 py-3 font-semibold">Category</th>
+                        <th className="px-6 py-3 font-semibold">Buy price</th>
+                        <th className="px-6 py-3 font-semibold">Borrow price</th>
+                        <th className="px-6 py-3 font-semibold">Stock</th>
+                        <th className="px-6 py-3 font-semibold">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {myBooks.map((book, i) => (
+                        <tr key={book.id || i} className="border-b border-slate-50 hover:bg-slate-50 transition">
+                          <td className="px-6 py-3.5 text-slate-400">{i + 1}</td>
+                          <td className="px-6 py-3.5 font-medium text-slate-900">{book.title}</td>
+                          <td className="px-6 py-3.5 text-slate-600">{book.author}</td>
+                          <td className="px-6 py-3.5 text-slate-600">{book.category}</td>
+                          <td className="px-6 py-3.5 font-medium text-slate-900">{formatCurrency(book.priceBuy)}</td>
+                          <td className="px-6 py-3.5 text-slate-700">{formatCurrency(book.priceBorrow)}</td>
+                          <td className="px-6 py-3.5 text-slate-700">{book.stock}</td>
+                          <td className="px-6 py-3.5">
+                            <span className={`inline-flex px-2.5 py-1 rounded-full text-[0.75rem] font-medium ${statusClass(book.status)}`}>
+                              {book.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                      {myBooks.length === 0 && (
+                        <tr>
+                          <td colSpan="8" className="px-6 py-10 text-center text-slate-400">
+                            You haven't listed any books yet.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {/* -------------------- USERS TAB (admin) -------------------- */}
+            {activeTab === "users" && isAdmin && (
               <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 border-b border-slate-100">
                   <h3 className="font-semibold text-slate-900">Registered users</h3>
@@ -572,88 +810,155 @@ export const Dashboard = () => {
             )}
 
             {/* -------------------- BORROW TAB -------------------- */}
-            {activeTab === "borrow" && (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            {activeTab === "borrow" &&
+              (isAdmin ? (
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <div className="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div className="px-6 py-4 border-b border-slate-100">
+                      <h3 className="font-semibold text-slate-900">Borrow requests</h3>
+                    </div>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left text-[0.875rem]">
+                        <thead>
+                          <tr className="text-[0.75rem] uppercase tracking-wide text-slate-400 border-b border-slate-100">
+                            <th className="px-6 py-3 font-semibold">User</th>
+                            <th className="px-6 py-3 font-semibold">Book</th>
+                            <th className="px-6 py-3 font-semibold">Duration</th>
+                            <th className="px-6 py-3 font-semibold">Status</th>
+                            <th className="px-6 py-3 font-semibold">Actions</th>
+                            <th className="px-6 py-3 font-semibold">Requested</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {borrows.map((req, i) => (
+                            <tr key={req.id || i} className="border-b border-slate-50 hover:bg-slate-50 transition">
+                              <td className="px-6 py-3.5 text-slate-700">{req.user}</td>
+                              <td className="px-6 py-3.5 text-slate-600">{req.book}</td>
+                              <td className="px-6 py-3.5 text-slate-600">{req.days} days</td>
+                              <td className="px-6 py-3.5">
+                                <span className={`inline-flex px-2.5 py-1 rounded-full text-[0.75rem] font-medium ${statusClass(req.status)}`}>
+                                  {req.status}
+                                </span>
+                              </td>
+                              <td className="px-6 py-3.5">
+                                {req.status === "pending" ? (
+                                  <div className="flex flex-wrap gap-2">
+                                    <button
+                                      onClick={() => handleBorrowRequestAction(req.id, "approved")}
+                                      className="rounded-full bg-emerald-50 px-3 py-1 text-[0.75rem] font-semibold text-emerald-700 transition hover:bg-emerald-100"
+                                    >
+                                      Approve
+                                    </button>
+                                    <button
+                                      onClick={() => handleBorrowRequestAction(req.id, "declined")}
+                                      className="rounded-full bg-rose-50 px-3 py-1 text-[0.75rem] font-semibold text-rose-700 transition hover:bg-rose-100"
+                                    >
+                                      Decline
+                                    </button>
+                                  </div>
+                                ) : (
+                                  <span className="text-[0.75rem] text-slate-400">No action</span>
+                                )}
+                              </td>
+                              <td className="px-6 py-3.5 text-slate-500">{req.requested || req.created_at || "—"}</td>
+                            </tr>
+                          ))}
+                          {borrows.length === 0 && (
+                            <tr>
+                              <td colSpan="6" className="px-6 py-10 text-center text-slate-400">
+                                No borrow requests.
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm h-fit">
+                    <h3 className="font-semibold text-slate-900 mb-4">Request summary</h3>
+                    <div className="space-y-3">
+                      {[
+                        { label: "Pending", value: borrows.filter((b) => b.status === "pending").length, cls: "bg-amber-100 text-amber-700" },
+                        { label: "Approved", value: borrows.filter((b) => b.status === "approved").length, cls: "bg-emerald-100 text-emerald-700" },
+                        { label: "Returned", value: borrows.filter((b) => b.status === "returned").length, cls: "bg-sky-100 text-sky-700" },
+                        { label: "Overdue", value: borrows.filter((b) => b.status === "overdue").length, cls: "bg-red-100 text-red-700" },
+                      ].map((s) => (
+                        <div key={s.label} className="flex items-center justify-between p-3 rounded-lg bg-slate-50">
+                          <span className={`px-2.5 py-1 rounded-full text-[0.75rem] font-medium ${s.cls}`}>{s.label}</span>
+                          <span className="font-bold text-slate-900">{s.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                   <div className="px-6 py-4 border-b border-slate-100">
-                    <h3 className="font-semibold text-slate-900">Borrow requests</h3>
+                    <h3 className="font-semibold text-slate-900">My borrow requests</h3>
                   </div>
                   <div className="overflow-x-auto">
                     <table className="w-full text-left text-[0.875rem]">
                       <thead>
                         <tr className="text-[0.75rem] uppercase tracking-wide text-slate-400 border-b border-slate-100">
-                          <th className="px-6 py-3 font-semibold">User</th>
                           <th className="px-6 py-3 font-semibold">Book</th>
                           <th className="px-6 py-3 font-semibold">Duration</th>
                           <th className="px-6 py-3 font-semibold">Status</th>
-                          <th className="px-6 py-3 font-semibold">Actions</th>
                           <th className="px-6 py-3 font-semibold">Requested</th>
+                          <th className="px-6 py-3 font-semibold">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {borrows.map((req, i) => (
+                        {myBorrows.map((req, i) => (
                           <tr key={req.id || i} className="border-b border-slate-50 hover:bg-slate-50 transition">
-                            <td className="px-6 py-3.5 text-slate-700">{req.user}</td>
-                            <td className="px-6 py-3.5 text-slate-600">{req.book}</td>
+                            <td className="px-6 py-3.5 font-medium text-slate-900">{req.book_title || req.book || "—"}</td>
                             <td className="px-6 py-3.5 text-slate-600">{req.days} days</td>
                             <td className="px-6 py-3.5">
                               <span className={`inline-flex px-2.5 py-1 rounded-full text-[0.75rem] font-medium ${statusClass(req.status)}`}>
                                 {req.status}
                               </span>
                             </td>
+                            <td className="px-6 py-3.5 text-slate-500">{req.created_at || req.requested || "—"}</td>
                             <td className="px-6 py-3.5">
                               {req.status === "pending" ? (
-                                <div className="flex flex-wrap gap-2">
-                                  <button
-                                    onClick={() => handleBorrowRequestAction(req.id, "approved")}
-                                    className="rounded-full bg-emerald-50 px-3 py-1 text-[0.75rem] font-semibold text-emerald-700 transition hover:bg-emerald-100"
-                                  >
-                                    Approve
-                                  </button>
-                                  <button
-                                    onClick={() => handleBorrowRequestAction(req.id, "declined")}
-                                    className="rounded-full bg-rose-50 px-3 py-1 text-[0.75rem] font-semibold text-rose-700 transition hover:bg-rose-100"
-                                  >
-                                    Decline
-                                  </button>
-                                </div>
+                                <button
+                                  onClick={() => handleCancelMyBorrow(req.id)}
+                                  className="rounded-full border border-slate-200 px-3 py-1 text-[0.75rem] font-medium text-slate-500 transition hover:border-rose-300 hover:text-rose-600"
+                                >
+                                  Cancel
+                                </button>
                               ) : (
-                                <span className="text-[0.75rem] text-slate-400">No action</span>
+                                <span className="text-[0.75rem] text-slate-400">—</span>
                               )}
                             </td>
-                            <td className="px-6 py-3.5 text-slate-500">{req.requested || req.created_at || "—"}</td>
                           </tr>
                         ))}
-                        {borrows.length === 0 && (
+                        {myBorrows.length === 0 && (
                           <tr>
-                            <td colSpan="6" className="px-6 py-10 text-center text-slate-400">
-                              No borrow requests.
+                            <td colSpan="5" className="px-6 py-10 text-center text-slate-400">
+                              No borrow requests yet.
                             </td>
                           </tr>
                         )}
                       </tbody>
                     </table>
                   </div>
-                </div>
-
-                <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm h-fit">
-                  <h3 className="font-semibold text-slate-900 mb-4">Request summary</h3>
-                  <div className="space-y-3">
-                    {[
-                      { label: "Pending", value: borrows.filter((b) => b.status === "pending").length, cls: "bg-amber-100 text-amber-700" },
-                      { label: "Approved", value: borrows.filter((b) => b.status === "approved").length, cls: "bg-emerald-100 text-emerald-700" },
-                      { label: "Returned", value: borrows.filter((b) => b.status === "returned").length, cls: "bg-sky-100 text-sky-700" },
-                      { label: "Overdue", value: borrows.filter((b) => b.status === "overdue").length, cls: "bg-red-100 text-red-700" },
-                    ].map((s) => (
-                      <div key={s.label} className="flex items-center justify-between p-3 rounded-lg bg-slate-50">
-                        <span className={`px-2.5 py-1 rounded-full text-[0.75rem] font-medium ${s.cls}`}>{s.label}</span>
-                        <span className="font-bold text-slate-900">{s.value}</span>
-                      </div>
-                    ))}
+                  <div className="px-6 py-4 border-t border-slate-100">
+                    <button
+                      onClick={() => navigate("/borrow")}
+                      className="rounded-full bg-indigo-600 text-white px-4 py-2 text-[0.8rem] font-semibold transition hover:bg-indigo-700"
+                    >
+                      Request to borrow a book
+                    </button>
                   </div>
                 </div>
-              </div>
-            )}
+              ))}
+
+            {/* -------------------- EXCHANGE TAB -------------------- */}
+            {activeTab === "exchange" && <ExchangePanel />}
+
+            {/* -------------------- MESSAGES TAB -------------------- */}
+            {activeTab === "messages" && <MessagesPanel />}
           </>
         )}
       </main>

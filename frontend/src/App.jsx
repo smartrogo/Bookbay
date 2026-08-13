@@ -14,9 +14,7 @@ import { Success } from "./pages/Success";
 import { MyBooks } from "./pages/MyBooks";
 import { Borrow } from "./pages/Borrow";
 import { Buy } from "./pages/Buy";
-import { Exchange } from "./pages/Exchange";
 import { Wallet } from "./pages/Wallet";
-import { Messages } from "./pages/Messages";
 import { WalletConnect } from "./pages/WalletConnect";
 import { FAQs } from "./pages/FAQs";
 import { Policy } from "./pages/Policy";
@@ -60,14 +58,11 @@ function App() {
                 <Route path="/borrow" element={<ProtectedRoute />}>
                   <Route path="/borrow" element={<Borrow />} />
                 </Route>
-                <Route path="/exchange" element={<ProtectedRoute />}>
-                  <Route path="/exchange" element={<Exchange />} />
-                </Route>
                 <Route path="/wallet" element={<ProtectedRoute />}>
                   <Route path="/wallet" element={<Wallet />} />
                 </Route>
-                <Route path="/messages" element={<ProtectedRoute />}>
-                  <Route path="/messages" element={<Messages />} />
+                <Route path="/dashboard" element={<ProtectedRoute />}>
+                  <Route path="/dashboard" element={<Dashboard />} />
                 </Route>
                 <Route path="/admin/login" element={<AdminLogin />} />
                 <Route path="/admin" element={<AdminRoute />}>

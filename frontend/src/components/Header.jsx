@@ -128,11 +128,6 @@ export const Header = () => {
               </NavLink>
             </li>
             <li className="roboto font-normal text-style text-[1.125rem] leading-normal">
-              <NavLink to="/exchange" style={navLinkStyle}>
-                Exchange
-              </NavLink>
-            </li>
-            <li className="roboto font-normal text-style text-[1.125rem] leading-normal">
               <NavLink to="/buy" style={navLinkStyle}>
                 Buy
               </NavLink>
@@ -142,11 +137,13 @@ export const Header = () => {
                 Sell
               </NavLink>
             </li>
-            <li className="roboto font-normal text-style text-[1.125rem] leading-normal">
-              <NavLink to="/messages" style={navLinkStyle}>
-                Messages
-              </NavLink>
-            </li>
+            {isAuth && (
+              <li className="roboto font-normal text-style text-[1.125rem] leading-normal">
+                <NavLink to="/dashboard" style={navLinkStyle}>
+                  Dashboard
+                </NavLink>
+              </li>
+            )}
             {isAdmin && (
               <li className="roboto font-normal text-style text-[1.125rem] leading-normal">
                 <NavLink to="/admin" style={navLinkStyle}>
@@ -212,8 +209,8 @@ export const Header = () => {
               cls_name="text-[0.80rem] btn md:text-[1rem] bg-[#0000FF] rounded-[0.25rem] text-[#FFFFFF] py-[0.75rem]"
             />
             <Button
-              onClick={() => { setIsMenuOpen(false); navigate('/messages'); }}
-              value="Messages"
+              onClick={() => { setIsMenuOpen(false); navigate('/dashboard'); }}
+              value="Dashboard"
               cls_name="text-[0.80rem] btn md:text-[1rem] bg-[#10B981] rounded-[0.25rem] text-[#FFFFFF] py-[0.75rem]"
             />
             <Button
