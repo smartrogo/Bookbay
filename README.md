@@ -1,8 +1,30 @@
-# React + Vite
+# BookBay
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Monorepo for the BookBay marketplace.
 
-Currently, two official plugins are available:
+| Folder      | Contents                                                    |
+| ----------- | ----------------------------------------------------------- |
+| `frontend/` | React + Vite web app (see [`frontend/README.md`](frontend/README.md)) |
+| `backend/`  | Laravel 12 API — **placeholder, not yet scaffolded** (see [`backend/README.md`](backend/README.md)) |
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Quick start (frontend)
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend talks to the Laravel backend at `/api/v1` via `VITE_API_BASE_URL`
+(defaults to the deployed backend on Render).
+
+## Docs
+
+- [`BookBay_2.0_PRD_Laravel12.md`](BookBay_2.0_PRD_Laravel12.md) — overall product PRD
+- [`backend/BookBay_Backend_PRD_Laravel12.md`](backend/BookBay_Backend_PRD_Laravel12.md) — backend spec
+- [`frontend/frontend-phase1-task-map.md`](frontend/frontend-phase1-task-map.md) — frontend phase 1 task map
+
+## Deploying the frontend on Vercel
+
+Set the project **Root Directory** to `frontend/` (the Vercel/Netlify
+configs `vercel.json` and `_redirects` live there with the app).
