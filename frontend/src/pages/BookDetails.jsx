@@ -502,6 +502,67 @@ export const BookDetails = () => {
             )}
           </div>
         </div>
+
+        {/* Similar Books Section */}
+        {similarBooks.length > 0 && (
+          <div className="mt-8">
+            <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h2 className="text-xl font-semibold text-slate-900">Similar Books</h2>
+                  <p className="text-sm text-slate-500">You might also like these</p>
+                </div>
+              </div>
+
+              {similarLoading ? (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+                  {[...Array(6)].map((_, i) => (
+                    <div key={i} className="animate-pulse">
+                      <div className="aspect-[3/4] bg-slate-200 rounded-lg mb-2" />
+                      <div className="h-3 bg-slate-200 rounded w-3/4 mb-1" />
+                      <div className="h-2 bg-slate-200 rounded w-1/2" />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+                  {similarBooks.map((sBook) => (
+                    <Link
+                      key={sBook.id}
+                      to={`/books/${sBook.id}`}
+                      className="group"
+                    >
+                      <div className="aspect-[3/4] bg-slate-100 rounded-lg overflow-hidden mb-2">
+                        <img
+                          src={sBook.cover || sBook.coverPic || `https://placehold.co/300x450/eef2ff/4f46e5?text=${encodeURIComponent(sBook.title)}`}
+                          alt={sBook.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          onError={(e) => {
+                            e.target.src = `https://placehold.co/300x450/eef2ff/4f46e5?text=${encodeURIComponent(sBook.title)}`;
+                          }}
+                        />
+                      </div>
+                      <p className="font-medium text-slate-900 text-[0.85rem] line-clamp-1 group-hover:text-indigo-600 transition">
+                        {sBook.title}
+                      </p>
+                      <p className="text-[0.75rem] text-slate-500">{sBook.author}</p>
+                      <div className="flex items-center justify-between mt-1">
+                        <p className="text-[0.8rem] font-semibold text-indigo-600">
+                          {formatPrice(sBook.priceBuy)}
+                        </p>
+                        {sBook.reasons && sBook.reasons.length > 0 && (
+                          <span className="text-[0.65rem] bg-indigo-50 text-indigo-600 px-1.5 py-0.5 rounded-full">
+                            {sBook.reasons[0]}
+                          </span>
+                        )}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       <Footer />
