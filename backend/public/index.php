@@ -26,6 +26,21 @@ if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'OPTIONS') {
     Response::options();
 }
 
+$uri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
+
+// Serve Swagger UI
+if ($uri === '/docs' || $uri === '/docs/') {
+    header('Content-Type: text/html; charset=utf-8');
+    echo file_get_contents(__DIR__ . '/docs.php');
+    exit;
+}
+
+// Serve OpenAPI spec
+if ($uri === '/api/docs/openapi.json') {
+    require __DIR__ . '/api-docs.php';
+    exit;
+}
+
 $router = new Router();
 
 require __DIR__ . '/../routes/api.php';

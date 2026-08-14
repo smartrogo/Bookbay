@@ -1,0 +1,1045 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "BookBay API",
+    "description": "BookBay 2.0 — Africa's student super app for buying, selling, borrowing, renting, exchanging and reading books.",
+    "version": "2.0.0",
+    "contact": {
+      "name": "BookBay Support",
+      "email": "support@bookbay.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "/api/v1",
+      "description": "API v1"
+    }
+  ],
+  "tags": [
+    { "name": "Auth", "description": "Authentication & user management" },
+    { "name": "Categories", "description": "Book categories" },
+    { "name": "Books", "description": "Book listings & catalog" },
+    { "name": "Cart", "description": "Shopping cart" },
+    { "name": "Payments", "description": "Payment processing" },
+    { "name": "Orders", "description": "Order management" },
+    { "name": "Wallet", "description": "User wallet & transactions" },
+    { "name": "Borrowing", "description": "Book borrow requests" },
+    { "name": "Exchange", "description": "Book exchange requests" },
+    { "name": "Chat", "description": "Messaging & conversations" },
+    { "name": "Notifications", "description": "User notifications" },
+    { "name": "Newsletter", "description": "Newsletter subscription" },
+    { "name": "Reviews", "description": "Book reviews & ratings" },
+    { "name": "Recommendations", "description": "Personalized book recommendations" },
+    { "name": "AI Assistant", "description": "AI chat, summaries & suggestions" },
+    { "name": "Gamification", "description": "Points, streaks, badges & leaderboard" },
+    { "name": "Wishlist", "description": "User wishlist" },
+    { "name": "Blog", "description": "Blog posts & CMS" },
+    { "name": "Admin", "description": "Admin portal — dashboard, users, books, orders, settings" }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "Token",
+        "description": "Pass the token from POST /auth/login as `Authorization: Bearer <token>`"
+      },
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "bookbay_session",
+        "description": "Session cookie set automatically by POST /auth/login"
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "phone": { "type": "string" },
+          "role": { "type": "string", "enum": ["user", "admin", "superadmin"] },
+          "role_id": { "type": "integer" },
+          "is_admin": { "type": "boolean" },
+          "is_superadmin": { "type": "boolean" },
+          "status": { "type": "string", "enum": ["active", "suspended"] },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Book": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "title": { "type": "string" },
+          "author": { "type": "string" },
+          "category": { "type": "string" },
+          "cover": { "type": "string" },
+          "coverPic": { "type": "string" },
+          "priceBuy": { "type": "number" },
+          "priceBorrow": { "type": "number" },
+          "description": { "type": "string" },
+          "stock": { "type": "integer" },
+          "status": { "type": "string", "enum": ["active", "inactive"] },
+          "year": { "type": "string" },
+          "sellerId": { "type": "integer" }
+        }
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "user_id": { "type": "integer" },
+          "total": { "type": "number" },
+          "status": { "type": "string", "enum": ["pending", "processing", "completed", "cancelled", "refunded"] },
+          "reference": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "BorrowRequest": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "user_id": { "type": "integer" },
+          "book_id": { "type": "integer" },
+          "days": { "type": "integer" },
+          "status": { "type": "string", "enum": ["pending", "approved", "declined", "returned", "overdue"] },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "ExchangeRequest": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "user_id": { "type": "integer" },
+          "offered_book_id": { "type": "integer" },
+          "wanted_book_id": { "type": "integer" },
+          "message": { "type": "string" },
+          "status": { "type": "string", "enum": ["pending", "approved", "rejected", "completed", "cancelled"] }
+        }
+      },
+      "Review": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "user_id": { "type": "integer" },
+          "book_id": { "type": "integer" },
+          "rating": { "type": "integer", "minimum": 1, "maximum": 5 },
+          "comment": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Wallet": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "user_id": { "type": "integer" },
+          "balance": { "type": "number" },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Transaction": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "wallet_id": { "type": "integer" },
+          "type": { "type": "string", "enum": ["topup", "transfer", "purchase", "refund"] },
+          "amount": { "type": "number" },
+          "description": { "type": "string" },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Notification": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "user_id": { "type": "integer" },
+          "title": { "type": "string" },
+          "message": { "type": "string" },
+          "is_read": { "type": "boolean" },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "Setting": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "key": { "type": "string" },
+          "value": { "type": "string" }
+        }
+      },
+      "AiConversation": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "user_id": { "type": "integer" },
+          "title": { "type": "string" },
+          "message_count": { "type": "integer" },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "AiMessage": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "conversation_id": { "type": "integer" },
+          "role": { "type": "string", "enum": ["user", "assistant"] },
+          "content": { "type": "string" },
+          "tokens_used": { "type": "integer" },
+          "created_at": { "type": "string", "format": "date-time" }
+        }
+      },
+      "GamificationSummary": {
+        "type": "object",
+        "properties": {
+          "total_points": { "type": "integer" },
+          "rank": { "type": "integer" },
+          "streak": {
+            "type": "object",
+            "properties": {
+              "current_streak": { "type": "integer" },
+              "longest_streak": { "type": "integer" },
+              "last_activity_date": { "type": "string" }
+            }
+          },
+          "badges_count": { "type": "integer" }
+        }
+      },
+      "Badge": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "icon": { "type": "string" },
+          "description": { "type": "string" },
+          "earned": { "type": "boolean" }
+        }
+      },
+      "LeaderboardEntry": {
+        "type": "object",
+        "properties": {
+          "rank": { "type": "integer" },
+          "user_id": { "type": "integer" },
+          "name": { "type": "string" },
+          "total_points": { "type": "integer" }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string" }
+        }
+      }
+    }
+  },
+  "security": [
+    { "bearerAuth": [] },
+    { "cookieAuth": [] }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Register a new user",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "email", "password"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string", "minLength": 6 },
+                  "phone": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "User created", "content": { "application/json": { "schema": { "type": "object", "properties": { "token": { "type": "string" }, "user": { "$ref": "#/components/schemas/User" } } } } } },
+          "422": { "description": "Validation error" }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login with email and password",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Login successful", "content": { "application/json": { "schema": { "type": "object", "properties": { "token": { "type": "string" }, "user": { "$ref": "#/components/schemas/User" } } } } } },
+          "401": { "description": "Invalid credentials" }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Logout and invalidate token",
+        "responses": {
+          "200": { "description": "Logged out" }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get current authenticated user",
+        "responses": {
+          "200": { "description": "Current user", "content": { "application/json": { "schema": { "type": "object", "properties": { "user": { "$ref": "#/components/schemas/User" } } } } } },
+          "401": { "description": "Unauthenticated" }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "List all categories",
+        "security": [],
+        "responses": {
+          "200": { "description": "Categories list", "content": { "application/json": { "schema": { "type": "object", "properties": { "categories": { "type": "array", "items": { "type": "object", "properties": { "id": { "type": "integer" }, "name": { "type": "string" } } } } } } } } }
+        }
+      },
+      "post": {
+        "tags": ["Categories"],
+        "summary": "Create a category (admin)",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "type": "object", "required": ["name"], "properties": { "name": { "type": "string" } } } } }
+        },
+        "responses": {
+          "201": { "description": "Category created" },
+          "403": { "description": "Admin only" }
+        }
+      }
+    },
+    "/categories/{id}": {
+      "put": {
+        "tags": ["Categories"],
+        "summary": "Update a category (admin)",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "name": { "type": "string" } } } } } },
+        "responses": { "200": { "description": "Updated" }, "403": { "description": "Admin only" } }
+      },
+      "delete": {
+        "tags": ["Categories"],
+        "summary": "Delete a category (admin)",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Deleted" }, "403": { "description": "Admin only" } }
+      }
+    },
+    "/books": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "List/search books",
+        "security": [],
+        "parameters": [
+          { "name": "q", "in": "query", "schema": { "type": "string" }, "description": "Search query" },
+          { "name": "category", "in": "query", "schema": { "type": "string" }, "description": "Filter by category" },
+          { "name": "user_id", "in": "query", "schema": { "type": "integer" }, "description": "Filter by seller" },
+          { "name": "page", "in": "query", "schema": { "type": "integer" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Books list", "content": { "application/json": { "schema": { "type": "object", "properties": { "books": { "type": "array", "items": { "$ref": "#/components/schemas/Book" } } } } } } }
+        }
+      },
+      "post": {
+        "tags": ["Books"],
+        "summary": "Create a book listing (user)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["title", "author", "category_id", "price_buy"],
+                "properties": {
+                  "title": { "type": "string" },
+                  "author": { "type": "string" },
+                  "category_id": { "type": "integer" },
+                  "description": { "type": "string" },
+                  "cover": { "type": "string", "description": "Cover image URL" },
+                  "price_buy": { "type": "number" },
+                  "price_borrow": { "type": "number" },
+                  "stock": { "type": "integer" },
+                  "year": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Book created" },
+          "401": { "description": "Unauthenticated" }
+        }
+      }
+    },
+    "/books/{id}": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Get book details",
+        "security": [],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Book details", "content": { "application/json": { "schema": { "type": "object", "properties": { "book": { "$ref": "#/components/schemas/Book" } } } } } } }
+      },
+      "put": {
+        "tags": ["Books"],
+        "summary": "Update a book (owner/admin)",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": { "200": { "description": "Updated" } }
+      },
+      "delete": {
+        "tags": ["Books"],
+        "summary": "Delete a book (owner/admin)",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Deleted" } }
+      }
+    },
+    "/books/user/{userId}": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Get books by a specific user",
+        "security": [],
+        "parameters": [{ "name": "userId", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "User's books", "content": { "application/json": { "schema": { "type": "object", "properties": { "books": { "type": "array", "items": { "$ref": "#/components/schemas/Book" } } } } } } } }
+      }
+    },
+    "/cart/{userId}": {
+      "get": {
+        "tags": ["Cart"],
+        "summary": "Get cart items",
+        "parameters": [{ "name": "userId", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Cart items", "content": { "application/json": { "schema": { "type": "object", "properties": { "items": { "type": "array" } } } } } } }
+      },
+      "post": {
+        "tags": ["Cart"],
+        "summary": "Add item to cart",
+        "parameters": [{ "name": "userId", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["book_id"], "properties": { "book_id": { "type": "integer" }, "quantity": { "type": "integer", "default": 1 } } } } } },
+        "responses": { "200": { "description": "Item added" } }
+      }
+    },
+    "/cart/{userId}/{cartItemId}": {
+      "delete": {
+        "tags": ["Cart"],
+        "summary": "Remove item from cart",
+        "parameters": [
+          { "name": "userId", "in": "path", "required": true, "schema": { "type": "integer" } },
+          { "name": "cartItemId", "in": "path", "required": true, "schema": { "type": "integer" } }
+        ],
+        "responses": { "200": { "description": "Item removed" } }
+      }
+    },
+    "/payments/start/{userId}": {
+      "post": {
+        "tags": ["Payments"],
+        "summary": "Start a payment (demo gateway)",
+        "parameters": [{ "name": "userId", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["amount"], "properties": { "amount": { "type": "number" } } } } } },
+        "responses": { "200": { "description": "Payment reference", "content": { "application/json": { "schema": { "type": "object", "properties": { "reference": { "type": "string" } } } } } } }
+      }
+    },
+    "/payments/verify/{userId}": {
+      "post": {
+        "tags": ["Payments"],
+        "summary": "Verify payment and create order from cart",
+        "parameters": [{ "name": "userId", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["reference"], "properties": { "reference": { "type": "string" } } } } } },
+        "responses": { "200": { "description": "Payment verified", "content": { "application/json": { "schema": { "type": "object", "properties": { "paid": { "type": "boolean" }, "order_id": { "type": "integer" } } } } } } }
+      }
+    },
+    "/orders": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "List user's orders",
+        "parameters": [{ "name": "status", "in": "query", "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Orders list", "content": { "application/json": { "schema": { "type": "object", "properties": { "orders": { "type": "array", "items": { "$ref": "#/components/schemas/Order" } } } } } } } }
+      },
+      "post": {
+        "tags": ["Orders"],
+        "summary": "Place order from cart",
+        "responses": { "201": { "description": "Order placed" } }
+      }
+    },
+    "/wallet/{userId}": {
+      "get": {
+        "tags": ["Wallet"],
+        "summary": "Get wallet details",
+        "parameters": [{ "name": "userId", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Wallet", "content": { "application/json": { "schema": { "type": "object", "properties": { "wallet": { "$ref": "#/components/schemas/Wallet" } } } } } } }
+      }
+    },
+    "/wallet/{userId}/transactions": {
+      "get": {
+        "tags": ["Wallet"],
+        "summary": "Get wallet transactions",
+        "parameters": [
+          { "name": "userId", "in": "path", "required": true, "schema": { "type": "integer" } },
+          { "name": "type", "in": "query", "schema": { "type": "string" }, "description": "Filter by type: topup, transfer, purchase, refund" }
+        ],
+        "responses": { "200": { "description": "Transactions", "content": { "application/json": { "schema": { "type": "object", "properties": { "transactions": { "type": "array", "items": { "$ref": "#/components/schemas/Transaction" } } } } } } } }
+      }
+    },
+    "/wallet/{userId}/topup": {
+      "post": {
+        "tags": ["Wallet"],
+        "summary": "Top up wallet balance",
+        "parameters": [{ "name": "userId", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["amount"], "properties": { "amount": { "type": "number" } } } } } },
+        "responses": { "200": { "description": "Top up successful", "content": { "application/json": { "schema": { "type": "object", "properties": { "balance": { "type": "number" } } } } } } }
+      }
+    },
+    "/wallet/{userId}/transfer": {
+      "post": {
+        "tags": ["Wallet"],
+        "summary": "Transfer funds to another user",
+        "parameters": [{ "name": "userId", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["amount", "recipient_email"], "properties": { "amount": { "type": "number" }, "recipient_email": { "type": "string" } } } } } },
+        "responses": { "200": { "description": "Transfer successful" } }
+      }
+    },
+    "/borrow": {
+      "get": {
+        "tags": ["Borrowing"],
+        "summary": "List user's borrow requests",
+        "responses": { "200": { "description": "Borrow requests", "content": { "application/json": { "schema": { "type": "object", "properties": { "borrow_requests": { "type": "array", "items": { "$ref": "#/components/schemas/BorrowRequest" } } } } } } } }
+      },
+      "post": {
+        "tags": ["Borrowing"],
+        "summary": "Create a borrow request",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["book_id", "days"], "properties": { "book_id": { "type": "integer" }, "days": { "type": "integer" } } } } } },
+        "responses": { "201": { "description": "Borrow request created" } }
+      }
+    },
+    "/borrow/request": {
+      "post": {
+        "tags": ["Borrowing"],
+        "summary": "Create a borrow request (alias)",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["book_id", "days"], "properties": { "book_id": { "type": "integer" }, "days": { "type": "integer" } } } } } },
+        "responses": { "201": { "description": "Borrow request created" } }
+      }
+    },
+    "/borrow/{id}": {
+      "get": {
+        "tags": ["Borrowing"],
+        "summary": "Get borrow request details",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Borrow request" } }
+      },
+      "put": {
+        "tags": ["Borrowing"],
+        "summary": "Update borrow request (owner)",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "status": { "type": "string" } } } } } },
+        "responses": { "200": { "description": "Updated" } }
+      },
+      "delete": {
+        "tags": ["Borrowing"],
+        "summary": "Delete borrow request (owner)",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Deleted" } }
+      }
+    },
+    "/exchange": {
+      "get": {
+        "tags": ["Exchange"],
+        "summary": "List user's exchange requests",
+        "responses": { "200": { "description": "Exchange requests", "content": { "application/json": { "schema": { "type": "object", "properties": { "exchange_requests": { "type": "array", "items": { "$ref": "#/components/schemas/ExchangeRequest" } } } } } } } }
+      },
+      "post": {
+        "tags": ["Exchange"],
+        "summary": "Create an exchange request",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["offered_book_id", "wanted_book_id"], "properties": { "offered_book_id": { "type": "integer" }, "wanted_book_id": { "type": "integer" }, "message": { "type": "string" } } } } } },
+        "responses": { "201": { "description": "Exchange request created" } }
+      }
+    },
+    "/exchange/{id}": {
+      "get": {
+        "tags": ["Exchange"],
+        "summary": "Get exchange request details",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Exchange request" } }
+      },
+      "put": {
+        "tags": ["Exchange"],
+        "summary": "Update exchange request (owner)",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "status": { "type": "string" } } } } } },
+        "responses": { "200": { "description": "Updated" } }
+      },
+      "delete": {
+        "tags": ["Exchange"],
+        "summary": "Delete exchange request (owner)",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Deleted" } }
+      }
+    },
+    "/chat/conversations/{userId}": {
+      "get": {
+        "tags": ["Chat"],
+        "summary": "Get user's conversations",
+        "parameters": [{ "name": "userId", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Conversations list" } }
+      }
+    },
+    "/chat/conversations": {
+      "post": {
+        "tags": ["Chat"],
+        "summary": "Create a new conversation",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["user_id"], "properties": { "user_id": { "type": "integer" } } } } } },
+        "responses": { "201": { "description": "Conversation created" } }
+      }
+    },
+    "/chat/{conversationId}/messages": {
+      "get": {
+        "tags": ["Chat"],
+        "summary": "Get messages in a conversation",
+        "parameters": [{ "name": "conversationId", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Messages list" } }
+      },
+      "post": {
+        "tags": ["Chat"],
+        "summary": "Send a message",
+        "parameters": [{ "name": "conversationId", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["message"], "properties": { "message": { "type": "string" } } } } } },
+        "responses": { "201": { "description": "Message sent" } }
+      }
+    },
+    "/notifications": {
+      "get": {
+        "tags": ["Notifications"],
+        "summary": "Get user's notifications",
+        "parameters": [{ "name": "unread", "in": "query", "schema": { "type": "boolean" }, "description": "Filter unread only" }],
+        "responses": { "200": { "description": "Notifications", "content": { "application/json": { "schema": { "type": "object", "properties": { "notifications": { "type": "array", "items": { "$ref": "#/components/schemas/Notification" } }, "unread_count": { "type": "integer" } } } } } } }
+      }
+    },
+    "/notifications/read-all": {
+      "post": {
+        "tags": ["Notifications"],
+        "summary": "Mark all notifications as read",
+        "responses": { "200": { "description": "All marked as read" } }
+      }
+    },
+    "/notifications/{id}/read": {
+      "patch": {
+        "tags": ["Notifications"],
+        "summary": "Mark a notification as read",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Marked as read" } }
+      }
+    },
+    "/newsletter/subscribe": {
+      "post": {
+        "tags": ["Newsletter"],
+        "summary": "Subscribe to newsletter",
+        "security": [],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["email"], "properties": { "email": { "type": "string", "format": "email" } } } } } },
+        "responses": { "200": { "description": "Subscribed" } }
+      }
+    },
+    "/reviews": {
+      "get": {
+        "tags": ["Reviews"],
+        "summary": "List reviews",
+        "security": [],
+        "parameters": [{ "name": "book_id", "in": "query", "schema": { "type": "integer" }, "description": "Filter by book" }],
+        "responses": { "200": { "description": "Reviews", "content": { "application/json": { "schema": { "type": "object", "properties": { "reviews": { "type": "array", "items": { "$ref": "#/components/schemas/Review" } } } } } } } }
+      },
+      "post": {
+        "tags": ["Reviews"],
+        "summary": "Create a review",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["book_id", "rating"], "properties": { "book_id": { "type": "integer" }, "rating": { "type": "integer", "minimum": 1, "maximum": 5 }, "comment": { "type": "string" } } } } } },
+        "responses": { "201": { "description": "Review created" } }
+      }
+    },
+    "/recommendations/personalized": {
+      "get": {
+        "tags": ["Recommendations"],
+        "summary": "Get personalized book recommendations",
+        "parameters": [{ "name": "limit", "in": "query", "schema": { "type": "integer", "default": 12 } }],
+        "responses": { "200": { "description": "Recommendations", "content": { "application/json": { "schema": { "type": "object", "properties": { "recommendations": { "type": "array", "items": { "$ref": "#/components/schemas/Book" } } } } } } } }
+      }
+    },
+    "/recommendations/recently-viewed": {
+      "get": {
+        "tags": ["Recommendations"],
+        "summary": "Get recently viewed books",
+        "parameters": [{ "name": "limit", "in": "query", "schema": { "type": "integer", "default": 8 } }],
+        "responses": { "200": { "description": "Recently viewed", "content": { "application/json": { "schema": { "type": "object", "properties": { "recently_viewed": { "type": "array", "items": { "$ref": "#/components/schemas/Book" } } } } } } } }
+      }
+    },
+    "/recommendations/similar/{bookId}": {
+      "get": {
+        "tags": ["Recommendations"],
+        "summary": "Get books similar to a given book",
+        "parameters": [
+          { "name": "bookId", "in": "path", "required": true, "schema": { "type": "integer" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "default": 6 } }
+        ],
+        "responses": { "200": { "description": "Similar books", "content": { "application/json": { "schema": { "type": "object", "properties": { "similar_books": { "type": "array", "items": { "$ref": "#/components/schemas/Book" } } } } } } } }
+      }
+    },
+    "/recommendations/track-view": {
+      "post": {
+        "tags": ["Recommendations"],
+        "summary": "Track a book view event",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["book_id"], "properties": { "book_id": { "type": "integer" } } } } } },
+        "responses": { "200": { "description": "View tracked" } }
+      }
+    },
+    "/ai/conversations": {
+      "get": {
+        "tags": ["AI Assistant"],
+        "summary": "List AI chat conversations",
+        "responses": { "200": { "description": "Conversations", "content": { "application/json": { "schema": { "type": "object", "properties": { "conversations": { "type": "array", "items": { "$ref": "#/components/schemas/AiConversation" } } } } } } } }
+      },
+      "post": {
+        "tags": ["AI Assistant"],
+        "summary": "Create a new AI conversation",
+        "requestBody": { "content": { "application/json": { "schema": { "type": "object", "properties": { "title": { "type": "string", "default": "New Chat" } } } } } },
+        "responses": { "201": { "description": "Conversation created", "content": { "application/json": { "schema": { "type": "object", "properties": { "conversation_id": { "type": "integer" }, "title": { "type": "string" } } } } } } }
+      }
+    },
+    "/ai/conversations/{id}/messages": {
+      "get": {
+        "tags": ["AI Assistant"],
+        "summary": "Get messages in an AI conversation",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "default": 50 } }
+        ],
+        "responses": { "200": { "description": "Messages", "content": { "application/json": { "schema": { "type": "object", "properties": { "messages": { "type": "array", "items": { "$ref": "#/components/schemas/AiMessage" } } } } } } } }
+      },
+      "post": {
+        "tags": ["AI Assistant"],
+        "summary": "Send a message and get AI response",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["message"], "properties": { "message": { "type": "string" } } } } } },
+        "responses": { "200": { "description": "AI response", "content": { "application/json": { "schema": { "type": "object", "properties": { "conversation_id": { "type": "integer" }, "reply": { "type": "string" }, "tokens_used": { "type": "integer" } } } } } } }
+      }
+    },
+    "/ai/conversations/{id}": {
+      "delete": {
+        "tags": ["AI Assistant"],
+        "summary": "Delete an AI conversation",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Deleted" } }
+      }
+    },
+    "/ai/summarize": {
+      "post": {
+        "tags": ["AI Assistant"],
+        "summary": "Get AI summary of a book",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["book_id"], "properties": { "book_id": { "type": "integer" } } } } } },
+        "responses": { "200": { "description": "Book summary", "content": { "application/json": { "schema": { "type": "object", "properties": { "summary": { "type": "string" } } } } } } }
+      }
+    },
+    "/ai/suggest": {
+      "post": {
+        "tags": ["AI Assistant"],
+        "summary": "Get book suggestions based on query",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["query"], "properties": { "query": { "type": "string" } } } } } },
+        "responses": { "200": { "description": "Suggestions", "content": { "application/json": { "schema": { "type": "object", "properties": { "suggestions": { "type": "array", "items": { "$ref": "#/components/schemas/Book" } } } } } } } }
+      }
+    },
+    "/gamification/summary": {
+      "get": {
+        "tags": ["Gamification"],
+        "summary": "Get gamification summary (points, streak, badges, rank)",
+        "responses": { "200": { "description": "Summary", "content": { "application/json": { "schema": { "type": "object", "properties": { "summary": { "$ref": "#/components/schemas/GamificationSummary" } } } } } } }
+      }
+    },
+    "/gamification/points": {
+      "get": {
+        "tags": ["Gamification"],
+        "summary": "Get points history",
+        "parameters": [{ "name": "limit", "in": "query", "schema": { "type": "integer", "default": 20 } }],
+        "responses": { "200": { "description": "Points history", "content": { "application/json": { "schema": { "type": "object", "properties": { "points": { "type": "array" }, "total": { "type": "integer" } } } } } } }
+      },
+      "post": {
+        "tags": ["Gamification"],
+        "summary": "Award points to user",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["type"], "properties": { "type": { "type": "string", "description": "Activity type: view_book, purchase, review, borrow_request, exchange_request, wishlist_add, daily_login, profile_complete, first_purchase, streak_bonus" }, "description": { "type": "string" }, "reference_id": { "type": "integer" }, "reference_type": { "type": "string" } } } } } },
+        "responses": { "201": { "description": "Points awarded", "content": { "application/json": { "schema": { "type": "object", "properties": { "total_points": { "type": "integer" } } } } } } }
+      }
+    },
+    "/gamification/streak": {
+      "get": {
+        "tags": ["Gamification"],
+        "summary": "Get user's streak info",
+        "responses": { "200": { "description": "Streak", "content": { "application/json": { "schema": { "type": "object", "properties": { "streak": { "type": "object", "properties": { "current_streak": { "type": "integer" }, "longest_streak": { "type": "integer" }, "last_activity_date": { "type": "string" } } } } } } } } }
+      },
+      "post": {
+        "tags": ["Gamification"],
+        "summary": "Record a daily activity for streak tracking",
+        "responses": { "200": { "description": "Activity recorded", "content": { "application/json": { "schema": { "type": "object", "properties": { "streak": { "type": "object", "properties": { "current_streak": { "type": "integer" }, "longest_streak": { "type": "integer" }, "is_new": { "type": "boolean" }, "bonus": { "type": "boolean" } } } } } } } } }
+      }
+    },
+    "/gamification/badges": {
+      "get": {
+        "tags": ["Gamification"],
+        "summary": "Get all badges with earned status",
+        "responses": { "200": { "description": "Badges", "content": { "application/json": { "schema": { "type": "object", "properties": { "badges": { "type": "array", "items": { "$ref": "#/components/schemas/Badge" } }, "earned_count": { "type": "integer" }, "total_count": { "type": "integer" } } } } } } }
+      }
+    },
+    "/gamification/leaderboard": {
+      "get": {
+        "tags": ["Gamification"],
+        "summary": "Get top users by points",
+        "parameters": [{ "name": "limit", "in": "query", "schema": { "type": "integer", "default": 10 } }],
+        "responses": { "200": { "description": "Leaderboard", "content": { "application/json": { "schema": { "type": "object", "properties": { "leaderboard": { "type": "array", "items": { "$ref": "#/components/schemas/LeaderboardEntry" } } } } } } } }
+      }
+    },
+    "/wishlist": {
+      "get": {
+        "tags": ["Wishlist"],
+        "summary": "Get user's wishlist",
+        "responses": { "200": { "description": "Wishlist", "content": { "application/json": { "schema": { "type": "object", "properties": { "wishlist": { "type": "array" } } } } } } }
+      },
+      "post": {
+        "tags": ["Wishlist"],
+        "summary": "Add book to wishlist (idempotent)",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["book_id"], "properties": { "book_id": { "type": "integer" } } } } } },
+        "responses": { "200": { "description": "Book added to wishlist" } }
+      }
+    },
+    "/wishlist/{id}": {
+      "delete": {
+        "tags": ["Wishlist"],
+        "summary": "Remove book from wishlist",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Removed" } }
+      }
+    },
+    "/posts": {
+      "get": {
+        "tags": ["Blog"],
+        "summary": "List blog posts",
+        "security": [],
+        "responses": { "200": { "description": "Posts", "content": { "application/json": { "schema": { "type": "object", "properties": { "posts": { "type": "array" } } } } } } }
+      },
+      "post": {
+        "tags": ["Blog"],
+        "summary": "Create a blog post (admin)",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["title", "body"], "properties": { "title": { "type": "string" }, "body": { "type": "string" }, "excerpt": { "type": "string" }, "slug": { "type": "string" } } } } } },
+        "responses": { "201": { "description": "Post created" }, "403": { "description": "Admin only" } }
+      }
+    },
+    "/posts/{id}": {
+      "get": {
+        "tags": ["Blog"],
+        "summary": "Get blog post",
+        "security": [],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Post" } }
+      },
+      "put": {
+        "tags": ["Blog"],
+        "summary": "Update blog post (admin)",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object" } } } },
+        "responses": { "200": { "description": "Updated" }, "403": { "description": "Admin only" } }
+      },
+      "delete": {
+        "tags": ["Blog"],
+        "summary": "Delete blog post (admin)",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Deleted" }, "403": { "description": "Admin only" } }
+      }
+    },
+    "/admin/dashboard": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get admin dashboard stats",
+        "responses": { "200": { "description": "Dashboard stats", "content": { "application/json": { "schema": { "type": "object", "properties": { "stats": { "type": "object", "properties": { "total_books": { "type": "integer" }, "total_users": { "type": "integer" }, "total_orders": { "type": "integer" }, "total_revenue": { "type": "number" }, "pending_borrow_requests": { "type": "integer" }, "pending_orders": { "type": "integer" } } }, "revenue_by_month": { "type": "array" }, "recent_orders": { "type": "array" } } } } } } }
+      }
+    },
+    "/admin/users": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "List all users (admin)",
+        "parameters": [{ "name": "q", "in": "query", "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Users", "content": { "application/json": { "schema": { "type": "object", "properties": { "users": { "type": "array", "items": { "$ref": "#/components/schemas/User" } } } } } } } }
+      }
+    },
+    "/admin/users/{id}": {
+      "put": {
+        "tags": ["Admin"],
+        "summary": "Update a user (admin/superadmin)",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "name": { "type": "string" }, "phone": { "type": "string" }, "status": { "type": "string", "enum": ["active", "suspended"] }, "is_admin": { "type": "integer", "enum": [0, 1] }, "is_superadmin": { "type": "integer", "enum": [0, 1] }, "role_id": { "type": "integer" } } } } } },
+        "responses": { "200": { "description": "User updated" } }
+      },
+      "delete": {
+        "tags": ["Admin"],
+        "summary": "Delete a user (superadmin for admins)",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "User deleted" } }
+      }
+    },
+    "/admin/books": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "List all books (admin)",
+        "responses": { "200": { "description": "Books", "content": { "application/json": { "schema": { "type": "object", "properties": { "books": { "type": "array", "items": { "$ref": "#/components/schemas/Book" } } } } } } } }
+      }
+    },
+    "/admin/books/{id}": {
+      "put": {
+        "tags": ["Admin"],
+        "summary": "Update book status (admin)",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "properties": { "status": { "type": "string", "enum": ["active", "inactive"] }, "stock": { "type": "integer" } } } } } },
+        "responses": { "200": { "description": "Book updated" } }
+      }
+    },
+    "/admin/borrow": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "List all borrow requests (admin)",
+        "responses": { "200": { "description": "Borrow requests", "content": { "application/json": { "schema": { "type": "object", "properties": { "borrow_requests": { "type": "array", "items": { "$ref": "#/components/schemas/BorrowRequest" } } } } } } } }
+      }
+    },
+    "/admin/borrow/{id}": {
+      "patch": {
+        "tags": ["Admin"],
+        "summary": "Approve/decline borrow request (admin)",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["status"], "properties": { "status": { "type": "string", "enum": ["approved", "declined"] } } } } } },
+        "responses": { "200": { "description": "Borrow request updated" } }
+      }
+    },
+    "/admin/orders": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "List all orders (admin)",
+        "parameters": [
+          { "name": "status", "in": "query", "schema": { "type": "string" } },
+          { "name": "q", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "description": "Orders", "content": { "application/json": { "schema": { "type": "object", "properties": { "orders": { "type": "array", "items": { "$ref": "#/components/schemas/Order" } } } } } } } }
+      }
+    },
+    "/admin/orders/{id}": {
+      "put": {
+        "tags": ["Admin"],
+        "summary": "Update order status (admin)",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["status"], "properties": { "status": { "type": "string", "enum": ["pending", "processing", "completed", "cancelled", "refunded"] } } } } } },
+        "responses": { "200": { "description": "Order updated" } }
+      }
+    },
+    "/admin/reviews": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "List all reviews (admin)",
+        "parameters": [{ "name": "book_id", "in": "query", "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Reviews", "content": { "application/json": { "schema": { "type": "object", "properties": { "reviews": { "type": "array", "items": { "$ref": "#/components/schemas/Review" } } } } } } } }
+      }
+    },
+    "/admin/reviews/{id}": {
+      "delete": {
+        "tags": ["Admin"],
+        "summary": "Delete a review (admin)",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Review deleted" } }
+      }
+    },
+    "/admin/exchanges": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "List all exchange requests (admin)",
+        "parameters": [{ "name": "status", "in": "query", "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Exchanges", "content": { "application/json": { "schema": { "type": "object", "properties": { "exchanges": { "type": "array", "items": { "$ref": "#/components/schemas/ExchangeRequest" } } } } } } } }
+      }
+    },
+    "/admin/exchanges/{id}": {
+      "put": {
+        "tags": ["Admin"],
+        "summary": "Update exchange request (admin)",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["status"], "properties": { "status": { "type": "string", "enum": ["pending", "approved", "rejected", "completed", "cancelled"] } } } } } },
+        "responses": { "200": { "description": "Exchange updated" } }
+      }
+    },
+    "/admin/subscribers": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "List newsletter subscribers (admin)",
+        "responses": { "200": { "description": "Subscribers", "content": { "application/json": { "schema": { "type": "object", "properties": { "subscribers": { "type": "array" } } } } } } }
+      }
+    },
+    "/admin/subscribers/{id}": {
+      "delete": {
+        "tags": ["Admin"],
+        "summary": "Remove subscriber (admin)",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": { "200": { "description": "Subscriber removed" } }
+      }
+    },
+    "/admin/settings": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "List all site settings (admin)",
+        "responses": { "200": { "description": "Settings", "content": { "application/json": { "schema": { "type": "object", "properties": { "settings": { "type": "array", "items": { "$ref": "#/components/schemas/Setting" } } } } } } } }
+      }
+    },
+    "/admin/settings/export": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Export settings as JSON (admin)",
+        "responses": { "200": { "description": "JSON file download" } }
+      }
+    },
+    "/admin/settings/import": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Import settings from JSON (superadmin)",
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["settings"], "properties": { "settings": { "type": "array", "items": { "type": "object", "properties": { "key": { "type": "string" }, "value": { "type": "string" } } } }, "overwrite": { "type": "boolean" } } } } } },
+        "responses": { "200": { "description": "Imported", "content": { "application/json": { "schema": { "type": "object", "properties": { "imported": { "type": "integer" }, "skipped": { "type": "integer" } } } } } } }
+      }
+    },
+    "/admin/settings/{key}": {
+      "get": {
+        "tags": ["Admin"],
+        "summary": "Get a setting by key (admin)",
+        "parameters": [{ "name": "key", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Setting", "content": { "application/json": { "schema": { "type": "object", "properties": { "setting": { "$ref": "#/components/schemas/Setting" } } } } } } }
+      },
+      "put": {
+        "tags": ["Admin"],
+        "summary": "Create or update a setting (superadmin)",
+        "parameters": [{ "name": "key", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "requestBody": { "required": true, "content": { "application/json": { "schema": { "type": "object", "required": ["value"], "properties": { "value": { "type": "string" } } } } } },
+        "responses": { "200": { "description": "Setting updated" } }
+      },
+      "delete": {
+        "tags": ["Admin"],
+        "summary": "Delete a setting (superadmin)",
+        "parameters": [{ "name": "key", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Setting deleted" } }
+      }
+    }
+  }
+}
