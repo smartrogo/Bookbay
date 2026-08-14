@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 /**
- * Swagger UI for BookBay API.
+ * Swagger UI for Bookbay API.
  *
  * Access at: /docs (or /docs.php)
  * The OpenAPI spec is served from /api/docs/openapi.json
@@ -13,7 +13,7 @@ declare(strict_types=1);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BookBay API Documentation</title>
+    <title>Bookbay API Documentation</title>
     <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css">
     <style>
         html { box-sizing: border-box; overflow-y: scroll; }

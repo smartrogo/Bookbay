@@ -1,7 +1,7 @@
-# BookBay Backend
+# Bookbay Backend
 
-PHP 8.3+ API for the BookBay marketplace. Implements the modules in
-[`BookBay_Backend.md`](./BookBay_Backend.md): authentication, users, roles,
+PHP 8.3+ API for the Bookbay marketplace. Implements the modules in
+[`Bookbay_Backend.md`](./Bookbay_Backend.md): authentication, users, roles,
 books, categories, orders, borrowing, reviews, wishlists, wallets,
 transactions, notifications, messaging, admin, blog, and newsletter.
 

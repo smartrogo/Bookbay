@@ -2,8 +2,8 @@ import { apiClient } from "./api";
 
 const buildFallbackUser = (email, password) => {
   const normalizedEmail = String(email || "").trim().toLowerCase();
-  const isAdmin = normalizedEmail.includes("admin") || password === "BookBay@2026";
-  const name = isAdmin ? "Admin User" : "BookBay User";
+  const isAdmin = normalizedEmail.includes("admin") || password === "Bookbay@2026";
+  const name = isAdmin ? "Admin User" : "Bookbay User";
 
   return {
     id: Date.now(),

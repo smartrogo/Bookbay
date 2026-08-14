@@ -26,7 +26,7 @@ const FeaturesHighlight = () => {
             More Than Just a Bookstore
           </h2>
           <p className="text-lg text-indigo-200 max-w-2xl mx-auto">
-            BookBay combines smart technology with gamification to make your reading journey engaging and rewarding.
+            Bookbay combines smart technology with gamification to make your reading journey engaging and rewarding.
           </p>
         </div>
 
@@ -68,7 +68,7 @@ const FeaturesHighlight = () => {
                 <div className="w-3 h-3 rounded-full bg-red-500/50" />
                 <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
                 <div className="w-3 h-3 rounded-full bg-green-500/50" />
-                <span className="ml-2 text-[0.7rem] text-slate-400">BookBay AI Chat</span>
+                <span className="ml-2 text-[0.7rem] text-slate-400">Bookbay AI Chat</span>
               </div>
               <div className="space-y-2">
                 <div className="flex justify-end">

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * BookBay unit tests — no Composer/PHPUnit needed.
+ * Bookbay unit tests — no Composer/PHPUnit needed.
  *
  * Boots a fresh SQLite database in /tmp, seeds it, and exercises the
  * Validator and Services directly. Error paths that end in a JSON
@@ -17,21 +17,21 @@ putenv('DB_DATABASE=/tmp/bookbay-unit-' . getmypid() . '.sqlite');
 
 require __DIR__ . '/../autoload.php';
 
-use BookBay\Core\Response;
-use BookBay\Core\Validator;
-use BookBay\Models\Book;
-use BookBay\Models\BorrowRequest;
-use BookBay\Models\CartItem;
-use BookBay\Models\Order;
-use BookBay\Models\User;
-use BookBay\Models\Wallet;
-use BookBay\Services\AuthService;
-use BookBay\Services\BookService;
-use BookBay\Services\BorrowService;
-use BookBay\Services\ChatService;
-use BookBay\Services\NotificationService;
-use BookBay\Services\OrderService;
-use BookBay\Services\WalletService;
+use Bookbay\Core\Response;
+use Bookbay\Core\Validator;
+use Bookbay\Models\Book;
+use Bookbay\Models\BorrowRequest;
+use Bookbay\Models\CartItem;
+use Bookbay\Models\Order;
+use Bookbay\Models\User;
+use Bookbay\Models\Wallet;
+use Bookbay\Services\AuthService;
+use Bookbay\Services\BookService;
+use Bookbay\Services\BorrowService;
+use Bookbay\Services\ChatService;
+use Bookbay\Services\NotificationService;
+use Bookbay\Services\OrderService;
+use Bookbay\Services\WalletService;
 
 // Buffer ALL output so header()/http_response_code() keep working inside
 // captureResponse (PHP warns once real output has been sent).

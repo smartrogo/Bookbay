@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Http\Controllers;
+namespace Bookbay\Http\Controllers;
 
-use BookBay\Core\Controller;
-use BookBay\Services\AuditService;
-use BookBay\Services\OrderService;
+use Bookbay\Core\Controller;
+use Bookbay\Services\AuditService;
+use Bookbay\Services\OrderService;
 
 final class OrderController extends Controller
 {

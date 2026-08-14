@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Core;
+namespace Bookbay\Core;
 
-use BookBay\Services\AuthService;
+use Bookbay\Services\AuthService;
 
 abstract class Controller
 {

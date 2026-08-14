@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Http\Controllers;
+namespace Bookbay\Http\Controllers;
 
-use BookBay\Core\Controller;
-use BookBay\Core\RateLimiter;
-use BookBay\Core\Response;
-use BookBay\Core\Validator;
-use BookBay\Services\AuthService;
-use BookBay\Services\AuditService;
+use Bookbay\Core\Controller;
+use Bookbay\Core\RateLimiter;
+use Bookbay\Core\Response;
+use Bookbay\Core\Validator;
+use Bookbay\Services\AuthService;
+use Bookbay\Services\AuditService;
 
 final class AuthController extends Controller
 {

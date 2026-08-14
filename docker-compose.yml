@@ -11,7 +11,7 @@ services:
     volumes:
       - db-data:/var/www/html/database
     environment:
-      - APP_NAME=BookBay
+      - APP_NAME=Bookbay
       - APP_ENV=local
       - APP_DEBUG=true
       - DB_DRIVER=sqlite

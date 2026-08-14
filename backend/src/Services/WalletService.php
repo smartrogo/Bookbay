@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Services;
+namespace Bookbay\Services;
 
-use BookBay\Core\Response;
-use BookBay\Models\Transaction;
-use BookBay\Models\User;
-use BookBay\Models\Wallet;
+use Bookbay\Core\Response;
+use Bookbay\Models\Transaction;
+use Bookbay\Models\User;
+use Bookbay\Models\Wallet;
 
 final class WalletService
 {

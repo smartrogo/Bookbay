@@ -208,7 +208,7 @@ export const Buy = () => {
       <div className="bg-gradient-to-r from-[#0f172a] via-[#1e1b4b] to-[#312e81] py-16 px-6">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            BookBay Marketplace
+            Bookbay Marketplace
           </h1>
           <p className="text-lg text-indigo-200 mb-8 max-w-2xl mx-auto">
             Discover thousands of books to buy or borrow. From bestsellers to hidden gems.

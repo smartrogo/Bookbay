@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Services;
+namespace Bookbay\Services;
 
-use BookBay\Models\Book;
+use Bookbay\Models\Book;
 
 final class BookService
 {

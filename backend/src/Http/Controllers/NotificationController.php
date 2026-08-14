@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Http\Controllers;
+namespace Bookbay\Http\Controllers;
 
-use BookBay\Core\Controller;
-use BookBay\Services\NotificationService;
+use Bookbay\Core\Controller;
+use Bookbay\Services\NotificationService;
 
 final class NotificationController extends Controller
 {

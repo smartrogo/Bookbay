@@ -5,7 +5,7 @@ const createPlaceholderCover = (title = "Book") => {
     <rect width='100%' height='100%' fill='#f5f3ff'/>
     <rect x='24' y='24' width='552' height='852' rx='24' fill='#ffffff'/>
     <text x='50%' y='44%' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='28' fill='#4f46e5'>${title}</text>
-    <text x='50%' y='58%' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='18' fill='#6b7280'>BookBay</text>
+    <text x='50%' y='58%' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='18' fill='#6b7280'>Bookbay</text>
   </svg>`;
 
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;

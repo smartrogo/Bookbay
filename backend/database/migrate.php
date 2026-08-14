@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * BookBay schema migration.
+ * Bookbay schema migration.
  *
  * Creates every core table from the backend spec. Runs against both
  * MySQL (DB_DRIVER=mysql, default) and SQLite (DB_DRIVER=sqlite, used
@@ -12,8 +12,8 @@ declare(strict_types=1);
  * Usage: php database/migrate.php
  */
 
-use BookBay\Core\Config;
-use BookBay\Core\Database;
+use Bookbay\Core\Config;
+use Bookbay\Core\Database;
 
 require __DIR__ . '/../autoload.php';
 
@@ -311,7 +311,7 @@ foreach ($tables as $table => $definition) {
 }
 
 $driverLabel = $driver === 'sqlite' ? 'SQLite' : 'MySQL';
-echo "Migrated BookBay schema ({$driverLabel}): {$created} table(s) created.\n";
+echo "Migrated Bookbay schema ({$driverLabel}): {$created} table(s) created.\n";
 
 function createTable(PDO $db, string $driver, string $table, array $columns): int
 {

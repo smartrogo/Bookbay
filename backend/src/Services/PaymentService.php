@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Services;
+namespace Bookbay\Services;
 
-use BookBay\Core\Response;
-use BookBay\Models\Payment;
+use Bookbay\Core\Response;
+use Bookbay\Models\Payment;
 
 /**
  * Demo payment gateway. `start` creates a pending payment with a

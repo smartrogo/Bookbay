@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Core;
+namespace Bookbay\Core;
 
 /**
  * Wraps the incoming HTTP request. Also normalises the URL path so the

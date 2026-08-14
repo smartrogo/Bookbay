@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Services;
+namespace Bookbay\Services;
 
-use BookBay\Models\Notification;
+use Bookbay\Models\Notification;
 
 final class NotificationService
 {

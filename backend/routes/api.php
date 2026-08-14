@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-use BookBay\Http\Controllers\AdminController;
-use BookBay\Http\Controllers\AuthController;
-use BookBay\Http\Controllers\BookController;
-use BookBay\Http\Controllers\BorrowController;
-use BookBay\Http\Controllers\CartController;
-use BookBay\Http\Controllers\CategoryController;
-use BookBay\Http\Controllers\ChatController;
-use BookBay\Http\Controllers\ExchangeController;
-use BookBay\Http\Controllers\NewsletterController;
-use BookBay\Http\Controllers\NotificationController;
-use BookBay\Http\Controllers\OrderController;
-use BookBay\Http\Controllers\PaymentController;
-use BookBay\Http\Controllers\PostController;
-use BookBay\Http\Controllers\ReviewController;
-use BookBay\Http\Controllers\SettingsController;
-use BookBay\Http\Controllers\RecommendationController;
-use BookBay\Http\Controllers\AiController;
-use BookBay\Http\Controllers\GamificationController;
-use BookBay\Http\Controllers\WalletController;
-use BookBay\Http\Controllers\WishlistController;
+use Bookbay\Http\Controllers\AdminController;
+use Bookbay\Http\Controllers\AuthController;
+use Bookbay\Http\Controllers\BookController;
+use Bookbay\Http\Controllers\BorrowController;
+use Bookbay\Http\Controllers\CartController;
+use Bookbay\Http\Controllers\CategoryController;
+use Bookbay\Http\Controllers\ChatController;
+use Bookbay\Http\Controllers\ExchangeController;
+use Bookbay\Http\Controllers\NewsletterController;
+use Bookbay\Http\Controllers\NotificationController;
+use Bookbay\Http\Controllers\OrderController;
+use Bookbay\Http\Controllers\PaymentController;
+use Bookbay\Http\Controllers\PostController;
+use Bookbay\Http\Controllers\ReviewController;
+use Bookbay\Http\Controllers\SettingsController;
+use Bookbay\Http\Controllers\RecommendationController;
+use Bookbay\Http\Controllers\AiController;
+use Bookbay\Http\Controllers\GamificationController;
+use Bookbay\Http\Controllers\WalletController;
+use Bookbay\Http\Controllers\WishlistController;
 
 /**
  * All routes live under /api/v1 (stripped by Request::path()).

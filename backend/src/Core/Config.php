@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Core;
+namespace Bookbay\Core;
 
 /**
  * Tiny environment/config loader.

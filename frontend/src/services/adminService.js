@@ -53,7 +53,7 @@ const DEMO_BOOKS = [
 
 const DEMO_USERS = [
   { id: 1, name: "Super Admin", email: "superadmin@example.com", phone: "+2348000000001", role: "superadmin", is_admin: true, is_superadmin: true, status: "active", joined: "2026-01-01" },
-  { id: 2, name: "BookBay Admin", email: "admin@example.com", phone: "+2348000000000", role: "admin", is_admin: true, is_superadmin: false, status: "active", joined: "2026-01-01" },
+  { id: 2, name: "Bookbay Admin", email: "admin@example.com", phone: "+2348000000000", role: "admin", is_admin: true, is_superadmin: false, status: "active", joined: "2026-01-01" },
   { id: 3, name: "Aisha Bello", email: "aisha@example.com", phone: "+2348012345678", role: "user", is_admin: false, is_superadmin: false, status: "active", joined: "2026-01-12" },
   { id: 4, name: "John Mensah", email: "john@example.com", phone: "+233201234567", role: "user", is_admin: false, is_superadmin: false, status: "active", joined: "2026-02-03" },
   { id: 5, name: "Ngozi Okonkwo", email: "ngozi@example.com", phone: "+2348023456789", role: "user", is_admin: false, is_superadmin: false, status: "active", joined: "2026-02-18" },
@@ -326,7 +326,7 @@ export const deleteAdminSubscriber = async (id) => {
 // ── Site Settings (superadmin only) ──────────────────────────────
 
 const DEMO_SETTINGS = [
-  { key: "site_name", value: "BookBay" },
+  { key: "site_name", value: "Bookbay" },
   { key: "site_description", value: "Your online bookstore for buying, selling, and borrowing books." },
   { key: "site_url", value: "https://bookbay.com" },
   { key: "support_email", value: "support@bookbay.com" },

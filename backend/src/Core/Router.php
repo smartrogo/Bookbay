@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Core;
+namespace Bookbay\Core;
 
 /**
  * Tiny regex router. Routes are matched in registration order, so

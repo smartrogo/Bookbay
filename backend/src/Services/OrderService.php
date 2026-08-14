@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Services;
+namespace Bookbay\Services;
 
-use BookBay\Core\Response;
-use BookBay\Models\Book;
-use BookBay\Models\CartItem;
-use BookBay\Models\Order;
-use BookBay\Models\OrderItem;
+use Bookbay\Core\Response;
+use Bookbay\Models\Book;
+use Bookbay\Models\CartItem;
+use Bookbay\Models\Order;
+use Bookbay\Models\OrderItem;
 
 final class OrderService
 {

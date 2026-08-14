@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Http\Controllers;
+namespace Bookbay\Http\Controllers;
 
-use BookBay\Core\Controller;
-use BookBay\Core\Response;
-use BookBay\Services\GamificationService;
+use Bookbay\Core\Controller;
+use Bookbay\Core\Response;
+use Bookbay\Services\GamificationService;
 
 final class GamificationController extends Controller
 {

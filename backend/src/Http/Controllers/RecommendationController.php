@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Http\Controllers;
+namespace Bookbay\Http\Controllers;
 
-use BookBay\Core\Controller;
-use BookBay\Core\Response;
-use BookBay\Models\UserActivity;
-use BookBay\Services\BookRecommendationService;
+use Bookbay\Core\Controller;
+use Bookbay\Core\Response;
+use Bookbay\Models\UserActivity;
+use Bookbay\Services\BookRecommendationService;
 
 final class RecommendationController extends Controller
 {

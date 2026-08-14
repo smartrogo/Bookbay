@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Services;
+namespace Bookbay\Services;
 
-use BookBay\Core\Response;
-use BookBay\Models\Book;
-use BookBay\Models\BorrowRequest;
+use Bookbay\Core\Response;
+use Bookbay\Models\Book;
+use Bookbay\Models\BorrowRequest;
 
 final class BorrowService
 {

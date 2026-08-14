@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Http\Controllers;
+namespace Bookbay\Http\Controllers;
 
-use BookBay\Core\Controller;
-use BookBay\Core\RateLimiter;
-use BookBay\Core\Validator;
-use BookBay\Models\NewsletterSubscriber;
+use Bookbay\Core\Controller;
+use Bookbay\Core\RateLimiter;
+use Bookbay\Core\Validator;
+use Bookbay\Models\NewsletterSubscriber;
 
 final class NewsletterController extends Controller
 {

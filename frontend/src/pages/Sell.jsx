@@ -125,7 +125,7 @@ export const Sell = () => {
           </button>
           <h1 className="text-3xl font-bold text-white mb-2">Sell a Book</h1>
           <p className="text-indigo-200">
-            List your book on BookBay and reach thousands of readers
+            List your book on Bookbay and reach thousands of readers
           </p>
         </div>
       </div>

@@ -98,6 +98,7 @@ function App() {
                 <Route path="/terms-of-service" element={<ServiceTerms />} />
                 <Route path="/privacy-policy" element={<Policy />} />
                 <Route path="/frequent-questions" element={<FAQs />} />
+                <Route path="/profile" element={<Profile />} />
                 <Route path="/profile/:userId" element={<Profile />} />
                 <Route path="/cart" element={<ProtectedRoute />}>
                   <Route path="/cart" element={<Cart />} />

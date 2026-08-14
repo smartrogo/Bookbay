@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Http\Controllers;
+namespace Bookbay\Http\Controllers;
 
-use BookBay\Core\Controller;
-use BookBay\Core\Response;
-use BookBay\Core\Validator;
-use BookBay\Models\Book;
-use BookBay\Services\AuditService;
-use BookBay\Services\AuthService;
-use BookBay\Services\BookService;
+use Bookbay\Core\Controller;
+use Bookbay\Core\Response;
+use Bookbay\Core\Validator;
+use Bookbay\Models\Book;
+use Bookbay\Services\AuditService;
+use Bookbay\Services\AuthService;
+use Bookbay\Services\BookService;
 
 final class BookController extends Controller
 {

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Smoke test for the BookBay API.
+# Smoke test for the Bookbay API.
 #
 # Boots the built-in PHP server against public/ with a fresh SQLite
 # database in /tmp, then exercises the main endpoints end-to-end.

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Models;
+namespace Bookbay\Models;
 
 final class UserPoint extends Model
 {

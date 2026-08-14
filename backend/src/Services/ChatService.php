@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Services;
+namespace Bookbay\Services;
 
-use BookBay\Core\Response;
-use BookBay\Models\Conversation;
-use BookBay\Models\Message;
-use BookBay\Models\User;
+use Bookbay\Core\Response;
+use Bookbay\Models\Conversation;
+use Bookbay\Models\Message;
+use Bookbay\Models\User;
 
 final class ChatService
 {

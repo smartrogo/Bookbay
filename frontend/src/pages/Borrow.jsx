@@ -81,7 +81,7 @@ export const Borrow = () => {
       </button>
       <h2 className="text-2xl font-semibold mb-4">Borrow Books</h2>
       <p className="text-sm text-gray-600 mb-6">
-        Request to borrow a book from another BookBay user. We'll keep track of your requests and statuses here.
+        Request to borrow a book from another Bookbay user. We'll keep track of your requests and statuses here.
       </p>
 
       <div className="grid gap-8 lg:grid-cols-[1fr_1.25fr]">

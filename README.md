@@ -1,6 +1,6 @@
-# BookBay
+# Bookbay
 
-Monorepo for the BookBay marketplace.
+Monorepo for the Bookbay marketplace.
 
 | Folder      | Contents                                                    |
 | ----------- | ----------------------------------------------------------- |
@@ -20,8 +20,8 @@ The frontend talks to the Laravel backend at `/api/v1` via `VITE_API_BASE_URL`
 
 ## Docs
 
-- [`BookBay_2.0_PRD_Laravel12.md`](BookBay_2.0_PRD_Laravel12.md) — overall product PRD
-- [`backend/BookBay_Backend_PRD_Laravel12.md`](backend/BookBay_Backend_PRD_Laravel12.md) — backend spec
+- [`Bookbay_2.0_PRD_Laravel12.md`](Bookbay_2.0_PRD_Laravel12.md) — overall product PRD
+- [`backend/Bookbay_Backend_PRD_Laravel12.md`](backend/Bookbay_Backend_PRD_Laravel12.md) — backend spec
 - [`frontend/frontend-phase1-task-map.md`](frontend/frontend-phase1-task-map.md) — frontend phase 1 task map
 
 ## Deploying the frontend on Vercel

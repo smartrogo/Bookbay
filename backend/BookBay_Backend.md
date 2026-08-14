@@ -1,8 +1,8 @@
-# BookBay 2.0 PRD (Laravel 12)
+# Bookbay 2.0 PRD (Laravel 12)
 
 ## Executive Summary
 
-BookBay transforms into Africa's student super app for buying,
+Bookbay transforms into Africa's student super app for buying,
 selling, borrowing, renting, exchanging and reading books.
 
 ## Technology Stack

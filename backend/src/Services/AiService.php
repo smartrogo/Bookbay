@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Services;
+namespace Bookbay\Services;
 
-use BookBay\Models\AiConversation;
-use BookBay\Models\AiMessage;
-use BookBay\Models\Book;
+use Bookbay\Models\AiConversation;
+use Bookbay\Models\AiMessage;
+use Bookbay\Models\Book;
 
 /**
  * AI Assistant service.
@@ -202,10 +202,10 @@ final class AiService
 
     private static function callOpenAI(string $apiKey, array $history): array
     {
-        $systemPrompt = "You are BookBay AI, a helpful assistant for an online bookstore. "
+        $systemPrompt = "You are Bookbay AI, a helpful assistant for an online bookstore. "
             . "You help users find books, provide summaries, give reading recommendations, "
             . "and answer questions about literature. Be friendly, concise, and helpful. "
-            . "When recommending books, mention you can search the BookBay catalog.";
+            . "When recommending books, mention you can search the Bookbay catalog.";
 
         $messages = [['role' => 'system', 'content' => $systemPrompt]];
         foreach ($history as $msg) {
@@ -252,7 +252,7 @@ final class AiService
 
         // Greeting patterns
         if (preg_match('/\b(hi|hello|hey|greetings|good morning|good afternoon|good evening)\b/', $lower)) {
-            $reply = "Hello! 👋 I'm BookBay AI, your personal book assistant. I can help you:\n\n"
+            $reply = "Hello! 👋 I'm Bookbay AI, your personal book assistant. I can help you:\n\n"
                 . "• Find books by title, author, or topic\n"
                 . "• Get book summaries and recommendations\n"
                 . "• Answer questions about literature\n\n"
@@ -330,6 +330,6 @@ final class AiService
             . "This book falls under the **{$category}** category. "
             . "Unfortunately, a detailed summary is not yet available for this title. "
             . "Check back later for AI-generated summaries!\n\n"
-            . "_Browse the BookBay catalog to learn more about this book._";
+            . "_Browse the Bookbay catalog to learn more about this book._";
     }
 }

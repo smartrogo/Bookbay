@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Services;
+namespace Bookbay\Services;
 
-use BookBay\Models\Book;
-use BookBay\Models\OrderItem;
-use BookBay\Models\UserActivity;
-use BookBay\Models\Wishlist;
+use Bookbay\Models\Book;
+use Bookbay\Models\OrderItem;
+use Bookbay\Models\UserActivity;
+use Bookbay\Models\Wishlist;
 
 final class BookRecommendationService
 {

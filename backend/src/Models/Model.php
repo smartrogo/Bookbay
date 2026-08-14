@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Models;
+namespace Bookbay\Models;
 
-use BookBay\Core\Database;
+use Bookbay\Core\Database;
 use PDO;
 
 /**

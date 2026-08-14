@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Core;
+namespace Bookbay\Core;
 
 final class Response
 {

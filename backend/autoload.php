@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 /**
  * Minimal PSR-4 style autoloader — no Composer required.
- * Maps the BookBay\ namespace to the src/ directory.
+ * Maps the Bookbay\ namespace to the src/ directory.
  */
 spl_autoload_register(static function (string $class): void {
-    $prefix = 'BookBay\\';
+    $prefix = 'Bookbay\\';
 
     if (!str_starts_with($class, $prefix)) {
         return;

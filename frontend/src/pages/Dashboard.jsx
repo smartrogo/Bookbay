@@ -539,7 +539,7 @@ export const Dashboard = () => {
       >
         <div className="h-full flex flex-col">
           <div className="px-6 py-6 border-b border-white/10">
-            <img src={logo} alt="BookBay" className="w-24 h-auto" />
+            <img src={logo} alt="Bookbay" className="w-24 h-auto" />
             <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wider text-emerald-300">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               {isAdmin ? "Admin Panel" : "My Dashboard"}
@@ -681,7 +681,7 @@ export const Dashboard = () => {
                   <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                     <div>
                       <p className="text-[0.75rem] font-semibold uppercase tracking-[0.25em] text-indigo-200">
-                        {isAdmin ? "BookBay admin control center" : "Your BookBay dashboard"}
+                        {isAdmin ? "Bookbay admin control center" : "Your Bookbay dashboard"}
                       </p>
                       <h2 className="mt-2 text-[1.35rem] font-semibold">
                         Welcome back, {userData?.name || userData?.email || (isAdmin ? "Admin" : "User")}
@@ -1667,7 +1667,7 @@ export const Dashboard = () => {
                     <h2 className="text-[1.2rem] font-bold">Site Settings</h2>
                   </div>
                   <p className="text-[0.85rem] text-amber-100">
-                    Manage BookBay configuration. Changes apply immediately across the platform.
+                    Manage Bookbay configuration. Changes apply immediately across the platform.
                   </p>
                 </div>
 

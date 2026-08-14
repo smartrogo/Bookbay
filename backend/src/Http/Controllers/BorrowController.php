@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Http\Controllers;
+namespace Bookbay\Http\Controllers;
 
-use BookBay\Core\Controller;
-use BookBay\Core\Response;
-use BookBay\Models\BorrowRequest;
-use BookBay\Services\BorrowService;
+use Bookbay\Core\Controller;
+use Bookbay\Core\Response;
+use Bookbay\Models\BorrowRequest;
+use Bookbay\Services\BorrowService;
 
 final class BorrowController extends Controller
 {

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * BookBay API front controller.
+ * Bookbay API front controller.
  *
  * Run locally:
  *   php -S 127.0.0.1:8000 -t public public/index.php
@@ -12,10 +12,10 @@ declare(strict_types=1);
  * should be web-accessible).
  */
 
-use BookBay\Core\Config;
-use BookBay\Core\Request;
-use BookBay\Core\Response;
-use BookBay\Core\Router;
+use Bookbay\Core\Config;
+use Bookbay\Core\Request;
+use Bookbay\Core\Response;
+use Bookbay\Core\Router;
 
 require __DIR__ . '/../autoload.php';
 

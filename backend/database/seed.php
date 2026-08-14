@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * BookBay database seeder.
+ * Bookbay database seeder.
  *
  * Idempotent — safe to run repeatedly. Seeds roles, admin users, demo
  * users, categories, books, orders, borrow requests, exchange requests,
@@ -12,19 +12,19 @@ declare(strict_types=1);
  * Usage: php database/seed.php
  */
 
-use BookBay\Core\Config;
-use BookBay\Models\Book;
-use BookBay\Models\BorrowRequest;
-use BookBay\Models\Category;
-use BookBay\Models\ExchangeRequest;
-use BookBay\Models\NewsletterSubscriber;
-use BookBay\Models\Order;
-use BookBay\Models\OrderItem;
-use BookBay\Models\Review;
-use BookBay\Models\Role;
-use BookBay\Models\Setting;
-use BookBay\Models\User;
-use BookBay\Models\Wallet;
+use Bookbay\Core\Config;
+use Bookbay\Models\Book;
+use Bookbay\Models\BorrowRequest;
+use Bookbay\Models\Category;
+use Bookbay\Models\ExchangeRequest;
+use Bookbay\Models\NewsletterSubscriber;
+use Bookbay\Models\Order;
+use Bookbay\Models\OrderItem;
+use Bookbay\Models\Review;
+use Bookbay\Models\Role;
+use Bookbay\Models\Setting;
+use Bookbay\Models\User;
+use Bookbay\Models\Wallet;
 
 require __DIR__ . '/../autoload.php';
 
@@ -45,7 +45,7 @@ if (Role::all() === []) {
 
 $adminUsers = [
     ['Super Admin', 'superadmin@bookbay.test', '+2348000000001', 3, 1, 1, 'active'],
-    ['BookBay Admin', 'admin@bookbay.test', '+2348000000000', 1, 1, 0, 'active'],
+    ['Bookbay Admin', 'admin@bookbay.test', '+2348000000000', 1, 1, 0, 'active'],
 ];
 
 $demoUsers = [
@@ -156,7 +156,7 @@ foreach ($demoBooks as [$title, $author, $slug, $buy, $borrow, $stock, $year]) {
         'title' => $title,
         'author' => $author,
         'category_id' => $categoryId,
-        'description' => "A curated {$title} title from BookBay.",
+        'description' => "A curated {$title} title from Bookbay.",
         'cover' => placeholderCover($title),
         'cover_pic' => placeholderCover($title),
         'price_buy' => $buy,
@@ -175,7 +175,7 @@ echo "Seeded/verified {$seededBooks} demo book(s).\n";
 // --- Settings ----------------------------------------------------------
 
 $defaultSettings = [
-    'site_name' => 'BookBay',
+    'site_name' => 'Bookbay',
     'site_description' => 'Your online bookstore for buying, selling, and borrowing books.',
     'site_url' => 'https://bookbay.com',
     'support_email' => 'support@bookbay.com',

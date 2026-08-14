@@ -157,7 +157,7 @@ export const AiAssistant = () => {
           </button>
           <div className="flex items-center gap-3 mb-2">
             <span className="text-3xl">🤖</span>
-            <h1 className="text-3xl font-bold text-white">BookBay AI</h1>
+            <h1 className="text-3xl font-bold text-white">Bookbay AI</h1>
           </div>
           <p className="text-indigo-200">Your personal book assistant — ask anything about books and reading</p>
         </div>
@@ -303,7 +303,7 @@ export const AiAssistant = () => {
             /* No conversation selected */
             <div className="flex-1 flex flex-col items-center justify-center p-8">
               <div className="text-6xl mb-4">🤖</div>
-              <h2 className="text-2xl font-bold text-slate-900 mb-2">Welcome to BookBay AI</h2>
+              <h2 className="text-2xl font-bold text-slate-900 mb-2">Welcome to Bookbay AI</h2>
               <p className="text-slate-500 mb-8 text-center max-w-md">
                 Start a new conversation or select an existing one to chat about books,
                 get recommendations, and explore our catalog.

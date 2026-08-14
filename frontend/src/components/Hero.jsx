@@ -21,7 +21,7 @@ function HeroContent() {
           </h1>
 
           <p className="poppins lg:ml-4 leading-normal text-style font-normal text-[0.875rem] text-center w-[20.3125rem] md:text-center md:w-[70%] md:mx-auto lg:mx-0 lg:w-[33.75rem] md:leading-normal sm:w-[50%] lg:text-start mx-auto md:text-[1.25rem]">
-            BookBay: Your one-stop platform for buying, selling, and borrowing
+            Bookbay: Your one-stop platform for buying, selling, and borrowing
             books. Discover a vast selection, enjoy great deals, and join our
             family by signing up today.
           </p>

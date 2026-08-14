@@ -64,7 +64,7 @@ export const AdminLogin = () => {
       <div className="w-full max-w-md">
         {/* Brand header */}
         <div className="flex flex-col items-center mb-8">
-          <img src={logo} alt="BookBay logo" className="w-28 h-auto mb-4" />
+          <img src={logo} alt="Bookbay logo" className="w-28 h-auto mb-4" />
           <div className="flex items-center gap-2 rounded-full bg-white/10 backdrop-blur px-4 py-1.5 border border-white/20">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <span className="text-white/90 text-[0.8rem] font-semibold tracking-wide uppercase">
@@ -73,7 +73,7 @@ export const AdminLogin = () => {
           </div>
           <h1 className="text-white text-[1.75rem] font-bold mt-4">Sign in to your dashboard</h1>
           <p className="text-slate-300 text-[0.9rem] mt-2 text-center">
-            Authorized personnel only. This area is restricted to BookBay administrators.
+            Authorized personnel only. This area is restricted to Bookbay administrators.
           </p>
         </div>
 
@@ -195,7 +195,7 @@ export const AdminLogin = () => {
             <div className="flex items-center justify-between text-[0.85rem] text-slate-700 font-mono">
               <span>admin@bookbay.com</span>
               <span className="text-slate-400">/</span>
-              <span>BookBay@2026</span>
+              <span>Bookbay@2026</span>
             </div>
           </div>
         </div>
@@ -208,7 +208,7 @@ export const AdminLogin = () => {
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            Back to BookBay store
+            Back to Bookbay store
           </Link>
         </div>
       </div>

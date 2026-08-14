@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Http\Controllers;
+namespace Bookbay\Http\Controllers;
 
-use BookBay\Core\Controller;
-use BookBay\Core\Response;
-use BookBay\Models\Book;
-use BookBay\Models\BorrowRequest;
-use BookBay\Models\ExchangeRequest;
-use BookBay\Models\Message;
-use BookBay\Models\NewsletterSubscriber;
-use BookBay\Models\Order;
-use BookBay\Models\Review;
-use BookBay\Models\User;
-use BookBay\Services\AuthService;
-use BookBay\Services\AuditService;
-use BookBay\Services\BookService;
-use BookBay\Services\BorrowService;
-use BookBay\Services\NotificationService;
+use Bookbay\Core\Controller;
+use Bookbay\Core\Response;
+use Bookbay\Models\Book;
+use Bookbay\Models\BorrowRequest;
+use Bookbay\Models\ExchangeRequest;
+use Bookbay\Models\Message;
+use Bookbay\Models\NewsletterSubscriber;
+use Bookbay\Models\Order;
+use Bookbay\Models\Review;
+use Bookbay\Models\User;
+use Bookbay\Services\AuthService;
+use Bookbay\Services\AuditService;
+use Bookbay\Services\BookService;
+use Bookbay\Services\BorrowService;
+use Bookbay\Services\NotificationService;
 
 final class AdminController extends Controller
 {

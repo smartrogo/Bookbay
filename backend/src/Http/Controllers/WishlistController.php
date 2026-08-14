@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Http\Controllers;
+namespace Bookbay\Http\Controllers;
 
-use BookBay\Core\Controller;
-use BookBay\Core\Response;
-use BookBay\Models\Book;
-use BookBay\Models\Wishlist;
-use BookBay\Services\BookService;
+use Bookbay\Core\Controller;
+use Bookbay\Core\Response;
+use Bookbay\Models\Book;
+use Bookbay\Models\Wishlist;
+use Bookbay\Services\BookService;
 
 final class WishlistController extends Controller
 {

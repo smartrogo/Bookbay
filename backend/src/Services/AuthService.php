@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Services;
+namespace Bookbay\Services;
 
-use BookBay\Core\Request;
-use BookBay\Core\Response;
-use BookBay\Models\Session;
-use BookBay\Models\User;
-use BookBay\Models\Wallet;
+use Bookbay\Core\Request;
+use Bookbay\Core\Response;
+use Bookbay\Models\Session;
+use Bookbay\Models\User;
+use Bookbay\Models\Wallet;
 
 final class AuthService
 {

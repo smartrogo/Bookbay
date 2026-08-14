@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace BookBay\Services;
+namespace Bookbay\Services;
 
-use BookBay\Models\UserPoint;
-use BookBay\Models\UserStreak;
-use BookBay\Models\UserBadge;
-use BookBay\Models\User;
+use Bookbay\Models\UserPoint;
+use Bookbay\Models\UserStreak;
+use Bookbay\Models\UserBadge;
+use Bookbay\Models\User;
 
 /**
  * Gamification service — points, daily streaks, badges, leaderboard.
