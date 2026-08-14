@@ -1,0 +1,12 @@
+node_modules
+vendor
+.env
+.env.*
+!.env.example
+*.sqlite
+*.sqlite.*
+/tmp
+/tests
+.git
+.gitignore
+*.md

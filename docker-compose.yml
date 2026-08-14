@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  # ── Backend (PHP API) ────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - db-data:/var/www/html/database
+    environment:
+      - APP_NAME=BookBay
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - DB_DRIVER=sqlite
+      - DB_DATABASE=/var/www/html/database/bookbay.sqlite
+      - CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
+      - SESSION_TTL=2592000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/categories"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ── Frontend (React + Nginx) ─────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: http://localhost:8000/api/v1
+    ports:
+      - "3000:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  db-data:
