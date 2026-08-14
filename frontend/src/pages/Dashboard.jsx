@@ -8,6 +8,24 @@ import {
   fetchAdminBorrowRequests,
   updateAdminBorrowRequest,
   updateAdminBookStatus,
+  updateUserStatus,
+  toggleUserAdmin,
+  toggleUserSuperAdmin,
+  deleteUser,
+  fetchAdminOrders,
+  updateAdminOrder,
+  fetchAdminReviews,
+  deleteAdminReview,
+  fetchAdminExchanges,
+  updateAdminExchange,
+  fetchAdminSubscribers,
+  deleteAdminSubscriber,
+  fetchAdminSettings,
+  updateAdminSetting,
+  deleteAdminSetting,
+  exportSettings,
+  importSettings,
+  parseSettingsFile,
 } from "../services/adminService";
 import { fetchUserBooks } from "../services/bookService";
 import { fetchBorrowRequests } from "../services/borrowService";
@@ -30,11 +48,15 @@ import logo from "../assets/logo.png";
 
 const ADMIN_NAV = [
   { id: "overview", label: "Overview", icon: "📊" },
-  { id: "books", label: "Books", icon: "📚" },
   { id: "users", label: "Users", icon: "👥" },
+  { id: "books", label: "Books", icon: "📚" },
+  { id: "orders", label: "Orders", icon: "🛒" },
   { id: "borrow", label: "Borrow Requests", icon: "🔁" },
   { id: "exchange", label: "Exchange", icon: "🔄" },
+  { id: "reviews", label: "Reviews", icon: "⭐" },
   { id: "messages", label: "Messages", icon: "💬" },
+  { id: "subscribers", label: "Subscribers", icon: "📧" },
+  { id: "settings", label: "Settings", icon: "⚙️", superadminOnly: true },
 ];
 
 const USER_NAV = [
@@ -90,6 +112,22 @@ export const Dashboard = () => {
   const [books, setBooks] = useState([]);
   const [users, setUsers] = useState([]);
   const [borrows, setBorrows] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [reviews, setReviews] = useState([]);
+  const [exchanges, setExchanges] = useState([]);
+  const [subscribers, setSubscribers] = useState([]);
+  const [settings, setSettings] = useState([]);
+  const [orderSearch, setOrderSearch] = useState("");
+  const [reviewSearch, setReviewSearch] = useState("");
+  const [exchangeSearch, setExchangeSearch] = useState("");
+  const [subscriberSearch, setSubscriberSearch] = useState("");
+  const [settingsSearch, setSettingsSearch] = useState("");
+  const [editingSetting, setEditingSetting] = useState(null);
+  const [editValue, setEditValue] = useState("");
+  const [newSettingKey, setNewSettingKey] = useState("");
+  const [newSettingValue, setNewSettingValue] = useState("");
+  const [importing, setImporting] = useState(false);
+  const [overwriteImport, setOverwriteImport] = useState(false);
 
   // user state
   const [wallet, setWallet] = useState(null);
@@ -103,7 +141,9 @@ export const Dashboard = () => {
   const [bookSearch, setBookSearch] = useState("");
   const [userSearch, setUserSearch] = useState("");
 
-  const navItems = isAdmin ? ADMIN_NAV : USER_NAV;
+  const navItems = isAdmin
+    ? ADMIN_NAV.filter((item) => !item.superadminOnly || userData?.is_superadmin)
+    : USER_NAV;
   const currentUserId = userData?.id;
 
   const adminQuickActions = [
@@ -120,16 +160,26 @@ export const Dashboard = () => {
 
   const loadAdminData = useCallback(async (showLoader = true) => {
     if (showLoader) setLoading(true);
-    const [dash, bookList, userList, borrowList] = await Promise.allSettled([
+    const [dash, bookList, userList, borrowList, orderList, reviewList, exchangeList, subscriberList, settingsList] = await Promise.allSettled([
       fetchAdminDashboard(),
       fetchAdminBooks(),
       fetchAdminUsers(),
       fetchAdminBorrowRequests(),
+      fetchAdminOrders(),
+      fetchAdminReviews(),
+      fetchAdminExchanges(),
+      fetchAdminSubscribers(),
+      fetchAdminSettings(),
     ]);
     setDashboard(dash.status === "fulfilled" ? dash.value : null);
     setBooks(bookList.status === "fulfilled" ? bookList.value : []);
     setUsers(userList.status === "fulfilled" ? userList.value : []);
     setBorrows(borrowList.status === "fulfilled" ? borrowList.value : []);
+    setOrders(orderList.status === "fulfilled" ? orderList.value : []);
+    setReviews(reviewList.status === "fulfilled" ? reviewList.value : []);
+    setExchanges(exchangeList.status === "fulfilled" ? exchangeList.value : []);
+    setSubscribers(subscriberList.status === "fulfilled" ? subscriberList.value : []);
+    setSettings(settingsList.status === "fulfilled" ? settingsList.value : []);
     if (showLoader) setLoading(false);
   }, []);
 
@@ -218,6 +268,169 @@ export const Dashboard = () => {
     }
   };
 
+  const handleUserStatusToggle = async (userId, currentStatus) => {
+    const nextStatus = currentStatus === "active" ? "suspended" : "active";
+    setUsers((current) =>
+      current.map((item) =>
+        item.id === userId ? { ...item, status: nextStatus } : item
+      )
+    );
+    try {
+      await updateUserStatus(userId, nextStatus);
+    } catch (error) {
+      console.warn("Unable to persist user status update.", error);
+    }
+  };
+
+  const handleUserAdminToggle = async (userId, currentIsAdmin) => {
+    setUsers((current) =>
+      current.map((item) =>
+        item.id === userId ? { ...item, is_admin: !currentIsAdmin } : item
+      )
+    );
+    try {
+      await toggleUserAdmin(userId, !currentIsAdmin);
+    } catch (error) {
+      console.warn("Unable to persist admin toggle.", error);
+    }
+  };
+
+  const handleUserSuperAdminToggle = async (userId, currentIsSuperAdmin) => {
+    setUsers((current) =>
+      current.map((item) =>
+        item.id === userId ? { ...item, is_superadmin: !currentIsSuperAdmin } : item
+      )
+    );
+    try {
+      await toggleUserSuperAdmin(userId, !currentIsSuperAdmin);
+    } catch (error) {
+      console.warn("Unable to persist superadmin toggle.", error);
+    }
+  };
+
+  const handleDeleteUser = async (userId) => {
+    if (!window.confirm("Are you sure you want to delete this user? This action cannot be undone.")) return;
+    setUsers((current) => current.filter((item) => item.id !== userId));
+    try {
+      await deleteUser(userId);
+    } catch (error) {
+      console.warn("Unable to delete user.", error);
+    }
+  };
+
+  const handleOrderStatusUpdate = async (orderId, newStatus) => {
+    setOrders((current) =>
+      current.map((item) =>
+        item.id === orderId ? { ...item, status: newStatus } : item
+      )
+    );
+    try {
+      await updateAdminOrder(orderId, newStatus);
+    } catch (error) {
+      console.warn("Unable to persist order status update.", error);
+    }
+  };
+
+  const handleDeleteReview = async (reviewId) => {
+    if (!window.confirm("Are you sure you want to delete this review?")) return;
+    setReviews((current) => current.filter((item) => item.id !== reviewId));
+    try {
+      await deleteAdminReview(reviewId);
+    } catch (error) {
+      console.warn("Unable to delete review.", error);
+    }
+  };
+
+  const handleExchangeStatusUpdate = async (exchangeId, newStatus) => {
+    setExchanges((current) =>
+      current.map((item) =>
+        item.id === exchangeId ? { ...item, status: newStatus } : item
+      )
+    );
+    try {
+      await updateAdminExchange(exchangeId, newStatus);
+    } catch (error) {
+      console.warn("Unable to persist exchange status update.", error);
+    }
+  };
+
+  const handleDeleteSubscriber = async (subscriberId) => {
+    if (!window.confirm("Remove this subscriber from the newsletter?")) return;
+    setSubscribers((current) => current.filter((item) => item.id !== subscriberId));
+    try {
+      await deleteAdminSubscriber(subscriberId);
+    } catch (error) {
+      console.warn("Unable to delete subscriber.", error);
+    }
+  };
+
+  const handleSaveSetting = async (key, value) => {
+    setSettings((current) =>
+      current.map((item) =>
+        item.key === key ? { ...item, value } : item
+      )
+    );
+    setEditingSetting(null);
+    try {
+      await updateAdminSetting(key, value);
+    } catch (error) {
+      console.warn("Unable to save setting.", error);
+    }
+  };
+
+  const handleAddSetting = async () => {
+    if (!newSettingKey.trim() || !newSettingValue.trim()) return;
+    const newSetting = { key: newSettingKey.trim(), value: newSettingValue.trim() };
+    setSettings((current) => [...current, newSetting]);
+    setNewSettingKey("");
+    setNewSettingValue("");
+    try {
+      await updateAdminSetting(newSetting.key, newSetting.value);
+    } catch (error) {
+      console.warn("Unable to add setting.", error);
+    }
+  };
+
+  const handleDeleteSetting = async (key) => {
+    if (!window.confirm(`Delete setting "${key}"?`)) return;
+    setSettings((current) => current.filter((item) => item.key !== key));
+    try {
+      await deleteAdminSetting(key);
+    } catch (error) {
+      console.warn("Unable to delete setting.", error);
+    }
+  };
+
+  const handleExportSettings = async () => {
+    try {
+      await exportSettings();
+    } catch (error) {
+      console.warn("Unable to export settings.", error);
+      alert("Export failed. Please try again.");
+    }
+  };
+
+  const handleImportSettings = async (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setImporting(true);
+    try {
+      const settingsData = await parseSettingsFile(file);
+      const result = await importSettings(settingsData, overwriteImport);
+      alert(result.message || `Imported ${result.imported} setting(s).`);
+      // Reload settings
+      const updatedSettings = await fetchAdminSettings();
+      setSettings(updatedSettings);
+    } catch (error) {
+      console.warn("Unable to import settings.", error);
+      alert(`Import failed: ${error.message}`);
+    } finally {
+      setImporting(false);
+      event.target.value = "";
+    }
+  };
+
   const handleCancelMyBorrow = async (id) => {
     // Local removal; the dedicated cancel endpoint persists server-side.
     setMyBorrows((current) => current.filter((b) => b.id !== id));
@@ -234,6 +447,21 @@ export const Dashboard = () => {
   );
   const filteredUsers = users.filter((u) =>
     `${u.name || ""} ${u.email || ""}`.toLowerCase().includes(userSearch.toLowerCase())
+  );
+  const filteredOrders = orders.filter((o) =>
+    `${o.customer_name || ""} ${o.customer_email || ""} ${o.reference || ""}`.toLowerCase().includes(orderSearch.toLowerCase())
+  );
+  const filteredReviews = reviews.filter((r) =>
+    `${r.user_name || ""} ${r.book_title || ""} ${r.comment || ""}`.toLowerCase().includes(reviewSearch.toLowerCase())
+  );
+  const filteredExchanges = exchanges.filter((e) =>
+    `${e.requester_name || ""} ${e.offered_book_title || ""} ${e.wanted_book_title || ""}`.toLowerCase().includes(exchangeSearch.toLowerCase())
+  );
+  const filteredSubscribers = subscribers.filter((s) =>
+    `${s.email || ""}`.toLowerCase().includes(subscriberSearch.toLowerCase())
+  );
+  const filteredSettings = settings.filter((s) =>
+    `${s.key || ""} ${s.value || ""}`.toLowerCase().includes(settingsSearch.toLowerCase())
   );
 
   const stats = dashboard?.stats || {};
@@ -282,6 +510,21 @@ export const Dashboard = () => {
                 {item.id === "messages" && conversations.length > 0 && (
                   <span className="ml-auto text-[0.68rem] bg-white/15 rounded-full px-2 py-0.5">
                     {conversations.length}
+                  </span>
+                )}
+                {item.id === "orders" && isAdmin && (
+                  <span className="ml-auto text-[0.68rem] bg-white/15 rounded-full px-2 py-0.5">
+                    {orders.length}
+                  </span>
+                )}
+                {item.id === "reviews" && isAdmin && (
+                  <span className="ml-auto text-[0.68rem] bg-white/15 rounded-full px-2 py-0.5">
+                    {reviews.length}
+                  </span>
+                )}
+                {item.id === "subscribers" && isAdmin && (
+                  <span className="ml-auto text-[0.68rem] bg-white/15 rounded-full px-2 py-0.5">
+                    {subscribers.length}
                   </span>
                 )}
               </button>
@@ -769,9 +1012,10 @@ export const Dashboard = () => {
                         <th className="px-6 py-3 font-semibold">#</th>
                         <th className="px-6 py-3 font-semibold">Name</th>
                         <th className="px-6 py-3 font-semibold">Email</th>
-                        <th className="px-6 py-3 font-semibold">Phone</th>
+                        <th className="px-6 py-3 font-semibold">Role</th>
                         <th className="px-6 py-3 font-semibold">Joined</th>
                         <th className="px-6 py-3 font-semibold">Status</th>
+                        <th className="px-6 py-3 font-semibold">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -787,18 +1031,77 @@ export const Dashboard = () => {
                             </div>
                           </td>
                           <td className="px-6 py-3.5 text-slate-600">{user.email}</td>
-                          <td className="px-6 py-3.5 text-slate-600">{user.phone || "—"}</td>
+                          <td className="px-6 py-3.5">
+                            <span className={`inline-flex px-2.5 py-1 rounded-full text-[0.75rem] font-medium ${
+                              user.is_superadmin ? "bg-rose-100 text-rose-700" :
+                              user.is_admin ? "bg-violet-100 text-violet-700" :
+                              "bg-slate-100 text-slate-600"
+                            }`}>
+                              {user.is_superadmin ? "Super Admin" : user.is_admin ? "Admin" : "User"}
+                            </span>
+                          </td>
                           <td className="px-6 py-3.5 text-slate-500">{user.joined || user.created_at || "—"}</td>
                           <td className="px-6 py-3.5">
                             <span className={`inline-flex px-2.5 py-1 rounded-full text-[0.75rem] font-medium ${statusClass(user.status)}`}>
                               {user.status || "active"}
                             </span>
                           </td>
+                          <td className="px-6 py-3.5">
+                            <div className="flex flex-wrap gap-1.5">
+                              <button
+                                onClick={() => handleUserStatusToggle(user.id, user.status)}
+                                className={`rounded-full px-2.5 py-1 text-[0.7rem] font-medium transition ${
+                                  user.status === "active"
+                                    ? "bg-amber-50 text-amber-700 hover:bg-amber-100"
+                                    : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
+                                }`}
+                              >
+                                {user.status === "active" ? "Suspend" : "Activate"}
+                              </button>
+                              {user.id !== currentUserId && (
+                                <>
+                                  {/* Only superadmin can promote to admin/superadmin */}
+                                  {userData?.is_superadmin && (
+                                    <>
+                                      <button
+                                        onClick={() => handleUserAdminToggle(user.id, user.is_admin)}
+                                        className={`rounded-full px-2.5 py-1 text-[0.7rem] font-medium transition ${
+                                          user.is_admin
+                                            ? "bg-violet-50 text-violet-700 hover:bg-violet-100"
+                                            : "bg-indigo-50 text-indigo-700 hover:bg-indigo-100"
+                                        }`}
+                                      >
+                                        {user.is_admin ? "Remove Admin" : "Make Admin"}
+                                      </button>
+                                      {user.is_admin && (
+                                        <button
+                                          onClick={() => handleUserSuperAdminToggle(user.id, user.is_superadmin)}
+                                          className={`rounded-full px-2.5 py-1 text-[0.7rem] font-medium transition ${
+                                            user.is_superadmin
+                                              ? "bg-rose-50 text-rose-700 hover:bg-rose-100"
+                                              : "bg-amber-50 text-amber-700 hover:bg-amber-100"
+                                          }`}
+                                        >
+                                          {user.is_superadmin ? "Remove SuperAdmin" : "Make SuperAdmin"}
+                                        </button>
+                                      )}
+                                    </>
+                                  )}
+                                  <button
+                                    onClick={() => handleDeleteUser(user.id)}
+                                    className="rounded-full bg-rose-50 px-2.5 py-1 text-[0.7rem] font-medium text-rose-700 hover:bg-rose-100 transition"
+                                  >
+                                    Delete
+                                  </button>
+                                </>
+                              )}
+                            </div>
+                          </td>
                         </tr>
                       ))}
                       {filteredUsers.length === 0 && (
                         <tr>
-                          <td colSpan="6" className="px-6 py-10 text-center text-slate-400">
+                          <td colSpan="7" className="px-6 py-10 text-center text-slate-400">
                             No users found.
                           </td>
                         </tr>
@@ -954,8 +1257,537 @@ export const Dashboard = () => {
                 </div>
               ))}
 
-            {/* -------------------- EXCHANGE TAB -------------------- */}
-            {activeTab === "exchange" && <ExchangePanel />}
+            {/* -------------------- ORDERS TAB (admin) -------------------- */}
+            {activeTab === "orders" && isAdmin && (
+              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 border-b border-slate-100">
+                  <h3 className="font-semibold text-slate-900">All orders</h3>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-3 flex items-center text-slate-400">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </span>
+                    <input
+                      value={orderSearch}
+                      onChange={(e) => setOrderSearch(e.target.value)}
+                      placeholder="Search orders..."
+                      className="pl-9 pr-3 py-2 rounded-lg border border-slate-200 text-[0.85rem] focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full sm:w-64"
+                    />
+                  </div>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-[0.875rem]">
+                    <thead>
+                      <tr className="text-[0.75rem] uppercase tracking-wide text-slate-400 border-b border-slate-100">
+                        <th className="px-6 py-3 font-semibold">#</th>
+                        <th className="px-6 py-3 font-semibold">Reference</th>
+                        <th className="px-6 py-3 font-semibold">Customer</th>
+                        <th className="px-6 py-3 font-semibold">Book</th>
+                        <th className="px-6 py-3 font-semibold">Total</th>
+                        <th className="px-6 py-3 font-semibold">Status</th>
+                        <th className="px-6 py-3 font-semibold">Date</th>
+                        <th className="px-6 py-3 font-semibold">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredOrders.map((order, i) => (
+                        <tr key={order.id || i} className="border-b border-slate-50 hover:bg-slate-50 transition">
+                          <td className="px-6 py-3.5 text-slate-400">{i + 1}</td>
+                          <td className="px-6 py-3.5 font-medium text-indigo-600">{order.reference || `#${order.id}`}</td>
+                          <td className="px-6 py-3.5">
+                            <div>
+                              <p className="font-medium text-slate-900">{order.customer_name || "—"}</p>
+                              <p className="text-[0.75rem] text-slate-500">{order.customer_email || ""}</p>
+                            </div>
+                          </td>
+                          <td className="px-6 py-3.5 text-slate-600">{order.first_book || "—"}</td>
+                          <td className="px-6 py-3.5 font-medium text-slate-900">{formatCurrency(order.total)}</td>
+                          <td className="px-6 py-3.5">
+                            <span className={`inline-flex px-2.5 py-1 rounded-full text-[0.75rem] font-medium ${statusClass(order.status)}`}>
+                              {order.status}
+                            </span>
+                          </td>
+                          <td className="px-6 py-3.5 text-slate-500">{order.created_at || "—"}</td>
+                          <td className="px-6 py-3.5">
+                            <select
+                              value={order.status}
+                              onChange={(e) => handleOrderStatusUpdate(order.id, e.target.value)}
+                              className="rounded-lg border border-slate-200 px-2 py-1 text-[0.75rem] focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            >
+                              {['pending', 'processing', 'completed', 'cancelled', 'refunded'].map((s) => (
+                                <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>
+                              ))}
+                            </select>
+                          </td>
+                        </tr>
+                      ))}
+                      {filteredOrders.length === 0 && (
+                        <tr>
+                          <td colSpan="8" className="px-6 py-10 text-center text-slate-400">
+                            No orders found.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {/* -------------------- EXCHANGE TAB (admin) -------------------- */}
+            {activeTab === "exchange" && isAdmin && (
+              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 border-b border-slate-100">
+                  <h3 className="font-semibold text-slate-900">Exchange requests</h3>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-3 flex items-center text-slate-400">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </span>
+                    <input
+                      value={exchangeSearch}
+                      onChange={(e) => setExchangeSearch(e.target.value)}
+                      placeholder="Search exchanges..."
+                      className="pl-9 pr-3 py-2 rounded-lg border border-slate-200 text-[0.85rem] focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full sm:w-64"
+                    />
+                  </div>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-[0.875rem]">
+                    <thead>
+                      <tr className="text-[0.75rem] uppercase tracking-wide text-slate-400 border-b border-slate-100">
+                        <th className="px-6 py-3 font-semibold">#</th>
+                        <th className="px-6 py-3 font-semibold">Requester</th>
+                        <th className="px-6 py-3 font-semibold">Offered Book</th>
+                        <th className="px-6 py-3 font-semibold">Wanted Book</th>
+                        <th className="px-6 py-3 font-semibold">Status</th>
+                        <th className="px-6 py-3 font-semibold">Date</th>
+                        <th className="px-6 py-3 font-semibold">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredExchanges.map((exchange, i) => (
+                        <tr key={exchange.id || i} className="border-b border-slate-50 hover:bg-slate-50 transition">
+                          <td className="px-6 py-3.5 text-slate-400">{i + 1}</td>
+                          <td className="px-6 py-3.5">
+                            <div>
+                              <p className="font-medium text-slate-900">{exchange.requester_name || "—"}</p>
+                              <p className="text-[0.75rem] text-slate-500">{exchange.requester_email || ""}</p>
+                            </div>
+                          </td>
+                          <td className="px-6 py-3.5 font-medium text-slate-900">{exchange.offered_book_title || "—"}</td>
+                          <td className="px-6 py-3.5 font-medium text-slate-900">{exchange.wanted_book_title || "—"}</td>
+                          <td className="px-6 py-3.5">
+                            <span className={`inline-flex px-2.5 py-1 rounded-full text-[0.75rem] font-medium ${statusClass(exchange.status)}`}>
+                              {exchange.status}
+                            </span>
+                          </td>
+                          <td className="px-6 py-3.5 text-slate-500">{exchange.created_at || "—"}</td>
+                          <td className="px-6 py-3.5">
+                            {exchange.status === "pending" ? (
+                              <div className="flex flex-wrap gap-1.5">
+                                <button
+                                  onClick={() => handleExchangeStatusUpdate(exchange.id, "approved")}
+                                  className="rounded-full bg-emerald-50 px-2.5 py-1 text-[0.7rem] font-semibold text-emerald-700 transition hover:bg-emerald-100"
+                                >
+                                  Approve
+                                </button>
+                                <button
+                                  onClick={() => handleExchangeStatusUpdate(exchange.id, "rejected")}
+                                  className="rounded-full bg-rose-50 px-2.5 py-1 text-[0.7rem] font-semibold text-rose-700 transition hover:bg-rose-100"
+                                >
+                                  Reject
+                                </button>
+                              </div>
+                            ) : (
+                              <select
+                                value={exchange.status}
+                                onChange={(e) => handleExchangeStatusUpdate(exchange.id, e.target.value)}
+                                className="rounded-lg border border-slate-200 px-2 py-1 text-[0.7rem] focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                              >
+                                {['approved', 'completed', 'cancelled'].map((s) => (
+                                  <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>
+                                ))}
+                              </select>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                      {filteredExchanges.length === 0 && (
+                        <tr>
+                          <td colSpan="7" className="px-6 py-10 text-center text-slate-400">
+                            No exchange requests found.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {/* -------------------- REVIEWS TAB (admin) -------------------- */}
+            {activeTab === "reviews" && isAdmin && (
+              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 border-b border-slate-100">
+                  <h3 className="font-semibold text-slate-900">All reviews</h3>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-3 flex items-center text-slate-400">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </span>
+                    <input
+                      value={reviewSearch}
+                      onChange={(e) => setReviewSearch(e.target.value)}
+                      placeholder="Search reviews..."
+                      className="pl-9 pr-3 py-2 rounded-lg border border-slate-200 text-[0.85rem] focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full sm:w-64"
+                    />
+                  </div>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-[0.875rem]">
+                    <thead>
+                      <tr className="text-[0.75rem] uppercase tracking-wide text-slate-400 border-b border-slate-100">
+                        <th className="px-6 py-3 font-semibold">#</th>
+                        <th className="px-6 py-3 font-semibold">User</th>
+                        <th className="px-6 py-3 font-semibold">Book</th>
+                        <th className="px-6 py-3 font-semibold">Rating</th>
+                        <th className="px-6 py-3 font-semibold">Comment</th>
+                        <th className="px-6 py-3 font-semibold">Date</th>
+                        <th className="px-6 py-3 font-semibold">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredReviews.map((review, i) => (
+                        <tr key={review.id || i} className="border-b border-slate-50 hover:bg-slate-50 transition">
+                          <td className="px-6 py-3.5 text-slate-400">{i + 1}</td>
+                          <td className="px-6 py-3.5">
+                            <div className="flex items-center gap-2">
+                              <div className="w-7 h-7 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-[0.7rem] font-bold">
+                                {(review.user_name || "?").charAt(0).toUpperCase()}
+                              </div>
+                              <span className="font-medium text-slate-900 text-[0.85rem]">{review.user_name || "—"}</span>
+                            </div>
+                          </td>
+                          <td className="px-6 py-3.5 text-slate-600">{review.book_title || "—"}</td>
+                          <td className="px-6 py-3.5">
+                            <div className="flex items-center gap-0.5">
+                              {[1, 2, 3, 4, 5].map((star) => (
+                                <span key={star} className={`text-[0.9rem] ${star <= (review.rating || 0) ? "text-amber-400" : "text-slate-200"}`}>★</span>
+                              ))}
+                            </div>
+                          </td>
+                          <td className="px-6 py-3.5 text-slate-600 max-w-[200px] truncate">{review.comment || "—"}</td>
+                          <td className="px-6 py-3.5 text-slate-500">{review.created_at || "—"}</td>
+                          <td className="px-6 py-3.5">
+                            <button
+                              onClick={() => handleDeleteReview(review.id)}
+                              className="rounded-full bg-rose-50 px-2.5 py-1 text-[0.7rem] font-medium text-rose-700 hover:bg-rose-100 transition"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                      {filteredReviews.length === 0 && (
+                        <tr>
+                          <td colSpan="7" className="px-6 py-10 text-center text-slate-400">
+                            No reviews found.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {/* -------------------- EXCHANGE TAB (user) -------------------- */}
+            {activeTab === "exchange" && !isAdmin && <ExchangePanel />}
+
+            {/* -------------------- SUBSCRIBERS TAB (admin) -------------------- */}
+            {activeTab === "subscribers" && isAdmin && (
+              <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 border-b border-slate-100">
+                  <h3 className="font-semibold text-slate-900">Newsletter subscribers</h3>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-3 flex items-center text-slate-400">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                      </svg>
+                    </span>
+                    <input
+                      value={subscriberSearch}
+                      onChange={(e) => setSubscriberSearch(e.target.value)}
+                      placeholder="Search subscribers..."
+                      className="pl-9 pr-3 py-2 rounded-lg border border-slate-200 text-[0.85rem] focus:outline-none focus:ring-2 focus:ring-indigo-500 w-full sm:w-64"
+                    />
+                  </div>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-[0.875rem]">
+                    <thead>
+                      <tr className="text-[0.75rem] uppercase tracking-wide text-slate-400 border-b border-slate-100">
+                        <th className="px-6 py-3 font-semibold">#</th>
+                        <th className="px-6 py-3 font-semibold">Email</th>
+                        <th className="px-6 py-3 font-semibold">Subscribed</th>
+                        <th className="px-6 py-3 font-semibold">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredSubscribers.map((sub, i) => (
+                        <tr key={sub.id || i} className="border-b border-slate-50 hover:bg-slate-50 transition">
+                          <td className="px-6 py-3.5 text-slate-400">{i + 1}</td>
+                          <td className="px-6 py-3.5 font-medium text-slate-900">{sub.email}</td>
+                          <td className="px-6 py-3.5 text-slate-500">{sub.created_at || "—"}</td>
+                          <td className="px-6 py-3.5">
+                            <button
+                              onClick={() => handleDeleteSubscriber(sub.id)}
+                              className="rounded-full bg-rose-50 px-2.5 py-1 text-[0.7rem] font-medium text-rose-700 hover:bg-rose-100 transition"
+                            >
+                              Remove
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                      {filteredSubscribers.length === 0 && (
+                        <tr>
+                          <td colSpan="4" className="px-6 py-10 text-center text-slate-400">
+                            No subscribers found.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {/* -------------------- SETTINGS TAB (superadmin only) -------------------- */}
+            {activeTab === "settings" && isAdmin && userData?.is_superadmin && (
+              <div className="space-y-6">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-amber-500 to-orange-600 rounded-2xl p-6 text-white shadow-sm">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-2xl">⚙️</span>
+                    <h2 className="text-[1.2rem] font-bold">Site Settings</h2>
+                  </div>
+                  <p className="text-[0.85rem] text-amber-100">
+                    Manage BookBay configuration. Changes apply immediately across the platform.
+                  </p>
+                </div>
+
+                {/* Add new setting */}
+                <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                  <h3 className="font-semibold text-slate-900 mb-4">Add new setting</h3>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <input
+                      value={newSettingKey}
+                      onChange={(e) => setNewSettingKey(e.target.value)}
+                      placeholder="Setting key (e.g. site_name)"
+                      className="flex-1 rounded-lg border border-slate-200 px-4 py-2.5 text-[0.85rem] focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    />
+                    <input
+                      value={newSettingValue}
+                      onChange={(e) => setNewSettingValue(e.target.value)}
+                      placeholder="Setting value"
+                      className="flex-1 rounded-lg border border-slate-200 px-4 py-2.5 text-[0.85rem] focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    />
+                    <button
+                      onClick={handleAddSetting}
+                      disabled={!newSettingKey.trim() || !newSettingValue.trim()}
+                      className="rounded-lg bg-amber-600 text-white px-5 py-2.5 text-[0.85rem] font-semibold transition hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      + Add
+                    </button>
+                  </div>
+                </div>
+
+                {/* Import / Export */}
+                <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                  <h3 className="font-semibold text-slate-900 mb-4">Import / Export Settings</h3>
+                  <p className="text-[0.85rem] text-slate-500 mb-4">
+                    Export your settings as a JSON file for backup or migration. Import settings from a previously exported file.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    {/* Export */}
+                    <div className="flex-1 p-4 rounded-lg bg-slate-50 border border-slate-200">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-lg">📤</span>
+                        <h4 className="font-medium text-slate-900 text-[0.85rem]">Export Settings</h4>
+                      </div>
+                      <p className="text-[0.75rem] text-slate-500 mb-3">
+                        Download all current settings as a JSON file.
+                      </p>
+                      <button
+                        onClick={handleExportSettings}
+                        className="rounded-lg bg-indigo-600 text-white px-4 py-2 text-[0.8rem] font-semibold transition hover:bg-indigo-700"
+                      >
+                        📥 Download JSON
+                      </button>
+                    </div>
+
+                    {/* Import */}
+                    <div className="flex-1 p-4 rounded-lg bg-slate-50 border border-slate-200">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-lg">📥</span>
+                        <h4 className="font-medium text-slate-900 text-[0.85rem]">Import Settings</h4>
+                      </div>
+                      <p className="text-[0.75rem] text-slate-500 mb-3">
+                        Upload a JSON settings file to restore or migrate settings.
+                      </p>
+                      <div className="flex items-center gap-3">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={overwriteImport}
+                            onChange={(e) => setOverwriteImport(e.target.checked)}
+                            className="rounded border-slate-300 text-amber-600 focus:ring-amber-500"
+                          />
+                          <span className="text-[0.75rem] text-slate-600">Overwrite existing</span>
+                        </label>
+                      </div>
+                      <label className="mt-3 inline-flex items-center gap-2 rounded-lg bg-amber-600 text-white px-4 py-2 text-[0.8rem] font-semibold transition hover:bg-amber-700 cursor-pointer">
+                        {importing ? (
+                          <>
+                            <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h5M20 20v-5h-5M5.6 14A8 8 0 0118.4 10M18.4 10A8 8 0 015.6 14" />
+                            </svg>
+                            Importing...
+                          </>
+                        ) : (
+                          <>📤 Upload JSON</>
+                        )}
+                        <input
+                          type="file"
+                          accept=".json"
+                          onChange={handleImportSettings}
+                          className="hidden"
+                          disabled={importing}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Settings list */}
+                <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 border-b border-slate-100">
+                    <h3 className="font-semibold text-slate-900">All settings ({filteredSettings.length})</h3>
+                    <div className="relative">
+                      <span className="absolute inset-y-0 left-3 flex items-center text-slate-400">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                      </span>
+                      <input
+                        value={settingsSearch}
+                        onChange={(e) => setSettingsSearch(e.target.value)}
+                        placeholder="Search settings..."
+                        className="pl-9 pr-3 py-2 rounded-lg border border-slate-200 text-[0.85rem] focus:outline-none focus:ring-2 focus:ring-amber-500 w-full sm:w-64"
+                      />
+                    </div>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-[0.875rem]">
+                      <thead>
+                        <tr className="text-[0.75rem] uppercase tracking-wide text-slate-400 border-b border-slate-100">
+                          <th className="px-6 py-3 font-semibold">Key</th>
+                          <th className="px-6 py-3 font-semibold">Value</th>
+                          <th className="px-6 py-3 font-semibold">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredSettings.map((setting, i) => (
+                          <tr key={setting.key || i} className="border-b border-slate-50 hover:bg-slate-50 transition">
+                            <td className="px-6 py-3.5">
+                              <span className="inline-flex items-center gap-2 font-mono text-[0.8rem] font-medium text-slate-900 bg-slate-100 px-2.5 py-1 rounded">
+                                {setting.key}
+                              </span>
+                            </td>
+                            <td className="px-6 py-3.5">
+                              {editingSetting === setting.key ? (
+                                <div className="flex items-center gap-2">
+                                  <input
+                                    value={editValue}
+                                    onChange={(e) => setEditValue(e.target.value)}
+                                    className="flex-1 max-w-md rounded-lg border border-amber-300 px-3 py-1.5 text-[0.85rem] focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                    autoFocus
+                                    onKeyDown={(e) => {
+                                      if (e.key === "Enter") handleSaveSetting(setting.key, editValue);
+                                      if (e.key === "Escape") setEditingSetting(null);
+                                    }}
+                                  />
+                                  <button
+                                    onClick={() => handleSaveSetting(setting.key, editValue)}
+                                    className="rounded-full bg-emerald-50 px-3 py-1 text-[0.75rem] font-semibold text-emerald-700 hover:bg-emerald-100 transition"
+                                  >
+                                    Save
+                                  </button>
+                                  <button
+                                    onClick={() => setEditingSetting(null)}
+                                    className="rounded-full bg-slate-100 px-3 py-1 text-[0.75rem] font-semibold text-slate-600 hover:bg-slate-200 transition"
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              ) : (
+                                <span className="text-slate-700 text-[0.85rem]">{setting.value}</span>
+                              )}
+                            </td>
+                            <td className="px-6 py-3.5">
+                              {editingSetting !== setting.key && (
+                                <div className="flex gap-2">
+                                  <button
+                                    onClick={() => {
+                                      setEditingSetting(setting.key);
+                                      setEditValue(setting.value);
+                                    }}
+                                    className="rounded-full bg-amber-50 px-3 py-1 text-[0.75rem] font-semibold text-amber-700 hover:bg-amber-100 transition"
+                                  >
+                                    Edit
+                                  </button>
+                                  <button
+                                    onClick={() => handleDeleteSetting(setting.key)}
+                                    className="rounded-full bg-rose-50 px-3 py-1 text-[0.75rem] font-semibold text-rose-700 hover:bg-rose-100 transition"
+                                  >
+                                    Delete
+                                  </button>
+                                </div>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                        {filteredSettings.length === 0 && (
+                          <tr>
+                            <td colSpan="3" className="px-6 py-10 text-center text-slate-400">
+                              No settings found.
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                {/* Quick settings info */}
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                  <div className="flex items-start gap-3">
+                    <span className="text-amber-600 text-lg">💡</span>
+                    <div>
+                      <p className="text-[0.85rem] font-semibold text-amber-800">Superadmin Settings</p>
+                      <p className="text-[0.8rem] text-amber-700 mt-1">
+                        Only superadmins can modify these settings. Changes take effect immediately.
+                        Common settings: site_name, support_email, maintenance_mode, max_books_per_user, etc.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* -------------------- MESSAGES TAB -------------------- */}
             {activeTab === "messages" && <MessagesPanel />}

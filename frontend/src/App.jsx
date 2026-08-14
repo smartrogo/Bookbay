@@ -29,6 +29,8 @@ import { BookProvider } from "./BookContext";
 import { UserProvider } from "./UserContext";
 import ScrollToTop from "./components/ScrollToTop";
 import { Sell } from "./pages/Sell";
+import { Orders } from "./pages/Orders";
+import { Wishlist } from "./pages/Wishlist";
 import { Dashboard } from "./pages/Dashboard";
 import { AdminLogin } from "./pages/AdminLogin";
 
@@ -75,6 +77,12 @@ function App() {
                 <Route path="/books/:bookId" element={<BookDetails />} />
                 <Route path="/buy" element={<Buy />} />
                 <Route path="/sell" element={<Sell />} />
+                <Route path="/orders" element={<ProtectedRoute />}>
+                  <Route path="/orders" element={<Orders />} />
+                </Route>
+                <Route path="/wishlist" element={<ProtectedRoute />}>
+                  <Route path="/wishlist" element={<Wishlist />} />
+                </Route>
                 <Route path="/success" element={<Success />} />
                 <Route path="/my-books" element={<ProtectedRoute />}> 
                   <Route path="/my-books" element={<MyBooks />} />

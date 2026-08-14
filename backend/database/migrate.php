@@ -54,6 +54,7 @@ $tables = [
             'phone' => ['string', 50],
             'role_id' => ['int'],
             'is_admin' => ['boolean'],
+            'is_superadmin' => ['boolean'],
             'status' => ['string', 20],
         ],
         'unique' => ['email'],
@@ -241,6 +242,15 @@ $tables = [
             'action' => ['string', 100],
             'details' => ['text'],
             'ip_address' => ['string', 45],
+        ],
+    ],
+
+    'user_activities' => [
+        'columns' => [
+            'user_id' => ['int'],
+            'book_id' => ['int'],
+            'activity_type' => ['string', 50],
+            'metadata' => ['text'],
         ],
     ],
 ];

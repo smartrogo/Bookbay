@@ -106,7 +106,7 @@ check "POST transfer" '"success"' "$(curl -s -X POST "${BASE}/wallet/${USER_ID}/
 
 echo "== Borrowing =="
 check "POST /borrow" '"borrow_request"' "$(curl -s -X POST "${BASE}/borrow" "${AUTH[@]}" -d '{"book_id":1,"days":7}')"
-check "POST /borrow/request (spec alias)" '"borrow_request"' "$(curl -s -X POST "${BASE}/borrow/request" "${AUTH[@]}" -d '{"book_id":3,"days":14}')"
+check "POST /borrow/request (spec alias)" '"borrow_request"' "$(curl -s -X POST "${BASE}/borrow/request" "${AUTH[@]}" -d '{"book_id":7,"days":14}')"
 check "GET /borrow" '"borrow_requests"' "$(curl -s "${BASE}/borrow" "${AUTH[@]}")"
 
 echo "== Exchange / chat / notifications / newsletter / reviews / posts =="
@@ -138,8 +138,55 @@ check "GET /admin/books" '"books"' "$(curl -s "${BASE}/admin/books" "${ADMIN_AUT
 check "PUT /admin/books/1" '"book"' "$(curl -s -X PUT "${BASE}/admin/books/1" "${ADMIN_AUTH[@]}" -d '{"stock":15}')"
 check "GET /admin/borrow" '"borrow_requests"' "$(curl -s "${BASE}/admin/borrow" "${ADMIN_AUTH[@]}")"
 check "PATCH /admin/borrow/1" '"approved"' "$(curl -s -X PATCH "${BASE}/admin/borrow/1" "${ADMIN_AUTH[@]}" -d '{"status":"approved"}')"
+
+check "GET /admin/orders" '"orders"' "$(curl -s "${BASE}/admin/orders" "${ADMIN_AUTH[@]}")"
+check "PUT /admin/orders/1" '"success"' "$(curl -s -X PUT "${BASE}/admin/orders/1" "${ADMIN_AUTH[@]}" -d '{"status":"processing"}')"
+
+check "GET /admin/reviews" '"reviews"' "$(curl -s "${BASE}/admin/reviews" "${ADMIN_AUTH[@]}")"
+check "DELETE /admin/reviews/1" '"success"' "$(curl -s -X DELETE "${BASE}/admin/reviews/1" "${ADMIN_AUTH[@]}")"
+
+check "GET /admin/exchanges" '"exchanges"' "$(curl -s "${BASE}/admin/exchanges" "${ADMIN_AUTH[@]}")"
+check "PUT /admin/exchanges/1" '"success"' "$(curl -s -X PUT "${BASE}/admin/exchanges/1" "${ADMIN_AUTH[@]}" -d '{"status":"approved"}')"
+
+check "GET /admin/subscribers" '"subscribers"' "$(curl -s "${BASE}/admin/subscribers" "${ADMIN_AUTH[@]}")"
+check "DELETE /admin/subscribers/1" '"success"' "$(curl -s -X DELETE "${BASE}/admin/subscribers/1" "${ADMIN_AUTH[@]}")"
+
+check "PUT /admin/users/3" '"user"' "$(curl -s -X PUT "${BASE}/admin/users/3" "${ADMIN_AUTH[@]}" -d '{"status":"suspended"}')"
+check "PUT /admin/users/3 (reactivate)" '"user"' "$(curl -s -X PUT "${BASE}/admin/users/3" "${ADMIN_AUTH[@]}" -d '{"status":"active"}')"
+
+# Superadmin tests - login as superadmin for admin role modifications
+SUPERADMIN_LOGIN=$(curl -s -X POST "${BASE}/auth/login" -H 'Content-Type: application/json' \
+    -d '{"email":"superadmin@bookbay.test","password":"password"}')
+SUPERADMIN_TOKEN=$(echo "${SUPERADMIN_LOGIN}" | php -r 'echo json_decode(stream_get_contents(STDIN), true)["token"] ?? "";')
+SUPERADMIN_AUTH=(-H "Authorization: Bearer ${SUPERADMIN_TOKEN}" -H 'Content-Type: application/json')
+
+check "PUT /admin/users/3 (make admin)" '"user"' "$(curl -s -X PUT "${BASE}/admin/users/3" "${SUPERADMIN_AUTH[@]}" -d '{"is_admin":1}')"
+check "PUT /admin/users/3 (remove admin)" '"user"' "$(curl -s -X PUT "${BASE}/admin/users/3" "${SUPERADMIN_AUTH[@]}" -d '{"is_admin":0}')"
+check "PUT /admin/users/3 (make superadmin)" '"user"' "$(curl -s -X PUT "${BASE}/admin/users/3" "${SUPERADMIN_AUTH[@]}" -d '{"is_superadmin":1}')"
+check "PUT /admin/users/3 (remove superadmin)" '"user"' "$(curl -s -X PUT "${BASE}/admin/users/3" "${SUPERADMIN_AUTH[@]}" -d '{"is_superadmin":0}')"
+check "admin cannot modify admin roles -> 403" 'superadmins' \
+    "$(curl -s -X PUT "${BASE}/admin/users/3" "${ADMIN_AUTH[@]}" -d '{"is_admin":1}')"
+
+# Settings tests
+check "GET /admin/settings" '"settings"' "$(curl -s "${BASE}/admin/settings" "${ADMIN_AUTH[@]}")"
+check "PUT /admin/settings/test_key (superadmin)" '"setting"' "$(curl -s -X PUT "${BASE}/admin/settings/test_key" "${SUPERADMIN_AUTH[@]}" -d '{"value":"test_value"}')"
+check "GET /admin/settings/test_key" '"setting"' "$(curl -s "${BASE}/admin/settings/test_key" "${ADMIN_AUTH[@]}")"
+check "DELETE /admin/settings/test_key (superadmin)" '"success"' "$(curl -s -X DELETE "${BASE}/admin/settings/test_key" "${SUPERADMIN_AUTH[@]}")"
+check "PUT /admin/settings/nope (admin denied)" 'Superadmin' \
+    "$(curl -s -X PUT "${BASE}/admin/settings/nope" "${ADMIN_AUTH[@]}" -d '{"value":"nope"}')"
+
+# Settings export/import tests
+check "GET /admin/settings/export" 'settings' "$(curl -s "${BASE}/admin/settings/export" "${ADMIN_AUTH[@]}")"
+check "POST /admin/settings/import (superadmin)" '"success"' "$(curl -s -X POST "${BASE}/admin/settings/import" "${SUPERADMIN_AUTH[@]}" -d '{"settings":[{"key":"import_test","value":"imported_value"}],"overwrite":true}')"
+check "POST /admin/settings/import (admin denied)" 'Superadmin' \
+    "$(curl -s -X POST "${BASE}/admin/settings/import" "${ADMIN_AUTH[@]}" -d '{"settings":[{"key":"nope","value":"nope"}]')"
+
 check "user cannot access admin -> 403" 'Forbidden' \
     "$(curl -s "${BASE}/admin/dashboard" "${AUTH[@]}")"
+check "user cannot access admin orders -> 403" 'Forbidden' \
+    "$(curl -s "${BASE}/admin/orders" "${AUTH[@]}")"
+check "user cannot access admin reviews -> 403" 'Forbidden' \
+    "$(curl -s "${BASE}/admin/reviews" "${AUTH[@]}")"
 
 echo
 echo "== Results: ${PASS} passed, ${FAIL} failed =="

@@ -67,4 +67,21 @@ abstract class Controller
 
         return $user;
     }
+
+    /**
+     * Require that the authenticated user is a superadmin.
+     * Returns the authenticated user payload.
+     *
+     * @return array<string, mixed> The authenticated superadmin user payload.
+     */
+    protected function requireSuperAdmin(): array
+    {
+        $user = $this->requireAuth();
+
+        if (!AuthService::isSuperAdmin($user)) {
+            Response::json(['message' => 'Forbidden. Superadmin access required.'], 403);
+        }
+
+        return $user;
+    }
 }

@@ -127,6 +127,11 @@ final class AuthService
         return ($user['is_admin'] ?? false) === true || ($user['role'] ?? '') === 'admin';
     }
 
+    public static function isSuperAdmin(array $user): bool
+    {
+        return ($user['is_superadmin'] ?? false) === true || ($user['role'] ?? '') === 'superadmin';
+    }
+
     public static function issueToken(int $userId): string
     {
         $token = bin2hex(random_bytes(32));
@@ -168,7 +173,7 @@ final class AuthService
 
     /**
      * The user payload the frontend understands:
-     * id, email, name, phone, role, role_id, is_admin, status.
+     * id, email, name, phone, role, role_id, is_admin, is_superadmin, status.
      */
     public static function publicUser(array $user): array
     {
@@ -180,12 +185,17 @@ final class AuthService
             'role' => self::roleName((int) ($user['role_id'] ?? 2)),
             'role_id' => (int) ($user['role_id'] ?? 2),
             'is_admin' => ((int) ($user['is_admin'] ?? 0)) === 1,
+            'is_superadmin' => ((int) ($user['is_superadmin'] ?? 0)) === 1,
             'status' => (string) ($user['status'] ?? 'active'),
         ];
     }
 
     public static function roleName(int $roleId): string
     {
-        return $roleId === 1 ? 'admin' : 'user';
+        return match($roleId) {
+            1 => 'admin',
+            3 => 'superadmin',
+            default => 'user',
+        };
     }
 }

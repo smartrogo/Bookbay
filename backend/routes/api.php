@@ -16,6 +16,8 @@ use BookBay\Http\Controllers\OrderController;
 use BookBay\Http\Controllers\PaymentController;
 use BookBay\Http\Controllers\PostController;
 use BookBay\Http\Controllers\ReviewController;
+use BookBay\Http\Controllers\SettingsController;
+use BookBay\Http\Controllers\RecommendationController;
 use BookBay\Http\Controllers\WalletController;
 use BookBay\Http\Controllers\WishlistController;
 
@@ -98,6 +100,12 @@ $router->post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'
 $router->get('/reviews', [ReviewController::class, 'index']);
 $router->post('/reviews', [ReviewController::class, 'store']);
 
+// --- Recommendations -----------------------------------------------------
+$router->get('/recommendations/personalized', [RecommendationController::class, 'personalized']);
+$router->get('/recommendations/recently-viewed', [RecommendationController::class, 'recentlyViewed']);
+$router->get('/recommendations/similar/{bookId}', [RecommendationController::class, 'similar']);
+$router->post('/recommendations/track-view', [RecommendationController::class, 'trackView']);
+
 // --- Wishlist -----------------------------------------------------------
 $router->get('/wishlist', [WishlistController::class, 'index']);
 $router->post('/wishlist', [WishlistController::class, 'store']);
@@ -113,7 +121,23 @@ $router->delete('/posts/{id}', [PostController::class, 'destroy']);
 // --- Admin --------------------------------------------------------------
 $router->get('/admin/dashboard', [AdminController::class, 'dashboard']);
 $router->get('/admin/users', [AdminController::class, 'users']);
+$router->put('/admin/users/{id}', [AdminController::class, 'updateUser']);
+$router->delete('/admin/users/{id}', [AdminController::class, 'deleteUser']);
 $router->get('/admin/books', [AdminController::class, 'books']);
 $router->put('/admin/books/{id}', [AdminController::class, 'updateBook']);
 $router->get('/admin/borrow', [AdminController::class, 'borrow']);
 $router->patch('/admin/borrow/{id}', [AdminController::class, 'updateBorrow']);
+$router->get('/admin/orders', [AdminController::class, 'orders']);
+$router->put('/admin/orders/{id}', [AdminController::class, 'updateOrder']);
+$router->get('/admin/reviews', [AdminController::class, 'reviews']);
+$router->delete('/admin/reviews/{id}', [AdminController::class, 'deleteReview']);
+$router->get('/admin/exchanges', [AdminController::class, 'exchanges']);
+$router->put('/admin/exchanges/{id}', [AdminController::class, 'updateExchange']);
+$router->get('/admin/subscribers', [AdminController::class, 'subscribers']);
+$router->delete('/admin/subscribers/{id}', [AdminController::class, 'deleteSubscriber']);
+$router->get('/admin/settings', [SettingsController::class, 'index']);
+$router->get('/admin/settings/export', [SettingsController::class, 'export']);
+$router->post('/admin/settings/import', [SettingsController::class, 'import']);
+$router->get('/admin/settings/{key}', [SettingsController::class, 'show']);
+$router->put('/admin/settings/{key}', [SettingsController::class, 'update']);
+$router->delete('/admin/settings/{key}', [SettingsController::class, 'destroy']);
