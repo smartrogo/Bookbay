@@ -18,6 +18,8 @@ use BookBay\Http\Controllers\PostController;
 use BookBay\Http\Controllers\ReviewController;
 use BookBay\Http\Controllers\SettingsController;
 use BookBay\Http\Controllers\RecommendationController;
+use BookBay\Http\Controllers\AiController;
+use BookBay\Http\Controllers\GamificationController;
 use BookBay\Http\Controllers\WalletController;
 use BookBay\Http\Controllers\WishlistController;
 
@@ -105,6 +107,24 @@ $router->get('/recommendations/personalized', [RecommendationController::class, 
 $router->get('/recommendations/recently-viewed', [RecommendationController::class, 'recentlyViewed']);
 $router->get('/recommendations/similar/{bookId}', [RecommendationController::class, 'similar']);
 $router->post('/recommendations/track-view', [RecommendationController::class, 'trackView']);
+
+// --- AI Assistant --------------------------------------------------------
+$router->get('/ai/conversations', [AiController::class, 'conversations']);
+$router->post('/ai/conversations', [AiController::class, 'createConversation']);
+$router->get('/ai/conversations/{id}/messages', [AiController::class, 'messages']);
+$router->post('/ai/conversations/{id}/messages', [AiController::class, 'sendMessage']);
+$router->delete('/ai/conversations/{id}', [AiController::class, 'deleteConversation']);
+$router->post('/ai/summarize', [AiController::class, 'summarize']);
+$router->post('/ai/suggest', [AiController::class, 'suggest']);
+
+// --- Gamification --------------------------------------------------------
+$router->get('/gamification/summary', [GamificationController::class, 'summary']);
+$router->get('/gamification/points', [GamificationController::class, 'points']);
+$router->post('/gamification/points', [GamificationController::class, 'awardPoints']);
+$router->get('/gamification/streak', [GamificationController::class, 'streak']);
+$router->post('/gamification/streak', [GamificationController::class, 'recordActivity']);
+$router->get('/gamification/badges', [GamificationController::class, 'badges']);
+$router->get('/gamification/leaderboard', [GamificationController::class, 'leaderboard']);
 
 // --- Wishlist -----------------------------------------------------------
 $router->get('/wishlist', [WishlistController::class, 'index']);

@@ -189,5 +189,29 @@ check "user cannot access admin reviews -> 403" 'Forbidden' \
     "$(curl -s "${BASE}/admin/reviews" "${AUTH[@]}")"
 
 echo
+echo "== AI Assistant =="
+AI_CONV=$(curl -s -X POST "${BASE}/ai/conversations" "${AUTH[@]}" -d '{"title":"Test Chat"}')
+check "POST /ai/conversations" '"conversation_id"' "${AI_CONV}"
+AI_CONV_ID=$(echo "${AI_CONV}" | php -r 'echo json_decode(stream_get_contents(STDIN), true)["conversation_id"] ?? "";')
+check "GET /ai/conversations" '"conversations"' "$(curl -s "${BASE}/ai/conversations" "${AUTH[@]}")"
+check "POST /ai/conversations/{id}/messages" '"reply"' "$(curl -s -X POST "${BASE}/ai/conversations/${AI_CONV_ID}/messages" "${AUTH[@]}" -d '{"message":"Hello, recommend me a book"}')"
+check "GET /ai/conversations/{id}/messages" '"messages"' "$(curl -s "${BASE}/ai/conversations/${AI_CONV_ID}/messages" "${AUTH[@]}")"
+check "POST /ai/summarize" '"summary"' "$(curl -s -X POST "${BASE}/ai/summarize" "${AUTH[@]}" -d '{"book_id":1}')"
+check "POST /ai/suggest" '"suggestions"' "$(curl -s -X POST "${BASE}/ai/suggest" "${AUTH[@]}" -d '{"query":"fiction"}')"
+check "DELETE /ai/conversations/{id}" '"success"' "$(curl -s -X DELETE "${BASE}/ai/conversations/${AI_CONV_ID}" "${AUTH[@]}")"
+
+# Suppress unused variable warning
+: "${AI_CONV_ID}"
+
+echo "== Gamification =="
+check "GET /gamification/summary" '"summary"' "$(curl -s "${BASE}/gamification/summary" "${AUTH[@]}")"
+check "GET /gamification/points" '"points"' "$(curl -s "${BASE}/gamification/points" "${AUTH[@]}")"
+check "POST /gamification/points" '"total_points"' "$(curl -s -X POST "${BASE}/gamification/points" "${AUTH[@]}" -d '{"type":"review","description":"Test review"}')"
+check "GET /gamification/streak" '"streak"' "$(curl -s "${BASE}/gamification/streak" "${AUTH[@]}")"
+check "POST /gamification/streak" '"streak"' "$(curl -s -X POST "${BASE}/gamification/streak" "${AUTH[@]}")"
+check "GET /gamification/badges" '"badges"' "$(curl -s "${BASE}/gamification/badges" "${AUTH[@]}")"
+check "GET /gamification/leaderboard" '"leaderboard"' "$(curl -s "${BASE}/gamification/leaderboard" "${AUTH[@]}")"
+
+echo
 echo "== Results: ${PASS} passed, ${FAIL} failed =="
 [[ "${FAIL}" -eq 0 ]]

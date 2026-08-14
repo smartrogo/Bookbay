@@ -153,6 +153,20 @@ export const Header = () => {
             )}
             {isAuth && (
               <li className="roboto font-normal text-style text-[1.125rem] leading-normal">
+                <NavLink to="/ai" style={navLinkStyle}>
+                  AI Assistant
+                </NavLink>
+              </li>
+            )}
+            {isAuth && (
+              <li className="roboto font-normal text-style text-[1.125rem] leading-normal">
+                <NavLink to="/gamification" style={navLinkStyle}>
+                  Achievements
+                </NavLink>
+              </li>
+            )}
+            {isAuth && (
+              <li className="roboto font-normal text-style text-[1.125rem] leading-normal">
                 <NavLink to="/dashboard" style={navLinkStyle}>
                   Dashboard
                 </NavLink>

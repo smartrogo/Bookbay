@@ -253,6 +253,54 @@ $tables = [
             'metadata' => ['text'],
         ],
     ],
+
+    // ── AI Assistant ──────────────────────────────────────────────
+    'ai_conversations' => [
+        'columns' => [
+            'user_id' => ['int'],
+            'title' => ['string', 255],
+        ],
+    ],
+
+    'ai_messages' => [
+        'columns' => [
+            'conversation_id' => ['int'],
+            'role' => ['string', 20],
+            'content' => ['text'],
+            'tokens_used' => ['int'],
+        ],
+    ],
+
+    // ── Gamification ──────────────────────────────────────────────
+    'user_points' => [
+        'columns' => [
+            'user_id' => ['int'],
+            'points' => ['int'],
+            'type' => ['string', 50],
+            'description' => ['string', 255],
+            'reference_id' => ['int'],
+            'reference_type' => ['string', 50],
+        ],
+    ],
+
+    'user_streaks' => [
+        'columns' => [
+            'user_id' => ['int'],
+            'current_streak' => ['int'],
+            'longest_streak' => ['int'],
+            'last_activity_date' => ['string', 10],
+        ],
+        'unique' => ['user_id'],
+    ],
+
+    'user_badges' => [
+        'columns' => [
+            'user_id' => ['int'],
+            'badge_name' => ['string', 100],
+            'badge_icon' => ['string', 10],
+            'description' => ['string', 255],
+        ],
+    ],
 ];
 
 $created = 0;

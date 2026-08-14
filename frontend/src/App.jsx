@@ -31,6 +31,8 @@ import ScrollToTop from "./components/ScrollToTop";
 import { Sell } from "./pages/Sell";
 import { Orders } from "./pages/Orders";
 import { Wishlist } from "./pages/Wishlist";
+import { AiAssistant } from "./pages/AiAssistant";
+import { Gamification } from "./pages/Gamification";
 import { Dashboard } from "./pages/Dashboard";
 import { AdminLogin } from "./pages/AdminLogin";
 
@@ -82,6 +84,12 @@ function App() {
                 </Route>
                 <Route path="/wishlist" element={<ProtectedRoute />}>
                   <Route path="/wishlist" element={<Wishlist />} />
+                </Route>
+                <Route path="/ai" element={<ProtectedRoute />}>
+                  <Route path="/ai" element={<AiAssistant />} />
+                </Route>
+                <Route path="/gamification" element={<ProtectedRoute />}>
+                  <Route path="/gamification" element={<Gamification />} />
                 </Route>
                 <Route path="/success" element={<Success />} />
                 <Route path="/my-books" element={<ProtectedRoute />}> 
