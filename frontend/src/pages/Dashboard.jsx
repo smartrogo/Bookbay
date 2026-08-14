@@ -42,6 +42,9 @@ import {
 } from "../services/messageService";
 import ExchangePanel from "../components/dashboard/ExchangePanel";
 import MessagesPanel from "../components/dashboard/MessagesPanel";
+import { fetchPersonalizedRecommendations, fetchRecentlyViewed, trackBookView } from "../services/recommendationService";
+import { fetchAllBooks } from "../services/bookService";
+import { addBookToCart } from "../services/bookService";
 import logo from "../assets/logo.png";
 
 /* ------------------------------ helpers ------------------------------ */
@@ -64,6 +67,7 @@ const USER_NAV = [
   { id: "mybooks", label: "My Books", icon: "📚" },
   { id: "borrow", label: "Borrow", icon: "🔁" },
   { id: "exchange", label: "Exchange", icon: "🔄" },
+  { id: "recommendations", label: "For You", icon: "✨" },
   { id: "messages", label: "Messages", icon: "💬" },
 ];
 
@@ -135,6 +139,11 @@ export const Dashboard = () => {
   const [myBorrows, setMyBorrows] = useState([]);
   const [exchangeRequests, setExchangeRequests] = useState([]);
   const [conversations, setConversations] = useState([]);
+  const [recommendations, setRecommendations] = useState([]);
+  const [recentlyViewed, setRecentlyViewed] = useState([]);
+  const [allBooks, setAllBooks] = useState([]);
+  const [recLoading, setRecLoading] = useState(false);
+  const [addingRecToCart, setAddingRecToCart] = useState(null);
 
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -187,12 +196,15 @@ export const Dashboard = () => {
     if (!currentUserId) return;
     if (showLoader) setLoading(true);
 
-    const [walletRes, booksRes, borrowRes, exchangeRes, convRes] = await Promise.allSettled([
+    const [walletRes, booksRes, borrowRes, exchangeRes, convRes, recsRes, rvRes, allBooksRes] = await Promise.allSettled([
       fetchWallet(currentUserId),
       fetchUserBooks(currentUserId),
       fetchBorrowRequests(),
       fetchExchangeRequests(),
       fetchConversations(currentUserId),
+      fetchPersonalizedRecommendations(12),
+      fetchRecentlyViewed(8),
+      fetchAllBooks(),
     ]);
 
     if (walletRes.status === "fulfilled") setWallet(walletRes.value?.wallet || null);
@@ -204,6 +216,9 @@ export const Dashboard = () => {
     if (convRes.status === "fulfilled") {
       setConversations(unwrapConversations(convRes.value).map(normalizeConversation));
     }
+    if (recsRes.status === "fulfilled") setRecommendations(recsRes.value || []);
+    if (rvRes.status === "fulfilled") setRecentlyViewed(rvRes.value || []);
+    if (allBooksRes.status === "fulfilled") setAllBooks(allBooksRes.value?.books || []);
 
     if (showLoader) setLoading(false);
   }, [currentUserId]);
@@ -1786,6 +1801,199 @@ export const Dashboard = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+            )}
+
+            {/* -------------------- RECOMMENDATIONS TAB (user) -------------------- */}
+            {activeTab === "recommendations" && !isAdmin && (
+              <div className="space-y-6">
+                {/* Header */}
+                <div className="rounded-2xl bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 p-6 text-white shadow-sm">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-2xl">✨</span>
+                    <h2 className="text-[1.2rem] font-bold">Recommended For You</h2>
+                  </div>
+                  <p className="text-[0.85rem] text-purple-100">
+                    Personalized book suggestions based on your reading history and interests.
+                  </p>
+                </div>
+
+                {/* Recently Viewed */}
+                {recentlyViewed.length > 0 && (
+                  <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div className="px-6 py-4 border-b border-slate-100">
+                      <h3 className="font-semibold text-slate-900">Recently Viewed</h3>
+                      <p className="text-[0.8rem] text-slate-400 mt-0.5">Books you recently browsed</p>
+                    </div>
+                    <div className="p-6">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                        {recentlyViewed.map((book) => (
+                          <div key={book.id} className="group">
+                            <div className="aspect-[3/4] bg-slate-100 rounded-lg overflow-hidden mb-2">
+                              <img
+                                src={book.cover || book.coverPic || `https://placehold.co/300x450/eef2ff/4f46e5?text=${encodeURIComponent(book.title)}`}
+                                alt={book.title}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                onError={(e) => {
+                                  e.target.src = `https://placehold.co/300x450/eef2ff/4f46e5?text=${encodeURIComponent(book.title)}`;
+                                }}
+                              />
+                            </div>
+                            <p className="font-medium text-slate-900 text-[0.85rem] line-clamp-1 group-hover:text-indigo-600 transition">{book.title}</p>
+                            <p className="text-[0.75rem] text-slate-500">{book.author}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Personalized Recommendations */}
+                <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                  <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+                    <div>
+                      <h3 className="font-semibold text-slate-900">Suggested Books</h3>
+                      <p className="text-[0.8rem] text-slate-400 mt-0.5">Curated picks based on your interests</p>
+                    </div>
+                    <button
+                      onClick={async () => {
+                        setRecLoading(true);
+                        try {
+                          const [recs, rv] = await Promise.all([
+                            fetchPersonalizedRecommendations(12),
+                            fetchRecentlyViewed(8),
+                          ]);
+                          setRecommendations(recs || []);
+                          setRecentlyViewed(rv || []);
+                        } finally {
+                          setRecLoading(false);
+                        }
+                      }}
+                      disabled={recLoading}
+                      className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[0.8rem] font-medium text-slate-600 transition hover:bg-slate-50 disabled:opacity-50"
+                    >
+                      <svg className={`w-4 h-4 ${recLoading ? "animate-spin" : ""}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h5M20 20v-5h-5M5.6 14A8 8 0 0118.4 10M18.4 10A8 8 0 015.6 14" />
+                      </svg>
+                      Refresh
+                    </button>
+                  </div>
+                  <div className="p-6">
+                    {recommendations.length === 0 ? (
+                      <div className="text-center py-12">
+                        <div className="text-5xl mb-4">📖</div>
+                        <h4 className="text-lg font-semibold text-slate-900 mb-2">No recommendations yet</h4>
+                        <p className="text-[0.85rem] text-slate-500 mb-4">
+                          Browse some books and we'll suggest personalized picks for you!
+                        </p>
+                        <button
+                          onClick={() => navigate("/buy")}
+                          className="rounded-full bg-indigo-600 text-white px-5 py-2 text-[0.85rem] font-semibold transition hover:bg-indigo-700"
+                        >
+                          Browse Books
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+                        {recommendations.map((book) => (
+                          <div
+                            key={book.id}
+                            className="flex gap-4 p-4 rounded-xl border border-slate-100 hover:border-indigo-200 hover:shadow-sm transition group"
+                          >
+                            <div className="w-20 h-28 bg-slate-100 rounded-lg overflow-hidden shrink-0">
+                              <img
+                                src={book.cover || book.coverPic || `https://placehold.co/300x450/eef2ff/4f46e5?text=${encodeURIComponent(book.title)}`}
+                                alt={book.title}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                onError={(e) => {
+                                  e.target.src = `https://placehold.co/300x450/eef2ff/4f46e5?text=${encodeURIComponent(book.title)}`;
+                                }}
+                              />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="font-semibold text-slate-900 text-[0.9rem] line-clamp-1 group-hover:text-indigo-600 transition">
+                                {book.title}
+                              </p>
+                              <p className="text-[0.8rem] text-slate-500">{book.author}</p>
+                              <div className="flex items-center gap-2 mt-1">
+                                <span className="text-[0.7rem] bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">
+                                  {book.category || "General"}
+                                </span>
+                                {book.reasons && book.reasons.length > 0 && (
+                                  <span className="text-[0.7rem] bg-indigo-50 text-indigo-600 px-2 py-0.5 rounded-full">
+                                    {book.reasons[0]}
+                                  </span>
+                                )}
+                              </div>
+                              <div className="flex items-center justify-between mt-2">
+                                <p className="text-[0.8rem] font-semibold text-indigo-600">
+                                  {formatCurrency(book.priceBuy)}
+                                </p>
+                                <button
+                                  onClick={async () => {
+                                    if (!isAuth) { navigate("/sign-in?next=/dashboard"); return; }
+                                    setAddingRecToCart(book.id);
+                                    try {
+                                      await addBookToCart(userData.id, { book_id: book.id, quantity: 1 });
+                                      showToast("Added to cart!", { type: "success" });
+                                    } catch (e) {
+                                      showToast("Failed to add to cart", { type: "error" });
+                                    } finally {
+                                      setAddingRecToCart(null);
+                                    }
+                                  }}
+                                  disabled={book.stock === 0 || addingRecToCart === book.id}
+                                  className="rounded-full bg-indigo-600 text-white px-3 py-1 text-[0.7rem] font-semibold transition hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                  {addingRecToCart === book.id ? "..." : book.stock === 0 ? "Out of Stock" : "+ Cart"}
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* All Books Discovery */}
+                {allBooks.length > 0 && (
+                  <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+                      <div>
+                        <h3 className="font-semibold text-slate-900">Discover More</h3>
+                        <p className="text-[0.8rem] text-slate-400 mt-0.5">Browse all available books</p>
+                      </div>
+                      <button
+                        onClick={() => navigate("/buy")}
+                        className="text-[0.8rem] text-indigo-600 hover:text-indigo-800 font-medium transition"
+                      >
+                        View all →
+                      </button>
+                    </div>
+                    <div className="p-6">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                        {allBooks.slice(0, 8).map((book) => (
+                          <div key={book.id} className="group cursor-pointer" onClick={() => trackBookView(book.id)}>
+                            <div className="aspect-[3/4] bg-slate-100 rounded-lg overflow-hidden mb-2">
+                              <img
+                                src={book.cover || book.coverPic || `https://placehold.co/300x450/eef2ff/4f46e5?text=${encodeURIComponent(book.title)}`}
+                                alt={book.title}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                onError={(e) => {
+                                  e.target.src = `https://placehold.co/300x450/eef2ff/4f46e5?text=${encodeURIComponent(book.title)}`;
+                                }}
+                              />
+                            </div>
+                            <p className="font-medium text-slate-900 text-[0.85rem] line-clamp-1 group-hover:text-indigo-600 transition">{book.title}</p>
+                            <p className="text-[0.75rem] text-slate-500">{book.author}</p>
+                            <p className="text-[0.8rem] font-semibold text-indigo-600 mt-1">{formatCurrency(book.priceBuy)}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
