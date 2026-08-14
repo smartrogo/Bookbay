@@ -43,6 +43,7 @@ import {
 import ExchangePanel from "../components/dashboard/ExchangePanel";
 import MessagesPanel from "../components/dashboard/MessagesPanel";
 import { fetchPersonalizedRecommendations, fetchRecentlyViewed, trackBookView } from "../services/recommendationService";
+import { fetchGamificationSummary, recordActivity } from "../services/gamificationService";
 import { fetchAllBooks } from "../services/bookService";
 import { addBookToCart } from "../services/bookService";
 import logo from "../assets/logo.png";
@@ -144,6 +145,7 @@ export const Dashboard = () => {
   const [allBooks, setAllBooks] = useState([]);
   const [recLoading, setRecLoading] = useState(false);
   const [addingRecToCart, setAddingRecToCart] = useState(null);
+  const [gamification, setGamification] = useState(null);
 
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -196,7 +198,10 @@ export const Dashboard = () => {
     if (!currentUserId) return;
     if (showLoader) setLoading(true);
 
-    const [walletRes, booksRes, borrowRes, exchangeRes, convRes, recsRes, rvRes, allBooksRes] = await Promise.allSettled([
+    // Record daily activity for streak
+    recordActivity();
+
+    const [walletRes, booksRes, borrowRes, exchangeRes, convRes, recsRes, rvRes, allBooksRes, gamRes] = await Promise.allSettled([
       fetchWallet(currentUserId),
       fetchUserBooks(currentUserId),
       fetchBorrowRequests(),
@@ -205,6 +210,7 @@ export const Dashboard = () => {
       fetchPersonalizedRecommendations(12),
       fetchRecentlyViewed(8),
       fetchAllBooks(),
+      fetchGamificationSummary(),
     ]);
 
     if (walletRes.status === "fulfilled") setWallet(walletRes.value?.wallet || null);
@@ -219,6 +225,7 @@ export const Dashboard = () => {
     if (recsRes.status === "fulfilled") setRecommendations(recsRes.value || []);
     if (rvRes.status === "fulfilled") setRecentlyViewed(rvRes.value || []);
     if (allBooksRes.status === "fulfilled") setAllBooks(allBooksRes.value?.books || []);
+    if (gamRes.status === "fulfilled") setGamification(gamRes.value);
 
     if (showLoader) setLoading(false);
   }, [currentUserId]);
@@ -803,6 +810,42 @@ export const Dashboard = () => {
                       <StatCard label="Borrow Requests" value={myBorrows.length} sub={`${pendingBorrows} pending`} accent="bg-amber-500" />
                       <StatCard label="Exchanges" value={exchangeRequests.length} sub={`${pendingExchanges} pending`} accent="bg-rose-500" />
                     </div>
+
+                    {/* gamification widget */}
+                    {gamification && (
+                      <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 rounded-2xl p-6 text-white shadow-sm">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                          <div className="flex items-center gap-4">
+                            <div className="bg-white/20 rounded-xl p-3">
+                              <span className="text-3xl">🏆</span>
+                            </div>
+                            <div>
+                              <p className="text-[0.75rem] font-semibold uppercase tracking-wider text-amber-100">Your Achievements</p>
+                              <div className="flex items-baseline gap-3 mt-1">
+                                <p className="text-2xl font-bold">{gamification.total_points} pts</p>
+                                <p className="text-amber-100 text-[0.85rem]">Rank #{gamification.rank}</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-6">
+                            <div className="text-center">
+                              <p className="text-xl font-bold">🔥 {gamification.streak?.current_streak || 0}</p>
+                              <p className="text-[0.7rem] text-amber-100">Day Streak</p>
+                            </div>
+                            <div className="text-center">
+                              <p className="text-xl font-bold">🏅 {gamification.badges_count || 0}</p>
+                              <p className="text-[0.7rem] text-amber-100">Badges</p>
+                            </div>
+                          </div>
+                          <button
+                            onClick={() => navigate("/gamification")}
+                            className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg text-[0.85rem] font-semibold transition"
+                          >
+                            View All →
+                          </button>
+                        </div>
+                      </div>
+                    )}
 
                     {/* activity */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

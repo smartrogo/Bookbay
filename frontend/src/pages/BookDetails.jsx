@@ -7,6 +7,8 @@ import { fetchBookById, addBookToCart } from "../services/bookService";
 import { apiClient } from "../services/api";
 import { addToWishlist, removeFromWishlist, fetchWishlist } from "../services/wishlistService";
 import { fetchSimilarBooks, trackBookView } from "../services/recommendationService";
+import { summarizeBook } from "../services/aiService";
+import { awardPoints } from "../services/gamificationService";
 
 const formatPrice = (n) =>
   Number(n || 0).toLocaleString("en-US", { style: "currency", currency: "USD" });
@@ -84,6 +86,9 @@ export const BookDetails = () => {
   const [wishlistLoading, setWishlistLoading] = useState(false);
   const [similarBooks, setSimilarBooks] = useState([]);
   const [similarLoading, setSimilarLoading] = useState(true);
+  const [aiSummary, setAiSummary] = useState("");
+  const [summaryLoading, setSummaryLoading] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
 
   // Review form
   const [showReviewForm, setShowReviewForm] = useState(false);
@@ -96,9 +101,10 @@ export const BookDetails = () => {
     loadReviews();
     loadSimilarBooks();
     if (isAuth) checkWishlist();
-    // Track view
+    // Track view and award points
     if (isAuth && userData?.id) {
       trackBookView(bookId);
+      awardPoints('view_book', 'Viewed a book', Number(bookId), 'book');
     }
   }, [bookId, isAuth, userData]);
 
@@ -194,7 +200,8 @@ export const BookDetails = () => {
       } else {
         await addToWishlist({ book_id: Number(bookId) });
         setIsInWishlist(true);
-        showToast("Added to wishlist!", { type: "success" });
+        showToast("Added to wishlist! +2 points earned! 🎉", { type: "success" });
+        awardPoints('wishlist_add', 'Added book to wishlist', Number(bookId), 'book');
       }
     } catch (error) {
       console.error("Wishlist toggle error:", error);
@@ -219,7 +226,8 @@ export const BookDetails = () => {
         rating: reviewRating,
         comment: reviewComment.trim(),
       });
-      showToast("Review submitted!", { type: "success" });
+      showToast("Review submitted! +5 points earned! 🎉", { type: "success" });
+      awardPoints('review', 'Wrote a review', Number(bookId), 'book');
       setShowReviewForm(false);
       setReviewRating(5);
       setReviewComment("");
@@ -406,6 +414,46 @@ export const BookDetails = () => {
               <p className="text-slate-600 leading-relaxed">
                 {book.description || "No description available for this book."}
               </p>
+            </div>
+
+            {/* AI Summary */}
+            <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border border-indigo-200 p-6 shadow-sm mt-6">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">🤖</span>
+                  <h2 className="text-lg font-semibold text-slate-900">AI Summary</h2>
+                </div>
+                <button
+                  onClick={async () => {
+                    if (showSummary) { setShowSummary(false); return; }
+                    setSummaryLoading(true);
+                    setShowSummary(true);
+                    try {
+                      const summary = await summarizeBook(bookId);
+                      setAiSummary(summary);
+                    } catch (e) {
+                      setAiSummary("Could not generate summary at this time.");
+                    } finally {
+                      setSummaryLoading(false);
+                    }
+                  }}
+                  className="bg-indigo-600 text-white px-4 py-1.5 rounded-lg text-[0.8rem] font-semibold hover:bg-indigo-700 transition"
+                >
+                  {showSummary ? "Hide" : "Get AI Summary"}
+                </button>
+              </div>
+              {showSummary && (
+                <div>
+                  {summaryLoading ? (
+                    <div className="flex items-center gap-2 text-slate-500">
+                      <div className="w-4 h-4 border-2 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" />
+                      <span className="text-[0.85rem]">Generating summary...</span>
+                    </div>
+                  ) : (
+                    <p className="text-slate-700 leading-relaxed whitespace-pre-wrap text-[0.9rem]">{aiSummary}</p>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -318,9 +318,13 @@ export const fetchCartItems = async (userId) => {
   }
 };
 
+import { awardPoints as awardGamificationPoints } from "./gamificationService";
+
 export const addBookToCart = async (userId, payload) => {
   try {
     const response = await apiClient.post(`/cart/${userId}`, payload);
+    // Award gamification points for adding to cart
+    awardGamificationPoints('wishlist_add', 'Added a book to cart', payload.book_id || 0, 'book');
     return response.data;
   } catch (error) {
     const item = {
