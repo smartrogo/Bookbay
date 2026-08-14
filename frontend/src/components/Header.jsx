@@ -139,36 +139,15 @@ export const Header = () => {
             </li>
             {isAuth && (
               <li className="roboto font-normal text-style text-[1.125rem] leading-normal">
-                <NavLink to="/wishlist" style={navLinkStyle}>
-                  Wishlist
-                </NavLink>
-              </li>
-            )}
-            {isAuth && (
-              <li className="roboto font-normal text-style text-[1.125rem] leading-normal">
-                <NavLink to="/orders" style={navLinkStyle}>
-                  Orders
-                </NavLink>
-              </li>
-            )}
-            {isAuth && (
-              <li className="roboto font-normal text-style text-[1.125rem] leading-normal">
-                <NavLink to="/ai" style={navLinkStyle}>
-                  AI Assistant
-                </NavLink>
-              </li>
-            )}
-            {isAuth && (
-              <li className="roboto font-normal text-style text-[1.125rem] leading-normal">
-                <NavLink to="/gamification" style={navLinkStyle}>
-                  Achievements
-                </NavLink>
-              </li>
-            )}
-            {isAuth && (
-              <li className="roboto font-normal text-style text-[1.125rem] leading-normal">
                 <NavLink to="/dashboard" style={navLinkStyle}>
                   Dashboard
+                </NavLink>
+              </li>
+            )}
+            {isAuth && (
+              <li className="roboto font-normal text-style text-[1.125rem] leading-normal">
+                <NavLink to="/profile" style={navLinkStyle}>
+                  Profile
                 </NavLink>
               </li>
             )}
@@ -240,34 +219,16 @@ export const Header = () => {
               📊 Dashboard
             </button>
             <button
-              onClick={() => { setIsMenuOpen(false); navigate('/ai'); }}
+              onClick={() => { setIsMenuOpen(false); navigate('/profile'); }}
               className="w-full text-left px-3 py-2.5 rounded-lg text-[0.85rem] font-medium text-slate-700 hover:bg-slate-100 transition"
             >
-              🤖 AI Assistant
-            </button>
-            <button
-              onClick={() => { setIsMenuOpen(false); navigate('/gamification'); }}
-              className="w-full text-left px-3 py-2.5 rounded-lg text-[0.85rem] font-medium text-slate-700 hover:bg-slate-100 transition"
-            >
-              🏆 Achievements
+              👤 Edit Profile
             </button>
             <button
               onClick={() => { setIsMenuOpen(false); navigate('/wallet'); }}
               className="w-full text-left px-3 py-2.5 rounded-lg text-[0.85rem] font-medium text-slate-700 hover:bg-slate-100 transition"
             >
               💰 Wallet
-            </button>
-            <button
-              onClick={() => { setIsMenuOpen(false); navigate('/orders'); }}
-              className="w-full text-left px-3 py-2.5 rounded-lg text-[0.85rem] font-medium text-slate-700 hover:bg-slate-100 transition"
-            >
-              📦 Orders
-            </button>
-            <button
-              onClick={() => { setIsMenuOpen(false); navigate('/wishlist'); }}
-              className="w-full text-left px-3 py-2.5 rounded-lg text-[0.85rem] font-medium text-slate-700 hover:bg-slate-100 transition"
-            >
-              ❤️ Wishlist
             </button>
             <button
               onClick={handleCartNavigate}
@@ -322,10 +283,8 @@ export const Header = () => {
                   <p className="text-[0.7rem] font-semibold text-slate-400 uppercase tracking-wider px-3 py-1">Your Account</p>
                   {[
                     { to: "/dashboard", icon: "📊", label: "Dashboard" },
-                    { to: "/ai", icon: "🤖", label: "AI Assistant" },
+                    { to: "/profile", icon: "👤", label: "Edit Profile" },
                     { to: "/gamification", icon: "🏆", label: "Achievements" },
-                    { to: "/wishlist", icon: "❤️", label: "Wishlist" },
-                    { to: "/orders", icon: "📦", label: "Orders" },
                     { to: "/my-books", icon: "📚", label: "My Books" },
                     { to: "/wallet", icon: "💰", label: "Wallet" },
                     { to: "/cart", icon: "🛒", label: "Cart" },
