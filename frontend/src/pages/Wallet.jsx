@@ -51,6 +51,10 @@ export const Wallet = () => {
 
   return (
     <div className="container mx-auto p-4">
+      <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-slate-500 hover:text-indigo-600 text-[0.85rem] mb-4 transition">
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+        Back
+      </button>
       <h2 className="text-2xl font-semibold mb-4">Wallet</h2>
       {loading ? (
         <div>Loading...</div>

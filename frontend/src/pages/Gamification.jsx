@@ -78,6 +78,10 @@ export const Gamification = () => {
       {/* Header */}
       <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 py-12 px-6">
         <div className="max-w-5xl mx-auto">
+          <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-amber-100 hover:text-white text-[0.85rem] mb-4 transition">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+            Back
+          </button>
           <div className="flex items-center gap-3 mb-2">
             <span className="text-3xl">🏆</span>
             <h1 className="text-3xl font-bold text-white">Achievements</h1>
