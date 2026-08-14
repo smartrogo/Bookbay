@@ -60,6 +60,7 @@ const ADMIN_NAV = [
   { id: "reviews", label: "Reviews", icon: "⭐" },
   { id: "messages", label: "Messages", icon: "💬" },
   { id: "subscribers", label: "Subscribers", icon: "📧" },
+  { id: "permissions", label: "Permissions", icon: "🔐", superadminOnly: true },
   { id: "settings", label: "Settings", icon: "⚙️", superadminOnly: true },
 ];
 
@@ -71,6 +72,31 @@ const USER_NAV = [
   { id: "recommendations", label: "For You", icon: "✨" },
   { id: "messages", label: "Messages", icon: "💬" },
 ];
+
+const CURRENCIES = [
+  { code: 'USD', symbol: '$', name: 'US Dollar' },
+  { code: 'NGN', symbol: '₦', name: 'Nigerian Naira' },
+  { code: 'GHS', symbol: 'GH₵', name: 'Ghanaian Cedi' },
+  { code: 'KES', symbol: 'KSh', name: 'Kenyan Shilling' },
+  { code: 'ZAR', symbol: 'R', name: 'South African Rand' },
+  { code: 'GBP', symbol: '£', name: 'British Pound' },
+  { code: 'EUR', symbol: '€', name: 'Euro' },
+];
+
+const ROLE_PERMISSIONS = {
+  superadmin: {
+    label: 'Super Admin', color: 'bg-rose-100 text-rose-700',
+    permissions: ['Full platform control', 'Manage all users', 'Manage all settings', 'Delete any content', 'Manage roles'],
+  },
+  admin: {
+    label: 'Admin', color: 'bg-violet-100 text-violet-700',
+    permissions: ['Manage users (except admins)', 'Manage books', 'Manage orders', 'Manage reviews', 'Approve borrows'],
+  },
+  user: {
+    label: 'User', color: 'bg-slate-100 text-slate-600',
+    permissions: ['Buy & sell books', 'Borrow & exchange', 'Write reviews', 'Use AI assistant', 'Earn achievements'],
+  },
+};
 
 const statusStyles = {
   completed: "bg-emerald-100 text-emerald-700",
@@ -100,8 +126,8 @@ const StatCard = ({ label, value, sub, accent }) => (
   </div>
 );
 
-const formatCurrency = (n) =>
-  Number(n || 0).toLocaleString("en-US", { style: "currency", currency: "USD" });
+const formatCurrency = (n, currency) =>
+  Number(n || 0).toLocaleString("en-US", { style: "currency", currency: currency || "USD" });
 
 /* --------------------------- main component -------------------------- */
 
@@ -133,6 +159,8 @@ export const Dashboard = () => {
   const [newSettingValue, setNewSettingValue] = useState("");
   const [importing, setImporting] = useState(false);
   const [overwriteImport, setOverwriteImport] = useState(false);
+  const [platformCurrency, setPlatformCurrency] = useState('USD');
+  const [selectedUser, setSelectedUser] = useState(null);
 
   // user state
   const [wallet, setWallet] = useState(null);
@@ -191,6 +219,11 @@ export const Dashboard = () => {
     setExchanges(exchangeList.status === "fulfilled" ? exchangeList.value : []);
     setSubscribers(subscriberList.status === "fulfilled" ? subscriberList.value : []);
     setSettings(settingsList.status === "fulfilled" ? settingsList.value : []);
+    // Extract currency from settings
+    if (settingsList.status === "fulfilled" && Array.isArray(settingsList.value)) {
+      const currSetting = settingsList.value.find((s) => s.key === 'currency');
+      if (currSetting?.value) setPlatformCurrency(currSetting.value);
+    }
     if (showLoader) setLoading(false);
   }, []);
 
@@ -1638,9 +1671,96 @@ export const Dashboard = () => {
                   </p>
                 </div>
 
+                {/* Platform Currency */}
+                <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-xl">💱</span>
+                    <div>
+                      <h3 className="font-semibold text-slate-900">Platform Currency</h3>
+                      <p className="text-[0.8rem] text-slate-500">This currency is used for all prices across the platform</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                    {CURRENCIES.map((curr) => (
+                      <button
+                        key={curr.code}
+                        onClick={async () => {
+                          setPlatformCurrency(curr.code);
+                          await updateAdminSetting('currency', curr.code);
+                          showToast(`Currency changed to ${curr.name} (${curr.symbol})`, { type: 'success' });
+                        }}
+                        className={`flex items-center gap-3 p-3 rounded-xl border-2 transition ${
+                          platformCurrency === curr.code
+                            ? 'border-indigo-500 bg-indigo-50'
+                            : 'border-slate-200 hover:border-slate-300 bg-white'
+                        }`}
+                      >
+                        <span className="text-2xl font-bold">{curr.symbol}</span>
+                        <div className="text-left">
+                          <p className="font-semibold text-slate-900 text-[0.85rem]">{curr.code}</p>
+                          <p className="text-[0.7rem] text-slate-500">{curr.name}</p>
+                        </div>
+                        {platformCurrency === curr.code && (
+                          <span className="ml-auto text-indigo-600">✓</span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Quick Settings */}
+                <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                  <h3 className="font-semibold text-slate-900 mb-4">Quick Settings</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {[
+                      { key: 'site_name', label: 'Site Name', icon: '🏪' },
+                      { key: 'support_email', label: 'Support Email', icon: '📧' },
+                      { key: 'maintenance_mode', label: 'Maintenance Mode', icon: '🔧', type: 'toggle' },
+                      { key: 'allow_registration', label: 'Allow Registration', icon: '👤', type: 'toggle' },
+                      { key: 'max_books_per_user', label: 'Max Books Per User', icon: '📚', type: 'number' },
+                      { key: 'borrow_max_days', label: 'Max Borrow Days', icon: '📅', type: 'number' },
+                    ].map((setting) => {
+                      const currentValue = settings.find((s) => s.key === setting.key)?.value || '';
+                      return (
+                        <div key={setting.key} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-200">
+                          <div className="flex items-center gap-2">
+                            <span>{setting.icon}</span>
+                            <span className="text-[0.85rem] font-medium text-slate-700">{setting.label}</span>
+                          </div>
+                          {setting.type === 'toggle' ? (
+                            <button
+                              onClick={async () => {
+                                const newValue = currentValue === 'true' ? 'false' : 'true';
+                                await updateAdminSetting(setting.key, newValue);
+                                setSettings((prev) => prev.map((s) => s.key === setting.key ? { ...s, value: newValue } : s));
+                                showToast(`${setting.label} ${newValue === 'true' ? 'enabled' : 'disabled'}`, { type: 'success' });
+                              }}
+                              className={`w-12 h-6 rounded-full transition-colors relative ${currentValue === 'true' ? 'bg-emerald-500' : 'bg-slate-300'}`}
+                            >
+                              <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${currentValue === 'true' ? 'left-6' : 'left-0.5'}`} />
+                            </button>
+                          ) : (
+                            <input
+                              defaultValue={currentValue}
+                              onBlur={async (e) => {
+                                if (e.target.value !== currentValue) {
+                                  await updateAdminSetting(setting.key, e.target.value);
+                                  setSettings((prev) => prev.map((s) => s.key === setting.key ? { ...s, value: e.target.value } : s));
+                                  showToast(`${setting.label} updated`, { type: 'success' });
+                                }
+                              }}
+                              className="w-24 text-right rounded-lg border border-slate-200 px-3 py-1.5 text-[0.85rem] focus:outline-none focus:ring-2 focus:ring-amber-500"
+                            />
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
                 {/* Add new setting */}
                 <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
-                  <h3 className="font-semibold text-slate-900 mb-4">Add new setting</h3>
+                  <h3 className="font-semibold text-slate-900 mb-4">Add New Setting</h3>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <input
                       value={newSettingKey}
@@ -2037,6 +2157,156 @@ export const Dashboard = () => {
                     </div>
                   </div>
                 )}
+              </div>
+            )}
+
+            {/* -------------------- PERMISSIONS TAB (superadmin only) -------------------- */}
+            {activeTab === "permissions" && isAdmin && userData?.is_superadmin && (
+              <div className="space-y-6">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-rose-500 to-pink-600 rounded-2xl p-6 text-white shadow-sm">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-2xl">🔐</span>
+                    <h2 className="text-[1.2rem] font-bold">Role Permissions</h2>
+                  </div>
+                  <p className="text-[0.85rem] text-rose-100">
+                    Manage user roles and their access levels across the platform.
+                  </p>
+                </div>
+
+                {/* Role Overview Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {Object.entries(ROLE_PERMISSIONS).map(([key, role]) => (
+                    <div key={key} className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className={`inline-flex px-3 py-1 rounded-full text-[0.8rem] font-semibold ${role.color}`}>
+                          {role.label}
+                        </span>
+                        <span className="text-[0.75rem] text-slate-400">
+                          {users.filter((u) =>
+                            key === 'superadmin' ? u.is_superadmin :
+                            key === 'admin' ? (u.is_admin && !u.is_superadmin) :
+                            !u.is_admin && !u.is_superadmin
+                          ).length} user(s)
+                        </span>
+                      </div>
+                      <ul className="space-y-2">
+                        {role.permissions.map((perm) => (
+                          <li key={perm} className="flex items-center gap-2 text-[0.8rem] text-slate-600">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                            {perm}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+
+                {/* User Role Management Table */}
+                <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-6 py-4 border-b border-slate-100">
+                    <h3 className="font-semibold text-slate-900">User Role Management</h3>
+                    <div className="relative">
+                      <input
+                        value={userSearch}
+                        onChange={(e) => setUserSearch(e.target.value)}
+                        placeholder="Search users..."
+                        className="pl-4 pr-3 py-2 rounded-lg border border-slate-200 text-[0.85rem] focus:outline-none focus:ring-2 focus:ring-rose-500 w-full sm:w-64"
+                      />
+                    </div>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left text-[0.875rem]">
+                      <thead>
+                        <tr className="text-[0.75rem] uppercase tracking-wide text-slate-400 border-b border-slate-100">
+                          <th className="px-6 py-3 font-semibold">User</th>
+                          <th className="px-6 py-3 font-semibold">Current Role</th>
+                          <th className="px-6 py-3 font-semibold">Status</th>
+                          <th className="px-6 py-3 font-semibold">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredUsers.map((user) => (
+                          <tr key={user.id} className="border-b border-slate-50 hover:bg-slate-50 transition">
+                            <td className="px-6 py-3.5">
+                              <div className="flex items-center gap-3">
+                                <div className="w-9 h-9 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-[0.8rem] font-bold">
+                                  {(user.name || user.email || 'U').charAt(0).toUpperCase()}
+                                </div>
+                                <div>
+                                  <p className="font-medium text-slate-900">{user.name || '—'}</p>
+                                  <p className="text-[0.7rem] text-slate-500">{user.email}</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="px-6 py-3.5">
+                              <span className={`inline-flex px-2.5 py-1 rounded-full text-[0.75rem] font-medium ${
+                                user.is_superadmin ? 'bg-rose-100 text-rose-700' :
+                                user.is_admin ? 'bg-violet-100 text-violet-700' :
+                                'bg-slate-100 text-slate-600'
+                              }`}>
+                                {user.is_superadmin ? '🛡️ Super Admin' : user.is_admin ? '👑 Admin' : '👤 User'}
+                              </span>
+                            </td>
+                            <td className="px-6 py-3.5">
+                              <span className={`inline-flex px-2.5 py-1 rounded-full text-[0.75rem] font-medium ${
+                                user.status === 'active' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'
+                              }`}>
+                                {user.status || 'active'}
+                              </span>
+                            </td>
+                            <td className="px-6 py-3.5">
+                              {user.id !== currentUserId && (
+                                <div className="flex flex-wrap gap-1.5">
+                                  <button
+                                    onClick={() => handleUserStatusToggle(user.id, user.status)}
+                                    className={`rounded-full px-3 py-1 text-[0.7rem] font-medium transition ${
+                                      user.status === 'active' ? 'bg-amber-50 text-amber-700 hover:bg-amber-100' : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
+                                    }`}
+                                  >
+                                    {user.status === 'active' ? '🚫 Suspend' : '✅ Activate'}
+                                  </button>
+                                  <button
+                                    onClick={() => handleUserAdminToggle(user.id, user.is_admin)}
+                                    className={`rounded-full px-3 py-1 text-[0.7rem] font-medium transition ${
+                                      user.is_admin ? 'bg-violet-50 text-violet-700 hover:bg-violet-100' : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100'
+                                    }`}
+                                  >
+                                    {user.is_admin ? '⬇️ Demote' : '⬆️ Promote to Admin'}
+                                  </button>
+                                  {user.is_admin && (
+                                    <button
+                                      onClick={() => handleUserSuperAdminToggle(user.id, user.is_superadmin)}
+                                      className={`rounded-full px-3 py-1 text-[0.7rem] font-medium transition ${
+                                        user.is_superadmin ? 'bg-rose-50 text-rose-700 hover:bg-rose-100' : 'bg-amber-50 text-amber-700 hover:bg-amber-100'
+                                      }`}
+                                    >
+                                      {user.is_superadmin ? '⬇️ Remove SA' : '⬆️ Make SuperAdmin'}
+                                    </button>
+                                  )}
+                                  <button
+                                    onClick={() => handleDeleteUser(user.id)}
+                                    className="rounded-full bg-rose-50 px-3 py-1 text-[0.7rem] font-medium text-rose-700 hover:bg-rose-100 transition"
+                                  >
+                                    🗑️ Delete
+                                  </button>
+                                </div>
+                              )}
+                              {user.id === currentUserId && (
+                                <span className="text-[0.75rem] text-slate-400">You</span>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                        {filteredUsers.length === 0 && (
+                          <tr>
+                            <td colSpan="4" className="px-6 py-10 text-center text-slate-400">No users found.</td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             )}
 
